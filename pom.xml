@@ -6,6 +6,7 @@
 	<groupId>com.graduation-project</groupId>
 	<artifactId>student-information-system-be</artifactId>
 	<version>v1.0.0</version>
+	<packaging>war</packaging>
 
 	<name>Student Information System</name>
 	<description>Student Information System for Higher Education</description>
@@ -50,6 +51,15 @@
 				<configuration>
 					<source>11</source>
 					<target>11</target>
+				</configuration>
+			</plugin>
+
+			<!--This Plugin Added for War Packaging-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
 		</plugins>
