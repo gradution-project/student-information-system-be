@@ -31,7 +31,7 @@
 	</developers>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 		<spring-boot.version>2.5.5</spring-boot.version>
 		<mysql-connector-java.version>8.0.26</mysql-connector-java.version>
 		<sql2o.version>1.6.0-RC3</sql2o.version>
