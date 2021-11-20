@@ -98,6 +98,12 @@
 			<version>${swagger.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>1.7</version>
+		</dependency>
+
 		<!--Those Dependencies are for Hikari slf4j Error!-->
 		<dependency>
 			<groupId>org.slf4j</groupId>
