@@ -4,12 +4,12 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum StudentClassLevel {
-
     PREPARATORY,
     FIRST,
     SECOND,
     THIRD,
     FOURTH,
     FIFTH,
-    SIXTH;
+    SIXTH,
+    GRADUATE
 }
