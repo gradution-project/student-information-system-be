@@ -24,23 +24,23 @@ public class SisBaseResponseUtil {
         return new ResponseEntity<>(sisResponse, status);
     }
 
-    public static <T> ResponseEntity<SisBaseResponse<T>> successResponse(T response, String message) {
-        return generateSisResponse(HttpStatus.OK, message, response);
-    }
-
-    public static <T> ResponseEntity<SisBaseResponse<T>> defaultSuccessResponseFound(T result) {
+    public static <T> ResponseEntity<SisBaseResponse<T>> successResponseFound(T result) {
         return successResponse(result, DEFAULT_FOUND_MESSAGE);
     }
 
-    public static <T> ResponseEntity<SisBaseResponse<T>> defaultSuccessResponseSaved(T result) {
+    public static <T> ResponseEntity<SisBaseResponse<T>> successResponseSaved(T result) {
         return successResponse(result, DEFAULT_SAVED_MESSAGE);
     }
 
-    public static <T> ResponseEntity<SisBaseResponse<T>> defaultSuccessResponseUpdated(T result) {
+    public static <T> ResponseEntity<SisBaseResponse<T>> successResponseUpdated(T result) {
         return successResponse(result, DEFAULT_UPDATED_MESSAGE);
     }
 
-    public static <T> ResponseEntity<SisBaseResponse<T>> defaultSuccessResponseDeleted(T result) {
+    public static <T> ResponseEntity<SisBaseResponse<T>> successResponseDeleted(T result) {
         return successResponse(result, DEFAULT_DELETED_MESSAGE);
+    }
+
+    private static <T> ResponseEntity<SisBaseResponse<T>> successResponse(T response, String message) {
+        return generateSisResponse(HttpStatus.OK, message, response);
     }
 }
