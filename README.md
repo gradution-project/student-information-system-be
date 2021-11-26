@@ -18,5 +18,5 @@ MySQL Hikari Parameters
 
 Swagger UI URL
 ------------------
-http://localhost:8585/public/swagger-ui/index.html
+http://localhost:8585/swagger-ui/index.html
 ```
