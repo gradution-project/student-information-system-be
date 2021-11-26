@@ -17,6 +17,7 @@ public enum StudentPersonalInfoMapping {
     SURNAME("SURNAME", "surname"),
     EMAIL("EMAIL", "email"),
     PHONE_NUMBER("PHONE_NUMBER", "phoneNumber"),
+    STATUS("STATUS", "status"),
     PROFILE_PHOTO("PROFILE_PHOTO", "profilePhoto"),
     PROFILE_PHOTO_URL("PROFILE_PHOTO_URL", "profilePhotoUrl"),
     BIRTHDAY("BIRTHDAY", "birthday"),
