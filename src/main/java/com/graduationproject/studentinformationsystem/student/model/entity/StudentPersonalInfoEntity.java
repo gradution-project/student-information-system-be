@@ -20,8 +20,8 @@ public class StudentPersonalInfoEntity extends BaseEntity {
     private String email;
     private Long phoneNumber;
     private StudentStatus status;
-    private byte[] profilePhoto;
-    private String profilePhotoUrl;
+    //    private Byte[] profilePhoto; // TODO: Added Profile Photo
+//    private String profilePhotoUrl; // TODO: Added Profile Photo URL
     private Date birthday;
     private String address;
 }
