@@ -1,7 +1,7 @@
 package com.graduationproject.studentinformationsystem.student.model.dto.request;
 
+import com.graduationproject.studentinformationsystem.common.util.group.OnCreate;
 import com.graduationproject.studentinformationsystem.common.util.validation.OnlyNumber;
-import com.graduationproject.studentinformationsystem.common.util.validation.URL;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,40 +13,41 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class StudentPersonalInfoRequestDto {
+public class StudentPersonalInfoRequest {
 
-    @NotNull
     @OnlyNumber
     @Size(max = 11)
+    @NotNull(groups = {OnCreate.class})
     private Long tcNo;
 
-    @NotNull
     @Size(max = 100)
+    @NotNull(groups = {OnCreate.class})
     private String name;
 
-    @NotNull
     @Size(max = 100)
+    @NotNull(groups = {OnCreate.class})
     private String surname;
 
-    @NotNull
     @Email
     @Size(max = 100)
+    @NotNull(groups = {OnCreate.class})
     private String email;
 
-    @NotNull
     @OnlyNumber
     @Size(max = 10)
+    @NotNull(groups = {OnCreate.class})
     private Long phoneNumber;
 
-    private byte[] profilePhoto;
+//    private Byte[] profilePhoto; // TODO: Added Profile Photo
 
-    @URL
-    private String profilePhotoUrl;
+//    @URL
+//    private String profilePhotoUrl; // TODO: Added Profile Photo URL
 
     @DateTimeFormat
+    @NotNull(groups = {OnCreate.class})
     private Date birthday;
 
-    @NotNull
     @Size(max = 256)
+    @NotNull(groups = {OnCreate.class})
     private String address;
 }
