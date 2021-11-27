@@ -1,8 +1,5 @@
 package com.graduationproject.studentinformationsystem.student.model.enums;
 
-import lombok.RequiredArgsConstructor;
-
-@RequiredArgsConstructor
 public enum StudentClassLevel {
     PREPARATORY,
     FIRST,

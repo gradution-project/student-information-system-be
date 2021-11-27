@@ -19,11 +19,9 @@ public interface StudentService {
 
     StudentInfoDetailResponse saveStudent(StudentInfoRequest studentInfoRequest);
 
-    StudentAcademicInfoResponse updateStudentAcademicInfo(Long studentId,
-                                                          StudentAcademicInfoRequest academicInfoRequest);
+    StudentAcademicInfoResponse updateStudentAcademicInfo(Long studentId, StudentAcademicInfoRequest academicInfoRequest);
 
-    StudentPersonalInfoResponse updateStudentPersonalInfo(Long studentId,
-                                                          StudentPersonalInfoRequest personalInfoRequest);
+    StudentPersonalInfoResponse updateStudentPersonalInfo(Long studentId, StudentPersonalInfoRequest personalInfoRequest);
 
     StudentResponse deleteStudent(Long studentId);
 

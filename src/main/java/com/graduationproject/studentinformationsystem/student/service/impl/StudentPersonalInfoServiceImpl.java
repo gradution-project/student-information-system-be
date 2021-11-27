@@ -29,11 +29,9 @@ public class StudentPersonalInfoServiceImpl implements StudentPersonalInfoServic
     }
 
     @Override
-    public StudentPersonalInfoResponse saveStudentPersonalInfo(Long studentId, StudentPersonalInfoRequest request) {
+    public void saveStudentPersonalInfo(Long studentId, StudentPersonalInfoRequest request) {
         StudentPersonalInfoEntity entity = StudentPersonalInfoConverter.generateSaveEntity(studentId, request);
         personalInfoRepository.saveStudentPersonalInfo(entity);
-
-        return getStudentPersonalInfoResponse(studentId);
     }
 
     @Override

@@ -30,7 +30,7 @@ public class StudentServiceImpl implements StudentService {
     public List<StudentResponse> getAllStudentsByStatus(StudentStatus status) {
         List<StudentAcademicInfoResponse> academicInfoResponseList = academicInfoService.getAllStudentAcademicInfosByStatus(status);
         List<StudentPersonalInfoResponse> personalInfoResponseList = personalInfoService.getAllStudentPersonalInfosByStatus(status);
-        return StudentResponseConverter.convertList(academicInfoResponseList, personalInfoResponseList);
+        return StudentResponseConverter.infoResponsesListToResponseList(academicInfoResponseList, personalInfoResponseList);
     }
 
     @Override
@@ -106,6 +106,6 @@ public class StudentServiceImpl implements StudentService {
     private StudentResponse getStudentResponse(Long studentId) {
         StudentAcademicInfoResponse academicInfoResponse = academicInfoService.getStudentAcademicInfoById(studentId);
         StudentPersonalInfoResponse personalInfoResponse = personalInfoService.getStudentPersonalInfoById(studentId);
-        return StudentResponseConverter.convert(academicInfoResponse, personalInfoResponse);
+        return StudentResponseConverter.infoResponsesToResponse(academicInfoResponse, personalInfoResponse);
     }
 }
