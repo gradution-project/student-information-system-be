@@ -12,12 +12,9 @@ public interface StudentAcademicInfoService {
 
     StudentAcademicInfoResponse getStudentAcademicInfoById(Long studentId);
 
-    void saveStudentAcademicInfo(Long studentId,
-                                 String studentEmail,
-                                 StudentAcademicInfoRequest academicInfoRequest);
+    void saveStudentAcademicInfo(Long studentId, String studentEmail, StudentAcademicInfoRequest academicInfoRequest);
 
-    StudentAcademicInfoResponse updateStudentAcademicInfo(Long studentId,
-                                                          StudentAcademicInfoRequest academicInfoRequest);
+    StudentAcademicInfoResponse updateStudentAcademicInfo(Long studentId, StudentAcademicInfoRequest academicInfoRequest);
 
     void deleteStudentAcademicInfo(Long studentId);
 

@@ -12,11 +12,9 @@ public interface StudentPersonalInfoService {
 
     StudentPersonalInfoResponse getStudentPersonalInfoById(Long studentId);
 
-    StudentPersonalInfoResponse saveStudentPersonalInfo(Long studentId,
-                                                        StudentPersonalInfoRequest personalInfoRequest);
+    StudentPersonalInfoResponse saveStudentPersonalInfo(Long studentId, StudentPersonalInfoRequest personalInfoRequest);
 
-    StudentPersonalInfoResponse updateStudentPersonalInfo(Long studentId,
-                                                          StudentPersonalInfoRequest personalInfoRequest);
+    StudentPersonalInfoResponse updateStudentPersonalInfo(Long studentId, StudentPersonalInfoRequest personalInfoRequest);
 
     void deleteStudentPersonalInfo(Long studentId);
 
