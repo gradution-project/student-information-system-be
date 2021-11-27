@@ -30,7 +30,7 @@ public class StudentServiceImpl implements StudentService {
     public List<StudentResponse> getAllStudentsByStatus(StudentStatus status) {
         List<StudentAcademicInfoResponse> academicInfoResponseList = academicInfoService.getAllStudentAcademicInfosByStatus(status);
         List<StudentPersonalInfoResponse> personalInfoResponseList = personalInfoService.getAllStudentPersonalInfosByStatus(status);
-        return StudentResponseConverter.convertList(academicInfoResponseList, personalInfoResponseList);
+        return StudentResponseConverter.infoResponsesListToResponseList(academicInfoResponseList, personalInfoResponseList);
     }
 
     @Override

@@ -26,8 +26,8 @@ public class StudentResponseConverter {
                 .registrationDate(academicInfoResponse.getRegistrationDate()).build();
     }
 
-    public static List<StudentResponse> convertList(List<StudentAcademicInfoResponse> academicInfoResponseList,
-                                                    List<StudentPersonalInfoResponse> personalInfoResponseList) {
+    public static List<StudentResponse> infoResponsesListToResponseList(List<StudentAcademicInfoResponse> academicInfoResponseList,
+                                                                        List<StudentPersonalInfoResponse> personalInfoResponseList) {
 
         List<StudentResponse> studentResponseList = new ArrayList<>();
         for (int i = 0; i < academicInfoResponseList.size(); i++) {
