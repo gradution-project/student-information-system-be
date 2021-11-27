@@ -106,6 +106,6 @@ public class StudentServiceImpl implements StudentService {
     private StudentResponse getStudentResponse(Long studentId) {
         StudentAcademicInfoResponse academicInfoResponse = academicInfoService.getStudentAcademicInfoById(studentId);
         StudentPersonalInfoResponse personalInfoResponse = personalInfoService.getStudentPersonalInfoById(studentId);
-        return StudentResponseConverter.convert(academicInfoResponse, personalInfoResponse);
+        return StudentResponseConverter.infoResponsesToResponse(academicInfoResponse, personalInfoResponse);
     }
 }

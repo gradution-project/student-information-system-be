@@ -12,8 +12,8 @@ public class StudentResponseConverter {
     private StudentResponseConverter() {
     }
 
-    public static StudentResponse convert(StudentAcademicInfoResponse academicInfoResponse,
-                                          StudentPersonalInfoResponse personalInfoResponse) {
+    public static StudentResponse infoResponsesToResponse(StudentAcademicInfoResponse academicInfoResponse,
+                                                          StudentPersonalInfoResponse personalInfoResponse) {
         return StudentResponse.builder()
                 .studentId(academicInfoResponse.getStudentId())
                 .departmentId(academicInfoResponse.getDepartmentId())
@@ -31,7 +31,7 @@ public class StudentResponseConverter {
 
         List<StudentResponse> studentResponseList = new ArrayList<>();
         for (int i = 0; i < academicInfoResponseList.size(); i++) {
-            studentResponseList.add(convert(academicInfoResponseList.get(i), personalInfoResponseList.get(i)));
+            studentResponseList.add(infoResponsesToResponse(academicInfoResponseList.get(i), personalInfoResponseList.get(i)));
         }
         return studentResponseList;
     }
