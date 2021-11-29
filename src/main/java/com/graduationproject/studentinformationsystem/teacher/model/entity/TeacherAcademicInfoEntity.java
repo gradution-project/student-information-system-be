@@ -20,7 +20,7 @@ public class TeacherAcademicInfoEntity extends BaseEntity {
     private TeacherGroup group;
     private TeacherRole role;
     private String fieldOfStudy;
-    private String phoneNumber;
+    private Long phoneNumber;
     private String email;
     private TeacherStatus status;
     private Date registrationDate;
