@@ -1,5 +1,7 @@
 package com.graduationproject.studentinformationsystem.teacher.model.enums;
 
 public enum TeacherRole {
-    // TODO: Teacher Roles
+    TEACHER,
+    ADVISOR,
+    HEAD_OF_DEPARTMENT
 }
