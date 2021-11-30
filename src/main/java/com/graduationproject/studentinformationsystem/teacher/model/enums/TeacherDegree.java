@@ -1,6 +1,6 @@
 package com.graduationproject.studentinformationsystem.teacher.model.enums;
 
-public enum TeacherGroup {
+public enum TeacherDegree {
     RESEARCH_ASSOCIATE,
     TEACHING_ASSOCIATE,
     ASSISTANT_PROFESSOR,
