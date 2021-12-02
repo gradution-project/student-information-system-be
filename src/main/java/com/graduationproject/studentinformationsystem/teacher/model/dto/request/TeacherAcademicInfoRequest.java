@@ -2,7 +2,7 @@ package com.graduationproject.studentinformationsystem.teacher.model.dto.request
 
 import com.graduationproject.studentinformationsystem.common.util.group.OnCreate;
 import com.graduationproject.studentinformationsystem.common.util.validation.OnlyNumber;
-import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherGroup;
+import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherDegree;
 import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherRole;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +20,7 @@ public class TeacherAcademicInfoRequest {
     private Long departmentId;
 
     @NotNull(groups = {OnCreate.class})
-    private TeacherGroup group;
+    private TeacherDegree degree;
 
     @NotNull(groups = {OnCreate.class})
     private TeacherRole role;
