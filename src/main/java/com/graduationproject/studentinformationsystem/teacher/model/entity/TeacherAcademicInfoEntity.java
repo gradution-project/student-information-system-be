@@ -1,7 +1,7 @@
 package com.graduationproject.studentinformationsystem.teacher.model.entity;
 
 import com.graduationproject.studentinformationsystem.common.model.entity.BaseEntity;
-import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherGroup;
+import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherDegree;
 import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherRole;
 import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherStatus;
 import lombok.Getter;
@@ -17,7 +17,7 @@ public class TeacherAcademicInfoEntity extends BaseEntity {
 
     private Long teacherId;
     private Long departmentId;
-    private TeacherGroup group;
+    private TeacherDegree degree;
     private TeacherRole role;
     private String fieldOfStudy;
     private Long phoneNumber;
