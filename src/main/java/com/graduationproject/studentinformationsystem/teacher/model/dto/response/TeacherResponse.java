@@ -1,6 +1,6 @@
 package com.graduationproject.studentinformationsystem.teacher.model.dto.response;
 
-import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherGroup;
+import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherDegree;
 import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherRole;
 import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherStatus;
 import lombok.Builder;
@@ -16,7 +16,7 @@ public class TeacherResponse {
 
     private Long teacherId;
     private Long departmentId;
-    private TeacherGroup group;
+    private TeacherDegree degree;
     private TeacherRole role;
     private String fieldOfStudy;
     private String name;

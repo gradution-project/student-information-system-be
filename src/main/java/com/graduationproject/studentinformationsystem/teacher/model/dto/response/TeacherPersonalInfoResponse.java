@@ -16,7 +16,7 @@ public class TeacherPersonalInfoResponse extends BaseResponse {
     private String name;
     private String surname;
     private String email;
-    private Long phoneNumber;
+    private String phoneNumber;
     private TeacherStatus status;
     //    private Byte[] profilePhoto; // TODO: Profile Photo
 //    private String profilePhotoUrl; // TODO: Profile Photo URL
