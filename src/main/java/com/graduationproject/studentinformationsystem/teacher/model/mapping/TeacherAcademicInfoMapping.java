@@ -12,12 +12,12 @@ import java.util.stream.Stream;
 public enum TeacherAcademicInfoMapping {
 
     TEACHER_ID("TEACHER_ID", "teacherId"),
-    GROUP_ID("GROUP_ID", "GROUP_ID"),
-    ROLE_ID("ROLE_ID", "ROLE_ID"),
+    DEGREE("DEGREE", "degree"),
+    ROLE("ROLE", "role"),
     DEPARTMENT_ID("DEPARTMENT_ID", "departmentId"),
     FIELD_OF_STUDY("FIELD_OF_STUDY", "fieldOfStudy"),
-    PHONE_NUMBER("PHONE_NUMBER", "phoneNumber"),
     EMAIL("EMAIL", "email"),
+    PHONE_NUMBER("PHONE_NUMBER", "phoneNumber"),
     STATUS("STATUS", "status"),
     REGISTRATION_DATE("REGISTRATION_DATE", "registrationDate"),
     CREATED_DATE("CREATED_DATE", "createdDate"),
