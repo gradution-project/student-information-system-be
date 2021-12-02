@@ -35,8 +35,8 @@ public class SisUtil {
         return Long.parseLong(prefixId + stringNumber);
     }
 
-    public static boolean isExistIdInIdList(Long id, List<Long> idList) {
-        for (Long idInList : idList) {
+    public static boolean isExistIdInIdList(Long id, List<Long> ids) {
+        for (Long idInList : ids) {
             if (id.equals(idInList)) {
                 return true;
             }
