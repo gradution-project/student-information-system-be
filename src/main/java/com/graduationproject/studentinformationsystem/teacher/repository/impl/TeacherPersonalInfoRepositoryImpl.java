@@ -1,5 +1,6 @@
 package com.graduationproject.studentinformationsystem.teacher.repository.impl;
 
+import com.graduationproject.studentinformationsystem.common.util.exception.SisDatabaseException;
 import com.graduationproject.studentinformationsystem.common.util.log.SisErrorLogMessageUtil;
 import com.graduationproject.studentinformationsystem.common.util.log.SisInfoLogMessageUtil;
 import com.graduationproject.studentinformationsystem.common.util.log.SisWarnLogMessageUtil;
@@ -39,10 +40,9 @@ public class TeacherPersonalInfoRepositoryImpl implements TeacherPersonalInfoRep
 
             info.foundAllByStatus(status.toString());
             return entities;
-        } catch (Exception e) {
+        } catch (Exception exception) {
             error.errorWhenGettingAllByStatus(status.toString());
-            // TODO: Throw Specific Method Exception
-            return null;
+            throw new SisDatabaseException(exception);
         }
     }
 
@@ -61,10 +61,9 @@ public class TeacherPersonalInfoRepositoryImpl implements TeacherPersonalInfoRep
                 warn.notFoundById(teacherId);
             }
             return entity;
-        } catch (Exception e) {
+        } catch (Exception exception) {
             error.errorWhenGetting();
-            // TODO: Throw Specific Method Exception
-            return null;
+            throw new SisDatabaseException(exception);
         }
     }
 
@@ -88,9 +87,9 @@ public class TeacherPersonalInfoRepositoryImpl implements TeacherPersonalInfoRep
                     .executeUpdate();
 
             info.savedById(entity.getTeacherId());
-        } catch (Exception e) {
+        } catch (Exception exception) {
             error.errorWhenSaving();
-            // TODO: Throw Specific Method Exception
+            throw new SisDatabaseException(exception);
         }
     }
 
@@ -112,9 +111,9 @@ public class TeacherPersonalInfoRepositoryImpl implements TeacherPersonalInfoRep
                     .executeUpdate();
 
             info.updated();
-        } catch (Exception e) {
+        } catch (Exception exception) {
             error.errorWhenUpdating();
-            // TODO: Throw Specific Method Exception
+            throw new SisDatabaseException(exception);
         }
     }
 
@@ -129,9 +128,9 @@ public class TeacherPersonalInfoRepositoryImpl implements TeacherPersonalInfoRep
                     .executeUpdate();
 
             info.statusUpdated(entity.getStatus().toString());
-        } catch (Exception e) {
+        } catch (Exception exception) {
             error.errorWhenUpdatingStatus();
-            // TODO: Throw Specific Method Exception
+            throw new SisDatabaseException(exception);
         }
     }
 }
