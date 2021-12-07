@@ -5,6 +5,8 @@ public class SisConstants {
     private SisConstants() {
     }
 
+    public static final String DATE_TIME_PATTERN = "dd.MM.yyyy HH:mm:ss";
+
     public static class DbProfile {
 
         private DbProfile() {
