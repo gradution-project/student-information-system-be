@@ -1,7 +1,6 @@
 package com.graduationproject.studentinformationsystem.teacher.model.dto.request;
 
-import com.graduationproject.studentinformationsystem.common.util.group.OnCreate;
-import com.graduationproject.studentinformationsystem.common.util.validation.OnlyNumber;
+import com.graduationproject.studentinformationsystem.common.util.validation.DepartmentID;
 import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherDegree;
 import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherRole;
 import lombok.Getter;
@@ -14,23 +13,20 @@ import javax.validation.constraints.Size;
 @Setter
 public class TeacherAcademicInfoRequest {
 
-    @OnlyNumber
-    @Size(min = 5, max = 5)
-    @NotNull(groups = {OnCreate.class})
+    @NotNull
+    @DepartmentID
     private Long departmentId;
 
-    @NotNull(groups = {OnCreate.class})
+    @NotNull
     private TeacherDegree degree;
 
-    @NotNull(groups = {OnCreate.class})
+    @NotNull
     private TeacherRole role;
 
-    @Size(max = 256)
-    @NotNull(groups = {OnCreate.class})
+    @NotNull
+    @Size(min = 3, max = 256)
     private String fieldOfStudy;
 
-    @OnlyNumber
-    @Size(max = 10)
-    @NotNull(groups = {OnCreate.class})
+    @NotNull
     private Long phoneNumber;
 }

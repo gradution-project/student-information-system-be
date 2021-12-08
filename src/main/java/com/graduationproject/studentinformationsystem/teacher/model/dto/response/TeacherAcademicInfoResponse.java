@@ -1,6 +1,6 @@
 package com.graduationproject.studentinformationsystem.teacher.model.dto.response;
 
-import com.graduationproject.studentinformationsystem.common.model.dto.response.BaseResponse;
+import com.graduationproject.studentinformationsystem.common.util.controller.response.SisBaseAcademicInfoResponse;
 import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherDegree;
 import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherRole;
 import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherStatus;
@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class TeacherAcademicInfoResponse extends BaseResponse {
+public class TeacherAcademicInfoResponse extends SisBaseAcademicInfoResponse {
 
     private Long teacherId;
     private Long departmentId;
@@ -19,7 +19,6 @@ public class TeacherAcademicInfoResponse extends BaseResponse {
     private TeacherRole role;
     private String fieldOfStudy;
     private String phoneNumber;
-    private String email;
     private TeacherStatus status;
     private Date registrationDate;
 }

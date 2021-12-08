@@ -1,6 +1,6 @@
 package com.graduationproject.studentinformationsystem.teacher.model.entity;
 
-import com.graduationproject.studentinformationsystem.common.model.entity.BaseEntity;
+import com.graduationproject.studentinformationsystem.common.model.entity.SisBaseEntity;
 import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherDegree;
 import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherRole;
 import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherStatus;
@@ -13,7 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 @SuperBuilder
-public class TeacherAcademicInfoEntity extends BaseEntity {
+public class TeacherAcademicInfoEntity extends SisBaseEntity {
 
     private Long teacherId;
     private Long departmentId;

@@ -1,6 +1,6 @@
 package com.graduationproject.studentinformationsystem.teacher.model.dto.response;
 
-import com.graduationproject.studentinformationsystem.common.model.dto.response.BaseResponse;
+import com.graduationproject.studentinformationsystem.common.model.dto.response.SisBaseResponse;
 import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherStatus;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class TeacherPersonalInfoResponse extends BaseResponse {
+public class TeacherPersonalInfoResponse extends SisBaseResponse {
 
     private Long teacherId;
     private Long tcNo;
