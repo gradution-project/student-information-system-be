@@ -1,5 +1,6 @@
 package com.graduationproject.studentinformationsystem.student.service;
 
+import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.student.model.dto.request.StudentAcademicInfoRequest;
 import com.graduationproject.studentinformationsystem.student.model.dto.request.StudentInfoRequest;
@@ -24,11 +25,11 @@ public interface StudentService {
 
     StudentPersonalInfoResponse updateStudentPersonalInfo(Long studentId, StudentPersonalInfoRequest personalInfoRequest) throws SisNotExistException;
 
-    StudentResponse deleteStudent(Long studentId) throws SisNotExistException;
+    StudentResponse deleteStudent(Long studentId) throws SisNotExistException, SisAlreadyException;
 
-    StudentResponse passivateStudent(Long studentId) throws SisNotExistException;
+    StudentResponse passivateStudent(Long studentId) throws SisNotExistException, SisAlreadyException;
 
-    StudentResponse activateStudent(Long studentId) throws SisNotExistException;
+    StudentResponse activateStudent(Long studentId) throws SisNotExistException, SisAlreadyException;
 
-    StudentResponse graduateStudent(Long studentId) throws SisNotExistException;
+    StudentResponse graduateStudent(Long studentId) throws SisNotExistException, SisAlreadyException;
 }
