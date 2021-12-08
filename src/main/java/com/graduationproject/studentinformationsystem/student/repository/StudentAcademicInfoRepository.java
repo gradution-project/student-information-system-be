@@ -20,4 +20,12 @@ public interface StudentAcademicInfoRepository {
     List<Long> getAllStudentIdsByDepartmentId(Long departmentId);
 
     boolean isStudentExist(Long studentId);
+
+    boolean isStudentDeleted(Long studentId);
+
+    boolean isStudentPassive(Long studentId);
+
+    boolean isStudentActive(Long studentId);
+
+    boolean isStudentGraduated(Long studentId);
 }

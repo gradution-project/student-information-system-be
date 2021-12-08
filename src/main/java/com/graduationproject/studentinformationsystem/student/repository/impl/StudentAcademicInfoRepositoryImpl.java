@@ -160,4 +160,84 @@ public class StudentAcademicInfoRepositoryImpl implements StudentAcademicInfoRep
             throw new SisDatabaseException(exception);
         }
     }
+
+    @Override
+    public boolean isStudentDeleted(Long studentId) {
+        try (Connection con = sql2o.open(); Query query = con.createQuery(IS_STUDENT_DELETED_BY_ID)) {
+
+            boolean isStudentExist = query.addParameter(STUDENT_ID.getModelName(), studentId)
+                    .executeAndFetchFirst(Boolean.class);
+
+            if (isStudentExist) {
+                info.foundByIdAndStatus(studentId, StudentStatus.DELETED.toString());
+                return true;
+            } else {
+                warn.notFoundByIdAndStatus(studentId, StudentStatus.DELETED.toString());
+                return false;
+            }
+        } catch (Exception exception) {
+            error.errorWhenGettingById(studentId);
+            throw new SisDatabaseException(exception);
+        }
+    }
+
+    @Override
+    public boolean isStudentPassive(Long studentId) {
+        try (Connection con = sql2o.open(); Query query = con.createQuery(IS_STUDENT_PASSIVE_BY_ID)) {
+
+            boolean isStudentExist = query.addParameter(STUDENT_ID.getModelName(), studentId)
+                    .executeAndFetchFirst(Boolean.class);
+
+            if (isStudentExist) {
+                info.foundByIdAndStatus(studentId, StudentStatus.PASSIVE.toString());
+                return true;
+            } else {
+                warn.notFoundByIdAndStatus(studentId, StudentStatus.PASSIVE.toString());
+                return false;
+            }
+        } catch (Exception exception) {
+            error.errorWhenGettingById(studentId);
+            throw new SisDatabaseException(exception);
+        }
+    }
+
+    @Override
+    public boolean isStudentActive(Long studentId) {
+        try (Connection con = sql2o.open(); Query query = con.createQuery(IS_STUDENT_ACTIVE_BY_ID)) {
+
+            boolean isStudentExist = query.addParameter(STUDENT_ID.getModelName(), studentId)
+                    .executeAndFetchFirst(Boolean.class);
+
+            if (isStudentExist) {
+                info.foundByIdAndStatus(studentId, StudentStatus.ACTIVE.toString());
+                return true;
+            } else {
+                warn.notFoundByIdAndStatus(studentId, StudentStatus.ACTIVE.toString());
+                return false;
+            }
+        } catch (Exception exception) {
+            error.errorWhenGettingById(studentId);
+            throw new SisDatabaseException(exception);
+        }
+    }
+
+    @Override
+    public boolean isStudentGraduated(Long studentId) {
+        try (Connection con = sql2o.open(); Query query = con.createQuery(IS_STUDENT_GRADUATED_BY_ID)) {
+
+            boolean isStudentExist = query.addParameter(STUDENT_ID.getModelName(), studentId)
+                    .executeAndFetchFirst(Boolean.class);
+
+            if (isStudentExist) {
+                info.foundByIdAndStatus(studentId, StudentStatus.GRADUATED.toString());
+                return true;
+            } else {
+                warn.notFoundByIdAndStatus(studentId, StudentStatus.GRADUATED.toString());
+                return false;
+            }
+        } catch (Exception exception) {
+            error.errorWhenGettingById(studentId);
+            throw new SisDatabaseException(exception);
+        }
+    }
 }
