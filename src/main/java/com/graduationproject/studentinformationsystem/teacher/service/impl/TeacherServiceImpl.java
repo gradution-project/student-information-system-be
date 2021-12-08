@@ -1,5 +1,6 @@
 package com.graduationproject.studentinformationsystem.teacher.service.impl;
 
+import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.teacher.model.dto.converter.TeacherInfoResponseConverter;
 import com.graduationproject.studentinformationsystem.teacher.model.dto.converter.TeacherResponseConverter;
@@ -70,7 +71,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public TeacherResponse deleteTeacher(Long teacherId) throws SisNotExistException {
+    public TeacherResponse deleteTeacher(Long teacherId) throws SisNotExistException, SisAlreadyException {
         checkBeforeDeleting(teacherId);
         academicInfoService.deleteTeacherAcademicInfo(teacherId);
         personalInfoService.deleteTeacherPersonalInfo(teacherId);
@@ -78,7 +79,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public TeacherResponse passivateTeacher(Long teacherId) throws SisNotExistException {
+    public TeacherResponse passivateTeacher(Long teacherId) throws SisNotExistException, SisAlreadyException {
         checkBeforePassivating(teacherId);
         academicInfoService.passivateTeacherAcademicInfo(teacherId);
         personalInfoService.passivateTeacherPersonalInfo(teacherId);
@@ -86,7 +87,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public TeacherResponse activateTeacher(Long teacherId) throws SisNotExistException {
+    public TeacherResponse activateTeacher(Long teacherId) throws SisNotExistException, SisAlreadyException {
         checkBeforeActivating(teacherId);
         academicInfoService.activateTeacherAcademicInfo(teacherId);
         personalInfoService.activateTeacherPersonalInfo(teacherId);
@@ -137,16 +138,21 @@ public class TeacherServiceImpl implements TeacherService {
         ifTeacherIsNotExistThrowNotExistException(teacherId);
     }
 
-    private void checkBeforeDeleting(Long teacherId) throws SisNotExistException {
+    private void checkBeforeDeleting(Long teacherId) throws SisNotExistException, SisAlreadyException {
         ifTeacherIsNotExistThrowNotExistException(teacherId);
+        ifTeacherIsAlreadyDeletedThrowAlreadyException(teacherId);
     }
 
-    private void checkBeforePassivating(Long teacherId) throws SisNotExistException {
+    private void checkBeforePassivating(Long teacherId) throws SisNotExistException, SisAlreadyException {
         ifTeacherIsNotExistThrowNotExistException(teacherId);
+        ifTeacherIsAlreadyPassiveThrowAlreadyException(teacherId);
+        ifTeacherIsAlreadyDeletedThrowAlreadyException(teacherId);
     }
 
-    private void checkBeforeActivating(Long teacherId) throws SisNotExistException {
+    private void checkBeforeActivating(Long teacherId) throws SisNotExistException, SisAlreadyException {
         ifTeacherIsNotExistThrowNotExistException(teacherId);
+        ifTeacherIsAlreadyActiveThrowAlreadyException(teacherId);
+        ifTeacherIsAlreadyDeletedThrowAlreadyException(teacherId);
     }
 
 
@@ -165,5 +171,23 @@ public class TeacherServiceImpl implements TeacherService {
 //        if (!departmentService.isDepartmentExist(teacherId)) {
 //            SisException.throwNotExistException();
 //        }
+    }
+
+    private void ifTeacherIsAlreadyDeletedThrowAlreadyException(Long studentId) throws SisAlreadyException {
+        if (academicInfoService.isTeacherDeleted(studentId)) {
+            TeacherException.throwAlreadyDeletedException(studentId);
+        }
+    }
+
+    private void ifTeacherIsAlreadyPassiveThrowAlreadyException(Long studentId) throws SisAlreadyException {
+        if (academicInfoService.isTeacherPassive(studentId)) {
+            TeacherException.throwAlreadyPassiveException(studentId);
+        }
+    }
+
+    private void ifTeacherIsAlreadyActiveThrowAlreadyException(Long studentId) throws SisAlreadyException {
+        if (academicInfoService.isTeacherActive(studentId)) {
+            TeacherException.throwAlreadyActiveException(studentId);
+        }
     }
 }
