@@ -1,6 +1,7 @@
 package com.graduationproject.studentinformationsystem.teacher.controller;
 
 import com.graduationproject.studentinformationsystem.common.util.controller.response.SisBaseApiResponse;
+import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.teacher.controller.endpoint.TeacherControllerEndpoint;
 import com.graduationproject.studentinformationsystem.teacher.model.dto.request.TeacherAcademicInfoRequest;
@@ -82,7 +83,7 @@ public class TeacherController {
     @DeleteMapping(TeacherControllerEndpoint.DELETE_BY_TEACHER_ID)
     @ApiOperation(value = "Delete Teacher")
     public ResponseEntity<SisBaseApiResponse<TeacherResponse>> deleteTeacher(@PathVariable Long teacherId)
-            throws SisNotExistException {
+            throws SisNotExistException, SisAlreadyException {
 
         return successResponse(teacherService.deleteTeacher(teacherId));
     }
@@ -90,7 +91,7 @@ public class TeacherController {
     @PatchMapping(TeacherControllerEndpoint.PASSIVATE_BY_TEACHER_ID)
     @ApiOperation(value = "Passivate Teacher")
     public ResponseEntity<SisBaseApiResponse<TeacherResponse>> passivateTeacher(@PathVariable Long teacherId)
-            throws SisNotExistException {
+            throws SisNotExistException, SisAlreadyException {
 
         return successResponse(teacherService.passivateTeacher(teacherId));
     }
@@ -98,7 +99,7 @@ public class TeacherController {
     @PatchMapping(TeacherControllerEndpoint.ACTIVATE_BY_TEACHER_ID)
     @ApiOperation(value = "Activate Teacher")
     public ResponseEntity<SisBaseApiResponse<TeacherResponse>> activateTeacher(@PathVariable Long teacherId)
-            throws SisNotExistException {
+            throws SisNotExistException, SisAlreadyException {
 
         return successResponse(teacherService.activateTeacher(teacherId));
     }

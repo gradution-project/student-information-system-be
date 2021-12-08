@@ -70,6 +70,21 @@ public class TeacherAcademicInfoServiceImpl implements TeacherAcademicInfoServic
         return academicInfoRepository.isTeacherExist(teacherId);
     }
 
+    @Override
+    public boolean isTeacherDeleted(Long teacherId) {
+        return academicInfoRepository.isTeacherDeleted(teacherId);
+    }
+
+    @Override
+    public boolean isTeacherPassive(Long teacherId) {
+        return academicInfoRepository.isTeacherPassive(teacherId);
+    }
+
+    @Override
+    public boolean isTeacherActive(Long teacherId) {
+        return academicInfoRepository.isTeacherActive(teacherId);
+    }
+
     private TeacherAcademicInfoResponse getTeacherAcademicInfoResponse(Long teacherId) {
         return TeacherAcademicInfoConverter.entityToResponse(academicInfoRepository.getTeacherAcademicInfoById(teacherId));
     }

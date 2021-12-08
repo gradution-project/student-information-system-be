@@ -1,5 +1,6 @@
 package com.graduationproject.studentinformationsystem.teacher.service;
 
+import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.teacher.model.dto.request.TeacherAcademicInfoRequest;
 import com.graduationproject.studentinformationsystem.teacher.model.dto.request.TeacherInfoRequest;
@@ -24,9 +25,9 @@ public interface TeacherService {
 
     TeacherPersonalInfoResponse updateTeacherPersonalInfo(Long teacherId, TeacherPersonalInfoRequest personalInfoRequest) throws SisNotExistException;
 
-    TeacherResponse deleteTeacher(Long teacherId) throws SisNotExistException;
+    TeacherResponse deleteTeacher(Long teacherId) throws SisNotExistException, SisAlreadyException;
 
-    TeacherResponse passivateTeacher(Long teacherId) throws SisNotExistException;
+    TeacherResponse passivateTeacher(Long teacherId) throws SisNotExistException, SisAlreadyException;
 
-    TeacherResponse activateTeacher(Long teacherId) throws SisNotExistException;
+    TeacherResponse activateTeacher(Long teacherId) throws SisNotExistException, SisAlreadyException;
 }

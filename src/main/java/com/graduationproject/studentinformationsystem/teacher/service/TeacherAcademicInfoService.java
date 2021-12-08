@@ -25,4 +25,10 @@ public interface TeacherAcademicInfoService {
     List<Long> getAllTeacherIdsByDepartmentId(Long departmentId);
 
     boolean isTeacherExist(Long teacherId);
+
+    boolean isTeacherDeleted(Long teacherId);
+
+    boolean isTeacherPassive(Long teacherId);
+
+    boolean isTeacherActive(Long teacherId);
 }

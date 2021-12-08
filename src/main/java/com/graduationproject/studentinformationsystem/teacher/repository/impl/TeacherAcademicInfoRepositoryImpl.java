@@ -168,4 +168,64 @@ public class TeacherAcademicInfoRepositoryImpl implements TeacherAcademicInfoRep
             throw new SisDatabaseException(exception);
         }
     }
+
+    @Override
+    public boolean isTeacherDeleted(Long teacherId) {
+        try (Connection con = sql2o.open(); Query query = con.createQuery(IS_TEACHER_DELETED_BY_ID)) {
+
+            boolean isTeacherExist = query.addParameter(TEACHER_ID.getModelName(), teacherId)
+                    .executeAndFetchFirst(Boolean.class);
+
+            if (isTeacherExist) {
+                info.foundByIdAndStatus(teacherId, TeacherStatus.DELETED.toString());
+                return true;
+            } else {
+                warn.notFoundByIdAndStatus(teacherId, TeacherStatus.DELETED.toString());
+                return false;
+            }
+        } catch (Exception exception) {
+            error.errorWhenGettingById(teacherId);
+            throw new SisDatabaseException(exception);
+        }
+    }
+
+    @Override
+    public boolean isTeacherPassive(Long teacherId) {
+        try (Connection con = sql2o.open(); Query query = con.createQuery(IS_TEACHER_PASSIVE_BY_ID)) {
+
+            boolean isTeacherExist = query.addParameter(TEACHER_ID.getModelName(), teacherId)
+                    .executeAndFetchFirst(Boolean.class);
+
+            if (isTeacherExist) {
+                info.foundByIdAndStatus(teacherId, TeacherStatus.PASSIVE.toString());
+                return true;
+            } else {
+                warn.notFoundByIdAndStatus(teacherId, TeacherStatus.PASSIVE.toString());
+                return false;
+            }
+        } catch (Exception exception) {
+            error.errorWhenGettingById(teacherId);
+            throw new SisDatabaseException(exception);
+        }
+    }
+
+    @Override
+    public boolean isTeacherActive(Long teacherId) {
+        try (Connection con = sql2o.open(); Query query = con.createQuery(IS_TEACHER_ACTIVE_BY_ID)) {
+
+            boolean isTeacherExist = query.addParameter(TEACHER_ID.getModelName(), teacherId)
+                    .executeAndFetchFirst(Boolean.class);
+
+            if (isTeacherExist) {
+                info.foundByIdAndStatus(teacherId, TeacherStatus.ACTIVE.toString());
+                return true;
+            } else {
+                warn.notFoundByIdAndStatus(teacherId, TeacherStatus.ACTIVE.toString());
+                return false;
+            }
+        } catch (Exception exception) {
+            error.errorWhenGettingById(teacherId);
+            throw new SisDatabaseException(exception);
+        }
+    }
 }
