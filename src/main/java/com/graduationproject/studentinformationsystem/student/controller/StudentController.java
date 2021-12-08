@@ -1,6 +1,7 @@
 package com.graduationproject.studentinformationsystem.student.controller;
 
 import com.graduationproject.studentinformationsystem.common.util.controller.response.SisBaseApiResponse;
+import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.student.controller.endpoint.StudentControllerEndpoint;
 import com.graduationproject.studentinformationsystem.student.model.dto.request.StudentAcademicInfoRequest;
@@ -82,7 +83,7 @@ public class StudentController {
     @DeleteMapping(StudentControllerEndpoint.DELETE_BY_STUDENT_ID)
     @ApiOperation(value = "Delete Student")
     public ResponseEntity<SisBaseApiResponse<StudentResponse>> deleteStudent(@PathVariable Long studentId)
-            throws SisNotExistException {
+            throws SisNotExistException, SisAlreadyException {
 
         return successResponse(studentService.deleteStudent(studentId));
     }
@@ -90,7 +91,7 @@ public class StudentController {
     @PatchMapping(StudentControllerEndpoint.PASSIVATE_BY_STUDENT_ID)
     @ApiOperation(value = "Passivate Student")
     public ResponseEntity<SisBaseApiResponse<StudentResponse>> passivateStudent(@PathVariable Long studentId)
-            throws SisNotExistException {
+            throws SisNotExistException, SisAlreadyException {
 
         return successResponse(studentService.passivateStudent(studentId));
     }
@@ -98,7 +99,7 @@ public class StudentController {
     @PatchMapping(StudentControllerEndpoint.ACTIVATE_BY_STUDENT_ID)
     @ApiOperation(value = "Activate Student")
     public ResponseEntity<SisBaseApiResponse<StudentResponse>> activateStudent(@PathVariable Long studentId)
-            throws SisNotExistException {
+            throws SisNotExistException, SisAlreadyException {
 
         return successResponse(studentService.activateStudent(studentId));
     }
@@ -106,7 +107,7 @@ public class StudentController {
     @PatchMapping(StudentControllerEndpoint.GRADUATE_BY_STUDENT_ID)
     @ApiOperation(value = "Graduate Student")
     public ResponseEntity<SisBaseApiResponse<StudentResponse>> graduateStudent(@PathVariable Long studentId)
-            throws SisNotExistException {
+            throws SisNotExistException, SisAlreadyException {
 
         return successResponse(studentService.graduateStudent(studentId));
     }
