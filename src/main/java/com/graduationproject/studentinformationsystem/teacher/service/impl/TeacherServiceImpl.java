@@ -1,5 +1,6 @@
 package com.graduationproject.studentinformationsystem.teacher.service.impl;
 
+import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.teacher.model.dto.converter.TeacherInfoResponseConverter;
 import com.graduationproject.studentinformationsystem.teacher.model.dto.converter.TeacherResponseConverter;
 import com.graduationproject.studentinformationsystem.teacher.model.dto.request.TeacherAcademicInfoRequest;
@@ -10,6 +11,7 @@ import com.graduationproject.studentinformationsystem.teacher.model.dto.response
 import com.graduationproject.studentinformationsystem.teacher.model.dto.response.TeacherPersonalInfoResponse;
 import com.graduationproject.studentinformationsystem.teacher.model.dto.response.TeacherResponse;
 import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherStatus;
+import com.graduationproject.studentinformationsystem.teacher.model.exception.TeacherException;
 import com.graduationproject.studentinformationsystem.teacher.service.TeacherAcademicInfoService;
 import com.graduationproject.studentinformationsystem.teacher.service.TeacherPersonalInfoService;
 import com.graduationproject.studentinformationsystem.teacher.service.TeacherService;
@@ -34,12 +36,15 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public TeacherInfoDetailResponse getTeacherDetailById(Long teacherId) {
+    public TeacherInfoDetailResponse getTeacherDetailById(Long teacherId) throws SisNotExistException {
+        ifTeacherIsNotExistThrowNotExistException(teacherId);
         return getTeacherInfoResponse(teacherId);
     }
 
     @Override
     public TeacherInfoDetailResponse saveTeacher(TeacherInfoRequest studentInfoRequest) {
+        checkBeforeSaving(studentInfoRequest);
+
         Long teacherId = generateTeacherId(studentInfoRequest.getAcademicInfoRequest().getDepartmentId());
         String studentEmail = generateTeacherEmail(studentInfoRequest);
 
@@ -49,35 +54,45 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public TeacherAcademicInfoResponse updateTeacherAcademicInfo(Long teacherId, TeacherAcademicInfoRequest academicInfoRequest) {
+    public TeacherAcademicInfoResponse updateTeacherAcademicInfo(Long teacherId, TeacherAcademicInfoRequest academicInfoRequest)
+            throws SisNotExistException {
+
+        checkBeforeUpdatingAcademicInfo(teacherId, academicInfoRequest);
         return academicInfoService.updateTeacherAcademicInfo(teacherId, academicInfoRequest);
     }
 
     @Override
-    public TeacherPersonalInfoResponse updateTeacherPersonalInfo(Long teacherId, TeacherPersonalInfoRequest personalInfoRequest) {
+    public TeacherPersonalInfoResponse updateTeacherPersonalInfo(Long teacherId, TeacherPersonalInfoRequest personalInfoRequest)
+            throws SisNotExistException {
+
+        checkBeforeUpdatingPersonalInfo(teacherId);
         return personalInfoService.updateTeacherPersonalInfo(teacherId, personalInfoRequest);
     }
 
     @Override
-    public TeacherResponse deleteTeacher(Long teacherId) {
+    public TeacherResponse deleteTeacher(Long teacherId) throws SisNotExistException {
+        checkBeforeDeleting(teacherId);
         academicInfoService.deleteTeacherAcademicInfo(teacherId);
         personalInfoService.deleteTeacherPersonalInfo(teacherId);
         return getTeacherResponse(teacherId);
     }
 
     @Override
-    public TeacherResponse passivateTeacher(Long teacherId) {
+    public TeacherResponse passivateTeacher(Long teacherId) throws SisNotExistException {
+        checkBeforePassivating(teacherId);
         academicInfoService.passivateTeacherAcademicInfo(teacherId);
         personalInfoService.passivateTeacherPersonalInfo(teacherId);
         return getTeacherResponse(teacherId);
     }
 
     @Override
-    public TeacherResponse activateTeacher(Long teacherId) {
+    public TeacherResponse activateTeacher(Long teacherId) throws SisNotExistException {
+        checkBeforeActivating(teacherId);
         academicInfoService.activateTeacherAcademicInfo(teacherId);
         personalInfoService.activateTeacherPersonalInfo(teacherId);
         return getTeacherResponse(teacherId);
     }
+
 
     private Long generateTeacherId(Long departmentId) {
         List<Long> teacherIds = academicInfoService.getAllTeacherIdsByDepartmentId(departmentId);
@@ -100,5 +115,55 @@ public class TeacherServiceImpl implements TeacherService {
         TeacherAcademicInfoResponse academicInfoResponse = academicInfoService.getTeacherAcademicInfoById(teacherId);
         TeacherPersonalInfoResponse personalInfoResponse = personalInfoService.getTeacherPersonalInfoById(teacherId);
         return TeacherResponseConverter.infoResponsesToResponse(academicInfoResponse, personalInfoResponse);
+    }
+
+
+    /**
+     * Checks Before Processing
+     */
+
+    private void checkBeforeSaving(TeacherInfoRequest studentInfoRequest) {
+        ifDepartmentIdIsNotExistThrowNotExistException(studentInfoRequest.getAcademicInfoRequest().getDepartmentId());
+    }
+
+    private void checkBeforeUpdatingAcademicInfo(Long teacherId, TeacherAcademicInfoRequest academicInfoRequest)
+            throws SisNotExistException {
+
+        ifTeacherIsNotExistThrowNotExistException(teacherId);
+        ifDepartmentIdIsNotExistThrowNotExistException(academicInfoRequest.getDepartmentId());
+    }
+
+    private void checkBeforeUpdatingPersonalInfo(Long teacherId) throws SisNotExistException {
+        ifTeacherIsNotExistThrowNotExistException(teacherId);
+    }
+
+    private void checkBeforeDeleting(Long teacherId) throws SisNotExistException {
+        ifTeacherIsNotExistThrowNotExistException(teacherId);
+    }
+
+    private void checkBeforePassivating(Long teacherId) throws SisNotExistException {
+        ifTeacherIsNotExistThrowNotExistException(teacherId);
+    }
+
+    private void checkBeforeActivating(Long teacherId) throws SisNotExistException {
+        ifTeacherIsNotExistThrowNotExistException(teacherId);
+    }
+
+
+    /**
+     * Throw Exceptions
+     */
+
+    private void ifTeacherIsNotExistThrowNotExistException(Long teacherId) throws SisNotExistException {
+        if (!academicInfoService.isTeacherExist(teacherId)) {
+            TeacherException.throwNotExistException(teacherId);
+        }
+    }
+
+    private void ifDepartmentIdIsNotExistThrowNotExistException(Long departmentId) {
+        // TODO: ifDepartmentIdIsNotExistThrowNotExistException
+//        if (!departmentService.isDepartmentExist(teacherId)) {
+//            SisException.throwNotExistException();
+//        }
     }
 }
