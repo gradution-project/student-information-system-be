@@ -16,5 +16,5 @@
 Request URL : http://localhost:8585/
 ------------------
 
-Swagger UI URL : http://localhost:8585/public/swagger-ui/index.html
+Swagger UI URL : http://localhost:8585/swagger-ui/index.html
 ------------------
