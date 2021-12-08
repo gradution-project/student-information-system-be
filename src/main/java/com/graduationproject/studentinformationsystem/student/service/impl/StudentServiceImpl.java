@@ -1,5 +1,6 @@
 package com.graduationproject.studentinformationsystem.student.service.impl;
 
+import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.student.model.dto.converter.StudentInfoResponseConverter;
 import com.graduationproject.studentinformationsystem.student.model.dto.converter.StudentResponseConverter;
@@ -70,7 +71,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentResponse deleteStudent(Long studentId) throws SisNotExistException {
+    public StudentResponse deleteStudent(Long studentId) throws SisNotExistException, SisAlreadyException {
         checkBeforeDeleting(studentId);
         academicInfoService.deleteStudentAcademicInfo(studentId);
         personalInfoService.deleteStudentPersonalInfo(studentId);
@@ -78,7 +79,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentResponse passivateStudent(Long studentId) throws SisNotExistException {
+    public StudentResponse passivateStudent(Long studentId) throws SisNotExistException, SisAlreadyException {
         checkBeforePassivating(studentId);
         academicInfoService.passivateStudentAcademicInfo(studentId);
         personalInfoService.passivateStudentPersonalInfo(studentId);
@@ -86,7 +87,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentResponse activateStudent(Long studentId) throws SisNotExistException {
+    public StudentResponse activateStudent(Long studentId) throws SisNotExistException, SisAlreadyException {
         checkBeforeActivating(studentId);
         academicInfoService.activateStudentAcademicInfo(studentId);
         personalInfoService.activateStudentPersonalInfo(studentId);
@@ -94,7 +95,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentResponse graduateStudent(Long studentId) throws SisNotExistException {
+    public StudentResponse graduateStudent(Long studentId) throws SisNotExistException, SisAlreadyException {
         checkBeforeGraduating(studentId);
         academicInfoService.graduateStudentAcademicInfo(studentId);
         personalInfoService.graduateStudentPersonalInfo(studentId);
@@ -131,6 +132,7 @@ public class StudentServiceImpl implements StudentService {
      */
 
     private void checkBeforeSaving(StudentInfoRequest studentInfoRequest) {
+        ifDepartmentIdIsNotExistThrowNotExistException(studentInfoRequest.getAcademicInfoRequest().getDepartmentId());
     }
 
     private void checkBeforeUpdatingAcademicInfo(Long studentId, StudentAcademicInfoRequest academicInfoRequest)
@@ -144,20 +146,31 @@ public class StudentServiceImpl implements StudentService {
         ifStudentIsNotExistThrowNotExistException(studentId);
     }
 
-    private void checkBeforeDeleting(Long studentId) throws SisNotExistException {
+    private void checkBeforeDeleting(Long studentId) throws SisNotExistException, SisAlreadyException {
         ifStudentIsNotExistThrowNotExistException(studentId);
+        ifStudentIsAlreadyDeletedThrowAlreadyException(studentId);
+        ifStudentIsAlreadyGraduatedThrowAlreadyException(studentId);
     }
 
-    private void checkBeforePassivating(Long studentId) throws SisNotExistException {
+    private void checkBeforePassivating(Long studentId) throws SisNotExistException, SisAlreadyException {
         ifStudentIsNotExistThrowNotExistException(studentId);
+        ifStudentIsAlreadyPassiveThrowAlreadyException(studentId);
+        ifStudentIsAlreadyGraduatedThrowAlreadyException(studentId);
+        ifStudentIsAlreadyDeletedThrowAlreadyException(studentId);
     }
 
-    private void checkBeforeActivating(Long studentId) throws SisNotExistException {
+    private void checkBeforeActivating(Long studentId) throws SisNotExistException, SisAlreadyException {
         ifStudentIsNotExistThrowNotExistException(studentId);
+        ifStudentIsAlreadyActiveThrowAlreadyException(studentId);
+        ifStudentIsAlreadyGraduatedThrowAlreadyException(studentId);
+        ifStudentIsAlreadyDeletedThrowAlreadyException(studentId);
     }
 
-    private void checkBeforeGraduating(Long studentId) throws SisNotExistException {
+    private void checkBeforeGraduating(Long studentId) throws SisNotExistException, SisAlreadyException {
         ifStudentIsNotExistThrowNotExistException(studentId);
+        ifStudentIsAlreadyGraduatedThrowAlreadyException(studentId);
+        ifStudentIsAlreadyPassiveThrowAlreadyException(studentId);
+        ifStudentIsAlreadyDeletedThrowAlreadyException(studentId);
     }
 
 
@@ -176,5 +189,29 @@ public class StudentServiceImpl implements StudentService {
 //        if (!departmentService.isDepartmentExist(studentId)) {
 //            SisException.throwNotExistException();
 //        }
+    }
+
+    private void ifStudentIsAlreadyDeletedThrowAlreadyException(Long studentId) throws SisAlreadyException {
+        if (academicInfoService.isStudentDeleted(studentId)) {
+            StudentException.throwAlreadyDeletedException(studentId);
+        }
+    }
+
+    private void ifStudentIsAlreadyPassiveThrowAlreadyException(Long studentId) throws SisAlreadyException {
+        if (academicInfoService.isStudentPassive(studentId)) {
+            StudentException.throwAlreadyPassiveException(studentId);
+        }
+    }
+
+    private void ifStudentIsAlreadyActiveThrowAlreadyException(Long studentId) throws SisAlreadyException {
+        if (academicInfoService.isStudentActive(studentId)) {
+            StudentException.throwAlreadyActiveException(studentId);
+        }
+    }
+
+    private void ifStudentIsAlreadyGraduatedThrowAlreadyException(Long studentId) throws SisAlreadyException {
+        if (academicInfoService.isStudentGraduated(studentId)) {
+            StudentException.throwAlreadyGraduatedException(studentId);
+        }
     }
 }

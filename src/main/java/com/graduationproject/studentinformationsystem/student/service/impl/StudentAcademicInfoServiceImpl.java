@@ -76,6 +76,26 @@ public class StudentAcademicInfoServiceImpl implements StudentAcademicInfoServic
         return academicInfoRepository.isStudentExist(studentId);
     }
 
+    @Override
+    public boolean isStudentDeleted(Long studentId) {
+        return academicInfoRepository.isStudentDeleted(studentId);
+    }
+
+    @Override
+    public boolean isStudentPassive(Long studentId) {
+        return academicInfoRepository.isStudentPassive(studentId);
+    }
+
+    @Override
+    public boolean isStudentActive(Long studentId) {
+        return academicInfoRepository.isStudentActive(studentId);
+    }
+
+    @Override
+    public boolean isStudentGraduated(Long studentId) {
+        return academicInfoRepository.isStudentGraduated(studentId);
+    }
+
     private StudentAcademicInfoResponse getStudentAcademicInfoResponse(Long studentId) {
         return StudentAcademicInfoConverter.entityToResponse(academicInfoRepository.getStudentAcademicInfoById(studentId));
     }
