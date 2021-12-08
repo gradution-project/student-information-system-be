@@ -1,6 +1,7 @@
 package com.graduationproject.studentinformationsystem.teacher.repository.impl.scripts;
 
 import com.graduationproject.studentinformationsystem.common.util.sql.SisSqlUtil;
+import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherStatus;
 
 import static com.graduationproject.studentinformationsystem.teacher.model.mapping.TeacherAcademicInfoMapping.TEACHER_ID;
 
@@ -89,4 +90,35 @@ public class TeacherAcademicInfoSqlScripts {
     public static final String IS_TEACHER_EXIST_BY_ID = SisSqlUtil.isExistByColumnName("TEACHER_ACADEMIC_INFO",
             TEACHER_ID.getColumnName(),
             TEACHER_ID.getModelName());
+
+
+    /**
+     * SELECT CASE WHEN MAX(TEACHER_ID) IS NULL THEN 'false' ELSE 'true' END IS_EXIST
+     * FROM TEACHER_ACADEMIC_INFO WHERE TEACHER_ID=:teacherId && STATUS='DELETED';
+     */
+    public static final String IS_TEACHER_DELETED_BY_ID = SisSqlUtil
+            .isExistByColumnNameAndStatus("TEACHER_ACADEMIC_INFO",
+                    TEACHER_ID.getColumnName(),
+                    TEACHER_ID.getModelName(),
+                    TeacherStatus.DELETED.toString());
+
+    /**
+     * SELECT CASE WHEN MAX(TEACHER_ID) IS NULL THEN 'false' ELSE 'true' END IS_EXIST
+     * FROM TEACHER_ACADEMIC_INFO WHERE TEACHER_ID=:teacherId && STATUS='PASSIVE';
+     */
+    public static final String IS_TEACHER_PASSIVE_BY_ID = SisSqlUtil
+            .isExistByColumnNameAndStatus("TEACHER_ACADEMIC_INFO",
+                    TEACHER_ID.getColumnName(),
+                    TEACHER_ID.getModelName(),
+                    TeacherStatus.PASSIVE.toString());
+
+    /**
+     * SELECT CASE WHEN MAX(TEACHER_ID) IS NULL THEN 'false' ELSE 'true' END IS_EXIST
+     * FROM TEACHER_ACADEMIC_INFO WHERE TEACHER_ID=:teacherId && STATUS='ACTIVE';
+     */
+    public static final String IS_TEACHER_ACTIVE_BY_ID = SisSqlUtil
+            .isExistByColumnNameAndStatus("TEACHER_ACADEMIC_INFO",
+                    TEACHER_ID.getColumnName(),
+                    TEACHER_ID.getModelName(),
+                    TeacherStatus.ACTIVE.toString());
 }
