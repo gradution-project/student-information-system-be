@@ -15,22 +15,19 @@ public class StudentException extends SisException {
         throwNotExistException("STUDENT IS NOT EXIST! studentId:" + studentId);
     }
 
-    public static void throwAlreadyActivatedException(Long studentId) {
-        throwAlreadyActivatedException("STUDENT IS ALREADY ACTIVATED! studentId:" + studentId);
+    public static void throwAlreadyActiveException(Long studentId) throws SisAlreadyException {
+        throwAlreadyException("STUDENT IS ALREADY ACTIVE! studentId:" + studentId);
     }
 
-    public static void throwAlreadyPassivatedException(Long studentId) {
-        throwAlreadyPassivatedException("STUDENT IS ALREADY PASSIVATED! studentId:" + studentId);
+    public static void throwAlreadyPassiveException(Long studentId) throws SisAlreadyException {
+        throwAlreadyException("STUDENT IS ALREADY PASSIVE! studentId:" + studentId);
     }
 
-    public static void throwAlreadyDeletedException(Long studentId) {
-        throwAlreadyDeletedException("STUDENT IS ALREADY DELETED! studentId:" + studentId);
+    public static void throwAlreadyDeletedException(Long studentId) throws SisAlreadyException {
+        throwAlreadyException("STUDENT IS ALREADY DELETED! studentId:" + studentId);
     }
 
-    public static void throwAlreadyGraduatedException(Long studentId) {
-        try {
-            throw new SisAlreadyException("STUDENT IS ALREADY GRADUATED! studentId:" + studentId);
-        } catch (SisAlreadyException ignored) {
-        }
+    public static void throwAlreadyGraduatedException(Long studentId) throws SisAlreadyException {
+        throwAlreadyException("STUDENT IS ALREADY GRADUATED! studentId:" + studentId);
     }
 }
