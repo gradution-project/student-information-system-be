@@ -13,12 +13,12 @@ public class TeacherException extends SisException {
         throwNotExistException("TEACHER IS NOT EXIST! teacherId:" + teacherId);
     }
 
-    public static void throwAlreadyActivatedException(Long teacherId) throws SisAlreadyException {
-        throwAlreadyException("TEACHER IS ALREADY ACTIVATED! teacherId:" + teacherId);
+    public static void throwAlreadyActiveException(Long teacherId) throws SisAlreadyException {
+        throwAlreadyException("TEACHER IS ALREADY ACTIVE! teacherId:" + teacherId);
     }
 
-    public static void throwAlreadyPassivatedException(Long teacherId) throws SisAlreadyException {
-        throwAlreadyException("TEACHER IS ALREADY PASSIVATED! teacherId:" + teacherId);
+    public static void throwAlreadyPassiveException(Long teacherId) throws SisAlreadyException {
+        throwAlreadyException("TEACHER IS ALREADY PASSIVE! teacherId:" + teacherId);
     }
 
     public static void throwAlreadyDeletedException(Long teacherId) throws SisAlreadyException {
