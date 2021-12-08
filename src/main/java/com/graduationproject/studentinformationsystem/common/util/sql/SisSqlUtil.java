@@ -1,6 +1,7 @@
 package com.graduationproject.studentinformationsystem.common.util.sql;
 
 import com.graduationproject.studentinformationsystem.common.model.enums.SisStatus;
+import com.graduationproject.studentinformationsystem.common.util.exception.SisDatabaseException;
 import org.sql2o.Connection;
 import org.sql2o.Query;
 import org.sql2o.Sql2o;
@@ -40,9 +41,8 @@ public class SisSqlUtil {
 
         try (Connection con = sql2o.open(); Query query = con.createQuery(script)) {
             return query.executeAndFetchFirst(Long.class);
-        } catch (Exception e) {
-            // TODO: Throw Specific Method Exception
-            return null;
+        } catch (Exception exception) {
+            throw new SisDatabaseException(exception);
         }
     }
 
