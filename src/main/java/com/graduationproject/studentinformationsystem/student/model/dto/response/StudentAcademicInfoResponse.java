@@ -1,6 +1,6 @@
 package com.graduationproject.studentinformationsystem.student.model.dto.response;
 
-import com.graduationproject.studentinformationsystem.common.model.dto.response.BaseResponse;
+import com.graduationproject.studentinformationsystem.common.util.controller.response.SisBaseAcademicInfoResponse;
 import com.graduationproject.studentinformationsystem.student.model.enums.StudentClassLevel;
 import com.graduationproject.studentinformationsystem.student.model.enums.StudentDegree;
 import com.graduationproject.studentinformationsystem.student.model.enums.StudentStatus;
@@ -11,13 +11,12 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class StudentAcademicInfoResponse extends BaseResponse {
+public class StudentAcademicInfoResponse extends SisBaseAcademicInfoResponse {
 
     private Long studentId;
     private Long departmentId;
     private StudentDegree degree;
     private StudentClassLevel classLevel;
-    private String email;
     private StudentStatus status;
     private Date registrationDate;
 }

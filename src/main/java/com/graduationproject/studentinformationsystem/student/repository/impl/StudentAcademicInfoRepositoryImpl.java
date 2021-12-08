@@ -1,5 +1,6 @@
 package com.graduationproject.studentinformationsystem.student.repository.impl;
 
+import com.graduationproject.studentinformationsystem.common.util.exception.SisDatabaseException;
 import com.graduationproject.studentinformationsystem.common.util.log.SisErrorLogMessageUtil;
 import com.graduationproject.studentinformationsystem.common.util.log.SisInfoLogMessageUtil;
 import com.graduationproject.studentinformationsystem.common.util.log.SisWarnLogMessageUtil;
@@ -40,10 +41,9 @@ public class StudentAcademicInfoRepositoryImpl implements StudentAcademicInfoRep
 
             info.foundAllByStatus(status.toString());
             return entities;
-        } catch (Exception e) {
+        } catch (Exception exception) {
             error.errorWhenGettingAllByStatus(status.toString());
-            // TODO: Throw Specific Method Exception
-            return null;
+            throw new SisDatabaseException(exception);
         }
     }
 
@@ -61,10 +61,9 @@ public class StudentAcademicInfoRepositoryImpl implements StudentAcademicInfoRep
                 warn.notFoundById(studentId);
             }
             return entity;
-        } catch (Exception e) {
+        } catch (Exception exception) {
             error.errorWhenGettingById(studentId);
-            // TODO: Throw Specific Method Exception
-            return null;
+            throw new SisDatabaseException(exception);
         }
     }
 
@@ -84,9 +83,9 @@ public class StudentAcademicInfoRepositoryImpl implements StudentAcademicInfoRep
                     .executeUpdate();
 
             info.savedById(entity.getStudentId());
-        } catch (Exception e) {
+        } catch (Exception exception) {
             error.errorWhenSaving();
-            // TODO: Throw Specific Method Exception
+            throw new SisDatabaseException(exception);
         }
     }
 
@@ -103,9 +102,9 @@ public class StudentAcademicInfoRepositoryImpl implements StudentAcademicInfoRep
                     .executeUpdate();
 
             info.updated();
-        } catch (Exception e) {
+        } catch (Exception exception) {
             error.errorWhenUpdating();
-            // TODO: Throw Specific Method Exception
+            throw new SisDatabaseException(exception);
         }
     }
 
@@ -120,9 +119,9 @@ public class StudentAcademicInfoRepositoryImpl implements StudentAcademicInfoRep
                     .executeUpdate();
 
             info.statusUpdated(entity.getStatus().toString());
-        } catch (Exception e) {
+        } catch (Exception exception) {
             error.errorWhenUpdatingStatus();
-            // TODO: Throw Specific Method Exception
+            throw new SisDatabaseException(exception);
         }
     }
 
@@ -136,10 +135,9 @@ public class StudentAcademicInfoRepositoryImpl implements StudentAcademicInfoRep
 
             info.foundAllIdsByDepartmentId(departmentId);
             return studentIdList;
-        } catch (Exception e) {
+        } catch (Exception exception) {
             error.errorWhenGettingAllIdsByDepartmentId(departmentId);
-            // TODO: Throw Specific Method Exception
-            return null;
+            throw new SisDatabaseException(exception);
         }
     }
 
@@ -150,12 +148,16 @@ public class StudentAcademicInfoRepositoryImpl implements StudentAcademicInfoRep
             boolean isStudentExist = query.addParameter(STUDENT_ID.getModelName(), studentId)
                     .executeAndFetchFirst(Boolean.class);
 
-            info.foundById(studentId);
-            return isStudentExist;
-        } catch (Exception e) {
+            if (isStudentExist) {
+                info.foundById(studentId);
+                return true;
+            } else {
+                warn.notFoundById(studentId);
+                return false;
+            }
+        } catch (Exception exception) {
             error.errorWhenGettingById(studentId);
-            // TODO: Throw Specific Method Exception
-            return false;
+            throw new SisDatabaseException(exception);
         }
     }
 }

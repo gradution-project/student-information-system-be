@@ -14,6 +14,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 public class SisSwaggerConfiguration {
 
     public static final String STUDENT_API_TAG = "Student Controller";
+    public static final String TEACHER_API_TAG = "Teacher Controller";
 
     @Bean
     public Docket api() {
@@ -23,7 +24,8 @@ public class SisSwaggerConfiguration {
                 .paths(PathSelectors.regex("/.*"))
                 .build().apiInfo(apiEndPointsInfo())
                 .tags(
-                        new Tag(STUDENT_API_TAG, "STUDENT_ACADEMIC_INFO & STUDENT_PERSONAL_INFO")
+                        new Tag(STUDENT_API_TAG, "STUDENT_ACADEMIC_INFO & STUDENT_PERSONAL_INFO"),
+                        new Tag(TEACHER_API_TAG, "TEACHER_ACADEMIC_INFO & TEACHER_PERSONAL_INFO")
                 );
     }
 

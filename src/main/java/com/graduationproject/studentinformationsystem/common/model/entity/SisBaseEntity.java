@@ -9,11 +9,10 @@ import java.util.Date;
 @Getter
 @Setter
 @SuperBuilder
-public class BaseEntityWithId {
+public abstract class SisBaseEntity {
 
-    private Long id;
-    private Date createdDate;
-    private Long createdUserId;
-    private Date modifiedDate;
-    private Long modifiedUserId;
+    protected Date createdDate;
+    protected Long createdUserId;
+    protected Date modifiedDate;
+    protected Long modifiedUserId;
 }
