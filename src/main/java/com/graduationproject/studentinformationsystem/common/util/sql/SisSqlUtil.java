@@ -17,7 +17,8 @@ public class SisSqlUtil {
     private static final StringBuilder sqlBuilder = new StringBuilder();
 
     /**
-     * SELECT CASE WHEN MAX(columnName) IS NULL THEN 'false' ELSE 'true' END IS_EXIST FROM tableName WHERE columnName=:modelName;
+     * SELECT CASE WHEN MAX(columnName) IS NULL THEN 'false' ELSE 'true' END IS_EXIST FROM tableName
+     * WHERE columnName=:modelName;
      */
     public static String isExistByColumnName(String tableName, String columnName, String modelName) {
         return sqlBuilder.delete(0, sqlBuilder.length())
@@ -25,10 +26,22 @@ public class SisSqlUtil {
                 .append(columnName)
                 .append(") IS NULL THEN 'false' ELSE 'true' END IS_EXIST FROM ")
                 .append(tableName)
-                .append(" WHERE ")
+                .append(" WHERE ").append(columnName).append("=:").append(modelName).toString();
+    }
+
+
+    /**
+     * SELECT CASE WHEN MAX(columnName) IS NULL THEN 'false' ELSE 'true' END IS_EXIST FROM tableName
+     * WHERE columnName=:modelName && STATUS='status';
+     */
+    public static String isExistByColumnNameAndStatus(String tableName, String columnName, String modelName, String status) {
+        return sqlBuilder.delete(0, sqlBuilder.length())
+                .append("SELECT CASE WHEN MAX(")
                 .append(columnName)
-                .append("=:")
-                .append(modelName).toString();
+                .append(") IS NULL THEN 'false' ELSE 'true' END IS_EXIST FROM ")
+                .append(tableName)
+                .append(" WHERE ").append(columnName).append("=:").append(modelName)
+                .append(" && STATUS='").append(status).append("'").toString();
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.graduationproject.studentinformationsystem.student.repository.impl.scripts;
 
 import com.graduationproject.studentinformationsystem.common.util.sql.SisSqlUtil;
+import com.graduationproject.studentinformationsystem.student.model.enums.StudentStatus;
 
 import static com.graduationproject.studentinformationsystem.student.model.mapping.StudentAcademicInfoMapping.STUDENT_ID;
 
@@ -84,7 +85,49 @@ public class StudentAcademicInfoSqlScripts {
      * SELECT CASE WHEN MAX(STUDENT_ID) IS NULL THEN 'false' ELSE 'true' END IS_EXIST
      * FROM STUDENT_ACADEMIC_INFO WHERE STUDENT_ID=:studentId;
      */
-    public static final String IS_STUDENT_EXIST_BY_ID = SisSqlUtil.isExistByColumnName("STUDENT_ACADEMIC_INFO",
-            STUDENT_ID.getColumnName(),
-            STUDENT_ID.getModelName());
+    public static final String IS_STUDENT_EXIST_BY_ID = SisSqlUtil
+            .isExistByColumnName("STUDENT_ACADEMIC_INFO",
+                    STUDENT_ID.getColumnName(),
+                    STUDENT_ID.getModelName());
+
+
+    /**
+     * SELECT CASE WHEN MAX(STUDENT_ID) IS NULL THEN 'false' ELSE 'true' END IS_EXIST
+     * FROM STUDENT_ACADEMIC_INFO WHERE STUDENT_ID=:studentId && STATUS='DELETED';
+     */
+    public static final String IS_STUDENT_DELETED_BY_ID = SisSqlUtil
+            .isExistByColumnNameAndStatus("STUDENT_ACADEMIC_INFO",
+                    STUDENT_ID.getColumnName(),
+                    STUDENT_ID.getModelName(),
+                    StudentStatus.DELETED.toString());
+
+    /**
+     * SELECT CASE WHEN MAX(STUDENT_ID) IS NULL THEN 'false' ELSE 'true' END IS_EXIST
+     * FROM STUDENT_ACADEMIC_INFO WHERE STUDENT_ID=:studentId && STATUS='PASSIVE';
+     */
+    public static final String IS_STUDENT_PASSIVE_BY_ID = SisSqlUtil
+            .isExistByColumnNameAndStatus("STUDENT_ACADEMIC_INFO",
+                    STUDENT_ID.getColumnName(),
+                    STUDENT_ID.getModelName(),
+                    StudentStatus.PASSIVE.toString());
+
+    /**
+     * SELECT CASE WHEN MAX(STUDENT_ID) IS NULL THEN 'false' ELSE 'true' END IS_EXIST
+     * FROM STUDENT_ACADEMIC_INFO WHERE STUDENT_ID=:studentId && STATUS='ACTIVE';
+     */
+    public static final String IS_STUDENT_ACTIVE_BY_ID = SisSqlUtil
+            .isExistByColumnNameAndStatus("STUDENT_ACADEMIC_INFO",
+                    STUDENT_ID.getColumnName(),
+                    STUDENT_ID.getModelName(),
+                    StudentStatus.ACTIVE.toString());
+
+    /**
+     * SELECT CASE WHEN MAX(STUDENT_ID) IS NULL THEN 'false' ELSE 'true' END IS_EXIST
+     * FROM STUDENT_ACADEMIC_INFO WHERE STUDENT_ID=:studentId && STATUS='GRADUATED';
+     */
+    public static final String IS_STUDENT_GRADUATED_BY_ID = SisSqlUtil
+            .isExistByColumnNameAndStatus("STUDENT_ACADEMIC_INFO",
+                    STUDENT_ID.getColumnName(),
+                    STUDENT_ID.getModelName(),
+                    StudentStatus.GRADUATED.toString());
 }

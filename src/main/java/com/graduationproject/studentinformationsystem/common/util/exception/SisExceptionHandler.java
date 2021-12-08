@@ -44,4 +44,10 @@ public class SisExceptionHandler extends ResponseEntityExceptionHandler {
         HttpStatus status = HttpStatus.NOT_FOUND;
         return new ResponseEntity<>(generateError(exception.getMessage(), status), status);
     }
+
+    @ExceptionHandler(SisAlreadyException.class)
+    protected ResponseEntity<Object> handleAlready(SisAlreadyException exception) {
+        HttpStatus status = HttpStatus.CONFLICT;
+        return new ResponseEntity<>(generateError(exception.getMessage(), status), status);
+    }
 }
