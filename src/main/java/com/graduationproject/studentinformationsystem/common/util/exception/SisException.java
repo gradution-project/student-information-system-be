@@ -12,24 +12,7 @@ public abstract class SisException {
         throw new SisNotExistException(message);
     }
 
-    protected static void throwAlreadyActivatedException(String message) {
-        try {
-            throw new SisAlreadyException(message);
-        } catch (SisAlreadyException ignored) {
-        }
-    }
-
-    protected static void throwAlreadyPassivatedException(String message) {
-        try {
-            throw new SisAlreadyException(message);
-        } catch (SisAlreadyException ignored) {
-        }
-    }
-
-    protected static void throwAlreadyDeletedException(String message) {
-        try {
-            throw new SisAlreadyException(message);
-        } catch (SisAlreadyException ignored) {
-        }
+    protected static void throwAlreadyException(String message) throws SisAlreadyException {
+        throw new SisAlreadyException(message);
     }
 }
