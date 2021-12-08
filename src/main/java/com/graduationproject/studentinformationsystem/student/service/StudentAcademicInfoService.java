@@ -12,12 +12,9 @@ public interface StudentAcademicInfoService {
 
     StudentAcademicInfoResponse getStudentAcademicInfoById(Long studentId);
 
-    void saveStudentAcademicInfo(Long studentId,
-                                 String studentEmail,
-                                 StudentAcademicInfoRequest academicInfoRequest);
+    void saveStudentAcademicInfo(Long studentId, String studentEmail, StudentAcademicInfoRequest academicInfoRequest);
 
-    StudentAcademicInfoResponse updateStudentAcademicInfo(Long studentId,
-                                                          StudentAcademicInfoRequest academicInfoRequest);
+    StudentAcademicInfoResponse updateStudentAcademicInfo(Long studentId, StudentAcademicInfoRequest academicInfoRequest);
 
     void deleteStudentAcademicInfo(Long studentId);
 
@@ -30,4 +27,12 @@ public interface StudentAcademicInfoService {
     List<Long> getAllStudentIdsByDepartmentId(Long departmentId);
 
     boolean isStudentExist(Long studentId);
+
+    boolean isStudentDeleted(Long studentId);
+
+    boolean isStudentPassive(Long studentId);
+
+    boolean isStudentActive(Long studentId);
+
+    boolean isStudentGraduated(Long studentId);
 }

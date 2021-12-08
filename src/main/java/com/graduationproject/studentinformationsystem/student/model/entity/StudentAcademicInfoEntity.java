@@ -1,6 +1,6 @@
 package com.graduationproject.studentinformationsystem.student.model.entity;
 
-import com.graduationproject.studentinformationsystem.common.model.entity.BaseEntity;
+import com.graduationproject.studentinformationsystem.common.model.entity.SisBaseEntity;
 import com.graduationproject.studentinformationsystem.student.model.enums.StudentClassLevel;
 import com.graduationproject.studentinformationsystem.student.model.enums.StudentDegree;
 import com.graduationproject.studentinformationsystem.student.model.enums.StudentStatus;
@@ -13,7 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 @SuperBuilder
-public class StudentAcademicInfoEntity extends BaseEntity {
+public class StudentAcademicInfoEntity extends SisBaseEntity {
 
     private Long studentId;
     private Long departmentId;

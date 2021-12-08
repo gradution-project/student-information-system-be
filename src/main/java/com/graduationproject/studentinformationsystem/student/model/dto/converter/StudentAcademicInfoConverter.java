@@ -15,6 +15,16 @@ public class StudentAcademicInfoConverter {
     private StudentAcademicInfoConverter() {
     }
 
+    public static StudentAcademicInfoResponse entityToResponse(StudentAcademicInfoEntity entity) {
+        return new ModelMapper().map(entity, StudentAcademicInfoResponse.class);
+    }
+
+    public static List<StudentAcademicInfoResponse> entityListToResponseList(List<StudentAcademicInfoEntity> entityList) {
+        List<StudentAcademicInfoResponse> dtoList = new ArrayList<>();
+        entityList.forEach(entity -> dtoList.add(entityToResponse(entity)));
+        return dtoList;
+    }
+
     public static StudentAcademicInfoEntity generateSaveEntity(Long studentId, String studentEmail, StudentAcademicInfoRequest request) {
         return StudentAcademicInfoEntity.builder()
                 .studentId(studentId)
@@ -74,15 +84,5 @@ public class StudentAcademicInfoConverter {
                 .modifiedUserId(1L)
                 .modifiedDate(new Date())
                 .build();
-    }
-
-    public static StudentAcademicInfoResponse entityToResponse(StudentAcademicInfoEntity entity) {
-        return new ModelMapper().map(entity, StudentAcademicInfoResponse.class);
-    }
-
-    public static List<StudentAcademicInfoResponse> entityListToResponseList(List<StudentAcademicInfoEntity> entityList) {
-        List<StudentAcademicInfoResponse> dtoList = new ArrayList<>();
-        entityList.forEach(entity -> dtoList.add(entityToResponse(entity)));
-        return dtoList;
     }
 }

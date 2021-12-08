@@ -1,5 +1,7 @@
 package com.graduationproject.studentinformationsystem.student.service;
 
+import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
+import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.student.model.dto.request.StudentAcademicInfoRequest;
 import com.graduationproject.studentinformationsystem.student.model.dto.request.StudentInfoRequest;
 import com.graduationproject.studentinformationsystem.student.model.dto.request.StudentPersonalInfoRequest;
@@ -15,21 +17,19 @@ public interface StudentService {
 
     List<StudentResponse> getAllStudentsByStatus(StudentStatus status);
 
-    StudentInfoDetailResponse getStudentDetailById(Long studentId);
+    StudentInfoDetailResponse getStudentDetailById(Long studentId) throws SisNotExistException;
 
     StudentInfoDetailResponse saveStudent(StudentInfoRequest studentInfoRequest);
 
-    StudentAcademicInfoResponse updateStudentAcademicInfo(Long studentId,
-                                                          StudentAcademicInfoRequest academicInfoRequest);
+    StudentAcademicInfoResponse updateStudentAcademicInfo(Long studentId, StudentAcademicInfoRequest academicInfoRequest) throws SisNotExistException;
 
-    StudentPersonalInfoResponse updateStudentPersonalInfo(Long studentId,
-                                                          StudentPersonalInfoRequest personalInfoRequest);
+    StudentPersonalInfoResponse updateStudentPersonalInfo(Long studentId, StudentPersonalInfoRequest personalInfoRequest) throws SisNotExistException;
 
-    StudentResponse deleteStudent(Long studentId);
+    StudentResponse deleteStudent(Long studentId) throws SisNotExistException, SisAlreadyException;
 
-    StudentResponse passivateStudent(Long studentId);
+    StudentResponse passivateStudent(Long studentId) throws SisNotExistException, SisAlreadyException;
 
-    StudentResponse activateStudent(Long studentId);
+    StudentResponse activateStudent(Long studentId) throws SisNotExistException, SisAlreadyException;
 
-    StudentResponse graduateStudent(Long studentId);
+    StudentResponse graduateStudent(Long studentId) throws SisNotExistException, SisAlreadyException;
 }

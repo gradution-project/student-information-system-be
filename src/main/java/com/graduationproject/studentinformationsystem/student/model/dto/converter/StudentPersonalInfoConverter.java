@@ -15,6 +15,16 @@ public class StudentPersonalInfoConverter {
     private StudentPersonalInfoConverter() {
     }
 
+    public static StudentPersonalInfoResponse entityToResponse(StudentPersonalInfoEntity entity) {
+        return new ModelMapper().map(entity, StudentPersonalInfoResponse.class);
+    }
+
+    public static List<StudentPersonalInfoResponse> entityListToResponseList(List<StudentPersonalInfoEntity> entityList) {
+        List<StudentPersonalInfoResponse> dtoList = new ArrayList<>();
+        entityList.forEach(entity -> dtoList.add(entityToResponse(entity)));
+        return dtoList;
+    }
+
     public static StudentPersonalInfoEntity generateSaveEntity(Long studentId, StudentPersonalInfoRequest request) {
         return StudentPersonalInfoEntity.builder()
                 .studentId(studentId)
@@ -84,15 +94,5 @@ public class StudentPersonalInfoConverter {
                 .modifiedUserId(1L)
                 .modifiedDate(new Date())
                 .build();
-    }
-
-    public static StudentPersonalInfoResponse entityToResponse(StudentPersonalInfoEntity entity) {
-        return new ModelMapper().map(entity, StudentPersonalInfoResponse.class);
-    }
-
-    public static List<StudentPersonalInfoResponse> entityListToResponseList(List<StudentPersonalInfoEntity> entityList) {
-        List<StudentPersonalInfoResponse> dtoList = new ArrayList<>();
-        entityList.forEach(entity -> dtoList.add(entityToResponse(entity)));
-        return dtoList;
     }
 }
