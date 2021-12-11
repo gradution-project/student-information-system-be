@@ -16,6 +16,10 @@ public class SisInfoLogMessageUtil {
         log.info("{} Found by ID! id:{}", apiName, id);
     }
 
+    public void foundByName(String name) {
+        log.info("{} Found by Name! name:{}", apiName, name);
+    }
+
     public void foundByIdAndStatus(Long id, String status) {
         log.info("{} Found by ID and Status! id:{} status:{}", apiName, id, status);
     }

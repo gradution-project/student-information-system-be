@@ -117,6 +117,12 @@
 			<version>1.7</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.6.2</version>
+		</dependency>
+
 		<!--Those Dependencies are for Hikari slf4j Error!-->
 		<dependency>
 			<groupId>org.slf4j</groupId>
