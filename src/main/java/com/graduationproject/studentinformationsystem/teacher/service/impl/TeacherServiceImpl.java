@@ -17,6 +17,7 @@ import com.graduationproject.studentinformationsystem.teacher.service.TeacherAca
 import com.graduationproject.studentinformationsystem.teacher.service.TeacherPersonalInfoService;
 import com.graduationproject.studentinformationsystem.teacher.service.TeacherService;
 import com.graduationproject.studentinformationsystem.teacher.util.TeacherUtil;
+import com.graduationproject.studentinformationsystem.university.mail.service.TeacherMailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     private final TeacherAcademicInfoService academicInfoService;
     private final TeacherPersonalInfoService personalInfoService;
+    private final TeacherMailService teacherMailService;
 
     @Override
     public List<TeacherResponse> getAllTeachersByStatus(TeacherStatus status) {
@@ -51,7 +53,10 @@ public class TeacherServiceImpl implements TeacherService {
 
         academicInfoService.saveTeacherAcademicInfo(teacherId, studentEmail, studentInfoRequest.getAcademicInfoRequest());
         personalInfoService.saveTeacherPersonalInfo(teacherId, studentInfoRequest.getPersonalInfoRequest());
-        return getTeacherInfoResponse(teacherId);
+
+        TeacherInfoDetailResponse teacherInfoDetailResponse = getTeacherInfoResponse(teacherId);
+        teacherMailService.sendFirstPasswordEmail(teacherInfoDetailResponse);
+        return teacherInfoDetailResponse;
     }
 
     @Override

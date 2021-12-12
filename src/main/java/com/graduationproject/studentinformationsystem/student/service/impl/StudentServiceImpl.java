@@ -17,6 +17,7 @@ import com.graduationproject.studentinformationsystem.student.service.StudentAca
 import com.graduationproject.studentinformationsystem.student.service.StudentPersonalInfoService;
 import com.graduationproject.studentinformationsystem.student.service.StudentService;
 import com.graduationproject.studentinformationsystem.student.util.StudentUtil;
+import com.graduationproject.studentinformationsystem.university.mail.service.StudentMailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,7 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentAcademicInfoService academicInfoService;
     private final StudentPersonalInfoService personalInfoService;
+    private final StudentMailService studentMailService;
 
     @Override
     public List<StudentResponse> getAllStudentsByStatus(StudentStatus status) {
@@ -51,7 +53,10 @@ public class StudentServiceImpl implements StudentService {
 
         academicInfoService.saveStudentAcademicInfo(studentId, studentEmail, studentInfoRequest.getAcademicInfoRequest());
         personalInfoService.saveStudentPersonalInfo(studentId, studentInfoRequest.getPersonalInfoRequest());
-        return getStudentInfoResponse(studentId);
+
+        StudentInfoDetailResponse studentInfoDetailResponse = getStudentInfoResponse(studentId);
+        studentMailService.sendFirstPasswordEmail(studentInfoDetailResponse);
+        return studentInfoDetailResponse;
     }
 
     @Override
