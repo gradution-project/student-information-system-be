@@ -1,10 +1,10 @@
 package com.graduationproject.studentinformationsystem.university.mail.service.impl;
 
-import com.graduationproject.studentinformationsystem.teacher.model.dto.response.TeacherInfoDetailResponse;
 import com.graduationproject.studentinformationsystem.university.mail.model.entity.MailEntity;
 import com.graduationproject.studentinformationsystem.university.mail.service.MailService;
 import com.graduationproject.studentinformationsystem.university.mail.service.TeacherMailService;
 import com.graduationproject.studentinformationsystem.university.parameter.repository.ParameterRepository;
+import com.graduationproject.studentinformationsystem.university.teacher.model.dto.response.TeacherInfoDetailResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

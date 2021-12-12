@@ -1,25 +1,34 @@
 package com.graduationproject.studentinformationsystem.university.mail.service.impl;
 
-import com.graduationproject.studentinformationsystem.student.model.dto.response.StudentInfoDetailResponse;
+import com.graduationproject.studentinformationsystem.login.common.service.PasswordService;
+import com.graduationproject.studentinformationsystem.login.student.repository.StudentLoginRepository;
 import com.graduationproject.studentinformationsystem.university.mail.model.entity.MailEntity;
 import com.graduationproject.studentinformationsystem.university.mail.service.MailService;
 import com.graduationproject.studentinformationsystem.university.mail.service.StudentMailService;
 import com.graduationproject.studentinformationsystem.university.parameter.repository.ParameterRepository;
+import com.graduationproject.studentinformationsystem.university.student.model.dto.response.StudentInfoDetailResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class StudentMailServiceImpl implements StudentMailService {
 
-    private final ParameterRepository parameterRepository;
     private final MailService mailService;
+
+    private final StudentLoginRepository loginRepository;
+    private final PasswordService passwordService;
+
+    private final ParameterRepository parameterRepository;
 
     private MailEntity mailEntity;
 
@@ -48,7 +57,7 @@ public class StudentMailServiceImpl implements StudentMailService {
         Map<String, String> values = new HashMap<>();
         values.put(STUDENT_NAME, getStudentName(studentInfoDetailResponse));
         values.put(STUDENT_NUMBER, getStudentNumber(studentInfoDetailResponse));
-        values.put(PASSWORD, String.valueOf(UUID.randomUUID()));
+        values.put(PASSWORD, getFirstPassword(studentInfoDetailResponse));
         values.put(DATE, getFormattedDate());
 
         mailEntity.setTitle("Öğrenci Hesabınız Başarıyla Oluşturuldu!");
@@ -65,7 +74,7 @@ public class StudentMailServiceImpl implements StudentMailService {
         Map<String, String> values = new HashMap<>();
         values.put(STUDENT_NAME, getStudentName(studentInfoDetailResponse));
         values.put(STUDENT_NUMBER, getStudentNumber(studentInfoDetailResponse));
-        values.put(PASSWORD, String.valueOf(UUID.randomUUID()));
+        values.put(PASSWORD, getChangedPassword(studentInfoDetailResponse));
         values.put(DATE, getFormattedDate());
 
         mailEntity.setTitle("Şifreniz Başarıyla Değiştirildi!");
@@ -76,6 +85,7 @@ public class StudentMailServiceImpl implements StudentMailService {
         mailService.sendMail(mailEntity);
         log.info("Forgot Password Email Successfully Sent to " + mailEntity.getTo());
     }
+
 
     private Properties getProperties() {
         Properties properties = new Properties();
@@ -104,5 +114,20 @@ public class StudentMailServiceImpl implements StudentMailService {
 
     private String getStudentPersonalEmail(StudentInfoDetailResponse studentInfoDetailResponse) {
         return studentInfoDetailResponse.getPersonalInfoResponse().getEmail();
+    }
+
+
+    protected String getFirstPassword(StudentInfoDetailResponse studentInfoDetailResponse) {
+        final Long studentId = studentInfoDetailResponse.getAcademicInfoResponse().getStudentId();
+        final String password = passwordService.generatePassword();
+        loginRepository.saveFirstPassword(studentId, password);
+        return password;
+    }
+
+    protected String getChangedPassword(StudentInfoDetailResponse studentInfoDetailResponse) {
+        final Long studentId = studentInfoDetailResponse.getAcademicInfoResponse().getStudentId();
+        final String password = passwordService.generatePassword();
+        loginRepository.updatePassword(studentId, password);
+        return password;
     }
 }
