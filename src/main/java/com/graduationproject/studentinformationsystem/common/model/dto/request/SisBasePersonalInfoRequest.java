@@ -2,7 +2,6 @@ package com.graduationproject.studentinformationsystem.common.model.dto.request;
 
 import com.graduationproject.studentinformationsystem.common.util.validation.*;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
@@ -10,7 +9,6 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Getter
-@Setter
 public abstract class SisBasePersonalInfoRequest {
 
     @TCNO

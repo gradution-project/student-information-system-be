@@ -9,6 +9,7 @@ public class SisControllerEndpoint {
         private Path() {
         }
 
+        public static final String LOGIN = "/login";
         public static final String STUDENT = "/student";
         public static final String TEACHER = "/teacher";
     }

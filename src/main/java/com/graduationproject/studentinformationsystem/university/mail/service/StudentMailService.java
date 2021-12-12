@@ -1,10 +1,10 @@
 package com.graduationproject.studentinformationsystem.university.mail.service;
 
-import com.graduationproject.studentinformationsystem.student.model.dto.response.StudentInfoDetailResponse;
+import com.graduationproject.studentinformationsystem.university.student.model.dto.response.StudentInfoDetailResponse;
 
 public interface StudentMailService {
 
-    void sendFirstPasswordEmail(StudentInfoDetailResponse studentInfoDetailResponse);
+    void sendFirstPasswordEmail(StudentInfoDetailResponse infoDetailResponse);
 
-    void sendForgotPasswordEmail(StudentInfoDetailResponse studentInfoDetailResponse);
+    void sendForgotPasswordEmail(StudentInfoDetailResponse infoDetailResponse);
 }
