@@ -29,7 +29,7 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentAcademicInfoService academicInfoService;
     private final StudentPersonalInfoService personalInfoService;
-    private final StudentMailService studentMailService;
+    private final StudentMailService mailService;
 
     @Override
     public List<StudentResponse> getAllStudentsByStatus(StudentStatus status) {
@@ -55,7 +55,7 @@ public class StudentServiceImpl implements StudentService {
         personalInfoService.saveStudentPersonalInfo(studentId, studentInfoRequest.getPersonalInfoRequest());
 
         StudentInfoDetailResponse studentInfoDetailResponse = getStudentInfoResponse(studentId);
-        studentMailService.sendFirstPasswordEmail(studentInfoDetailResponse);
+        mailService.sendFirstPasswordEmail(studentInfoDetailResponse);
         return studentInfoDetailResponse;
     }
 

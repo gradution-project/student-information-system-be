@@ -1,4 +1,4 @@
-package com.graduationproject.studentinformationsystem.common.util.validation;
+package com.graduationproject.studentinformationsystem.common.util.validation.id;
 
 import org.apache.commons.lang3.math.NumberUtils;
 

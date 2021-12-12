@@ -1,4 +1,4 @@
-package com.graduationproject.studentinformationsystem.common.util.validation;
+package com.graduationproject.studentinformationsystem.common.util.validation.id;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

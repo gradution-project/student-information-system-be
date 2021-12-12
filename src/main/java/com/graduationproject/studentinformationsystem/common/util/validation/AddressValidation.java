@@ -1,10 +1,7 @@
 package com.graduationproject.studentinformationsystem.common.util.validation;
 
-import org.apache.commons.lang3.math.NumberUtils;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.Objects;
 
 public class AddressValidation implements ConstraintValidator<Address, Object> {
 
@@ -16,6 +13,7 @@ public class AddressValidation implements ConstraintValidator<Address, Object> {
         context.disableDefaultConstraintViolation();
         context.buildConstraintViolationWithTemplate("length must be between " + minLength + " and " + maxLength).addConstraintViolation();
 
-        return NumberUtils.isCreatable(value.toString()) && Objects.equals(maxLength, value.toString().length());
+        int addressLength = value.toString().length();
+        return addressLength >= minLength && addressLength <= maxLength;
     }
 }

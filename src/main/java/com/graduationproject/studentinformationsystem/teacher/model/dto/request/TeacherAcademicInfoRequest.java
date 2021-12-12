@@ -1,6 +1,6 @@
 package com.graduationproject.studentinformationsystem.teacher.model.dto.request;
 
-import com.graduationproject.studentinformationsystem.common.util.validation.DepartmentID;
+import com.graduationproject.studentinformationsystem.common.util.validation.id.DepartmentID;
 import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherDegree;
 import com.graduationproject.studentinformationsystem.teacher.model.enums.TeacherRole;
 import lombok.Getter;
