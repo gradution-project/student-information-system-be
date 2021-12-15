@@ -165,7 +165,7 @@
 				<artifactId>heroku-maven-plugin</artifactId>
 				<version>3.0.4</version>
 				<configuration>
-					<appName>sis-be-master</appName>
+					<appName>sis-be</appName>
 					<jdkVersion>17.0.1</jdkVersion>
 					<processTypes>
 						<web>java -Dserver.port=$PORT $JAVA_OPTS -jar target/*.war</web>
