@@ -4,7 +4,7 @@ LOCAL
 ------------------
 Request URL : http://localhost:8585/
 
-Swagger UI URL : http://localhost:8585/
+Swagger UI URL : http://localhost:8585/swagger-ui/
 
 
 REMOTE
