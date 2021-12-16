@@ -10,7 +10,7 @@ public class OfficerIDValidation implements ConstraintValidator<OfficerID, Objec
 
     public boolean isValid(Object value, ConstraintValidatorContext context) {
         if (value == null) return true;
-        int length = 8;
+        int length = 5;
 
         context.disableDefaultConstraintViolation();
         context.buildConstraintViolationWithTemplate("length must be " + length).addConstraintViolation();
