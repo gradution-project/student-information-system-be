@@ -29,6 +29,22 @@ public class SisSqlUtil {
                 .append(" WHERE ").append(columnName).append("=:").append(modelName).toString();
     }
 
+    /**
+     * SELECT CASE WHEN MAX(columnName) IS NULL THEN 'false' ELSE 'true' END IS_EXIST FROM tableName
+     * WHERE columnName=:modelName && STATUS='status';
+     */
+    public static String isExistByColumnTwoColumns(String tableName,
+                                                   String columnName1, String modelName1,
+                                                   String columnName2, String modelName2) {
+
+        return sqlBuilder.delete(0, sqlBuilder.length())
+                .append("SELECT CASE WHEN MAX(")
+                .append(columnName1)
+                .append(") IS NULL THEN 'false' ELSE 'true' END IS_EXIST FROM ")
+                .append(tableName)
+                .append(" WHERE ").append(columnName1).append("=:").append(modelName1)
+                .append(" AND ").append(columnName2).append("=:").append(modelName2).toString();
+    }
 
     /**
      * SELECT CASE WHEN MAX(columnName) IS NULL THEN 'false' ELSE 'true' END IS_EXIST FROM tableName

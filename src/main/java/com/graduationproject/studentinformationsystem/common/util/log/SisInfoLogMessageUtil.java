@@ -24,6 +24,10 @@ public class SisInfoLogMessageUtil {
         log.info("{} Found by ID and Status! id:{} status:{}", apiName, id, status);
     }
 
+    public void foundAll() {
+        log.info("{}s Found!", apiName);
+    }
+
     public void foundAllByStatus(String status) {
         log.info("{}s Found by Status! status:{}", apiName, status);
     }
@@ -43,5 +47,9 @@ public class SisInfoLogMessageUtil {
 
     public void statusUpdated(String status) {
         log.info("{} Status Updated to {}!", apiName, status);
+    }
+
+    public void deleted() {
+        log.info("{} Deleted!", apiName);
     }
 }

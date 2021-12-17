@@ -24,6 +24,10 @@ public class SisErrorLogMessageUtil {
         log.error("Error When Getting {} by Name! name:{}", apiName, name);
     }
 
+    public void errorWhenGettingAll() {
+        log.error("Error When Getting {}s!", apiName);
+    }
+
     public void errorWhenGettingAllByStatus(String status) {
         log.error("Error When Getting {}s by Status! status:{}", apiName, status);
     }
@@ -43,5 +47,9 @@ public class SisErrorLogMessageUtil {
 
     public void errorWhenUpdatingStatus() {
         log.error("Error When Updating {} Status!", apiName);
+    }
+
+    public void errorWhenDeleting() {
+        log.error("Error When Deleting {}!", apiName);
     }
 }
