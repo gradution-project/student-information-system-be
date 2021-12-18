@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum TeacherDegree {
     RESEARCH_ASSOCIATE("Araştırma Görevlisi"),
-    TEACHING_ASSOCIATE("Öğretim üyesi"),
+    TEACHING_ASSOCIATE("Öğretim Üyesi"),
     ASSISTANT_PROFESSOR("Doçent"),
     PROFESSOR("Profesör");
 
