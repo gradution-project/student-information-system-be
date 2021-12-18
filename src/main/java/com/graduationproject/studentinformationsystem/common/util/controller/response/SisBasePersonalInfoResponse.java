@@ -2,21 +2,19 @@ package com.graduationproject.studentinformationsystem.common.util.controller.re
 
 import com.graduationproject.studentinformationsystem.common.model.dto.response.SisBaseResponse;
 import lombok.Getter;
-import lombok.Setter;
-
-import java.util.Date;
+import lombok.experimental.SuperBuilder;
 
 @Getter
-@Setter
-public abstract class SisBasePersonalInfoResponse extends SisBaseResponse {
+@SuperBuilder
+public class SisBasePersonalInfoResponse extends SisBaseResponse {
 
-    protected Long tcNo;
-    protected String name;
-    protected String surname;
-    protected String email;
-    protected Long phoneNumber;
-    //    protected Byte[] profilePhoto; // TODO: Added Profile Photo
-//    protected String profilePhotoUrl; // TODO: Added Profile Photo URL
-    protected Date birthday;
-    protected String address;
+    private Long tcNo;
+    private String name;
+    private String surname;
+    private String email;
+    private String phoneNumber;
+    //    private Byte[] profilePhoto; // TODO: Added Profile Photo
+//    private String profilePhotoUrl; // TODO: Added Profile Photo URL
+    private String birthday;
+    private String address;
 }

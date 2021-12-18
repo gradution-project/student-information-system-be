@@ -109,8 +109,8 @@ public class StudentServiceImpl implements StudentService {
 
 
     private Long generateStudentId(Long departmentId) {
-        List<Long> studentIdList = academicInfoService.getAllStudentIdsByDepartmentId(departmentId);
-        return StudentUtil.generateStudentId(departmentId, studentIdList);
+        List<Long> studentIds = academicInfoService.getAllStudentIdsByDepartmentId(departmentId);
+        return StudentUtil.generateStudentId(departmentId, studentIds);
     }
 
     private String generateStudentEmail(StudentInfoRequest studentInfoRequest) {

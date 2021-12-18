@@ -1,10 +1,10 @@
 package com.graduationproject.studentinformationsystem.university.teacher.model.dto.converter;
 
+import com.graduationproject.studentinformationsystem.common.util.SisUtil;
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.request.TeacherPersonalInfoRequest;
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.response.TeacherPersonalInfoResponse;
 import com.graduationproject.studentinformationsystem.university.teacher.model.entity.TeacherPersonalInfoEntity;
 import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherStatus;
-import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,7 +16,14 @@ public class TeacherPersonalInfoConverter {
     }
 
     public static TeacherPersonalInfoResponse entityToResponse(TeacherPersonalInfoEntity entity) {
-        return new ModelMapper().map(entity, TeacherPersonalInfoResponse.class);
+        return TeacherPersonalInfoResponse.builder()
+                .tcNo(entity.getTcNo())
+                .name(entity.getName())
+                .surname(entity.getSurname())
+                .email(entity.getEmail())
+                .phoneNumber(SisUtil.getFormattedPhoneNumber(entity.getPhoneNumber()))
+                .birthday(SisUtil.getFormattedDate(entity.getBirthday()))
+                .address(entity.getAddress()).build();
     }
 
     public static List<TeacherPersonalInfoResponse> entityListToResponseList(List<TeacherPersonalInfoEntity> entities) {

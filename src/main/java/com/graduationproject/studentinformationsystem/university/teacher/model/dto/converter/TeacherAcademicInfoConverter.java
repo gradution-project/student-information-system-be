@@ -1,10 +1,10 @@
 package com.graduationproject.studentinformationsystem.university.teacher.model.dto.converter;
 
+import com.graduationproject.studentinformationsystem.common.util.SisUtil;
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.request.TeacherAcademicInfoRequest;
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.response.TeacherAcademicInfoResponse;
 import com.graduationproject.studentinformationsystem.university.teacher.model.entity.TeacherAcademicInfoEntity;
 import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherStatus;
-import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,7 +16,16 @@ public class TeacherAcademicInfoConverter {
     }
 
     public static TeacherAcademicInfoResponse entityToResponse(TeacherAcademicInfoEntity entity) {
-        return new ModelMapper().map(entity, TeacherAcademicInfoResponse.class);
+        return TeacherAcademicInfoResponse.builder()
+                .teacherId(entity.getTeacherId())
+                .departmentId(entity.getDepartmentId())
+                .degree(entity.getDegree().getName())
+                .role(entity.getRole().getName())
+                .fieldOfStudy(entity.getFieldOfStudy())
+                .phoneNumber(SisUtil.getFormattedPhoneNumber(entity.getPhoneNumber()))
+                .email(entity.getEmail())
+                .status(entity.getStatus().getName())
+                .registrationDate(SisUtil.getFormattedDate(entity.getRegistrationDate())).build();
     }
 
     public static List<TeacherAcademicInfoResponse> entityListToResponseList(List<TeacherAcademicInfoEntity> entityList) {

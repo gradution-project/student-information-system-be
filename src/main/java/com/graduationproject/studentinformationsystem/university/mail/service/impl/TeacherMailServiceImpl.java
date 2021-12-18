@@ -1,5 +1,6 @@
 package com.graduationproject.studentinformationsystem.university.mail.service.impl;
 
+import com.graduationproject.studentinformationsystem.common.util.SisUtil;
 import com.graduationproject.studentinformationsystem.login.common.service.PasswordService;
 import com.graduationproject.studentinformationsystem.login.student.repository.StudentLoginRepository;
 import com.graduationproject.studentinformationsystem.university.mail.model.entity.MailEntity;
@@ -12,8 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -58,7 +57,7 @@ public class TeacherMailServiceImpl implements TeacherMailService {
         values.put(TEACHER_NAME, getTeacherName(infoDetailResponse));
         values.put(TEACHER_NUMBER, getTeacherNumber(infoDetailResponse));
         values.put(PASSWORD, getFirstPassword(infoDetailResponse));
-        values.put(DATE, getFormattedDate());
+        values.put(DATE, SisUtil.getCurrentFormattedDateTime());
 
         mailEntity.setTitle("Öğretmen Hesabınız Başarıyla Oluşturuldu!");
         mailEntity.setTemplate(parameterRepository.getTeacherParameterByName("MAIL_TEMPLATE_FIRST_PASSWORD"));
@@ -75,7 +74,7 @@ public class TeacherMailServiceImpl implements TeacherMailService {
         values.put(TEACHER_NAME, getTeacherName(infoDetailResponse));
         values.put(TEACHER_NUMBER, getTeacherNumber(infoDetailResponse));
         values.put(PASSWORD, getChangedPassword(infoDetailResponse));
-        values.put(DATE, getFormattedDate());
+        values.put(DATE, SisUtil.getCurrentFormattedDateTime());
 
         mailEntity.setTitle("Şifreniz Başarıyla Değiştirildi!");
         mailEntity.setTemplate(parameterRepository.getTeacherParameterByName("MAIL_TEMPLATE_FORGOT_PASSWORD"));
@@ -96,11 +95,6 @@ public class TeacherMailServiceImpl implements TeacherMailService {
         properties.put("mail.smtp.auth", parameterRepository.getTeacherParameterByName("MAIL_SMTP_AUTH"));
         properties.put("mail.smtp.starttls.enable", parameterRepository.getTeacherParameterByName("MAIL_SMTP_START_TLS_ENABLE"));
         return properties;
-    }
-
-    private String getFormattedDate() {
-        final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-        return dateFormat.format(new Date());
     }
 
     private String getTeacherName(TeacherInfoDetailResponse infoDetailResponse) {

@@ -1,24 +1,19 @@
 package com.graduationproject.studentinformationsystem.university.teacher.model.dto.response;
 
 import com.graduationproject.studentinformationsystem.common.util.controller.response.SisBaseAcademicInfoResponse;
-import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherDegree;
-import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherRole;
-import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherStatus;
 import lombok.Getter;
-import lombok.Setter;
-
-import java.util.Date;
+import lombok.experimental.SuperBuilder;
 
 @Getter
-@Setter
+@SuperBuilder
 public class TeacherAcademicInfoResponse extends SisBaseAcademicInfoResponse {
 
     private Long teacherId;
     private Long departmentId;
-    private TeacherDegree degree;
-    private TeacherRole role;
+    private String degree;
+    private String role;
     private String fieldOfStudy;
     private String phoneNumber;
-    private TeacherStatus status;
-    private Date registrationDate;
+    private String status;
+    private String registrationDate;
 }

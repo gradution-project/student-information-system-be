@@ -1,10 +1,30 @@
 package com.graduationproject.studentinformationsystem.common.util;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class SisUtil {
 
     private SisUtil() {
+    }
+
+    public static String getFormattedPhoneNumber(Long phoneNumber) {
+        String strPhoneNumber = String.valueOf(phoneNumber);
+        String first = strPhoneNumber.substring(0, 3);
+        String second = strPhoneNumber.substring(3, 6);
+        String third = strPhoneNumber.substring(6, 8);
+        String fourth = strPhoneNumber.substring(8, 10);
+        return "+90 (" + first + ") " + second + " " + third + " " + fourth;
+    }
+
+    public static String getFormattedDate(Date date) {
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        return dateFormat.format(date);
+    }
+
+    public static String getCurrentFormattedDateTime() {
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+        return dateFormat.format(new Date());
     }
 
     public static String getCurrentYear() {
