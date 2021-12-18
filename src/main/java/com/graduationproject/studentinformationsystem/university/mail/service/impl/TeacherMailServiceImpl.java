@@ -2,7 +2,7 @@ package com.graduationproject.studentinformationsystem.university.mail.service.i
 
 import com.graduationproject.studentinformationsystem.common.util.SisUtil;
 import com.graduationproject.studentinformationsystem.login.common.service.PasswordService;
-import com.graduationproject.studentinformationsystem.login.student.repository.StudentLoginRepository;
+import com.graduationproject.studentinformationsystem.login.teacher.repository.TeacherLoginRepository;
 import com.graduationproject.studentinformationsystem.university.mail.model.entity.MailEntity;
 import com.graduationproject.studentinformationsystem.university.mail.service.MailService;
 import com.graduationproject.studentinformationsystem.university.mail.service.TeacherMailService;
@@ -24,7 +24,7 @@ public class TeacherMailServiceImpl implements TeacherMailService {
 
     private final MailService mailService;
 
-    private final StudentLoginRepository loginRepository;
+    private final TeacherLoginRepository loginRepository;
     private final PasswordService passwordService;
 
     private final ParameterRepository parameterRepository;
