@@ -1,7 +1,7 @@
 package com.graduationproject.studentinformationsystem.university.lesson.teacher.model.entity;
 
 import com.graduationproject.studentinformationsystem.common.model.enums.SisStatus;
-import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.enums.LessonCompulsoryOrElective;
+import com.graduationproject.studentinformationsystem.university.lesson.common.model.enums.LessonCompulsoryOrElective;
 import lombok.Builder;
 import lombok.Getter;
 

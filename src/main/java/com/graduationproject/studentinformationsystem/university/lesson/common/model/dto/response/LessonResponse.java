@@ -2,7 +2,7 @@ package com.graduationproject.studentinformationsystem.university.lesson.common.
 
 import com.graduationproject.studentinformationsystem.common.model.dto.response.SisBaseResponse;
 import com.graduationproject.studentinformationsystem.common.model.enums.SisStatus;
-import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.enums.LessonCompulsoryOrElective;
+import com.graduationproject.studentinformationsystem.university.lesson.common.model.enums.LessonCompulsoryOrElective;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
