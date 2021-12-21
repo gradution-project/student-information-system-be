@@ -1,7 +1,5 @@
 package com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.response;
 
-import com.graduationproject.studentinformationsystem.common.model.enums.SisStatus;
-import com.graduationproject.studentinformationsystem.university.lesson.common.model.enums.LessonCompulsoryOrElective;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -15,6 +13,6 @@ public class TeacherLessonResponse {
     private String name;
     private Integer semester;
     private Integer credit;
-    private LessonCompulsoryOrElective compulsoryOrElective;
-    private SisStatus status;
+    private String compulsoryOrElective;
+    private String status;
 }

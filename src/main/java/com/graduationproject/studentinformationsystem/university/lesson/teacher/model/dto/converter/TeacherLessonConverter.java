@@ -37,8 +37,8 @@ public class TeacherLessonConverter {
                 .name(entity.getName())
                 .semester(entity.getSemester())
                 .credit(entity.getCredit())
-                .compulsoryOrElective(entity.getCompulsoryOrElective())
-                .status(entity.getStatus()).build();
+                .compulsoryOrElective(entity.getCompulsoryOrElective().getName())
+                .status(entity.getStatus().getName()).build();
     }
 
     public static List<TeacherLessonResponse> entitiesToResponses(List<TeacherLessonEntity> entities) {
