@@ -4,13 +4,11 @@ import com.graduationproject.studentinformationsystem.common.util.validation.id.
 import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherDegree;
 import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherRole;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Getter
-@Setter
 public class TeacherAcademicInfoRequest {
 
     @NotNull

@@ -4,12 +4,10 @@ import com.graduationproject.studentinformationsystem.common.util.validation.id.
 import com.graduationproject.studentinformationsystem.university.student.model.enums.StudentClassLevel;
 import com.graduationproject.studentinformationsystem.university.student.model.enums.StudentDegree;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 
 @Getter
-@Setter
 public class StudentAcademicInfoRequest {
 
     @NotNull

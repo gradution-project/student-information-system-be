@@ -2,13 +2,11 @@ package com.graduationproject.studentinformationsystem.common.config;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
 @Slf4j
 @Getter
-@Setter
 @Builder
 public class SisHikariConfigProfileDto {
     private String username;

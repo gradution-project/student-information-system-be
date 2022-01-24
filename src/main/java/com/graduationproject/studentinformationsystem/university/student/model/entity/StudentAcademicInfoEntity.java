@@ -5,13 +5,11 @@ import com.graduationproject.studentinformationsystem.university.student.model.e
 import com.graduationproject.studentinformationsystem.university.student.model.enums.StudentDegree;
 import com.graduationproject.studentinformationsystem.university.student.model.enums.StudentStatus;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 
 @Getter
-@Setter
 @SuperBuilder
 public class StudentAcademicInfoEntity extends SisBaseEntity {
 

@@ -5,13 +5,11 @@ import com.graduationproject.studentinformationsystem.university.teacher.model.e
 import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherRole;
 import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherStatus;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 
 @Getter
-@Setter
 @SuperBuilder
 public class TeacherAcademicInfoEntity extends SisBaseEntity {
 
