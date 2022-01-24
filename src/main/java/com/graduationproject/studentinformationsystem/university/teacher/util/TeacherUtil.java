@@ -24,7 +24,7 @@ public class TeacherUtil {
     public static Long generateTeacherId(Long departmentId, List<Long> teacherIds) {
         while (true) {
             Long teacherId = SisUtil.generateRandomIdWithPrefixId(departmentId);
-            if (!SisUtil.isExistIdInIdList(teacherId, teacherIds)) {
+            if (SisUtil.isNotExistIdInIdList(teacherId, teacherIds)) {
                 return teacherId;
             }
         }

@@ -55,12 +55,12 @@ public class SisUtil {
         return Long.parseLong(prefixId + stringNumber);
     }
 
-    public static boolean isExistIdInIdList(Long id, List<Long> ids) {
+    public static boolean isNotExistIdInIdList(Long id, List<Long> ids) {
         for (Long idInList : ids) {
             if (id.equals(idInList)) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 }

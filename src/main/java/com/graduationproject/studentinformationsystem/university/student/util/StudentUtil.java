@@ -27,7 +27,7 @@ public class StudentUtil {
 
         while (true) {
             Long studentId = SisUtil.generateRandomIdWithPrefixId(prefixStudentId);
-            if (!SisUtil.isExistIdInIdList(studentId, studentIds)) {
+            if (SisUtil.isNotExistIdInIdList(studentId, studentIds)) {
                 return studentId;
             }
         }
