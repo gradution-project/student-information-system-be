@@ -24,7 +24,10 @@ public class StudentAcademicInfoConverter {
                 .status(entity.getStatus().getName())
                 .registrationDate(SisUtil.getFormattedDate(entity.getRegistrationDate()))
                 .email(entity.getEmail())
-                .build();
+                .createdDate(SisUtil.getFormattedDate(entity.getCreatedDate()))
+                .createdUserId(entity.getCreatedUserId())
+                .modifiedDate(SisUtil.getFormattedDate(entity.getModifiedDate()))
+                .modifiedUserId(entity.getModifiedUserId()).build();
     }
 
     public static List<StudentAcademicInfoResponse> entityListToResponseList(List<StudentAcademicInfoEntity> entityList) {

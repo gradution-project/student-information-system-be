@@ -25,7 +25,11 @@ public class TeacherAcademicInfoConverter {
                 .phoneNumber(SisUtil.getFormattedPhoneNumber(entity.getPhoneNumber()))
                 .email(entity.getEmail())
                 .status(entity.getStatus().getName())
-                .registrationDate(SisUtil.getFormattedDate(entity.getRegistrationDate())).build();
+                .registrationDate(SisUtil.getFormattedDate(entity.getRegistrationDate()))
+                .createdDate(SisUtil.getFormattedDate(entity.getCreatedDate()))
+                .createdUserId(entity.getCreatedUserId())
+                .modifiedDate(SisUtil.getFormattedDate(entity.getModifiedDate()))
+                .modifiedUserId(entity.getModifiedUserId()).build();
     }
 
     public static List<TeacherAcademicInfoResponse> entityListToResponseList(List<TeacherAcademicInfoEntity> entityList) {

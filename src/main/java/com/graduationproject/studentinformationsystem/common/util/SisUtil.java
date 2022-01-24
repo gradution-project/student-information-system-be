@@ -1,7 +1,12 @@
 package com.graduationproject.studentinformationsystem.common.util;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Random;
 
 public class SisUtil {
 
@@ -23,15 +28,12 @@ public class SisUtil {
     }
 
     public static String getCurrentFormattedDateTime() {
-        final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-        return dateFormat.format(new Date());
+        final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+        return dateTimeFormatter.format(LocalDateTime.now());
     }
 
     public static String getCurrentYear() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        Integer year = calendar.get(Calendar.YEAR);
-        return String.valueOf(year);
+        return String.valueOf(LocalDateTime.now().getYear());
     }
 
     public static String stringToStringLowerCaseWithDot(String string) {
