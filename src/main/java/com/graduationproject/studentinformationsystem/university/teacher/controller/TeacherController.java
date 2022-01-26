@@ -5,8 +5,8 @@ import com.graduationproject.studentinformationsystem.common.util.exception.SisA
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.university.teacher.controller.endpoint.TeacherControllerEndpoint;
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.request.TeacherAcademicInfoRequest;
-import com.graduationproject.studentinformationsystem.university.teacher.model.dto.request.TeacherInfoRequest;
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.request.TeacherPersonalInfoRequest;
+import com.graduationproject.studentinformationsystem.university.teacher.model.dto.request.TeacherSaveInfoRequest;
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.response.TeacherAcademicInfoResponse;
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.response.TeacherInfoDetailResponse;
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.response.TeacherPersonalInfoResponse;
@@ -54,7 +54,7 @@ public class TeacherController {
     @PostMapping(TeacherControllerEndpoint.SAVE)
     @ApiOperation(value = "Save Teacher")
     public ResponseEntity<SisBaseApiResponse<TeacherInfoDetailResponse>> saveTeacher(
-            @Valid @RequestBody TeacherInfoRequest teacherInfoRequest) {
+            @Valid @RequestBody TeacherSaveInfoRequest teacherInfoRequest) {
 
         TeacherInfoDetailResponse teacherInfoDetailResponse = teacherService.saveTeacher(teacherInfoRequest);
         return successResponse(teacherInfoDetailResponse);
