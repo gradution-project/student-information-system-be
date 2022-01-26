@@ -1,6 +1,7 @@
 package com.graduationproject.studentinformationsystem.university.student.service;
 
-import com.graduationproject.studentinformationsystem.university.student.model.dto.request.StudentPersonalInfoRequest;
+import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
+import com.graduationproject.studentinformationsystem.university.student.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.student.model.dto.response.StudentPersonalInfoResponse;
 import com.graduationproject.studentinformationsystem.university.student.model.enums.StudentStatus;
 
@@ -12,15 +13,18 @@ public interface StudentPersonalInfoService {
 
     StudentPersonalInfoResponse getStudentPersonalInfoById(Long studentId);
 
-    void saveStudentPersonalInfo(Long studentId, StudentPersonalInfoRequest personalInfoRequest);
+    void saveStudentPersonalInfo(Long studentId,
+                                 StudentPersonalInfoRequest personalInfoRequest,
+                                 SisOperationInfoRequest operationInfoRequest);
 
-    StudentPersonalInfoResponse updateStudentPersonalInfo(Long studentId, StudentPersonalInfoRequest personalInfoRequest);
+    StudentPersonalInfoResponse updateStudentPersonalInfo(Long studentId,
+                                                          StudentUpdatePersonalInfoRequest updatePersonalInfoRequest);
 
-    void deleteStudentPersonalInfo(Long studentId);
+    void deleteStudentPersonalInfo(StudentDeleteRequest deleteRequest);
 
-    void passivateStudentPersonalInfo(Long studentId);
+    void passivateStudentPersonalInfo(StudentPassivateRequest passivateRequest);
 
-    void activateStudentPersonalInfo(Long studentId);
+    void activateStudentPersonalInfo(StudentActivateRequest activateRequest);
 
-    void graduateStudentPersonalInfo(Long studentId);
+    void graduateStudentPersonalInfo(StudentGraduateRequest graduateRequest);
 }

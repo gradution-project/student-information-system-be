@@ -2,9 +2,7 @@ package com.graduationproject.studentinformationsystem.university.student.servic
 
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
-import com.graduationproject.studentinformationsystem.university.student.model.dto.request.StudentAcademicInfoRequest;
-import com.graduationproject.studentinformationsystem.university.student.model.dto.request.StudentInfoRequest;
-import com.graduationproject.studentinformationsystem.university.student.model.dto.request.StudentPersonalInfoRequest;
+import com.graduationproject.studentinformationsystem.university.student.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.student.model.dto.response.StudentAcademicInfoResponse;
 import com.graduationproject.studentinformationsystem.university.student.model.dto.response.StudentInfoDetailResponse;
 import com.graduationproject.studentinformationsystem.university.student.model.dto.response.StudentPersonalInfoResponse;
@@ -17,19 +15,28 @@ public interface StudentService {
 
     List<StudentResponse> getAllStudentsByStatus(StudentStatus status);
 
-    StudentInfoDetailResponse getStudentDetailById(Long studentId) throws SisNotExistException;
+    StudentInfoDetailResponse getStudentDetailById(Long studentId)
+            throws SisNotExistException;
 
-    StudentInfoDetailResponse saveStudent(StudentInfoRequest studentInfoRequest);
+    StudentInfoDetailResponse saveStudent(StudentSaveInfoRequest saveInfoRequest);
 
-    StudentAcademicInfoResponse updateStudentAcademicInfo(Long studentId, StudentAcademicInfoRequest academicInfoRequest) throws SisNotExistException;
+    StudentAcademicInfoResponse updateStudentAcademicInfo(Long studentId,
+                                                          StudentUpdateAcademicInfoRequest updateAcademicInfoRequest)
+            throws SisNotExistException;
 
-    StudentPersonalInfoResponse updateStudentPersonalInfo(Long studentId, StudentPersonalInfoRequest personalInfoRequest) throws SisNotExistException;
+    StudentPersonalInfoResponse updateStudentPersonalInfo(Long studentId,
+                                                          StudentUpdatePersonalInfoRequest updatePersonalInfoRequest)
+            throws SisNotExistException;
 
-    StudentResponse deleteStudent(Long studentId) throws SisNotExistException, SisAlreadyException;
+    StudentResponse deleteStudent(StudentDeleteRequest deleteRequest)
+            throws SisNotExistException, SisAlreadyException;
 
-    StudentResponse passivateStudent(Long studentId) throws SisNotExistException, SisAlreadyException;
+    StudentResponse passivateStudent(StudentPassivateRequest passivateRequest)
+            throws SisNotExistException, SisAlreadyException;
 
-    StudentResponse activateStudent(Long studentId) throws SisNotExistException, SisAlreadyException;
+    StudentResponse activateStudent(StudentActivateRequest activateRequest)
+            throws SisNotExistException, SisAlreadyException;
 
-    StudentResponse graduateStudent(Long studentId) throws SisNotExistException, SisAlreadyException;
+    StudentResponse graduateStudent(StudentGraduateRequest graduateRequest)
+            throws SisNotExistException, SisAlreadyException;
 }

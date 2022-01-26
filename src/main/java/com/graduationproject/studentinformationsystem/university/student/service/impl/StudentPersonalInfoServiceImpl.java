@@ -1,7 +1,8 @@
 package com.graduationproject.studentinformationsystem.university.student.service.impl;
 
+import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
 import com.graduationproject.studentinformationsystem.university.student.model.dto.converter.StudentPersonalInfoConverter;
-import com.graduationproject.studentinformationsystem.university.student.model.dto.request.StudentPersonalInfoRequest;
+import com.graduationproject.studentinformationsystem.university.student.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.student.model.dto.response.StudentPersonalInfoResponse;
 import com.graduationproject.studentinformationsystem.university.student.model.entity.StudentPersonalInfoEntity;
 import com.graduationproject.studentinformationsystem.university.student.model.enums.StudentStatus;
@@ -29,40 +30,46 @@ public class StudentPersonalInfoServiceImpl implements StudentPersonalInfoServic
     }
 
     @Override
-    public void saveStudentPersonalInfo(Long studentId, StudentPersonalInfoRequest request) {
-        StudentPersonalInfoEntity entity = StudentPersonalInfoConverter.generateSaveEntity(studentId, request);
+    public void saveStudentPersonalInfo(Long studentId,
+                                        StudentPersonalInfoRequest personalInfoRequest,
+                                        SisOperationInfoRequest operationInfoRequest) {
+
+        StudentPersonalInfoEntity entity = StudentPersonalInfoConverter
+                .generateSaveEntity(studentId, personalInfoRequest, operationInfoRequest);
         personalInfoRepository.saveStudentPersonalInfo(entity);
     }
 
     @Override
-    public StudentPersonalInfoResponse updateStudentPersonalInfo(Long studentId, StudentPersonalInfoRequest request) {
-        StudentPersonalInfoEntity entity = StudentPersonalInfoConverter.generateUpdateEntity(studentId, request);
+    public StudentPersonalInfoResponse updateStudentPersonalInfo(Long studentId,
+                                                                 StudentUpdatePersonalInfoRequest updatePersonalInfoRequest) {
+
+        StudentPersonalInfoEntity entity = StudentPersonalInfoConverter.generateUpdateEntity(studentId, updatePersonalInfoRequest);
         personalInfoRepository.updateStudentPersonalInfo(entity);
 
         return getStudentPersonalInfoResponse(studentId);
     }
 
     @Override
-    public void deleteStudentPersonalInfo(Long studentId) {
-        StudentPersonalInfoEntity entity = StudentPersonalInfoConverter.generateDeleteEntity(studentId);
+    public void deleteStudentPersonalInfo(StudentDeleteRequest deleteRequest) {
+        StudentPersonalInfoEntity entity = StudentPersonalInfoConverter.generateDeleteEntity(deleteRequest);
         personalInfoRepository.updateStudentPersonalInfoStatus(entity);
     }
 
     @Override
-    public void passivateStudentPersonalInfo(Long studentId) {
-        StudentPersonalInfoEntity entity = StudentPersonalInfoConverter.generatePassiveEntity(studentId);
+    public void passivateStudentPersonalInfo(StudentPassivateRequest passivateRequest) {
+        StudentPersonalInfoEntity entity = StudentPersonalInfoConverter.generatePassiveEntity(passivateRequest);
         personalInfoRepository.updateStudentPersonalInfoStatus(entity);
     }
 
     @Override
-    public void activateStudentPersonalInfo(Long studentId) {
-        StudentPersonalInfoEntity entity = StudentPersonalInfoConverter.generateActiveEntity(studentId);
+    public void activateStudentPersonalInfo(StudentActivateRequest activateRequest) {
+        StudentPersonalInfoEntity entity = StudentPersonalInfoConverter.generateActiveEntity(activateRequest);
         personalInfoRepository.updateStudentPersonalInfoStatus(entity);
     }
 
     @Override
-    public void graduateStudentPersonalInfo(Long studentId) {
-        StudentPersonalInfoEntity entity = StudentPersonalInfoConverter.generateGraduateEntity(studentId);
+    public void graduateStudentPersonalInfo(StudentGraduateRequest graduateRequest) {
+        StudentPersonalInfoEntity entity = StudentPersonalInfoConverter.generateGraduateEntity(graduateRequest);
         personalInfoRepository.updateStudentPersonalInfoStatus(entity);
     }
 

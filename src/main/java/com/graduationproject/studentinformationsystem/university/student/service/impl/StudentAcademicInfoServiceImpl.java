@@ -1,7 +1,8 @@
 package com.graduationproject.studentinformationsystem.university.student.service.impl;
 
+import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
 import com.graduationproject.studentinformationsystem.university.student.model.dto.converter.StudentAcademicInfoConverter;
-import com.graduationproject.studentinformationsystem.university.student.model.dto.request.StudentAcademicInfoRequest;
+import com.graduationproject.studentinformationsystem.university.student.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.student.model.dto.response.StudentAcademicInfoResponse;
 import com.graduationproject.studentinformationsystem.university.student.model.entity.StudentAcademicInfoEntity;
 import com.graduationproject.studentinformationsystem.university.student.model.enums.StudentStatus;
@@ -29,40 +30,47 @@ public class StudentAcademicInfoServiceImpl implements StudentAcademicInfoServic
     }
 
     @Override
-    public void saveStudentAcademicInfo(Long studentId, String studentEmail, StudentAcademicInfoRequest request) {
-        StudentAcademicInfoEntity academicInfoEntity = StudentAcademicInfoConverter.generateSaveEntity(studentId, studentEmail, request);
+    public void saveStudentAcademicInfo(Long studentId,
+                                        String studentEmail,
+                                        StudentAcademicInfoRequest academicInfoRequest,
+                                        SisOperationInfoRequest operationInfoRequest) {
+
+        StudentAcademicInfoEntity academicInfoEntity = StudentAcademicInfoConverter
+                .generateSaveEntity(studentId, studentEmail, academicInfoRequest, operationInfoRequest);
         academicInfoRepository.saveStudentAcademicInfo(academicInfoEntity);
     }
 
     @Override
-    public StudentAcademicInfoResponse updateStudentAcademicInfo(Long studentId, StudentAcademicInfoRequest request) {
-        StudentAcademicInfoEntity entity = StudentAcademicInfoConverter.generateUpdateEntity(studentId, request);
+    public StudentAcademicInfoResponse updateStudentAcademicInfo(Long studentId,
+                                                                 StudentUpdateAcademicInfoRequest updateAcademicInfoRequest) {
+
+        StudentAcademicInfoEntity entity = StudentAcademicInfoConverter.generateUpdateEntity(studentId, updateAcademicInfoRequest);
         academicInfoRepository.updateStudentAcademicInfo(entity);
 
         return getStudentAcademicInfoResponse(studentId);
     }
 
     @Override
-    public void deleteStudentAcademicInfo(Long studentId) {
-        StudentAcademicInfoEntity entity = StudentAcademicInfoConverter.generateDeleteEntity(studentId);
+    public void deleteStudentAcademicInfo(StudentDeleteRequest deleteRequest) {
+        StudentAcademicInfoEntity entity = StudentAcademicInfoConverter.generateDeleteEntity(deleteRequest);
         academicInfoRepository.updateStudentAcademicInfoStatus(entity);
     }
 
     @Override
-    public void passivateStudentAcademicInfo(Long studentId) {
-        StudentAcademicInfoEntity entity = StudentAcademicInfoConverter.generatePassiveEntity(studentId);
+    public void passivateStudentAcademicInfo(StudentPassivateRequest passivateRequest) {
+        StudentAcademicInfoEntity entity = StudentAcademicInfoConverter.generatePassiveEntity(passivateRequest);
         academicInfoRepository.updateStudentAcademicInfoStatus(entity);
     }
 
     @Override
-    public void activateStudentAcademicInfo(Long studentId) {
-        StudentAcademicInfoEntity entity = StudentAcademicInfoConverter.generateActiveEntity(studentId);
+    public void activateStudentAcademicInfo(StudentActivateRequest activateRequest) {
+        StudentAcademicInfoEntity entity = StudentAcademicInfoConverter.generateActiveEntity(activateRequest);
         academicInfoRepository.updateStudentAcademicInfoStatus(entity);
     }
 
     @Override
-    public void graduateStudentAcademicInfo(Long studentId) {
-        StudentAcademicInfoEntity entity = StudentAcademicInfoConverter.generateGraduateEntity(studentId);
+    public void graduateStudentAcademicInfo(StudentGraduateRequest graduateRequest) {
+        StudentAcademicInfoEntity entity = StudentAcademicInfoConverter.generateGraduateEntity(graduateRequest);
         academicInfoRepository.updateStudentAcademicInfoStatus(entity);
     }
 
