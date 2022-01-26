@@ -13,6 +13,9 @@ public class SisUtil {
     private SisUtil() {
     }
 
+    private static final String DATE_FORMAT = "dd.MM.yyyy";
+    private static final String DATE_TIME_FORMAT = "dd.MM.yyyy HH:mm";
+
     public static String getFormattedPhoneNumber(Long phoneNumber) {
         String strPhoneNumber = String.valueOf(phoneNumber);
         String first = strPhoneNumber.substring(0, 3);
@@ -23,12 +26,16 @@ public class SisUtil {
     }
 
     public static String getFormattedDate(Date date) {
-        final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        return dateFormat.format(date);
+        if (date == null) {
+            return null;
+        } else {
+            final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_TIME_FORMAT);
+            return dateFormat.format(date);
+        }
     }
 
     public static String getCurrentFormattedDateTime() {
-        final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+        final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
         return dateTimeFormatter.format(LocalDateTime.now());
     }
 
