@@ -1,7 +1,8 @@
 package com.graduationproject.studentinformationsystem.university.student.model.dto.converter;
 
+import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
 import com.graduationproject.studentinformationsystem.common.util.SisUtil;
-import com.graduationproject.studentinformationsystem.university.student.model.dto.request.StudentAcademicInfoRequest;
+import com.graduationproject.studentinformationsystem.university.student.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.student.model.dto.response.StudentAcademicInfoResponse;
 import com.graduationproject.studentinformationsystem.university.student.model.entity.StudentAcademicInfoEntity;
 import com.graduationproject.studentinformationsystem.university.student.model.enums.StudentStatus;
@@ -36,63 +37,72 @@ public class StudentAcademicInfoConverter {
         return dtoList;
     }
 
-    public static StudentAcademicInfoEntity generateSaveEntity(Long studentId, String studentEmail, StudentAcademicInfoRequest request) {
+    public static StudentAcademicInfoEntity generateSaveEntity(Long studentId,
+                                                               String studentEmail,
+                                                               StudentAcademicInfoRequest academicInfoRequest,
+                                                               SisOperationInfoRequest operationInfoRequest) {
+
         return StudentAcademicInfoEntity.builder()
                 .studentId(studentId)
-                .departmentId(request.getDepartmentId())
-                .degree(request.getDegree())
-                .classLevel(request.getClassLevel())
+                .departmentId(academicInfoRequest.getDepartmentId())
+                .degree(academicInfoRequest.getDegree())
+                .classLevel(academicInfoRequest.getClassLevel())
                 .email(studentEmail)
                 .status(StudentStatus.ACTIVE)
                 .registrationDate(new Date())
-                .createdUserId(1L)
+                .createdUserId(operationInfoRequest.getOperationUserId())
                 .createdDate(new Date())
                 .build();
     }
 
-    public static StudentAcademicInfoEntity generateUpdateEntity(Long studentId, StudentAcademicInfoRequest request) {
+    public static StudentAcademicInfoEntity generateUpdateEntity(Long studentId,
+                                                                 StudentUpdateAcademicInfoRequest updateAcademicInfoRequest) {
+
+        final StudentAcademicInfoRequest academicInfoRequest = updateAcademicInfoRequest.getAcademicInfoRequest();
+        final SisOperationInfoRequest operationInfoRequest = updateAcademicInfoRequest.getOperationInfoRequest();
+
         return StudentAcademicInfoEntity.builder()
                 .studentId(studentId)
-                .departmentId(request.getDepartmentId())
-                .degree(request.getDegree())
-                .classLevel(request.getClassLevel())
-                .modifiedUserId(1L)
+                .departmentId(academicInfoRequest.getDepartmentId())
+                .degree(academicInfoRequest.getDegree())
+                .classLevel(academicInfoRequest.getClassLevel())
+                .modifiedUserId(operationInfoRequest.getOperationUserId())
                 .modifiedDate(new Date())
                 .build();
     }
 
-    public static StudentAcademicInfoEntity generateDeleteEntity(Long studentId) {
+    public static StudentAcademicInfoEntity generateDeleteEntity(StudentDeleteRequest deleteRequest) {
         return StudentAcademicInfoEntity.builder()
-                .studentId(studentId)
+                .studentId(deleteRequest.getStudentId())
                 .status(StudentStatus.DELETED)
-                .modifiedUserId(1L)
+                .modifiedUserId(deleteRequest.getOperationInfoRequest().getOperationUserId())
                 .modifiedDate(new Date())
                 .build();
     }
 
-    public static StudentAcademicInfoEntity generatePassiveEntity(Long studentId) {
+    public static StudentAcademicInfoEntity generatePassiveEntity(StudentPassivateRequest passivateRequest) {
         return StudentAcademicInfoEntity.builder()
-                .studentId(studentId)
+                .studentId(passivateRequest.getStudentId())
                 .status(StudentStatus.PASSIVE)
-                .modifiedUserId(1L)
+                .modifiedUserId(passivateRequest.getOperationInfoRequest().getOperationUserId())
                 .modifiedDate(new Date())
                 .build();
     }
 
-    public static StudentAcademicInfoEntity generateActiveEntity(Long studentId) {
+    public static StudentAcademicInfoEntity generateActiveEntity(StudentActivateRequest activateRequest) {
         return StudentAcademicInfoEntity.builder()
-                .studentId(studentId)
+                .studentId(activateRequest.getStudentId())
                 .status(StudentStatus.ACTIVE)
-                .modifiedUserId(1L)
+                .modifiedUserId(activateRequest.getOperationInfoRequest().getOperationUserId())
                 .modifiedDate(new Date())
                 .build();
     }
 
-    public static StudentAcademicInfoEntity generateGraduateEntity(Long studentId) {
+    public static StudentAcademicInfoEntity generateGraduateEntity(StudentGraduateRequest graduateRequest) {
         return StudentAcademicInfoEntity.builder()
-                .studentId(studentId)
+                .studentId(graduateRequest.getStudentId())
                 .status(StudentStatus.GRADUATED)
-                .modifiedUserId(1L)
+                .modifiedUserId(graduateRequest.getOperationInfoRequest().getOperationUserId())
                 .modifiedDate(new Date())
                 .build();
     }
