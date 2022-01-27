@@ -18,7 +18,7 @@ public class SisResponseUtil {
                         .isSuccess(true).build(), HttpStatus.OK);
     }
 
-    public static <T> ResponseEntity<SisBaseApiResponse<T>> successResponse(T result) {
+    public static <T> ResponseEntity<SisBaseApiResponse<T>> successResponse(final T result) {
         return new ResponseEntity<>(
                 SisBaseApiResponse.<T>builder()
                         .requestTime(LocalDateTime.now())
