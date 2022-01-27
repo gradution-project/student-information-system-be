@@ -25,11 +25,11 @@ public class SisMysqlHikariConfiguration {
     public DataSource hikariMysql() {
         log.debug("Hikari MySQL Datasource Configuration Call Started!");
 
-        SisHikariConfigProfileDto hikariConfigMysqlProfile = getHikariConfigProfile(environment);
+        final SisHikariConfigProfileDto hikariConfigMysqlProfile = getHikariConfigProfile(environment);
 
         SisHikariConfigProfileDto.checkProfileVariables(hikariConfigMysqlProfile);
 
-        HikariConfig hikariConfigMysql = getHikariConfig(hikariConfigMysqlProfile);
+        final HikariConfig hikariConfigMysql = getHikariConfig(hikariConfigMysqlProfile);
 
         log.debug("Hikari MySQL Datasource Successfully Configured!");
         return new HikariDataSource(hikariConfigMysql);
@@ -40,7 +40,7 @@ public class SisMysqlHikariConfiguration {
         return new Sql2o(hikariMysql);
     }
 
-    private static SisHikariConfigProfileDto getHikariConfigProfile(Environment environment) {
+    private static SisHikariConfigProfileDto getHikariConfigProfile(final Environment environment) {
         return SisHikariConfigProfileDto.builder()
                 .username(environment.getProperty("hikariMysql.username"))
                 .password(environment.getProperty("hikariMysql.password"))
@@ -51,7 +51,7 @@ public class SisMysqlHikariConfiguration {
                 .maxLifetime(environment.getProperty("hikari.maxLifetime")).build();
     }
 
-    private static HikariConfig getHikariConfig(SisHikariConfigProfileDto hikariConfigProfileDto) {
+    private static HikariConfig getHikariConfig(final SisHikariConfigProfileDto hikariConfigProfileDto) {
         return SisHikariConfiguration.getHikariConfigBaseValues(hikariConfigProfileDto);
     }
 }
