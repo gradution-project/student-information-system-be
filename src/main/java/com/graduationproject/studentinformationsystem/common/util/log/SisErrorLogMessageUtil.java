@@ -16,11 +16,11 @@ public class SisErrorLogMessageUtil {
         log.error("Error When Getting {}!", apiName);
     }
 
-    public void errorWhenGettingById(Long id) {
+    public void errorWhenGettingById(final Long id) {
         log.error("Error When Getting {} by ID! id:{}", apiName, id);
     }
 
-    public void errorWhenGettingByName(String name) {
+    public void errorWhenGettingByName(final String name) {
         log.error("Error When Getting {} by Name! name:{}", apiName, name);
     }
 
@@ -28,11 +28,11 @@ public class SisErrorLogMessageUtil {
         log.error("Error When Getting {}s!", apiName);
     }
 
-    public void errorWhenGettingAllByStatus(String status) {
+    public void errorWhenGettingAllByStatus(final String status) {
         log.error("Error When Getting {}s by Status! status:{}", apiName, status);
     }
 
-    public void errorWhenGettingAllIdsByDepartmentId(Long departmentId) {
+    public void errorWhenGettingAllIdsByDepartmentId(final Long departmentId) {
         log.error("Error When Getting {} IDs by Department ID! departmentId:{}", apiName, departmentId);
     }
 

@@ -12,15 +12,15 @@ public class SisInfoLogMessageUtil {
     private final String apiName;
 
 
-    public void foundById(Long id) {
+    public void foundById(final Long id) {
         log.info("{} Found by ID! id:{}", apiName, id);
     }
 
-    public void foundByName(String name) {
+    public void foundByName(final String name) {
         log.info("{} Found by Name! name:{}", apiName, name);
     }
 
-    public void foundByIdAndStatus(Long id, String status) {
+    public void foundByIdAndStatus(final Long id, final String status) {
         log.info("{} Found by ID and Status! id:{} status:{}", apiName, id, status);
     }
 
@@ -28,16 +28,16 @@ public class SisInfoLogMessageUtil {
         log.info("{}s Found!", apiName);
     }
 
-    public void foundAllByStatus(String status) {
+    public void foundAllByStatus(final String status) {
         log.info("{}s Found by Status! status:{}", apiName, status);
     }
 
-    public void foundAllIdsByDepartmentId(Long departmentId) {
+    public void foundAllIdsByDepartmentId(final Long departmentId) {
         log.info("{} IDs Found by Department ID! departmentId:{}", apiName, departmentId);
     }
 
 
-    public void savedById(Long id) {
+    public void savedById(final Long id) {
         log.info("{} Saved! id:{}", apiName, id);
     }
 
@@ -45,7 +45,7 @@ public class SisInfoLogMessageUtil {
         log.info("{} Updated!", apiName);
     }
 
-    public void statusUpdated(String status) {
+    public void statusUpdated(final String status) {
         log.info("{} Status Updated to {}!", apiName, status);
     }
 
