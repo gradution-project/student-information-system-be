@@ -35,7 +35,7 @@ public class OfficerLoginController {
     @PostMapping(LoginControllerEndpoint.OFFICER)
     @ApiOperation(value = "Officer Login")
     public ResponseEntity<SisBaseApiResponse<LoginResponse>> officerLogin(
-            @RequestBody @Valid OfficerLoginRequest loginRequest) {
+            @RequestBody @Valid final OfficerLoginRequest loginRequest) {
 
 //        return successResponse(loginService.login(loginRequest));
         return successResponse(LoginResponse.builder().isLoginSuccess(true).build());
@@ -44,7 +44,7 @@ public class OfficerLoginController {
     @PostMapping(LoginControllerEndpoint.OFFICER_FORGOT_PASSWORD)
     @ApiOperation(value = "Officer Forgot Password")
     public ResponseEntity<SisBaseApiResponse<ForgotPasswordResponse>> officerForgotPassword(
-            @RequestBody @Valid OfficerForgotPasswordRequest forgotPasswordRequest)
+            @RequestBody @Valid final OfficerForgotPasswordRequest forgotPasswordRequest)
             throws SisNotExistException {
 
 //        return successResponse(loginService.forgotPassword(forgotPasswordRequest));
