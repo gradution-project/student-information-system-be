@@ -20,17 +20,17 @@ public class PasswordServiceImpl implements PasswordService {
     }
 
     @Override
-    public String encodePassword(String decodedPassword) {
+    public String encodePassword(final String decodedPassword) {
         return passwordEncoder.encode(decodedPassword);
     }
 
     @Override
-    public boolean isPasswordTrue(CharSequence rawPassword, String encodedPassword) {
+    public boolean isPasswordTrue(final CharSequence rawPassword, final String encodedPassword) {
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 
     protected String generateRandomPassword() {
-        char[] possibleCharacters = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.").toCharArray();
+        final char[] possibleCharacters = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.").toCharArray();
         return RandomStringUtils.random(15, 0, possibleCharacters.length - 1, false, false, possibleCharacters, new SecureRandom());
     }
 }
