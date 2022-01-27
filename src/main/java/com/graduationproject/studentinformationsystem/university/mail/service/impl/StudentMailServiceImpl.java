@@ -1,8 +1,9 @@
 package com.graduationproject.studentinformationsystem.university.mail.service.impl;
 
+import com.graduationproject.studentinformationsystem.common.util.SisUtil;
 import com.graduationproject.studentinformationsystem.login.common.service.PasswordService;
 import com.graduationproject.studentinformationsystem.login.student.repository.StudentLoginRepository;
-import com.graduationproject.studentinformationsystem.university.mail.model.entity.MailEntity;
+import com.graduationproject.studentinformationsystem.university.mail.model.entity.SisMailEntity;
 import com.graduationproject.studentinformationsystem.university.mail.service.MailService;
 import com.graduationproject.studentinformationsystem.university.mail.service.StudentMailService;
 import com.graduationproject.studentinformationsystem.university.parameter.repository.ParameterRepository;
@@ -12,8 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -30,7 +29,7 @@ public class StudentMailServiceImpl implements StudentMailService {
 
     private final ParameterRepository parameterRepository;
 
-    private MailEntity mailEntity;
+    private SisMailEntity mailEntity;
 
     private static final String STUDENT_NAME = "studentName";
     private static final String STUDENT_NUMBER = "studentNumber";
@@ -45,7 +44,7 @@ public class StudentMailServiceImpl implements StudentMailService {
 
         final Properties properties = getProperties();
 
-        mailEntity = MailEntity.builder()
+        mailEntity = SisMailEntity.builder()
                 .senderEmail(senderEmail)
                 .senderPassword(senderPassword)
                 .senderName(senderName)
@@ -53,12 +52,12 @@ public class StudentMailServiceImpl implements StudentMailService {
     }
 
     @Override
-    public void sendFirstPasswordEmail(StudentInfoDetailResponse infoDetailResponse) {
+    public void sendFirstPasswordEmail(final StudentInfoDetailResponse infoDetailResponse) {
         Map<String, String> values = new HashMap<>();
         values.put(STUDENT_NAME, getStudentName(infoDetailResponse));
         values.put(STUDENT_NUMBER, getStudentNumber(infoDetailResponse));
         values.put(PASSWORD, getFirstPassword(infoDetailResponse));
-        values.put(DATE, getFormattedDate());
+        values.put(DATE, SisUtil.getCurrentFormattedDateTime());
 
         mailEntity.setTitle("Öğrenci Hesabınız Başarıyla Oluşturuldu!");
         mailEntity.setTemplate(parameterRepository.getStudentParameterByName("MAIL_TEMPLATE_FIRST_PASSWORD"));
@@ -70,12 +69,12 @@ public class StudentMailServiceImpl implements StudentMailService {
     }
 
     @Override
-    public void sendForgotPasswordEmail(StudentInfoDetailResponse infoDetailResponse) {
+    public void sendForgotPasswordEmail(final StudentInfoDetailResponse infoDetailResponse) {
         Map<String, String> values = new HashMap<>();
         values.put(STUDENT_NAME, getStudentName(infoDetailResponse));
         values.put(STUDENT_NUMBER, getStudentNumber(infoDetailResponse));
         values.put(PASSWORD, getChangedPassword(infoDetailResponse));
-        values.put(DATE, getFormattedDate());
+        values.put(DATE, SisUtil.getCurrentFormattedDateTime());
 
         mailEntity.setTitle("Şifreniz Başarıyla Değiştirildi!");
         mailEntity.setTemplate(parameterRepository.getStudentParameterByName("MAIL_TEMPLATE_FORGOT_PASSWORD"));
@@ -90,41 +89,35 @@ public class StudentMailServiceImpl implements StudentMailService {
     private Properties getProperties() {
         Properties properties = new Properties();
         properties.put("mail.smtp.host", parameterRepository.getStudentParameterByName("MAIL_SMTP_HOST"));
-        final String smtpPort = parameterRepository.getStudentParameterByName("MAIL_SMTP_PORT");
-        if (smtpPort != null) {
-            properties.put("mail.smtp.port", smtpPort);
-        }
+        properties.put("mail.smtp.port", parameterRepository.getStudentParameterByName("MAIL_SMTP_PORT"));
         properties.put("mail.smtp.auth", parameterRepository.getStudentParameterByName("MAIL_SMTP_AUTH"));
         properties.put("mail.smtp.starttls.enable", parameterRepository.getStudentParameterByName("MAIL_SMTP_START_TLS_ENABLE"));
         return properties;
     }
 
-    private String getFormattedDate() {
-        final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-        return dateFormat.format(new Date());
+    private String getStudentName(final StudentInfoDetailResponse infoDetailResponse) {
+        final String name = infoDetailResponse.getPersonalInfoResponse().getName();
+        final String surname = infoDetailResponse.getPersonalInfoResponse().getSurname();
+        return name + " " + surname;
     }
 
-    private String getStudentName(StudentInfoDetailResponse infoDetailResponse) {
-        return infoDetailResponse.getPersonalInfoResponse().getName() + " " + infoDetailResponse.getPersonalInfoResponse().getSurname();
-    }
-
-    private String getStudentNumber(StudentInfoDetailResponse infoDetailResponse) {
+    private String getStudentNumber(final StudentInfoDetailResponse infoDetailResponse) {
         return String.valueOf(infoDetailResponse.getAcademicInfoResponse().getStudentId());
     }
 
-    private String getStudentPersonalEmail(StudentInfoDetailResponse infoDetailResponse) {
+    private String getStudentPersonalEmail(final StudentInfoDetailResponse infoDetailResponse) {
         return infoDetailResponse.getPersonalInfoResponse().getEmail();
     }
 
 
-    protected String getFirstPassword(StudentInfoDetailResponse infoDetailResponse) {
+    protected String getFirstPassword(final StudentInfoDetailResponse infoDetailResponse) {
         final Long studentId = infoDetailResponse.getAcademicInfoResponse().getStudentId();
         final String password = passwordService.generatePassword();
         loginRepository.saveFirstPassword(studentId, password);
         return password;
     }
 
-    protected String getChangedPassword(StudentInfoDetailResponse infoDetailResponse) {
+    protected String getChangedPassword(final StudentInfoDetailResponse infoDetailResponse) {
         final Long studentId = infoDetailResponse.getAcademicInfoResponse().getStudentId();
         final String password = passwordService.generatePassword();
         loginRepository.updatePassword(studentId, password);

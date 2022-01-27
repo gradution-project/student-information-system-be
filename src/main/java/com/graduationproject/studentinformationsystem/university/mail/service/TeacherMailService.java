@@ -4,7 +4,7 @@ import com.graduationproject.studentinformationsystem.university.teacher.model.d
 
 public interface TeacherMailService {
 
-    void sendFirstPasswordEmail(TeacherInfoDetailResponse infoDetailResponse);
+    void sendFirstPasswordEmail(final TeacherInfoDetailResponse infoDetailResponse);
 
-    void sendForgotPasswordEmail(TeacherInfoDetailResponse infoDetailResponse);
+    void sendForgotPasswordEmail(final TeacherInfoDetailResponse infoDetailResponse);
 }

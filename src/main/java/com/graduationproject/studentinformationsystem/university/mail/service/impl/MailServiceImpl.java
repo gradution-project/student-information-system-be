@@ -1,6 +1,6 @@
 package com.graduationproject.studentinformationsystem.university.mail.service.impl;
 
-import com.graduationproject.studentinformationsystem.university.mail.model.entity.MailEntity;
+import com.graduationproject.studentinformationsystem.university.mail.model.entity.SisMailEntity;
 import com.graduationproject.studentinformationsystem.university.mail.service.MailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,9 +16,9 @@ import java.util.Map;
 public class MailServiceImpl implements MailService {
 
     @Override
-    public void sendMail(MailEntity mailEntity) {
+    public void sendMail(final SisMailEntity mailEntity) {
         try {
-            Authenticator auth = new Authenticator() {
+            final Authenticator auth = new Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
                     return new PasswordAuthentication(mailEntity.getSenderEmail(), mailEntity.getSenderPassword());
                 }
@@ -26,13 +26,15 @@ public class MailServiceImpl implements MailService {
             final Session session = Session.getInstance(mailEntity.getProperties(), auth);
             final MimeMessage message = new MimeMessage(session);
 
+            final String mailContent = placeValuesToMailTemplateAndGetMailContent(mailEntity.getTemplate(), mailEntity.getValues());
+
             message.addHeader("Content-type", "text/HTML; charset=UTF-8");
             message.addHeader("format", "flowed");
             message.addHeader("Content-Transfer-Encoding", "8bit");
             message.setFrom(new InternetAddress(mailEntity.getSenderEmail(), mailEntity.getSenderName()));
             message.setReplyTo(InternetAddress.parse(mailEntity.getSenderEmail(), false));
             message.setSubject(mailEntity.getTitle(), "UTF-8");
-            message.setContent(templateTo(mailEntity.getTemplate(), mailEntity.getValues()), "text/HTML; charset=UTF-8");
+            message.setContent(mailContent, "text/HTML; charset=UTF-8");
             message.setSentDate(new Date());
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mailEntity.getTo(), false));
 
@@ -42,8 +44,8 @@ public class MailServiceImpl implements MailService {
         }
     }
 
-    private String templateTo(String template, Map<String, String> values) {
+    private String placeValuesToMailTemplateAndGetMailContent(final String mailTemplate, final Map<String, String> values) {
         return values.entrySet().stream()
-                .reduce(template, (s, e) -> s.replace("{" + e.getKey() + "}", e.getValue()), (s, s2) -> s);
+                .reduce(mailTemplate, (s, e) -> s.replace("{" + e.getKey() + "}", e.getValue()), (s, s2) -> s);
     }
 }
