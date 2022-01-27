@@ -7,8 +7,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public abstract class SisBaseResponse {
 
-    private String createdDate;
     private Long createdUserId;
-    private String modifiedDate;
+    private String createdDate;
     private Long modifiedUserId;
+    private String modifiedDate;
 }
