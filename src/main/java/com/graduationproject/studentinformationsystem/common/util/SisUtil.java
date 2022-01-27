@@ -16,16 +16,16 @@ public class SisUtil {
     private static final String DATE_FORMAT = "dd.MM.yyyy";
     private static final String DATE_TIME_FORMAT = "dd.MM.yyyy HH:mm";
 
-    public static String getFormattedPhoneNumber(Long phoneNumber) {
-        String strPhoneNumber = String.valueOf(phoneNumber);
-        String first = strPhoneNumber.substring(0, 3);
-        String second = strPhoneNumber.substring(3, 6);
-        String third = strPhoneNumber.substring(6, 8);
-        String fourth = strPhoneNumber.substring(8, 10);
+    public static String getFormattedPhoneNumber(final Long phoneNumber) {
+        final String strPhoneNumber = String.valueOf(phoneNumber);
+        final String first = strPhoneNumber.substring(0, 3);
+        final String second = strPhoneNumber.substring(3, 6);
+        final String third = strPhoneNumber.substring(6, 8);
+        final String fourth = strPhoneNumber.substring(8, 10);
         return "+90 (" + first + ") " + second + " " + third + " " + fourth;
     }
 
-    public static String getFormattedDate(Date date) {
+    public static String getFormattedDate(final Date date) {
         if (date == null) {
             return null;
         } else {
@@ -53,8 +53,8 @@ public class SisUtil {
         return string;
     }
 
-    public static Long generateRandomIdWithPrefixId(Long prefixId) {
-        Random random = new Random();
+    public static Long generateRandomIdWithPrefixId(final Long prefixId) {
+        final Random random = new Random();
         String stringNumber = String.valueOf(random.nextLong(999));
         stringNumber = switch (stringNumber.length()) {
             case 1 -> "00" + stringNumber;
@@ -64,7 +64,7 @@ public class SisUtil {
         return Long.parseLong(prefixId + stringNumber);
     }
 
-    public static boolean isNotExistIdInIdList(Long id, List<Long> ids) {
+    public static boolean isNotExistIdInIdList(final Long id, final List<Long> ids) {
         for (Long idInList : ids) {
             if (id.equals(idInList)) {
                 return false;
