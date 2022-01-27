@@ -8,5 +8,5 @@ import javax.validation.constraints.NotNull;
 public class SisOperationInfoRequest {
 
     @NotNull
-    private Long operationUserId;
+    private Long userId;
 }
