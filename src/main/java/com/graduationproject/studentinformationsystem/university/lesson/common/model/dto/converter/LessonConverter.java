@@ -12,13 +12,13 @@ public class LessonConverter {
     private LessonConverter() {
     }
 
-    public static LessonResponse entityToResponse(LessonEntity entity) {
-        return new ModelMapper().map(entity, LessonResponse.class);
+    public static LessonResponse entityToResponse(final LessonEntity lessonEntity) {
+        return new ModelMapper().map(lessonEntity, LessonResponse.class);
     }
 
-    public static List<LessonResponse> entitiesToResponses(List<LessonEntity> entities) {
-        List<LessonResponse> dtos = new ArrayList<>();
-        entities.forEach(entity -> dtos.add(entityToResponse(entity)));
-        return dtos;
+    public static List<LessonResponse> entitiesToResponses(final List<LessonEntity> lessonEntities) {
+        List<LessonResponse> lessonResponses = new ArrayList<>();
+        lessonEntities.forEach(lessonEntity -> lessonResponses.add(entityToResponse(lessonEntity)));
+        return lessonResponses;
     }
 }
