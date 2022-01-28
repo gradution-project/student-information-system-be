@@ -7,9 +7,14 @@ import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serial;
+import java.io.Serializable;
 
 @Getter
-public class TeacherAcademicInfoRequest {
+public class TeacherAcademicInfoRequest implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -672637680560977958L;
 
     @NotNull
     @DepartmentID
