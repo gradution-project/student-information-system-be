@@ -17,4 +17,6 @@ public class TeacherLessonEntity {
     private Integer credit;
     private LessonCompulsoryOrElective compulsoryOrElective;
     private SisStatus status;
+    private Long createdUserId;
+    private String createdDate;
 }

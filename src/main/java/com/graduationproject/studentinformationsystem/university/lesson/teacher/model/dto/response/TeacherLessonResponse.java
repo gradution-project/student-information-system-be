@@ -15,4 +15,6 @@ public class TeacherLessonResponse {
     private Integer credit;
     private String compulsoryOrElective;
     private String status;
+    private Long createdUserId;
+    private String createdDate;
 }

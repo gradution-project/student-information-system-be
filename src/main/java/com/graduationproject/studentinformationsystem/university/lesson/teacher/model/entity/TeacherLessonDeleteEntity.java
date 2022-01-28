@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class TeacherDeleteLessonEntity {
+public class TeacherLessonDeleteEntity {
 
     private Long teacherId;
     private Long lessonId;

@@ -7,10 +7,10 @@ import java.util.Date;
 
 @Getter
 @Builder
-public class TeacherSaveLessonEntity {
+public class TeacherLessonSaveEntity {
 
     private Long teacherId;
     private Long lessonId;
-    private Date createdDate;
     private Long createdUserId;
+    private Date createdDate;
 }

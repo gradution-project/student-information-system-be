@@ -5,7 +5,8 @@ import com.graduationproject.studentinformationsystem.common.util.controller.res
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.university.lesson.common.controller.endpoint.LessonControllerEndpoint;
-import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.request.TeacherLessonRequest;
+import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.request.TeacherLessonDeleteRequest;
+import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.request.TeacherLessonSaveRequest;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.response.TeacherLessonResponse;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.service.TeacherLessonService;
 import io.swagger.annotations.Api;
@@ -38,7 +39,8 @@ public class TeacherLessonController {
 
     @GetMapping(LessonControllerEndpoint.TEACHER_BY_ID)
     @ApiOperation(value = "Get Teacher All Lessons By Teacher ID")
-    public ResponseEntity<SisBaseApiResponse<List<TeacherLessonResponse>>> getTeacherLessonsById(@PathVariable Long teacherId) {
+    public ResponseEntity<SisBaseApiResponse<List<TeacherLessonResponse>>> getTeacherLessonsById(
+            @PathVariable final Long teacherId) {
 
         return successResponse(lessonService.getTeacherLessonsById(teacherId));
     }
@@ -46,17 +48,19 @@ public class TeacherLessonController {
     @PostMapping(LessonControllerEndpoint.TEACHER)
     @ApiOperation(value = "Save Teacher Lesson")
     public ResponseEntity<SisBaseApiResponse<TeacherLessonResponse>> saveTeacherLesson(
-            @RequestBody @Valid TeacherLessonRequest teacherLessonRequest) throws SisAlreadyException {
+            @RequestBody @Valid final TeacherLessonSaveRequest saveRequest)
+            throws SisAlreadyException {
 
-        return successResponse(lessonService.saveTeacherLesson(teacherLessonRequest));
+        return successResponse(lessonService.saveTeacherLesson(saveRequest));
     }
 
     @DeleteMapping(LessonControllerEndpoint.TEACHER)
     @ApiOperation(value = "Delete Teacher Lesson")
-    public ResponseEntity<SisApiResponse> deleteTeacherLesson(@RequestBody @Valid TeacherLessonRequest request)
+    public ResponseEntity<SisApiResponse> deleteTeacherLesson(
+            @RequestBody @Valid final TeacherLessonDeleteRequest updateRequest)
             throws SisAlreadyException, SisNotExistException {
 
-        lessonService.deleteTeacherLesson(request);
+        lessonService.deleteTeacherLesson(updateRequest);
         return successResponse();
     }
 }

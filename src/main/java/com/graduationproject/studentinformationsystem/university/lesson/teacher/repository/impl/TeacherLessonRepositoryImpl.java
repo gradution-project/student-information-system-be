@@ -4,9 +4,9 @@ import com.graduationproject.studentinformationsystem.common.util.exception.SisD
 import com.graduationproject.studentinformationsystem.common.util.log.SisErrorLogMessageUtil;
 import com.graduationproject.studentinformationsystem.common.util.log.SisInfoLogMessageUtil;
 import com.graduationproject.studentinformationsystem.common.util.log.SisWarnLogMessageUtil;
-import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.entity.TeacherDeleteLessonEntity;
+import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.entity.TeacherLessonDeleteEntity;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.entity.TeacherLessonEntity;
-import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.entity.TeacherSaveLessonEntity;
+import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.entity.TeacherLessonSaveEntity;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.mapping.TeacherLessonMapping;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.repository.TeacherLessonRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,14 +33,14 @@ public class TeacherLessonRepositoryImpl implements TeacherLessonRepository {
 
     @Override
     public List<TeacherLessonEntity> getAllTeachersLessons() {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(GET_ALL_TEACHERS_LESSONS)) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_ALL_TEACHERS_LESSONS)) {
 
-            List<TeacherLessonEntity> entities = query
+            final List<TeacherLessonEntity> teacherLessonEntities = query
                     .setColumnMappings(TeacherLessonMapping.COLUMN_MAPPINGS)
                     .executeAndFetch(TeacherLessonEntity.class);
 
             info.foundAll();
-            return entities;
+            return teacherLessonEntities;
         } catch (Exception exception) {
             error.errorWhenGettingAll();
             throw new SisDatabaseException(exception);
@@ -48,16 +48,16 @@ public class TeacherLessonRepositoryImpl implements TeacherLessonRepository {
     }
 
     @Override
-    public List<TeacherLessonEntity> getTeacherLessonsByTeacherId(Long teacherId) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(GET_TEACHER_ALL_LESSONS)) {
+    public List<TeacherLessonEntity> getTeacherLessonsByTeacherId(final Long teacherId) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_TEACHER_ALL_LESSONS)) {
 
-            List<TeacherLessonEntity> entities = query
+            final List<TeacherLessonEntity> teacherLessonEntities = query
                     .addParameter(TEACHER_ID.getModelName(), teacherId)
                     .setColumnMappings(COLUMN_MAPPINGS)
                     .executeAndFetch(TeacherLessonEntity.class);
 
             info.foundAll();
-            return entities;
+            return teacherLessonEntities;
         } catch (Exception exception) {
             error.errorWhenGettingAll();
             throw new SisDatabaseException(exception);
@@ -65,17 +65,17 @@ public class TeacherLessonRepositoryImpl implements TeacherLessonRepository {
     }
 
     @Override
-    public TeacherLessonEntity getTeacherLessonByTeacherIdAndLessonId(Long teacherId, Long lessonId) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(GET_TEACHER_LESSON)) {
+    public TeacherLessonEntity getTeacherLessonByTeacherIdAndLessonId(final Long teacherId, final Long lessonId) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_TEACHER_LESSON)) {
 
-            TeacherLessonEntity entity = query
+            final TeacherLessonEntity teacherLessonEntity = query
                     .addParameter(TEACHER_ID.getModelName(), teacherId)
                     .addParameter(LESSON_ID.getModelName(), lessonId)
                     .setColumnMappings(COLUMN_MAPPINGS)
                     .executeAndFetchFirst(TeacherLessonEntity.class);
 
             info.foundById(lessonId);
-            return entity;
+            return teacherLessonEntity;
         } catch (Exception exception) {
             error.errorWhenGetting();
             throw new SisDatabaseException(exception);
@@ -83,17 +83,17 @@ public class TeacherLessonRepositoryImpl implements TeacherLessonRepository {
     }
 
     @Override
-    public void saveTeacherLesson(TeacherSaveLessonEntity saveLessonEntity) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(SAVE_TEACHER_LESSON)) {
+    public void saveTeacherLesson(final TeacherLessonSaveEntity saveEntity) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(SAVE_TEACHER_LESSON)) {
 
-            query.addParameter(TEACHER_ID.getModelName(), saveLessonEntity.getTeacherId())
-                    .addParameter(LESSON_ID.getModelName(), saveLessonEntity.getLessonId())
-                    .addParameter(CREATED_DATE.getModelName(), saveLessonEntity.getCreatedDate())
-                    .addParameter(CREATED_USER_ID.getModelName(), saveLessonEntity.getCreatedUserId())
+            query.addParameter(TEACHER_ID.getModelName(), saveEntity.getTeacherId())
+                    .addParameter(LESSON_ID.getModelName(), saveEntity.getLessonId())
+                    .addParameter(CREATED_DATE.getModelName(), saveEntity.getCreatedDate())
+                    .addParameter(CREATED_USER_ID.getModelName(), saveEntity.getCreatedUserId())
                     .setColumnMappings(COLUMN_MAPPINGS)
                     .executeUpdate();
 
-            info.savedById(saveLessonEntity.getLessonId());
+            info.savedById(saveEntity.getLessonId());
         } catch (Exception exception) {
             error.errorWhenSaving();
             throw new SisDatabaseException(exception);
@@ -101,8 +101,8 @@ public class TeacherLessonRepositoryImpl implements TeacherLessonRepository {
     }
 
     @Override
-    public void deleteTeacherLesson(TeacherDeleteLessonEntity deleteLessonEntity) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(DELETE_TEACHER_LESSON)) {
+    public void deleteTeacherLesson(final TeacherLessonDeleteEntity deleteLessonEntity) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(DELETE_TEACHER_LESSON)) {
 
             query.addParameter(TEACHER_ID.getModelName(), deleteLessonEntity.getTeacherId())
                     .addParameter(LESSON_ID.getModelName(), deleteLessonEntity.getLessonId())
@@ -117,10 +117,10 @@ public class TeacherLessonRepositoryImpl implements TeacherLessonRepository {
     }
 
     @Override
-    public boolean isTeacherLessonExist(Long teacherId, Long lessonId) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(IS_TEACHER_LESSON_EXIST)) {
+    public boolean isTeacherLessonExist(final Long teacherId, final Long lessonId) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(IS_TEACHER_LESSON_EXIST)) {
 
-            boolean isLessonExist = query
+            final boolean isLessonExist = query
                     .addParameter(TEACHER_ID.getModelName(), teacherId)
                     .addParameter(LESSON_ID.getModelName(), lessonId)
                     .executeAndFetchFirst(Boolean.class);
