@@ -8,13 +8,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+import static com.graduationproject.studentinformationsystem.common.util.constant.SisConstants.DATE_TIME_PATTERN;
+
 public class SisUtil {
 
     private SisUtil() {
     }
-
-    private static final String DATE_FORMAT = "dd.MM.yyyy";
-    private static final String DATE_TIME_FORMAT = "dd.MM.yyyy HH:mm";
 
     public static String getFormattedPhoneNumber(final Long phoneNumber) {
         final String strPhoneNumber = String.valueOf(phoneNumber);
@@ -29,13 +28,13 @@ public class SisUtil {
         if (date == null) {
             return null;
         } else {
-            final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_TIME_FORMAT);
+            final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_TIME_PATTERN);
             return dateFormat.format(date);
         }
     }
 
     public static String getCurrentFormattedDateTime() {
-        final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
+        final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
         return dateTimeFormatter.format(LocalDateTime.now());
     }
 
