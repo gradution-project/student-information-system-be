@@ -23,7 +23,7 @@ public class OfficerLoginRepositoryImpl implements OfficerLoginRepository {
 
     @Override
     public Integer getFailCounter(final Long officerId) {
-        try (final Connection con = sql2o.open(); final Query query = con.createQuery(GET_OFFICER_LOGIN_FAIL_COUNTER)) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_OFFICER_LOGIN_FAIL_COUNTER)) {
 
             return query.addParameter(OFFICER_ID.getModelName(), officerId)
                     .setColumnMappings(COLUMN_MAPPINGS)
@@ -38,7 +38,7 @@ public class OfficerLoginRepositoryImpl implements OfficerLoginRepository {
 
     @Override
     public String getPassword(final Long officerId) {
-        try (final Connection con = sql2o.open(); final Query query = con.createQuery(GET_OFFICER_PASSWORD)) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_OFFICER_PASSWORD)) {
 
             return query.addParameter(OFFICER_ID.getModelName(), officerId)
                     .setColumnMappings(COLUMN_MAPPINGS)
@@ -53,7 +53,7 @@ public class OfficerLoginRepositoryImpl implements OfficerLoginRepository {
 
     @Override
     public void saveFirstPassword(final Long officerId, final String password) {
-        try (final Connection con = sql2o.open(); final Query query = con.createQuery(SAVE_OFFICER_FIRST_PASSWORD)) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(SAVE_OFFICER_FIRST_PASSWORD)) {
 
             query.addParameter(OFFICER_ID.getModelName(), officerId)
                     .addParameter(PASSWORD.getModelName(), passwordService.encodePassword(password))
@@ -69,7 +69,7 @@ public class OfficerLoginRepositoryImpl implements OfficerLoginRepository {
 
     @Override
     public void updatePassword(final Long officerId, final String password) {
-        try (final Connection con = sql2o.open(); final Query query = con.createQuery(UPDATE_OFFICER_PASSWORD)) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(UPDATE_OFFICER_PASSWORD)) {
 
             query.addParameter(OFFICER_ID.getModelName(), officerId)
                     .addParameter(PASSWORD.getModelName(), passwordService.encodePassword(password))
@@ -84,7 +84,7 @@ public class OfficerLoginRepositoryImpl implements OfficerLoginRepository {
 
     @Override
     public void updateLoginInfo(final OfficerLoginInfoEntity loginInfoEntity) {
-        try (final Connection con = sql2o.open(); final Query query = con.createQuery(UPDATE_OFFICER_LOGIN_INFO)) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(UPDATE_OFFICER_LOGIN_INFO)) {
 
             query.addParameter(OFFICER_ID.getModelName(), loginInfoEntity.getOfficerId())
                     .addParameter(FAIL_COUNTER.getModelName(), loginInfoEntity.getFailCounter())
@@ -100,7 +100,7 @@ public class OfficerLoginRepositoryImpl implements OfficerLoginRepository {
 
     @Override
     public void updateFailCounter(final Long officerId) {
-        try (final Connection con = sql2o.open(); final Query query = con.createQuery(UPDATE_OFFICER_FAIL_COUNTER)) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(UPDATE_OFFICER_FAIL_COUNTER)) {
 
             query.addParameter(OFFICER_ID.getModelName(), officerId)
                     .addParameter(FAIL_COUNTER.getModelName(), getFailCounter(officerId) + 1)
@@ -116,7 +116,7 @@ public class OfficerLoginRepositoryImpl implements OfficerLoginRepository {
 //    TODO: Change or Update Password
 //    @Override
 //    public void updatePassword(final OfficerLoginInfoEntity loginInfoEntity) {
-//        try (final Connection con = sql2o.open(); final Query query = con.createQuery(UPDATE_OFFICER_PASSWORD)) {
+//        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(UPDATE_OFFICER_PASSWORD)) {
 //
 //            query.addParameter(OFFICER_ID.getModelName(), loginInfoEntity.getOfficerId())
 //                    .addParameter(PASSWORD.getModelName(), loginInfoEntity.getPassword())

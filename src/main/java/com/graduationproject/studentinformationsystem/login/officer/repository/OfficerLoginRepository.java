@@ -4,15 +4,15 @@ import com.graduationproject.studentinformationsystem.login.officer.model.entity
 
 public interface OfficerLoginRepository {
 
-    Integer getFailCounter(final Long officerId);
+    Integer getFailCounter(Long officerId);
 
-    String getPassword(final Long officerId);
+    String getPassword(Long officerId);
 
-    void saveFirstPassword(final Long officerId, final String password);
+    void saveFirstPassword(Long officerId, String password);
 
-    void updatePassword(final Long officerId, final String password);
+    void updatePassword(Long officerId, String password);
 
-    void updateLoginInfo(final OfficerLoginInfoEntity loginEntity);
+    void updateLoginInfo(OfficerLoginInfoEntity loginEntity);
 
-    void updateFailCounter(final Long officerId);
+    void updateFailCounter(Long officerId);
 }
