@@ -8,12 +8,14 @@ import java.util.Objects;
 
 public class TeacherIDValidation implements ConstraintValidator<TeacherID, Object> {
 
-    public boolean isValid(Object value, ConstraintValidatorContext context) {
+    public boolean isValid(final Object value, final ConstraintValidatorContext context) {
         if (value == null) return true;
-        int length = 8;
+
+        final int length = 8;
 
         context.disableDefaultConstraintViolation();
-        context.buildConstraintViolationWithTemplate("length must be " + length).addConstraintViolation();
+        context.buildConstraintViolationWithTemplate("length must be " + length)
+                .addConstraintViolation();
 
         return NumberUtils.isCreatable(value.toString()) && Objects.equals(length, value.toString().length());
     }
