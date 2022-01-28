@@ -2,9 +2,7 @@ package com.graduationproject.studentinformationsystem.university.teacher.model.
 
 import com.graduationproject.studentinformationsystem.common.model.dto.request.SisBasePersonalInfoRequest;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 public class TeacherPersonalInfoRequest extends SisBasePersonalInfoRequest {
 }

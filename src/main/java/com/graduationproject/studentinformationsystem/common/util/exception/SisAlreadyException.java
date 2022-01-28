@@ -7,7 +7,7 @@ public class SisAlreadyException extends Exception {
     @Serial
     private static final long serialVersionUID = -2380271036959211088L;
 
-    public SisAlreadyException(String message) {
+    public SisAlreadyException(final String message) {
         super(message);
     }
 }

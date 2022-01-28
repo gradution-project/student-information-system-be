@@ -12,19 +12,23 @@ public class SisWarnLogMessageUtil {
     private final String apiName;
 
 
-    public void notFoundById(Long id) {
+    public void notFoundById(final Long id) {
         log.warn("{} Not Found by ID! id:{}", apiName, id);
     }
 
-    public void notFoundByName(String name) {
+    public void notFoundByName(final String name) {
         log.warn("{} Not Found by Name! name:{}", apiName, name);
     }
 
-    public void notFoundByIdAndStatus(Long id, String status) {
+    public void notFoundByIdAndStatus(final Long id, final String status) {
         log.warn("{} Not Found by ID! id:{} status:{}", apiName, id, status);
     }
 
-    public void notFoundAllIdsByDepartmentId(Long departmentId) {
+    public void notFoundAllIdsByStatus(final String status) {
+        log.warn("{}s Not Found by Status! status:{}", apiName, status);
+    }
+
+    public void notFoundAllIdsByDepartmentId(final Long departmentId) {
         log.warn("{} IDs Not Found by Department ID! departmentId:{}", apiName, departmentId);
     }
 }

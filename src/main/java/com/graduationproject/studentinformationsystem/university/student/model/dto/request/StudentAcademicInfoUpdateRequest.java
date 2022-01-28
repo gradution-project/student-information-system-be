@@ -1,14 +1,13 @@
 package com.graduationproject.studentinformationsystem.university.student.model.dto.request;
 
+import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @Getter
-@Setter
-public class StudentInfoRequest {
+public class StudentAcademicInfoUpdateRequest {
 
     @Valid
     @NotNull
@@ -16,5 +15,5 @@ public class StudentInfoRequest {
 
     @Valid
     @NotNull
-    private StudentPersonalInfoRequest personalInfoRequest;
+    private SisOperationInfoRequest operationInfoRequest;
 }

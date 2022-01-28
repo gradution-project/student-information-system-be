@@ -9,19 +9,19 @@ public class TeacherException extends SisException {
     private TeacherException() {
     }
 
-    public static void throwNotExistException(Long teacherId) throws SisNotExistException {
+    public static void throwNotExistException(final Long teacherId) throws SisNotExistException {
         throwNotExistException("TEACHER IS NOT EXIST! teacherId:" + teacherId);
     }
 
-    public static void throwAlreadyActiveException(Long teacherId) throws SisAlreadyException {
+    public static void throwAlreadyActiveException(final Long teacherId) throws SisAlreadyException {
         throwAlreadyException("TEACHER IS ALREADY ACTIVE! teacherId:" + teacherId);
     }
 
-    public static void throwAlreadyPassiveException(Long teacherId) throws SisAlreadyException {
+    public static void throwAlreadyPassiveException(final Long teacherId) throws SisAlreadyException {
         throwAlreadyException("TEACHER IS ALREADY PASSIVE! teacherId:" + teacherId);
     }
 
-    public static void throwAlreadyDeletedException(Long teacherId) throws SisAlreadyException {
+    public static void throwAlreadyDeletedException(final Long teacherId) throws SisAlreadyException {
         throwAlreadyException("TEACHER IS ALREADY DELETED! teacherId:" + teacherId);
     }
 }

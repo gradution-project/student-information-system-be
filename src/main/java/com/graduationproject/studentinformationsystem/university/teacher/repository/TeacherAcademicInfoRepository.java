@@ -11,11 +11,11 @@ public interface TeacherAcademicInfoRepository {
 
     TeacherAcademicInfoEntity getTeacherAcademicInfoById(Long teacherId);
 
-    void saveTeacherAcademicInfo(TeacherAcademicInfoEntity entity);
+    void saveTeacherAcademicInfo(TeacherAcademicInfoEntity academicInfoEntity);
 
-    void updateTeacherAcademicInfo(TeacherAcademicInfoEntity entity);
+    void updateTeacherAcademicInfo(TeacherAcademicInfoEntity academicInfoEntity);
 
-    void updateTeacherAcademicInfoStatus(TeacherAcademicInfoEntity entity);
+    void updateTeacherAcademicInfoStatus(TeacherAcademicInfoEntity academicInfoEntity);
 
     List<Long> getAllTeacherIdsByDepartmentId(Long departmentId);
 

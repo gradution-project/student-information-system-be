@@ -4,13 +4,11 @@ import com.graduationproject.studentinformationsystem.common.util.controller.res
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.university.teacher.controller.endpoint.TeacherControllerEndpoint;
-import com.graduationproject.studentinformationsystem.university.teacher.model.dto.request.TeacherAcademicInfoRequest;
-import com.graduationproject.studentinformationsystem.university.teacher.model.dto.request.TeacherInfoRequest;
-import com.graduationproject.studentinformationsystem.university.teacher.model.dto.request.TeacherPersonalInfoRequest;
+import com.graduationproject.studentinformationsystem.university.teacher.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.response.TeacherAcademicInfoResponse;
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.response.TeacherInfoDetailResponse;
+import com.graduationproject.studentinformationsystem.university.teacher.model.dto.response.TeacherInfoResponse;
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.response.TeacherPersonalInfoResponse;
-import com.graduationproject.studentinformationsystem.university.teacher.model.dto.response.TeacherResponse;
 import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherStatus;
 import com.graduationproject.studentinformationsystem.university.teacher.service.TeacherService;
 import io.swagger.annotations.Api;
@@ -36,71 +34,81 @@ public class TeacherController {
 
     @GetMapping
     @ApiOperation(value = "Get All Teacher By Status")
-    public ResponseEntity<SisBaseApiResponse<List<TeacherResponse>>> getAllTeachersByStatus(TeacherStatus status) {
+    public ResponseEntity<SisBaseApiResponse<List<TeacherInfoResponse>>> getAllTeachersByStatus(
+            final TeacherStatus status) {
 
-        List<TeacherResponse> teacherResponses = teacherService.getAllTeachersByStatus(status);
-        return successResponse(teacherResponses);
+        final List<TeacherInfoResponse> infoResponses = teacherService.getAllTeachersByStatus(status);
+        return successResponse(infoResponses);
     }
 
     @GetMapping(TeacherControllerEndpoint.TEACHER_ID)
     @ApiOperation(value = "Get Teacher Detail By Teacher ID")
-    public ResponseEntity<SisBaseApiResponse<TeacherInfoDetailResponse>> getTeacherDetailById(@PathVariable Long teacherId)
+    public ResponseEntity<SisBaseApiResponse<TeacherInfoDetailResponse>> getTeacherDetailById(
+            @PathVariable final Long teacherId)
             throws SisNotExistException {
 
-        TeacherInfoDetailResponse teacherInfoDetailResponse = teacherService.getTeacherDetailById(teacherId);
-        return successResponse(teacherInfoDetailResponse);
+        final TeacherInfoDetailResponse infoDetailResponse = teacherService.getTeacherDetailById(teacherId);
+        return successResponse(infoDetailResponse);
     }
 
     @PostMapping(TeacherControllerEndpoint.SAVE)
     @ApiOperation(value = "Save Teacher")
     public ResponseEntity<SisBaseApiResponse<TeacherInfoDetailResponse>> saveTeacher(
-            @Valid @RequestBody TeacherInfoRequest teacherInfoRequest) {
+            @Valid @RequestBody final TeacherSaveRequest saveRequest) {
 
-        TeacherInfoDetailResponse teacherInfoDetailResponse = teacherService.saveTeacher(teacherInfoRequest);
-        return successResponse(teacherInfoDetailResponse);
+        final TeacherInfoDetailResponse infoDetailResponse = teacherService.saveTeacher(saveRequest);
+        return successResponse(infoDetailResponse);
     }
 
     @PutMapping(TeacherControllerEndpoint.UPDATE_ACADEMIC_INFO_BY_TEACHER_ID)
     @ApiOperation(value = "Update Teacher Academic Info")
     public ResponseEntity<SisBaseApiResponse<TeacherAcademicInfoResponse>> updateTeacherAcademicInfo(
-            @PathVariable Long teacherId,
-            @Valid @RequestBody TeacherAcademicInfoRequest academicInfoRequest)
+            @PathVariable final Long teacherId,
+            @Valid @RequestBody final TeacherAcademicInfoUpdateRequest academicInfoUpdateRequest)
             throws SisNotExistException {
 
-        return successResponse(teacherService.updateTeacherAcademicInfo(teacherId, academicInfoRequest));
+        final TeacherAcademicInfoResponse academicInfoResponse = teacherService.updateTeacherAcademicInfo(teacherId, academicInfoUpdateRequest);
+        return successResponse(academicInfoResponse);
     }
 
     @PutMapping(TeacherControllerEndpoint.UPDATE_PERSONAL_INFO_BY_TEACHER_ID)
     @ApiOperation(value = "Update Teacher Personal Info")
     public ResponseEntity<SisBaseApiResponse<TeacherPersonalInfoResponse>> updateTeacherPersonalInfo(
-            @PathVariable Long teacherId,
-            @Valid @RequestBody TeacherPersonalInfoRequest personalInfoRequest)
+            @PathVariable final Long teacherId,
+            @Valid @RequestBody final TeacherPersonalInfoUpdateRequest personalInfoUpdateRequest)
             throws SisNotExistException {
 
-        return successResponse(teacherService.updateTeacherPersonalInfo(teacherId, personalInfoRequest));
+        final TeacherPersonalInfoResponse personalInfoResponse = teacherService.updateTeacherPersonalInfo(teacherId, personalInfoUpdateRequest);
+        return successResponse(personalInfoResponse);
     }
 
     @DeleteMapping(TeacherControllerEndpoint.DELETE_BY_TEACHER_ID)
     @ApiOperation(value = "Delete Teacher")
-    public ResponseEntity<SisBaseApiResponse<TeacherResponse>> deleteTeacher(@PathVariable Long teacherId)
+    public ResponseEntity<SisBaseApiResponse<TeacherInfoResponse>> deleteTeacher(
+            @Valid @RequestBody final TeacherDeleteRequest deleteRequest)
             throws SisNotExistException, SisAlreadyException {
 
-        return successResponse(teacherService.deleteTeacher(teacherId));
+        final TeacherInfoResponse infoResponse = teacherService.deleteTeacher(deleteRequest);
+        return successResponse(infoResponse);
     }
 
     @PatchMapping(TeacherControllerEndpoint.PASSIVATE_BY_TEACHER_ID)
     @ApiOperation(value = "Passivate Teacher")
-    public ResponseEntity<SisBaseApiResponse<TeacherResponse>> passivateTeacher(@PathVariable Long teacherId)
+    public ResponseEntity<SisBaseApiResponse<TeacherInfoResponse>> passivateTeacher(
+            @Valid @RequestBody final TeacherPassivateRequest passivateRequest)
             throws SisNotExistException, SisAlreadyException {
 
-        return successResponse(teacherService.passivateTeacher(teacherId));
+        final TeacherInfoResponse infoResponse = teacherService.passivateTeacher(passivateRequest);
+        return successResponse(infoResponse);
     }
 
     @PatchMapping(TeacherControllerEndpoint.ACTIVATE_BY_TEACHER_ID)
     @ApiOperation(value = "Activate Teacher")
-    public ResponseEntity<SisBaseApiResponse<TeacherResponse>> activateTeacher(@PathVariable Long teacherId)
+    public ResponseEntity<SisBaseApiResponse<TeacherInfoResponse>> activateTeacher(
+            @Valid @RequestBody final TeacherActivateRequest activateRequest)
             throws SisNotExistException, SisAlreadyException {
 
-        return successResponse(teacherService.activateTeacher(teacherId));
+        final TeacherInfoResponse infoResponse = teacherService.activateTeacher(activateRequest);
+        return successResponse(infoResponse);
     }
 }

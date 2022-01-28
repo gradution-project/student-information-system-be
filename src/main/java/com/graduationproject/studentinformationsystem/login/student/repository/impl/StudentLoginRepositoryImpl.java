@@ -23,7 +23,7 @@ public class StudentLoginRepositoryImpl implements StudentLoginRepository {
 
     @Override
     public Integer getFailCounter(Long studentId) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(GET_STUDENT_LOGIN_FAIL_COUNTER)) {
+        try (Connection connection = sql2o.open(); Query query = connection.createQuery(GET_STUDENT_LOGIN_FAIL_COUNTER)) {
 
             return query.addParameter(STUDENT_ID.getModelName(), studentId)
                     .setColumnMappings(COLUMN_MAPPINGS)
@@ -38,7 +38,7 @@ public class StudentLoginRepositoryImpl implements StudentLoginRepository {
 
     @Override
     public String getPassword(Long studentId) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(GET_STUDENT_PASSWORD)) {
+        try (Connection connection = sql2o.open(); Query query = connection.createQuery(GET_STUDENT_PASSWORD)) {
 
             return query.addParameter(STUDENT_ID.getModelName(), studentId)
                     .setColumnMappings(COLUMN_MAPPINGS)
@@ -53,7 +53,7 @@ public class StudentLoginRepositoryImpl implements StudentLoginRepository {
 
     @Override
     public void saveFirstPassword(Long studentId, String password) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(SAVE_STUDENT_FIRST_PASSWORD)) {
+        try (Connection connection = sql2o.open(); Query query = connection.createQuery(SAVE_STUDENT_FIRST_PASSWORD)) {
 
             query.addParameter(STUDENT_ID.getModelName(), studentId)
                     .addParameter(PASSWORD.getModelName(), passwordService.encodePassword(password))
@@ -69,7 +69,7 @@ public class StudentLoginRepositoryImpl implements StudentLoginRepository {
 
     @Override
     public void updatePassword(Long studentId, String password) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(UPDATE_STUDENT_PASSWORD)) {
+        try (Connection connection = sql2o.open(); Query query = connection.createQuery(UPDATE_STUDENT_PASSWORD)) {
 
             query.addParameter(STUDENT_ID.getModelName(), studentId)
                     .addParameter(PASSWORD.getModelName(), passwordService.encodePassword(password))
@@ -84,7 +84,7 @@ public class StudentLoginRepositoryImpl implements StudentLoginRepository {
 
     @Override
     public void updateLoginInfo(StudentLoginInfoEntity loginInfoEntity) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(UPDATE_STUDENT_LOGIN_INFO)) {
+        try (Connection connection = sql2o.open(); Query query = connection.createQuery(UPDATE_STUDENT_LOGIN_INFO)) {
 
             query.addParameter(STUDENT_ID.getModelName(), loginInfoEntity.getStudentId())
                     .addParameter(FAIL_COUNTER.getModelName(), loginInfoEntity.getFailCounter())
@@ -100,7 +100,7 @@ public class StudentLoginRepositoryImpl implements StudentLoginRepository {
 
     @Override
     public void updateFailCounter(Long studentId) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(UPDATE_STUDENT_FAIL_COUNTER)) {
+        try (Connection connection = sql2o.open(); Query query = connection.createQuery(UPDATE_STUDENT_FAIL_COUNTER)) {
 
             query.addParameter(STUDENT_ID.getModelName(), studentId)
                     .addParameter(FAIL_COUNTER.getModelName(), getFailCounter(studentId) + 1)
@@ -116,7 +116,7 @@ public class StudentLoginRepositoryImpl implements StudentLoginRepository {
 //    TODO: Change or Update Password
 //    @Override
 //    public void updatePassword(StudentLoginEntity loginInfoEntity) {
-//        try (Connection con = sql2o.open(); Query query = con.createQuery(UPDATE_STUDENT_PASSWORD)) {
+//        try (Connection connection = sql2o.open(); Query query = connection.createQuery(UPDATE_STUDENT_PASSWORD)) {
 //
 //            query.addParameter(STUDENT_ID.getModelName(), loginInfoEntity.getStudentId())
 //                    .addParameter(PASSWORD.getModelName(), loginInfoEntity.getPassword())

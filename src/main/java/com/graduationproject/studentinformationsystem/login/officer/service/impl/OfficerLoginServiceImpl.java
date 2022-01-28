@@ -15,12 +15,12 @@ import org.springframework.stereotype.Service;
 public class OfficerLoginServiceImpl implements OfficerLoginService {
 
     @Override
-    public LoginResponse login(OfficerLoginRequest loginRequest) {
+    public LoginResponse login(final OfficerLoginRequest loginRequest) {
         return null;
     }
 
     @Override
-    public ForgotPasswordResponse forgotPassword(OfficerForgotPasswordRequest forgotPasswordRequest) throws SisNotExistException {
+    public ForgotPasswordResponse forgotPassword(final OfficerForgotPasswordRequest forgotPasswordRequest) throws SisNotExistException {
         return null;
     }
 

@@ -11,9 +11,9 @@ public interface TeacherPersonalInfoRepository {
 
     TeacherPersonalInfoEntity getTeacherPersonalInfoById(Long teacherId);
 
-    void saveTeacherPersonalInfo(TeacherPersonalInfoEntity entity);
+    void saveTeacherPersonalInfo(TeacherPersonalInfoEntity personalInfoEntity);
 
-    void updateTeacherPersonalInfo(TeacherPersonalInfoEntity entity);
+    void updateTeacherPersonalInfo(TeacherPersonalInfoEntity personalInfoEntity);
 
-    void updateTeacherPersonalInfoStatus(TeacherPersonalInfoEntity entity);
+    void updateTeacherPersonalInfoStatus(TeacherPersonalInfoEntity personalInfoEntity);
 }

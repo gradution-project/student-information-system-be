@@ -21,33 +21,36 @@ import static com.graduationproject.studentinformationsystem.common.util.excepti
 public class SisExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception,
-                                                                  HttpHeaders headers,
-                                                                  HttpStatus status,
-                                                                  WebRequest request) {
-        List<SisSubError> subErrors = new ArrayList<>();
-        exception.getBindingResult().getFieldErrors().forEach(fieldError -> {
-            subErrors.add(generateSubError(fieldError));
-        });
-        SisError error = generateErrorWithSubErrors(VALIDATION_ERROR, status, subErrors);
-        return new ResponseEntity<>(error, status);
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(final MethodArgumentNotValidException exception,
+                                                                  final HttpHeaders httpHeaders,
+                                                                  final HttpStatus httpStatus,
+                                                                  final WebRequest webRequest) {
+
+        final List<SisSubError> subErrors = new ArrayList<>();
+        exception.getBindingResult().getFieldErrors().forEach(fieldError -> subErrors.add(generateSubError(fieldError)));
+
+        final SisError error = generateErrorWithSubErrors(VALIDATION_ERROR, httpStatus, subErrors);
+        return new ResponseEntity<>(error, httpStatus);
     }
 
     @ExceptionHandler(SisDatabaseException.class)
-    protected ResponseEntity<Object> handleDatabaseError(SisDatabaseException exception) {
-        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        return new ResponseEntity<>(generateErrorWithDetail(exception.getMessage(), status, exception.getCause().getMessage()), status);
+    protected ResponseEntity<Object> handleDatabaseError(final SisDatabaseException databaseException) {
+        final HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        final SisError error = generateErrorWithDetail(databaseException.getMessage(), httpStatus, databaseException.getCause().getMessage());
+        return new ResponseEntity<>(error, httpStatus);
     }
 
     @ExceptionHandler(SisNotExistException.class)
-    protected ResponseEntity<Object> handleNotExist(SisNotExistException exception) {
-        HttpStatus status = HttpStatus.NOT_FOUND;
-        return new ResponseEntity<>(generateError(exception.getMessage(), status), status);
+    protected ResponseEntity<Object> handleNotExist(final SisNotExistException exception) {
+        final HttpStatus httpStatus = HttpStatus.NOT_FOUND;
+        final SisError error = generateError(exception.getMessage(), httpStatus);
+        return new ResponseEntity<>(error, httpStatus);
     }
 
     @ExceptionHandler(SisAlreadyException.class)
-    protected ResponseEntity<Object> handleAlready(SisAlreadyException exception) {
-        HttpStatus status = HttpStatus.CONFLICT;
-        return new ResponseEntity<>(generateError(exception.getMessage(), status), status);
+    protected ResponseEntity<Object> handleAlready(final SisAlreadyException exception) {
+        final HttpStatus httpStatus = HttpStatus.CONFLICT;
+        final SisError error = generateError(exception.getMessage(), httpStatus);
+        return new ResponseEntity<>(error, httpStatus);
     }
 }

@@ -4,13 +4,11 @@ import com.graduationproject.studentinformationsystem.common.util.controller.res
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.university.student.controller.endpoint.StudentControllerEndpoint;
-import com.graduationproject.studentinformationsystem.university.student.model.dto.request.StudentAcademicInfoRequest;
-import com.graduationproject.studentinformationsystem.university.student.model.dto.request.StudentInfoRequest;
-import com.graduationproject.studentinformationsystem.university.student.model.dto.request.StudentPersonalInfoRequest;
+import com.graduationproject.studentinformationsystem.university.student.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.student.model.dto.response.StudentAcademicInfoResponse;
 import com.graduationproject.studentinformationsystem.university.student.model.dto.response.StudentInfoDetailResponse;
+import com.graduationproject.studentinformationsystem.university.student.model.dto.response.StudentInfoResponse;
 import com.graduationproject.studentinformationsystem.university.student.model.dto.response.StudentPersonalInfoResponse;
-import com.graduationproject.studentinformationsystem.university.student.model.dto.response.StudentResponse;
 import com.graduationproject.studentinformationsystem.university.student.model.enums.StudentStatus;
 import com.graduationproject.studentinformationsystem.university.student.service.StudentService;
 import io.swagger.annotations.Api;
@@ -36,79 +34,91 @@ public class StudentController {
 
     @GetMapping
     @ApiOperation(value = "Get All Student By Status")
-    public ResponseEntity<SisBaseApiResponse<List<StudentResponse>>> getAllStudentsByStatus(StudentStatus status) {
+    public ResponseEntity<SisBaseApiResponse<List<StudentInfoResponse>>> getAllStudentsByStatus(
+            final StudentStatus status) {
 
-        List<StudentResponse> studentResponseList = studentService.getAllStudentsByStatus(status);
-        return successResponse(studentResponseList);
+        final List<StudentInfoResponse> infoResponses = studentService.getAllStudentsByStatus(status);
+        return successResponse(infoResponses);
     }
 
     @GetMapping(StudentControllerEndpoint.STUDENT_ID)
     @ApiOperation(value = "Get Student Detail By Student ID")
-    public ResponseEntity<SisBaseApiResponse<StudentInfoDetailResponse>> getStudentDetailById(@PathVariable Long studentId)
+    public ResponseEntity<SisBaseApiResponse<StudentInfoDetailResponse>> getStudentDetailById(
+            @PathVariable final Long studentId)
             throws SisNotExistException {
 
-        StudentInfoDetailResponse studentInfoDetailResponse = studentService.getStudentDetailById(studentId);
-        return successResponse(studentInfoDetailResponse);
+        final StudentInfoDetailResponse infoDetailResponse = studentService.getStudentDetailById(studentId);
+        return successResponse(infoDetailResponse);
     }
 
     @PostMapping(StudentControllerEndpoint.SAVE)
     @ApiOperation(value = "Save Student")
     public ResponseEntity<SisBaseApiResponse<StudentInfoDetailResponse>> saveStudent(
-            @RequestBody @Valid StudentInfoRequest studentInfoRequest) {
+            @RequestBody @Valid final StudentSaveRequest saveRequest) {
 
-        StudentInfoDetailResponse studentInfoDetailResponse = studentService.saveStudent(studentInfoRequest);
-        return successResponse(studentInfoDetailResponse);
+        final StudentInfoDetailResponse infoDetailResponse = studentService.saveStudent(saveRequest);
+        return successResponse(infoDetailResponse);
     }
 
     @PutMapping(StudentControllerEndpoint.UPDATE_ACADEMIC_INFO_BY_STUDENT_ID)
     @ApiOperation(value = "Update Student Academic Info")
     public ResponseEntity<SisBaseApiResponse<StudentAcademicInfoResponse>> updateStudentAcademicInfo(
-            @PathVariable Long studentId,
-            @RequestBody @Valid StudentAcademicInfoRequest academicInfoRequest)
+            @PathVariable final Long studentId,
+            @RequestBody @Valid final StudentAcademicInfoUpdateRequest academicInfoUpdateRequest)
             throws SisNotExistException {
 
-        return successResponse(studentService.updateStudentAcademicInfo(studentId, academicInfoRequest));
+        final StudentAcademicInfoResponse academicInfoResponse = studentService.updateStudentAcademicInfo(studentId, academicInfoUpdateRequest);
+        return successResponse(academicInfoResponse);
     }
 
     @PutMapping(StudentControllerEndpoint.UPDATE_PERSONAL_INFO_BY_STUDENT_ID)
     @ApiOperation(value = "Update Student Personal Info")
     public ResponseEntity<SisBaseApiResponse<StudentPersonalInfoResponse>> updateStudentPersonalInfo(
-            @PathVariable Long studentId,
-            @RequestBody @Valid StudentPersonalInfoRequest personalInfoRequest)
+            @PathVariable final Long studentId,
+            @RequestBody @Valid final StudentPersonalInfoUpdateRequest personalInfoUpdateRequest)
             throws SisNotExistException {
 
-        return successResponse(studentService.updateStudentPersonalInfo(studentId, personalInfoRequest));
+        final StudentPersonalInfoResponse personalInfoResponse = studentService.updateStudentPersonalInfo(studentId, personalInfoUpdateRequest);
+        return successResponse(personalInfoResponse);
     }
 
     @DeleteMapping(StudentControllerEndpoint.DELETE_BY_STUDENT_ID)
     @ApiOperation(value = "Delete Student")
-    public ResponseEntity<SisBaseApiResponse<StudentResponse>> deleteStudent(@PathVariable Long studentId)
+    public ResponseEntity<SisBaseApiResponse<StudentInfoResponse>> deleteStudent(
+            @RequestBody @Valid final StudentDeleteRequest deleteRequest)
             throws SisNotExistException, SisAlreadyException {
 
-        return successResponse(studentService.deleteStudent(studentId));
+        final StudentInfoResponse infoResponse = studentService.deleteStudent(deleteRequest);
+        return successResponse(infoResponse);
     }
 
     @PatchMapping(StudentControllerEndpoint.PASSIVATE_BY_STUDENT_ID)
     @ApiOperation(value = "Passivate Student")
-    public ResponseEntity<SisBaseApiResponse<StudentResponse>> passivateStudent(@PathVariable Long studentId)
+    public ResponseEntity<SisBaseApiResponse<StudentInfoResponse>> passivateStudent(
+            @RequestBody @Valid final StudentPassivateRequest passivateRequest)
             throws SisNotExistException, SisAlreadyException {
 
-        return successResponse(studentService.passivateStudent(studentId));
+        final StudentInfoResponse infoResponse = studentService.passivateStudent(passivateRequest);
+        return successResponse(infoResponse);
     }
 
     @PatchMapping(StudentControllerEndpoint.ACTIVATE_BY_STUDENT_ID)
     @ApiOperation(value = "Activate Student")
-    public ResponseEntity<SisBaseApiResponse<StudentResponse>> activateStudent(@PathVariable Long studentId)
+    public ResponseEntity<SisBaseApiResponse<StudentInfoResponse>> activateStudent(
+            @RequestBody @Valid final StudentActivateRequest activateRequest)
             throws SisNotExistException, SisAlreadyException {
 
-        return successResponse(studentService.activateStudent(studentId));
+        final StudentInfoResponse infoResponse = studentService.activateStudent(activateRequest);
+        return successResponse(infoResponse);
     }
 
     @PatchMapping(StudentControllerEndpoint.GRADUATE_BY_STUDENT_ID)
     @ApiOperation(value = "Graduate Student")
-    public ResponseEntity<SisBaseApiResponse<StudentResponse>> graduateStudent(@PathVariable Long studentId)
+    public ResponseEntity<SisBaseApiResponse<StudentInfoResponse>> graduateStudent(
+            @RequestBody @Valid final StudentGraduateRequest graduateRequest)
             throws SisNotExistException, SisAlreadyException {
 
-        return successResponse(studentService.graduateStudent(studentId));
+        final StudentInfoResponse infoResponse = studentService.graduateStudent(graduateRequest);
+        return successResponse(infoResponse);
     }
 }

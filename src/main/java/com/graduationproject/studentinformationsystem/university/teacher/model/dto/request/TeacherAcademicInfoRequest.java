@@ -4,14 +4,17 @@ import com.graduationproject.studentinformationsystem.common.util.validation.id.
 import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherDegree;
 import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherRole;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serial;
+import java.io.Serializable;
 
 @Getter
-@Setter
-public class TeacherAcademicInfoRequest {
+public class TeacherAcademicInfoRequest implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -672637680560977958L;
 
     @NotNull
     @DepartmentID

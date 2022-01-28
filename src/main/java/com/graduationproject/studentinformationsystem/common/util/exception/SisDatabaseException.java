@@ -12,7 +12,7 @@ public class SisDatabaseException extends RuntimeException {
     @Serial
     private static final long serialVersionUID = -4092737528643939521L;
 
-    public SisDatabaseException(Exception exception) {
+    public SisDatabaseException(final Exception exception) {
         super(DATABASE_ERROR, exception);
         log.error(exception.getMessage());
     }

@@ -9,7 +9,7 @@ import java.util.Properties;
 
 @Getter
 @Builder
-public class MailEntity {
+public class SisMailEntity {
 
     private String senderName;
 

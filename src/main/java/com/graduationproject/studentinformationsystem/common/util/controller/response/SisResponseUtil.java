@@ -10,12 +10,20 @@ public class SisResponseUtil {
     private SisResponseUtil() {
     }
 
-    public static <T> ResponseEntity<SisBaseApiResponse<T>> successResponse(T result) {
+    public static ResponseEntity<SisApiResponse> successResponse() {
+        return new ResponseEntity<>(
+                SisApiResponse.builder()
+                        .requestTime(LocalDateTime.now())
+                        .httpStatus(HttpStatus.OK)
+                        .isSuccess(true).build(), HttpStatus.OK);
+    }
+
+    public static <T> ResponseEntity<SisBaseApiResponse<T>> successResponse(final T response) {
         return new ResponseEntity<>(
                 SisBaseApiResponse.<T>builder()
                         .requestTime(LocalDateTime.now())
                         .httpStatus(HttpStatus.OK)
                         .isSuccess(true)
-                        .result(result).build(), HttpStatus.OK);
+                        .response(response).build(), HttpStatus.OK);
     }
 }
