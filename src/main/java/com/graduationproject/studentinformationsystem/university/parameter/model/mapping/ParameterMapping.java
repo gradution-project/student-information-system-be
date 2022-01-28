@@ -17,5 +17,6 @@ public enum ParameterMapping {
     private final String columnName;
     private final String modelName;
 
-    public static final Map<String, String> COLUMN_MAPPINGS = Stream.of(values()).collect(Collectors.toMap(ParameterMapping::getColumnName, ParameterMapping::getModelName));
+    public static final Map<String, String> COLUMN_MAPPINGS = Stream.of(values())
+            .collect(Collectors.toMap(ParameterMapping::getColumnName, ParameterMapping::getModelName));
 }
