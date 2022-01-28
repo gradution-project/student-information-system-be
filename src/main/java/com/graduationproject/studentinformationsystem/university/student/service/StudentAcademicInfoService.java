@@ -19,7 +19,7 @@ public interface StudentAcademicInfoService {
                                  SisOperationInfoRequest operationInfoRequest);
 
     StudentAcademicInfoResponse updateStudentAcademicInfo(Long studentId,
-                                                          StudentUpdateAcademicInfoRequest updateAcademicInfoRequest);
+                                                          StudentAcademicInfoUpdateRequest academicInfoUpdateRequest);
 
     void deleteStudentAcademicInfo(StudentDeleteRequest deleteRequest);
 

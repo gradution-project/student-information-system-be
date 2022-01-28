@@ -11,9 +11,9 @@ public interface StudentPersonalInfoRepository {
 
     StudentPersonalInfoEntity getStudentPersonalInfoById(Long studentId);
 
-    void saveStudentPersonalInfo(StudentPersonalInfoEntity entity);
+    void saveStudentPersonalInfo(StudentPersonalInfoEntity personalInfoEntity);
 
-    void updateStudentPersonalInfo(StudentPersonalInfoEntity entity);
+    void updateStudentPersonalInfo(StudentPersonalInfoEntity personalInfoEntity);
 
-    void updateStudentPersonalInfoStatus(StudentPersonalInfoEntity entity);
+    void updateStudentPersonalInfoStatus(StudentPersonalInfoEntity personalInfoEntity);
 }

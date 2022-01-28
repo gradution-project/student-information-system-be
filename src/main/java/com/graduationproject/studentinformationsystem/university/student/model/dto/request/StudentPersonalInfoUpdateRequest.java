@@ -7,7 +7,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @Getter
-public class StudentUpdatePersonalInfoRequest {
+public class StudentPersonalInfoUpdateRequest {
 
     @Valid
     @NotNull

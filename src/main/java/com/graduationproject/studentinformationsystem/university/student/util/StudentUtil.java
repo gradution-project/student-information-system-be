@@ -21,12 +21,12 @@ public class StudentUtil {
     /**
      * Student ID : registrationYear + departmentId + studentNumber
      */
-    public static Long generateStudentId(Long departmentId, List<Long> studentIds) {
-        String registrationYear = SisUtil.getCurrentYear();
-        Long prefixStudentId = Long.parseLong(registrationYear + departmentId);
+    public static Long generateStudentId(final Long departmentId, final List<Long> studentIds) {
+        final String registrationYear = SisUtil.getCurrentYear();
+        final Long prefixStudentId = Long.parseLong(registrationYear + departmentId);
 
         while (true) {
-            Long studentId = SisUtil.generateRandomIdWithPrefixId(prefixStudentId);
+            final Long studentId = SisUtil.generateRandomIdWithPrefixId(prefixStudentId);
             if (SisUtil.isNotExistIdInIdList(studentId, studentIds)) {
                 return studentId;
             }

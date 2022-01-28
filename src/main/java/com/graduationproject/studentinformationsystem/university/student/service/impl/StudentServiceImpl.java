@@ -1,5 +1,6 @@
 package com.graduationproject.studentinformationsystem.university.student.service.impl;
 
+import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.university.mail.service.StudentMailService;
@@ -8,8 +9,8 @@ import com.graduationproject.studentinformationsystem.university.student.model.d
 import com.graduationproject.studentinformationsystem.university.student.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.student.model.dto.response.StudentAcademicInfoResponse;
 import com.graduationproject.studentinformationsystem.university.student.model.dto.response.StudentInfoDetailResponse;
+import com.graduationproject.studentinformationsystem.university.student.model.dto.response.StudentInfoResponse;
 import com.graduationproject.studentinformationsystem.university.student.model.dto.response.StudentPersonalInfoResponse;
-import com.graduationproject.studentinformationsystem.university.student.model.dto.response.StudentResponse;
 import com.graduationproject.studentinformationsystem.university.student.model.enums.StudentStatus;
 import com.graduationproject.studentinformationsystem.university.student.model.exception.StudentException;
 import com.graduationproject.studentinformationsystem.university.student.service.StudentAcademicInfoService;
@@ -30,57 +31,56 @@ public class StudentServiceImpl implements StudentService {
     private final StudentMailService mailService;
 
     @Override
-    public List<StudentResponse> getAllStudentsByStatus(StudentStatus status) {
-        List<StudentAcademicInfoResponse> academicInfoResponseList = academicInfoService.getAllStudentAcademicInfosByStatus(status);
-        List<StudentPersonalInfoResponse> personalInfoResponseList = personalInfoService.getAllStudentPersonalInfosByStatus(status);
-        return StudentResponseConverter.infoResponsesListToResponseList(academicInfoResponseList, personalInfoResponseList);
+    public List<StudentInfoResponse> getAllStudentsByStatus(final StudentStatus status) {
+        final List<StudentAcademicInfoResponse> academicInfoResponses = academicInfoService.getAllStudentAcademicInfosByStatus(status);
+        final List<StudentPersonalInfoResponse> personalInfoResponses = personalInfoService.getAllStudentPersonalInfosByStatus(status);
+        return StudentResponseConverter.infoResponsesListToResponseList(academicInfoResponses, personalInfoResponses);
     }
 
     @Override
-    public StudentInfoDetailResponse getStudentDetailById(Long studentId) throws SisNotExistException {
+    public StudentInfoDetailResponse getStudentDetailById(final Long studentId) throws SisNotExistException {
         ifStudentIsNotExistThrowNotExistException(studentId);
         return getStudentInfoResponse(studentId);
     }
 
     @Override
-    public StudentInfoDetailResponse saveStudent(StudentSaveInfoRequest saveInfoRequest) {
-        checkBeforeSaving(saveInfoRequest);
+    public StudentInfoDetailResponse saveStudent(final StudentSaveRequest saveRequest) {
+        checkBeforeSaving(saveRequest);
 
-        Long studentId = generateStudentId(saveInfoRequest.getAcademicInfoRequest().getDepartmentId());
-        String studentEmail = generateStudentEmail(saveInfoRequest);
+        final Long studentId = generateStudentId(saveRequest.getAcademicInfoRequest().getDepartmentId());
+        final String studentEmail = generateStudentEmail(saveRequest);
+        final StudentAcademicInfoRequest academicInfoRequest = saveRequest.getAcademicInfoRequest();
+        final StudentPersonalInfoRequest personalInfoRequest = saveRequest.getPersonalInfoRequest();
+        final SisOperationInfoRequest operationInfoRequest = saveRequest.getOperationInfoRequest();
 
-        academicInfoService.saveStudentAcademicInfo(studentId, studentEmail,
-                saveInfoRequest.getAcademicInfoRequest(),
-                saveInfoRequest.getOperationInfoRequest());
-        personalInfoService.saveStudentPersonalInfo(studentId,
-                saveInfoRequest.getPersonalInfoRequest(),
-                saveInfoRequest.getOperationInfoRequest());
+        academicInfoService.saveStudentAcademicInfo(studentId, studentEmail, academicInfoRequest, operationInfoRequest);
+        personalInfoService.saveStudentPersonalInfo(studentId, personalInfoRequest, operationInfoRequest);
 
-        StudentInfoDetailResponse studentInfoDetailResponse = getStudentInfoResponse(studentId);
+        final StudentInfoDetailResponse studentInfoDetailResponse = getStudentInfoResponse(studentId);
         mailService.sendFirstPasswordEmail(studentInfoDetailResponse);
         return studentInfoDetailResponse;
     }
 
     @Override
-    public StudentAcademicInfoResponse updateStudentAcademicInfo(Long studentId,
-                                                                 StudentUpdateAcademicInfoRequest updateAcademicInfoRequest)
+    public StudentAcademicInfoResponse updateStudentAcademicInfo(final Long studentId,
+                                                                 final StudentAcademicInfoUpdateRequest academicInfoUpdateRequest)
             throws SisNotExistException {
 
-        checkBeforeUpdatingAcademicInfo(studentId, updateAcademicInfoRequest);
-        return academicInfoService.updateStudentAcademicInfo(studentId, updateAcademicInfoRequest);
+        checkBeforeUpdatingAcademicInfo(studentId, academicInfoUpdateRequest);
+        return academicInfoService.updateStudentAcademicInfo(studentId, academicInfoUpdateRequest);
     }
 
     @Override
-    public StudentPersonalInfoResponse updateStudentPersonalInfo(Long studentId,
-                                                                 StudentUpdatePersonalInfoRequest updatePersonalInfoRequest)
+    public StudentPersonalInfoResponse updateStudentPersonalInfo(final Long studentId,
+                                                                 final StudentPersonalInfoUpdateRequest personalInfoUpdateRequest)
             throws SisNotExistException {
 
         checkBeforeUpdatingPersonalInfo(studentId);
-        return personalInfoService.updateStudentPersonalInfo(studentId, updatePersonalInfoRequest);
+        return personalInfoService.updateStudentPersonalInfo(studentId, personalInfoUpdateRequest);
     }
 
     @Override
-    public StudentResponse deleteStudent(StudentDeleteRequest deleteRequest)
+    public StudentInfoResponse deleteStudent(final StudentDeleteRequest deleteRequest)
             throws SisNotExistException, SisAlreadyException {
 
         checkBeforeDeleting(deleteRequest.getStudentId());
@@ -90,7 +90,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentResponse passivateStudent(StudentPassivateRequest passivateRequest)
+    public StudentInfoResponse passivateStudent(final StudentPassivateRequest passivateRequest)
             throws SisNotExistException, SisAlreadyException {
 
         checkBeforePassivating(passivateRequest.getStudentId());
@@ -100,7 +100,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentResponse activateStudent(StudentActivateRequest activateRequest)
+    public StudentInfoResponse activateStudent(final StudentActivateRequest activateRequest)
             throws SisNotExistException, SisAlreadyException {
 
         checkBeforeActivating(activateRequest.getStudentId());
@@ -110,7 +110,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentResponse graduateStudent(StudentGraduateRequest graduateRequest)
+    public StudentInfoResponse graduateStudent(final StudentGraduateRequest graduateRequest)
             throws SisNotExistException, SisAlreadyException {
 
         checkBeforeGraduating(graduateRequest.getStudentId());
@@ -120,26 +120,26 @@ public class StudentServiceImpl implements StudentService {
     }
 
 
-    private Long generateStudentId(Long departmentId) {
-        List<Long> studentIds = academicInfoService.getAllStudentIdsByDepartmentId(departmentId);
+    private Long generateStudentId(final Long departmentId) {
+        final List<Long> studentIds = academicInfoService.getAllStudentIdsByDepartmentId(departmentId);
         return StudentUtil.generateStudentId(departmentId, studentIds);
     }
 
-    private String generateStudentEmail(StudentSaveInfoRequest studentInfoRequest) {
-        return StudentUtil.generateStudentEmail(
-                studentInfoRequest.getPersonalInfoRequest().getName(),
-                studentInfoRequest.getPersonalInfoRequest().getSurname());
+    private String generateStudentEmail(final StudentSaveRequest studentInfoRequest) {
+        final String name = studentInfoRequest.getPersonalInfoRequest().getName();
+        final String surname = studentInfoRequest.getPersonalInfoRequest().getSurname();
+        return StudentUtil.generateStudentEmail(name, surname);
     }
 
-    private StudentInfoDetailResponse getStudentInfoResponse(Long studentId) {
-        StudentAcademicInfoResponse academicInfoResponse = academicInfoService.getStudentAcademicInfoById(studentId);
-        StudentPersonalInfoResponse personalInfoResponse = personalInfoService.getStudentPersonalInfoById(studentId);
+    private StudentInfoDetailResponse getStudentInfoResponse(final Long studentId) {
+        final StudentAcademicInfoResponse academicInfoResponse = academicInfoService.getStudentAcademicInfoById(studentId);
+        final StudentPersonalInfoResponse personalInfoResponse = personalInfoService.getStudentPersonalInfoById(studentId);
         return StudentInfoResponseConverter.convert(academicInfoResponse, personalInfoResponse);
     }
 
-    private StudentResponse getStudentResponse(Long studentId) {
-        StudentAcademicInfoResponse academicInfoResponse = academicInfoService.getStudentAcademicInfoById(studentId);
-        StudentPersonalInfoResponse personalInfoResponse = personalInfoService.getStudentPersonalInfoById(studentId);
+    private StudentInfoResponse getStudentResponse(final Long studentId) {
+        final StudentAcademicInfoResponse academicInfoResponse = academicInfoService.getStudentAcademicInfoById(studentId);
+        final StudentPersonalInfoResponse personalInfoResponse = personalInfoService.getStudentPersonalInfoById(studentId);
         return StudentResponseConverter.infoResponsesToResponse(academicInfoResponse, personalInfoResponse);
     }
 
@@ -148,42 +148,42 @@ public class StudentServiceImpl implements StudentService {
      * Checks Before Processing
      */
 
-    private void checkBeforeSaving(StudentSaveInfoRequest studentInfoRequest) {
+    private void checkBeforeSaving(final StudentSaveRequest studentInfoRequest) {
         ifDepartmentIdIsNotExistThrowNotExistException(studentInfoRequest.getAcademicInfoRequest().getDepartmentId());
     }
 
-    private void checkBeforeUpdatingAcademicInfo(Long studentId, StudentUpdateAcademicInfoRequest updateAcademicInfoRequest)
+    private void checkBeforeUpdatingAcademicInfo(final Long studentId, final StudentAcademicInfoUpdateRequest academicInfoUpdateRequest)
             throws SisNotExistException {
 
         ifStudentIsNotExistThrowNotExistException(studentId);
-        ifDepartmentIdIsNotExistThrowNotExistException(updateAcademicInfoRequest.getAcademicInfoRequest().getDepartmentId());
+        ifDepartmentIdIsNotExistThrowNotExistException(academicInfoUpdateRequest.getAcademicInfoRequest().getDepartmentId());
     }
 
-    private void checkBeforeUpdatingPersonalInfo(Long studentId) throws SisNotExistException {
+    private void checkBeforeUpdatingPersonalInfo(final Long studentId) throws SisNotExistException {
         ifStudentIsNotExistThrowNotExistException(studentId);
     }
 
-    private void checkBeforeDeleting(Long studentId) throws SisNotExistException, SisAlreadyException {
+    private void checkBeforeDeleting(final Long studentId) throws SisNotExistException, SisAlreadyException {
         ifStudentIsNotExistThrowNotExistException(studentId);
         ifStudentIsAlreadyDeletedThrowAlreadyException(studentId);
         ifStudentIsAlreadyGraduatedThrowAlreadyException(studentId);
     }
 
-    private void checkBeforePassivating(Long studentId) throws SisNotExistException, SisAlreadyException {
+    private void checkBeforePassivating(final Long studentId) throws SisNotExistException, SisAlreadyException {
         ifStudentIsNotExistThrowNotExistException(studentId);
         ifStudentIsAlreadyPassiveThrowAlreadyException(studentId);
         ifStudentIsAlreadyGraduatedThrowAlreadyException(studentId);
         ifStudentIsAlreadyDeletedThrowAlreadyException(studentId);
     }
 
-    private void checkBeforeActivating(Long studentId) throws SisNotExistException, SisAlreadyException {
+    private void checkBeforeActivating(final Long studentId) throws SisNotExistException, SisAlreadyException {
         ifStudentIsNotExistThrowNotExistException(studentId);
         ifStudentIsAlreadyActiveThrowAlreadyException(studentId);
         ifStudentIsAlreadyGraduatedThrowAlreadyException(studentId);
         ifStudentIsAlreadyDeletedThrowAlreadyException(studentId);
     }
 
-    private void checkBeforeGraduating(Long studentId) throws SisNotExistException, SisAlreadyException {
+    private void checkBeforeGraduating(final Long studentId) throws SisNotExistException, SisAlreadyException {
         ifStudentIsNotExistThrowNotExistException(studentId);
         ifStudentIsAlreadyGraduatedThrowAlreadyException(studentId);
         ifStudentIsAlreadyPassiveThrowAlreadyException(studentId);
@@ -195,38 +195,38 @@ public class StudentServiceImpl implements StudentService {
      * Throw Exceptions
      */
 
-    private void ifStudentIsNotExistThrowNotExistException(Long studentId) throws SisNotExistException {
+    private void ifStudentIsNotExistThrowNotExistException(final Long studentId) throws SisNotExistException {
         if (!academicInfoService.isStudentExist(studentId)) {
             StudentException.throwNotExistException(studentId);
         }
     }
 
-    private void ifDepartmentIdIsNotExistThrowNotExistException(Long departmentId) {
+    private void ifDepartmentIdIsNotExistThrowNotExistException(final Long departmentId) {
         // TODO: ifDepartmentIdIsNotExistThrowNotExistException
 //        if (!departmentService.isDepartmentExist(studentId)) {
 //            SisException.throwNotExistException();
 //        }
     }
 
-    private void ifStudentIsAlreadyDeletedThrowAlreadyException(Long studentId) throws SisAlreadyException {
+    private void ifStudentIsAlreadyDeletedThrowAlreadyException(final Long studentId) throws SisAlreadyException {
         if (academicInfoService.isStudentDeleted(studentId)) {
             StudentException.throwAlreadyDeletedException(studentId);
         }
     }
 
-    private void ifStudentIsAlreadyPassiveThrowAlreadyException(Long studentId) throws SisAlreadyException {
+    private void ifStudentIsAlreadyPassiveThrowAlreadyException(final Long studentId) throws SisAlreadyException {
         if (academicInfoService.isStudentPassive(studentId)) {
             StudentException.throwAlreadyPassiveException(studentId);
         }
     }
 
-    private void ifStudentIsAlreadyActiveThrowAlreadyException(Long studentId) throws SisAlreadyException {
+    private void ifStudentIsAlreadyActiveThrowAlreadyException(final Long studentId) throws SisAlreadyException {
         if (academicInfoService.isStudentActive(studentId)) {
             StudentException.throwAlreadyActiveException(studentId);
         }
     }
 
-    private void ifStudentIsAlreadyGraduatedThrowAlreadyException(Long studentId) throws SisAlreadyException {
+    private void ifStudentIsAlreadyGraduatedThrowAlreadyException(final Long studentId) throws SisAlreadyException {
         if (academicInfoService.isStudentGraduated(studentId)) {
             StudentException.throwAlreadyGraduatedException(studentId);
         }

@@ -18,7 +18,7 @@ public interface StudentPersonalInfoService {
                                  SisOperationInfoRequest operationInfoRequest);
 
     StudentPersonalInfoResponse updateStudentPersonalInfo(Long studentId,
-                                                          StudentUpdatePersonalInfoRequest updatePersonalInfoRequest);
+                                                          StudentPersonalInfoUpdateRequest personalInfoUpdateRequest);
 
     void deleteStudentPersonalInfo(StudentDeleteRequest deleteRequest);
 

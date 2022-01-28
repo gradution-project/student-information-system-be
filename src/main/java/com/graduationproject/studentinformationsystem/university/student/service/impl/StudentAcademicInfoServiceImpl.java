@@ -42,9 +42,9 @@ public class StudentAcademicInfoServiceImpl implements StudentAcademicInfoServic
 
     @Override
     public StudentAcademicInfoResponse updateStudentAcademicInfo(Long studentId,
-                                                                 StudentUpdateAcademicInfoRequest updateAcademicInfoRequest) {
+                                                                 StudentAcademicInfoUpdateRequest academicInfoUpdateRequest) {
 
-        StudentAcademicInfoEntity entity = StudentAcademicInfoConverter.generateUpdateEntity(studentId, updateAcademicInfoRequest);
+        StudentAcademicInfoEntity entity = StudentAcademicInfoConverter.generateUpdateEntity(studentId, academicInfoUpdateRequest);
         academicInfoRepository.updateStudentAcademicInfo(entity);
 
         return getStudentAcademicInfoResponse(studentId);

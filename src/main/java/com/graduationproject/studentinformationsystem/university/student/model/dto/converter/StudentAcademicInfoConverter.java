@@ -16,31 +16,10 @@ public class StudentAcademicInfoConverter {
     private StudentAcademicInfoConverter() {
     }
 
-    public static StudentAcademicInfoResponse entityToResponse(StudentAcademicInfoEntity entity) {
-        return StudentAcademicInfoResponse.builder()
-                .studentId(entity.getStudentId())
-                .departmentId(entity.getDepartmentId())
-                .degree(entity.getDegree().getName())
-                .classLevel(entity.getClassLevel().getName())
-                .status(entity.getStatus().getName())
-                .registrationDate(SisUtil.getFormattedDate(entity.getRegistrationDate()))
-                .email(entity.getEmail())
-                .createdDate(SisUtil.getFormattedDate(entity.getCreatedDate()))
-                .createdUserId(entity.getCreatedUserId())
-                .modifiedDate(SisUtil.getFormattedDate(entity.getModifiedDate()))
-                .modifiedUserId(entity.getModifiedUserId()).build();
-    }
-
-    public static List<StudentAcademicInfoResponse> entityListToResponseList(List<StudentAcademicInfoEntity> entityList) {
-        List<StudentAcademicInfoResponse> dtoList = new ArrayList<>();
-        entityList.forEach(entity -> dtoList.add(entityToResponse(entity)));
-        return dtoList;
-    }
-
-    public static StudentAcademicInfoEntity generateSaveEntity(Long studentId,
-                                                               String studentEmail,
-                                                               StudentAcademicInfoRequest academicInfoRequest,
-                                                               SisOperationInfoRequest operationInfoRequest) {
+    public static StudentAcademicInfoEntity generateSaveEntity(final Long studentId,
+                                                               final String studentEmail,
+                                                               final StudentAcademicInfoRequest academicInfoRequest,
+                                                               final SisOperationInfoRequest operationInfoRequest) {
 
         return StudentAcademicInfoEntity.builder()
                 .studentId(studentId)
@@ -50,60 +29,81 @@ public class StudentAcademicInfoConverter {
                 .email(studentEmail)
                 .status(StudentStatus.ACTIVE)
                 .registrationDate(new Date())
-                .createdUserId(operationInfoRequest.getOperationUserId())
+                .createdUserId(operationInfoRequest.getUserId())
                 .createdDate(new Date())
                 .build();
     }
 
-    public static StudentAcademicInfoEntity generateUpdateEntity(Long studentId,
-                                                                 StudentUpdateAcademicInfoRequest updateAcademicInfoRequest) {
+    public static StudentAcademicInfoEntity generateUpdateEntity(final Long studentId,
+                                                                 final StudentAcademicInfoUpdateRequest academicInfoUpdateRequest) {
 
-        final StudentAcademicInfoRequest academicInfoRequest = updateAcademicInfoRequest.getAcademicInfoRequest();
-        final SisOperationInfoRequest operationInfoRequest = updateAcademicInfoRequest.getOperationInfoRequest();
+        final StudentAcademicInfoRequest academicInfoRequest = academicInfoUpdateRequest.getAcademicInfoRequest();
+        final SisOperationInfoRequest operationInfoRequest = academicInfoUpdateRequest.getOperationInfoRequest();
 
         return StudentAcademicInfoEntity.builder()
                 .studentId(studentId)
                 .departmentId(academicInfoRequest.getDepartmentId())
                 .degree(academicInfoRequest.getDegree())
                 .classLevel(academicInfoRequest.getClassLevel())
-                .modifiedUserId(operationInfoRequest.getOperationUserId())
+                .modifiedUserId(operationInfoRequest.getUserId())
                 .modifiedDate(new Date())
                 .build();
     }
 
-    public static StudentAcademicInfoEntity generateDeleteEntity(StudentDeleteRequest deleteRequest) {
+    public static StudentAcademicInfoEntity generateDeleteEntity(final StudentDeleteRequest deleteRequest) {
         return StudentAcademicInfoEntity.builder()
                 .studentId(deleteRequest.getStudentId())
                 .status(StudentStatus.DELETED)
-                .modifiedUserId(deleteRequest.getOperationInfoRequest().getOperationUserId())
+                .modifiedUserId(deleteRequest.getOperationInfoRequest().getUserId())
                 .modifiedDate(new Date())
                 .build();
     }
 
-    public static StudentAcademicInfoEntity generatePassiveEntity(StudentPassivateRequest passivateRequest) {
+    public static StudentAcademicInfoEntity generatePassiveEntity(final StudentPassivateRequest passivateRequest) {
         return StudentAcademicInfoEntity.builder()
                 .studentId(passivateRequest.getStudentId())
                 .status(StudentStatus.PASSIVE)
-                .modifiedUserId(passivateRequest.getOperationInfoRequest().getOperationUserId())
+                .modifiedUserId(passivateRequest.getOperationInfoRequest().getUserId())
                 .modifiedDate(new Date())
                 .build();
     }
 
-    public static StudentAcademicInfoEntity generateActiveEntity(StudentActivateRequest activateRequest) {
+    public static StudentAcademicInfoEntity generateActiveEntity(final StudentActivateRequest activateRequest) {
         return StudentAcademicInfoEntity.builder()
                 .studentId(activateRequest.getStudentId())
                 .status(StudentStatus.ACTIVE)
-                .modifiedUserId(activateRequest.getOperationInfoRequest().getOperationUserId())
+                .modifiedUserId(activateRequest.getOperationInfoRequest().getUserId())
                 .modifiedDate(new Date())
                 .build();
     }
 
-    public static StudentAcademicInfoEntity generateGraduateEntity(StudentGraduateRequest graduateRequest) {
+    public static StudentAcademicInfoEntity generateGraduateEntity(final StudentGraduateRequest graduateRequest) {
         return StudentAcademicInfoEntity.builder()
                 .studentId(graduateRequest.getStudentId())
                 .status(StudentStatus.GRADUATED)
-                .modifiedUserId(graduateRequest.getOperationInfoRequest().getOperationUserId())
+                .modifiedUserId(graduateRequest.getOperationInfoRequest().getUserId())
                 .modifiedDate(new Date())
                 .build();
+    }
+
+    public static StudentAcademicInfoResponse entityToResponse(final StudentAcademicInfoEntity academicInfoEntity) {
+        return StudentAcademicInfoResponse.builder()
+                .studentId(academicInfoEntity.getStudentId())
+                .departmentId(academicInfoEntity.getDepartmentId())
+                .degree(academicInfoEntity.getDegree().getName())
+                .classLevel(academicInfoEntity.getClassLevel().getName())
+                .status(academicInfoEntity.getStatus().getName())
+                .registrationDate(SisUtil.getFormattedDate(academicInfoEntity.getRegistrationDate()))
+                .email(academicInfoEntity.getEmail())
+                .createdDate(SisUtil.getFormattedDate(academicInfoEntity.getCreatedDate()))
+                .createdUserId(academicInfoEntity.getCreatedUserId())
+                .modifiedDate(SisUtil.getFormattedDate(academicInfoEntity.getModifiedDate()))
+                .modifiedUserId(academicInfoEntity.getModifiedUserId()).build();
+    }
+
+    public static List<StudentAcademicInfoResponse> entityListToResponseList(final List<StudentAcademicInfoEntity> academicInfoEntities) {
+        List<StudentAcademicInfoResponse> academicInfoResponses = new ArrayList<>();
+        academicInfoEntities.forEach(academicInfoEntity -> academicInfoResponses.add(entityToResponse(academicInfoEntity)));
+        return academicInfoResponses;
     }
 }

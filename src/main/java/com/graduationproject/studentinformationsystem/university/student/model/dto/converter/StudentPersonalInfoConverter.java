@@ -16,30 +16,10 @@ public class StudentPersonalInfoConverter {
     private StudentPersonalInfoConverter() {
     }
 
-    public static StudentPersonalInfoResponse entityToResponse(StudentPersonalInfoEntity entity) {
-        return StudentPersonalInfoResponse.builder()
-                .tcNo(entity.getTcNo())
-                .name(entity.getName())
-                .surname(entity.getSurname())
-                .email(entity.getEmail())
-                .phoneNumber(SisUtil.getFormattedPhoneNumber(entity.getPhoneNumber()))
-                .birthday(SisUtil.getFormattedDate(entity.getBirthday()))
-                .address(entity.getAddress())
-                .createdDate(SisUtil.getFormattedDate(entity.getCreatedDate()))
-                .createdUserId(entity.getCreatedUserId())
-                .modifiedDate(SisUtil.getFormattedDate(entity.getModifiedDate()))
-                .modifiedUserId(entity.getModifiedUserId()).build();
-    }
+    public static StudentPersonalInfoEntity generateSaveEntity(final Long studentId,
+                                                               final StudentPersonalInfoRequest personalInfoRequest,
+                                                               final SisOperationInfoRequest operationInfoRequest) {
 
-    public static List<StudentPersonalInfoResponse> entityListToResponseList(List<StudentPersonalInfoEntity> entityList) {
-        List<StudentPersonalInfoResponse> dtoList = new ArrayList<>();
-        entityList.forEach(entity -> dtoList.add(entityToResponse(entity)));
-        return dtoList;
-    }
-
-    public static StudentPersonalInfoEntity generateSaveEntity(Long studentId,
-                                                               StudentPersonalInfoRequest personalInfoRequest,
-                                                               SisOperationInfoRequest operationInfoRequest) {
         return StudentPersonalInfoEntity.builder()
                 .studentId(studentId)
                 .tcNo(personalInfoRequest.getTcNo())
@@ -48,20 +28,20 @@ public class StudentPersonalInfoConverter {
                 .email(personalInfoRequest.getEmail())
                 .phoneNumber(personalInfoRequest.getPhoneNumber())
                 .status(StudentStatus.ACTIVE)
-//                .profilePhoto(request.getProfilePhoto()) // TODO: Set Profile Photo
-//                .profilePhotoUrl(request.getProfilePhotoUrl()) // TODO: Set Profile Photo URL
+//                .profilePhoto(personalInfoRequest.getProfilePhoto()) // TODO: Set Profile Photo
+//                .profilePhotoUrl(personalInfoRequest.getProfilePhotoUrl()) // TODO: Set Profile Photo URL
                 .birthday(personalInfoRequest.getBirthday())
                 .address(personalInfoRequest.getAddress())
-                .createdUserId(operationInfoRequest.getOperationUserId())
+                .createdUserId(operationInfoRequest.getUserId())
                 .createdDate(new Date())
                 .build();
     }
 
-    public static StudentPersonalInfoEntity generateUpdateEntity(Long studentId,
-                                                                 StudentUpdatePersonalInfoRequest updatePersonalInfoRequest) {
+    public static StudentPersonalInfoEntity generateUpdateEntity(final Long studentId,
+                                                                 final StudentPersonalInfoUpdateRequest personalInfoUpdateRequest) {
 
-        final StudentPersonalInfoRequest personalInfoRequest = updatePersonalInfoRequest.getPersonalInfoRequest();
-        final SisOperationInfoRequest operationInfoRequest = updatePersonalInfoRequest.getOperationInfoRequest();
+        final StudentPersonalInfoRequest personalInfoRequest = personalInfoUpdateRequest.getPersonalInfoRequest();
+        final SisOperationInfoRequest operationInfoRequest = personalInfoUpdateRequest.getOperationInfoRequest();
 
         return StudentPersonalInfoEntity.builder()
                 .studentId(studentId)
@@ -74,44 +54,65 @@ public class StudentPersonalInfoConverter {
 //                .profilePhotoUrl(personalInfoRequest.getProfilePhotoUrl()) // TODO: Set Profile Photo URL
                 .birthday(personalInfoRequest.getBirthday())
                 .address(personalInfoRequest.getAddress())
-                .createdUserId(operationInfoRequest.getOperationUserId())
+                .createdUserId(operationInfoRequest.getUserId())
                 .modifiedDate(new Date())
                 .build();
     }
 
-    public static StudentPersonalInfoEntity generateDeleteEntity(StudentDeleteRequest deleteRequest) {
+    public static StudentPersonalInfoEntity generateDeleteEntity(final StudentDeleteRequest deleteRequest) {
         return StudentPersonalInfoEntity.builder()
                 .studentId(deleteRequest.getStudentId())
                 .status(StudentStatus.DELETED)
-                .modifiedUserId(deleteRequest.getOperationInfoRequest().getOperationUserId())
+                .modifiedUserId(deleteRequest.getOperationInfoRequest().getUserId())
                 .modifiedDate(new Date())
                 .build();
     }
 
-    public static StudentPersonalInfoEntity generatePassiveEntity(StudentPassivateRequest passivateRequest) {
+    public static StudentPersonalInfoEntity generatePassiveEntity(final StudentPassivateRequest passivateRequest) {
         return StudentPersonalInfoEntity.builder()
                 .studentId(passivateRequest.getStudentId())
                 .status(StudentStatus.PASSIVE)
-                .modifiedUserId(passivateRequest.getOperationInfoRequest().getOperationUserId())
+                .modifiedUserId(passivateRequest.getOperationInfoRequest().getUserId())
                 .modifiedDate(new Date())
                 .build();
     }
 
-    public static StudentPersonalInfoEntity generateActiveEntity(StudentActivateRequest activateRequest) {
+    public static StudentPersonalInfoEntity generateActiveEntity(final StudentActivateRequest activateRequest) {
         return StudentPersonalInfoEntity.builder()
                 .studentId(activateRequest.getStudentId())
                 .status(StudentStatus.ACTIVE)
-                .modifiedUserId(activateRequest.getOperationInfoRequest().getOperationUserId())
+                .modifiedUserId(activateRequest.getOperationInfoRequest().getUserId())
                 .modifiedDate(new Date())
                 .build();
     }
 
-    public static StudentPersonalInfoEntity generateGraduateEntity(StudentGraduateRequest graduateRequest) {
+    public static StudentPersonalInfoEntity generateGraduateEntity(final StudentGraduateRequest graduateRequest) {
         return StudentPersonalInfoEntity.builder()
                 .studentId(graduateRequest.getStudentId())
                 .status(StudentStatus.GRADUATED)
-                .modifiedUserId(graduateRequest.getOperationInfoRequest().getOperationUserId())
+                .modifiedUserId(graduateRequest.getOperationInfoRequest().getUserId())
                 .modifiedDate(new Date())
                 .build();
+    }
+
+    public static StudentPersonalInfoResponse entityToResponse(final StudentPersonalInfoEntity personalInfoEntity) {
+        return StudentPersonalInfoResponse.builder()
+                .tcNo(personalInfoEntity.getTcNo())
+                .name(personalInfoEntity.getName())
+                .surname(personalInfoEntity.getSurname())
+                .email(personalInfoEntity.getEmail())
+                .phoneNumber(SisUtil.getFormattedPhoneNumber(personalInfoEntity.getPhoneNumber()))
+                .birthday(SisUtil.getFormattedDate(personalInfoEntity.getBirthday()))
+                .address(personalInfoEntity.getAddress())
+                .createdDate(SisUtil.getFormattedDate(personalInfoEntity.getCreatedDate()))
+                .createdUserId(personalInfoEntity.getCreatedUserId())
+                .modifiedDate(SisUtil.getFormattedDate(personalInfoEntity.getModifiedDate()))
+                .modifiedUserId(personalInfoEntity.getModifiedUserId()).build();
+    }
+
+    public static List<StudentPersonalInfoResponse> entityListToResponseList(final List<StudentPersonalInfoEntity> personalInfoEntities) {
+        List<StudentPersonalInfoResponse> personalInfoResponses = new ArrayList<>();
+        personalInfoEntities.forEach(personalInfoEntity -> personalInfoResponses.add(entityToResponse(personalInfoEntity)));
+        return personalInfoResponses;
     }
 }

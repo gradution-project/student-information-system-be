@@ -41,9 +41,9 @@ public class StudentPersonalInfoServiceImpl implements StudentPersonalInfoServic
 
     @Override
     public StudentPersonalInfoResponse updateStudentPersonalInfo(Long studentId,
-                                                                 StudentUpdatePersonalInfoRequest updatePersonalInfoRequest) {
+                                                                 StudentPersonalInfoUpdateRequest personalInfoUpdateRequest) {
 
-        StudentPersonalInfoEntity entity = StudentPersonalInfoConverter.generateUpdateEntity(studentId, updatePersonalInfoRequest);
+        StudentPersonalInfoEntity entity = StudentPersonalInfoConverter.generateUpdateEntity(studentId, personalInfoUpdateRequest);
         personalInfoRepository.updateStudentPersonalInfo(entity);
 
         return getStudentPersonalInfoResponse(studentId);
