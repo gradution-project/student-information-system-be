@@ -18,12 +18,12 @@ public class SisResponseUtil {
                         .isSuccess(true).build(), HttpStatus.OK);
     }
 
-    public static <T> ResponseEntity<SisBaseApiResponse<T>> successResponse(final T result) {
+    public static <T> ResponseEntity<SisBaseApiResponse<T>> successResponse(final T response) {
         return new ResponseEntity<>(
                 SisBaseApiResponse.<T>builder()
                         .requestTime(LocalDateTime.now())
                         .httpStatus(HttpStatus.OK)
                         .isSuccess(true)
-                        .result(result).build(), HttpStatus.OK);
+                        .response(response).build(), HttpStatus.OK);
     }
 }

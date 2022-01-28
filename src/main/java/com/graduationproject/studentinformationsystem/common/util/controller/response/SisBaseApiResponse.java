@@ -15,6 +15,6 @@ public class SisBaseApiResponse<T> {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_TIME_PATTERN)
     private LocalDateTime requestTime;
     private HttpStatus httpStatus;
-    private T result;
+    private T response;
     private boolean isSuccess;
 }
