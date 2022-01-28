@@ -1,6 +1,7 @@
 package com.graduationproject.studentinformationsystem.university.teacher.service;
 
-import com.graduationproject.studentinformationsystem.university.teacher.model.dto.request.TeacherPersonalInfoRequest;
+import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
+import com.graduationproject.studentinformationsystem.university.teacher.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.response.TeacherPersonalInfoResponse;
 import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherStatus;
 
@@ -12,13 +13,16 @@ public interface TeacherPersonalInfoService {
 
     TeacherPersonalInfoResponse getTeacherPersonalInfoById(Long teacherId);
 
-    void saveTeacherPersonalInfo(Long teacherId, TeacherPersonalInfoRequest personalInfoRequest);
+    void saveTeacherPersonalInfo(Long teacherId,
+                                 TeacherPersonalInfoRequest personalInfoRequest,
+                                 SisOperationInfoRequest operationInfoRequest);
 
-    TeacherPersonalInfoResponse updateTeacherPersonalInfo(Long teacherId, TeacherPersonalInfoRequest personalInfoRequest);
+    TeacherPersonalInfoResponse updateTeacherPersonalInfo(Long teacherId,
+                                                          TeacherPersonalInfoUpdateRequest personalInfoUpdateRequest);
 
-    void deleteTeacherPersonalInfo(Long teacherId);
+    void deleteTeacherPersonalInfo(TeacherDeleteRequest deleteRequest);
 
-    void passivateTeacherPersonalInfo(Long teacherId);
+    void passivateTeacherPersonalInfo(TeacherPassivateRequest passivateRequest);
 
-    void activateTeacherPersonalInfo(Long teacherId);
+    void activateTeacherPersonalInfo(TeacherActivateRequest activateRequest);
 }

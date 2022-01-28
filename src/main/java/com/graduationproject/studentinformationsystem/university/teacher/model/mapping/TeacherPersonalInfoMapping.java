@@ -30,5 +30,6 @@ public enum TeacherPersonalInfoMapping {
     private final String columnName;
     private final String modelName;
 
-    public static final Map<String, String> COLUMN_MAPPINGS = Stream.of(values()).collect(Collectors.toMap(TeacherPersonalInfoMapping::getColumnName, TeacherPersonalInfoMapping::getModelName));
+    public static final Map<String, String> COLUMN_MAPPINGS = Stream.of(values())
+            .collect(Collectors.toMap(TeacherPersonalInfoMapping::getColumnName, TeacherPersonalInfoMapping::getModelName));
 }

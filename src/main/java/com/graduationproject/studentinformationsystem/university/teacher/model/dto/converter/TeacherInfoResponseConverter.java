@@ -11,6 +11,7 @@ public class TeacherInfoResponseConverter {
 
     public static TeacherInfoDetailResponse convert(TeacherAcademicInfoResponse academicInfoResponse,
                                                     TeacherPersonalInfoResponse personalInfoResponse) {
+
         return TeacherInfoDetailResponse.builder()
                 .academicInfoResponse(academicInfoResponse)
                 .personalInfoResponse(personalInfoResponse).build();

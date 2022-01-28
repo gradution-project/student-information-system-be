@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class TeacherResponse {
+public class TeacherInfoResponse {
 
     private Long teacherId;
     private Long departmentId;

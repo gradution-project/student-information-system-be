@@ -1,6 +1,7 @@
 package com.graduationproject.studentinformationsystem.university.teacher.service;
 
-import com.graduationproject.studentinformationsystem.university.teacher.model.dto.request.TeacherAcademicInfoRequest;
+import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
+import com.graduationproject.studentinformationsystem.university.teacher.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.response.TeacherAcademicInfoResponse;
 import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherStatus;
 
@@ -12,15 +13,19 @@ public interface TeacherAcademicInfoService {
 
     TeacherAcademicInfoResponse getTeacherAcademicInfoById(Long teacherId);
 
-    void saveTeacherAcademicInfo(Long teacherId, String studentEmail, TeacherAcademicInfoRequest academicInfoRequest);
+    void saveTeacherAcademicInfo(Long teacherId,
+                                 String teacherEmail,
+                                 TeacherAcademicInfoRequest academicInfoRequest,
+                                 SisOperationInfoRequest operationInfoRequest);
 
-    TeacherAcademicInfoResponse updateTeacherAcademicInfo(Long teacherId, TeacherAcademicInfoRequest academicInfoRequest);
+    TeacherAcademicInfoResponse updateTeacherAcademicInfo(Long teacherId,
+                                                          TeacherAcademicInfoUpdateRequest academicInfoUpdateRequest);
 
-    void deleteTeacherAcademicInfo(Long teacherId);
+    void deleteTeacherAcademicInfo(TeacherDeleteRequest deleteRequest);
 
-    void passivateTeacherAcademicInfo(Long teacherId);
+    void passivateTeacherAcademicInfo(TeacherPassivateRequest passivateRequest);
 
-    void activateTeacherAcademicInfo(Long teacherId);
+    void activateTeacherAcademicInfo(TeacherActivateRequest activateRequest);
 
     List<Long> getAllTeacherIdsByDepartmentId(Long departmentId);
 
