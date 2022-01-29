@@ -14,6 +14,4 @@ public class TeacherAcademicInfoResponse extends SisBaseAcademicInfoResponse {
     private String role;
     private String fieldOfStudy;
     private String phoneNumber;
-    private String status;
-    private String registrationDate;
 }
