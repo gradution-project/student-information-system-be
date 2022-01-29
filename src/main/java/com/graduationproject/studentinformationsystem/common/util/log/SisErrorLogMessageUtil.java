@@ -28,6 +28,10 @@ public class SisErrorLogMessageUtil {
         log.error("Error When Getting {}s!", apiName);
     }
 
+    public void errorWhenGettingAllIds() {
+        log.error("Error When Getting {} IDs!", apiName);
+    }
+
     public void errorWhenGettingAllByStatus(final String status) {
         log.error("Error When Getting {}s by Status! status:{}", apiName, status);
     }
