@@ -6,12 +6,17 @@ import lombok.Getter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Date;
 
 import static com.graduationproject.studentinformationsystem.common.util.constant.SisConstants.DATE_PATTERN;
 
 @Getter
-public abstract class SisBasePersonalInfoRequest {
+public abstract class SisBasePersonalInfoRequest implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 8140330376859399691L;
 
     @TCNO
     @NotNull
