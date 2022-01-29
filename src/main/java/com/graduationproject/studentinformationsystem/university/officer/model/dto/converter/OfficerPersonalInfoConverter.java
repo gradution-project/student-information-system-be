@@ -94,7 +94,9 @@ public class OfficerPersonalInfoConverter {
                 .email(personalInfoEntity.getEmail())
                 .phoneNumber(SisUtil.getFormattedPhoneNumber(personalInfoEntity.getPhoneNumber()))
                 .birthday(SisUtil.getFormattedDate(personalInfoEntity.getBirthday()))
-                .address(personalInfoEntity.getAddress()).build();
+                .address(personalInfoEntity.getAddress())
+                .createdUserId(personalInfoEntity.getCreatedUserId())
+                .createdDate(SisUtil.getFormattedDateTime(personalInfoEntity.getCreatedDate())).build();
     }
 
     public static List<OfficerPersonalInfoResponse> entityListToResponseList(List<OfficerPersonalInfoEntity> personalInfoEntities) {

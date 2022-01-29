@@ -8,12 +8,14 @@
 		<version>2.5.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>com.graduation-project</groupId>
 	<artifactId>student-information-system-be</artifactId>
 	<version>v1.0.0</version>
 	<packaging>war</packaging>
 	<name>Student Information System</name>
 	<description>Student Information System for Higher Education</description>
+
 	<developers>
 		<developer>
 			<name>Agit Rubar Demir</name>
@@ -32,9 +34,10 @@
 			</roles>
 		</developer>
 	</developers>
+
 	<properties>
 		<java.version>17</java.version>
-		<log4j2.version>2.15.0</log4j2.version>
+		<log4j2.version>2.17.1</log4j2.version>
 		<mysql-connector-java.version>8.0.26</mysql-connector-java.version>
 		<sql2o.version>1.6.0-RC3</sql2o.version>
 		<hikari.version>5.0.0</hikari.version>
@@ -47,6 +50,7 @@
 		<javax.mail.version>1.6.2</javax.mail.version>
 		<spring-security-crypto.version>5.6.0</spring-security-crypto.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -145,12 +149,12 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
-			<version>1.2.6</version>
+			<version>1.2.7</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.2.6</version>
+			<version>1.2.7</version>
 		</dependency>
 	</dependencies>
 

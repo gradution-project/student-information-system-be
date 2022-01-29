@@ -7,8 +7,8 @@ import java.util.Date;
 
 @Getter
 @SuperBuilder
-public abstract class SisBaseLoginEntity {
+public abstract class SisBaseLoginInfoEntity {
 
-    private Integer failCounter;
-    private Date lastLoginDate;
+    protected Integer failCounter;
+    protected Date lastLoginDate;
 }
