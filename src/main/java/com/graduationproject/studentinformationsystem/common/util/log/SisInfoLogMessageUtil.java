@@ -28,6 +28,10 @@ public class SisInfoLogMessageUtil {
         log.info("{}s Found!", apiName);
     }
 
+    public void foundAllIds() {
+        log.info("{} IDs Found!", apiName);
+    }
+
     public void foundAllByStatus(final String status) {
         log.info("{}s Found by Status! status:{}", apiName, status);
     }
