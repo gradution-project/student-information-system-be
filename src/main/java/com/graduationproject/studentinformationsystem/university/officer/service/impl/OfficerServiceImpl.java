@@ -3,6 +3,7 @@ package com.graduationproject.studentinformationsystem.university.officer.servic
 import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
+import com.graduationproject.studentinformationsystem.university.mail.service.OfficerMailService;
 import com.graduationproject.studentinformationsystem.university.officer.model.dto.converter.OfficerInfoResponseConverter;
 import com.graduationproject.studentinformationsystem.university.officer.model.dto.converter.OfficerResponseConverter;
 import com.graduationproject.studentinformationsystem.university.officer.model.dto.request.*;
@@ -27,7 +28,7 @@ public class OfficerServiceImpl implements OfficerService {
 
     private final OfficerAcademicInfoService academicInfoService;
     private final OfficerPersonalInfoService personalInfoService;
-//    private final OfficerMailService officerMailService;
+    private final OfficerMailService officerMailService;
 
     @Override
     public List<OfficerInfoResponse> getAllOfficersByStatus(final OfficerStatus status) {
@@ -56,7 +57,7 @@ public class OfficerServiceImpl implements OfficerService {
         personalInfoService.saveOfficerPersonalInfo(officerId, personalInfoRequest, operationInfoRequest);
 
         final OfficerInfoDetailResponse infoDetailResponse = getOfficerInfoResponse(officerId);
-//        officerMailService.sendFirstPasswordEmail(infoDetailResponse);
+        officerMailService.sendFirstPasswordEmail(infoDetailResponse);
         return infoDetailResponse;
     }
 

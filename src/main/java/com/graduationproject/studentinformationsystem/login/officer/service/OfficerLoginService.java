@@ -8,8 +8,8 @@ import com.graduationproject.studentinformationsystem.login.officer.model.dto.re
 
 public interface OfficerLoginService {
 
-    LoginResponse login(final OfficerLoginRequest loginRequest);
+    LoginResponse login(OfficerLoginRequest loginRequest);
 
-    ForgotPasswordResponse forgotPassword(final OfficerForgotPasswordRequest forgotPasswordRequest)
+    ForgotPasswordResponse forgotPassword(OfficerForgotPasswordRequest forgotPasswordRequest)
             throws SisNotExistException;
 }

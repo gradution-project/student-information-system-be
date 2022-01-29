@@ -23,7 +23,6 @@ import static com.graduationproject.studentinformationsystem.common.config.SisSw
 import static com.graduationproject.studentinformationsystem.common.util.controller.endpoint.SisControllerEndpoint.Path.LOGIN;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.successResponse;
 
-//TODO: Officer Login Controller Return Values Must Be Updated After Login Service Created
 @RestController
 @RequestMapping(LOGIN)
 @Api(tags = LOGIN_API_TAG)
@@ -37,8 +36,8 @@ public class OfficerLoginController {
     public ResponseEntity<SisBaseApiResponse<LoginResponse>> officerLogin(
             @RequestBody @Valid final OfficerLoginRequest loginRequest) {
 
-//        return successResponse(loginService.login(loginRequest));
-        return successResponse(LoginResponse.builder().isLoginSuccess(true).build());
+        final LoginResponse loginResponse = loginService.login(loginRequest);
+        return successResponse(loginResponse);
     }
 
     @PostMapping(LoginControllerEndpoint.OFFICER_FORGOT_PASSWORD)
@@ -47,7 +46,7 @@ public class OfficerLoginController {
             @RequestBody @Valid final OfficerForgotPasswordRequest forgotPasswordRequest)
             throws SisNotExistException {
 
-//        return successResponse(loginService.forgotPassword(forgotPasswordRequest));
-        return successResponse(ForgotPasswordResponse.builder().isForgotPasswordSuccess(true).build());
+        final ForgotPasswordResponse forgotPasswordResponse = loginService.forgotPassword(forgotPasswordRequest);
+        return successResponse(forgotPasswordResponse);
     }
 }
