@@ -12,7 +12,7 @@ public interface TeacherLoginRepository {
 
     void updatePassword(Long teacherId, String password);
 
-    void updateLoginInfo(TeacherLoginInfoEntity loginEntity);
+    void updateLoginInfo(TeacherLoginInfoEntity loginInfoEntity);
 
     void updateFailCounter(Long teacherId);
 }
