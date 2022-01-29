@@ -19,5 +19,6 @@ public enum TeacherLoginMapping {
     private final String columnName;
     private final String modelName;
 
-    public static final Map<String, String> COLUMN_MAPPINGS = Stream.of(values()).collect(Collectors.toMap(TeacherLoginMapping::getColumnName, TeacherLoginMapping::getModelName));
+    public static final Map<String, String> COLUMN_MAPPINGS = Stream.of(values())
+            .collect(Collectors.toMap(TeacherLoginMapping::getColumnName, TeacherLoginMapping::getModelName));
 }

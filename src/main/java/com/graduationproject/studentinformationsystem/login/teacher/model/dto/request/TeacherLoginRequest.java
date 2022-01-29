@@ -4,9 +4,14 @@ import com.graduationproject.studentinformationsystem.common.util.validation.id.
 import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serial;
+import java.io.Serializable;
 
 @Getter
-public class TeacherLoginRequest {
+public class TeacherLoginRequest implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -1662653221462978195L;
 
     @NotNull
     @TeacherID

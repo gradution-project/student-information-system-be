@@ -12,6 +12,4 @@ public class StudentAcademicInfoResponse extends SisBaseAcademicInfoResponse {
     private Long departmentId;
     private String degree;
     private String classLevel;
-    private String status;
-    private String registrationDate;
 }

@@ -34,17 +34,19 @@ public class TeacherLoginController {
     @PostMapping(LoginControllerEndpoint.TEACHER)
     @ApiOperation(value = "Teacher Login")
     public ResponseEntity<SisBaseApiResponse<LoginResponse>> teacherLogin(
-            @RequestBody @Valid TeacherLoginRequest loginRequest) {
+            @RequestBody @Valid final TeacherLoginRequest loginRequest) {
 
-        return successResponse(loginService.login(loginRequest));
+        final LoginResponse loginResponse = loginService.login(loginRequest);
+        return successResponse(loginResponse);
     }
 
     @PostMapping(LoginControllerEndpoint.TEACHER_FORGOT_PASSWORD)
     @ApiOperation(value = "Teacher Forgot Password")
     public ResponseEntity<SisBaseApiResponse<ForgotPasswordResponse>> teacherForgotPassword(
-            @RequestBody @Valid TeacherForgotPasswordRequest forgotPasswordRequest)
+            @RequestBody @Valid final TeacherForgotPasswordRequest forgotPasswordRequest)
             throws SisNotExistException {
 
-        return successResponse(loginService.forgotPassword(forgotPasswordRequest));
+        final ForgotPasswordResponse forgotPasswordResponse = loginService.forgotPassword(forgotPasswordRequest);
+        return successResponse(forgotPasswordResponse);
     }
 }

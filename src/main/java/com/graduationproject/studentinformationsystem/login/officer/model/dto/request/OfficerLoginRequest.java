@@ -4,9 +4,14 @@ import com.graduationproject.studentinformationsystem.common.util.validation.id.
 import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serial;
+import java.io.Serializable;
 
 @Getter
-public class OfficerLoginRequest {
+public class OfficerLoginRequest implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 8556507920660216619L;
 
     @NotNull
     @OfficerID

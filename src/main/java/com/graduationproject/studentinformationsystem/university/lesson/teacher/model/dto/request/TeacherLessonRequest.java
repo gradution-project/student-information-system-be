@@ -2,14 +2,17 @@ package com.graduationproject.studentinformationsystem.university.lesson.teacher
 
 import com.graduationproject.studentinformationsystem.common.util.validation.id.LessonID;
 import com.graduationproject.studentinformationsystem.common.util.validation.id.TeacherID;
-import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serial;
+import java.io.Serializable;
 
 @Getter
-@Builder
-public class TeacherLessonRequest {
+public class TeacherLessonRequest implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -1980596814982587730L;
 
     @NotNull
     @TeacherID

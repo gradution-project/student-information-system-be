@@ -22,8 +22,8 @@ public class TeacherLoginRepositoryImpl implements TeacherLoginRepository {
     private final Sql2o sql2o;
 
     @Override
-    public Integer getFailCounter(Long teacherId) {
-        try (Connection connection = sql2o.open(); Query query = connection.createQuery(GET_TEACHER_LOGIN_FAIL_COUNTER)) {
+    public Integer getFailCounter(final Long teacherId) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_TEACHER_LOGIN_FAIL_COUNTER)) {
 
             return query.addParameter(TEACHER_ID.getModelName(), teacherId)
                     .setColumnMappings(COLUMN_MAPPINGS)
@@ -37,8 +37,8 @@ public class TeacherLoginRepositoryImpl implements TeacherLoginRepository {
     }
 
     @Override
-    public String getPassword(Long teacherId) {
-        try (Connection connection = sql2o.open(); Query query = connection.createQuery(GET_TEACHER_PASSWORD)) {
+    public String getPassword(final Long teacherId) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_TEACHER_PASSWORD)) {
 
             return query.addParameter(TEACHER_ID.getModelName(), teacherId)
                     .setColumnMappings(COLUMN_MAPPINGS)
@@ -52,8 +52,8 @@ public class TeacherLoginRepositoryImpl implements TeacherLoginRepository {
     }
 
     @Override
-    public void saveFirstPassword(Long teacherId, String password) {
-        try (Connection connection = sql2o.open(); Query query = connection.createQuery(SAVE_TEACHER_FIRST_PASSWORD)) {
+    public void saveFirstPassword(final Long teacherId, final String password) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(SAVE_TEACHER_FIRST_PASSWORD)) {
 
             query.addParameter(TEACHER_ID.getModelName(), teacherId)
                     .addParameter(PASSWORD.getModelName(), passwordService.encodePassword(password))
@@ -68,8 +68,8 @@ public class TeacherLoginRepositoryImpl implements TeacherLoginRepository {
     }
 
     @Override
-    public void updatePassword(Long teacherId, String password) {
-        try (Connection connection = sql2o.open(); Query query = connection.createQuery(UPDATE_TEACHER_PASSWORD)) {
+    public void updatePassword(final Long teacherId, final String password) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(UPDATE_TEACHER_PASSWORD)) {
 
             query.addParameter(TEACHER_ID.getModelName(), teacherId)
                     .addParameter(PASSWORD.getModelName(), passwordService.encodePassword(password))
@@ -83,8 +83,8 @@ public class TeacherLoginRepositoryImpl implements TeacherLoginRepository {
     }
 
     @Override
-    public void updateLoginInfo(TeacherLoginInfoEntity loginInfoEntity) {
-        try (Connection connection = sql2o.open(); Query query = connection.createQuery(UPDATE_TEACHER_LOGIN_INFO)) {
+    public void updateLoginInfo(final TeacherLoginInfoEntity loginInfoEntity) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(UPDATE_TEACHER_LOGIN_INFO)) {
 
             query.addParameter(TEACHER_ID.getModelName(), loginInfoEntity.getTeacherId())
                     .addParameter(FAIL_COUNTER.getModelName(), loginInfoEntity.getFailCounter())
@@ -99,8 +99,8 @@ public class TeacherLoginRepositoryImpl implements TeacherLoginRepository {
     }
 
     @Override
-    public void updateFailCounter(Long teacherId) {
-        try (Connection connection = sql2o.open(); Query query = connection.createQuery(UPDATE_TEACHER_FAIL_COUNTER)) {
+    public void updateFailCounter(final Long teacherId) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(UPDATE_TEACHER_FAIL_COUNTER)) {
 
             query.addParameter(TEACHER_ID.getModelName(), teacherId)
                     .addParameter(FAIL_COUNTER.getModelName(), getFailCounter(teacherId) + 1)
@@ -115,8 +115,8 @@ public class TeacherLoginRepositoryImpl implements TeacherLoginRepository {
 
 //    TODO: Change or Update Password
 //    @Override
-//    public void updatePassword(TeacherLoginInfoEntity loginInfoEntity) {
-//        try (Connection connection = sql2o.open(); Query query = connection.createQuery(UPDATE_TEACHER_PASSWORD)) {
+//    public void updatePassword(final TeacherLoginInfoEntity loginInfoEntity) {
+//        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(UPDATE_TEACHER_PASSWORD)) {
 //
 //            query.addParameter(TEACHER_ID.getModelName(), loginInfoEntity.getTeacherId())
 //                    .addParameter(PASSWORD.getModelName(), loginInfoEntity.getPassword())

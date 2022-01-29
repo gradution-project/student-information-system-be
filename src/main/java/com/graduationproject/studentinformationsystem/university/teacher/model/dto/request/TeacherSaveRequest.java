@@ -5,9 +5,14 @@ import lombok.Getter;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.io.Serial;
+import java.io.Serializable;
 
 @Getter
-public class TeacherSaveRequest {
+public class TeacherSaveRequest implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 3910560473819652137L;
 
     @Valid
     @NotNull

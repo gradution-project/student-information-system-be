@@ -10,4 +10,5 @@ public class OfficerAcademicInfoResponse extends SisBaseAcademicInfoResponse {
 
     private Long officerId;
     private Long facultyId;
+    private String OfficerAcademicInfoResponse;
 }

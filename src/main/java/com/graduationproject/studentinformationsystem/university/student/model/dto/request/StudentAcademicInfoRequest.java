@@ -6,9 +6,14 @@ import com.graduationproject.studentinformationsystem.university.student.model.e
 import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serial;
+import java.io.Serializable;
 
 @Getter
-public class StudentAcademicInfoRequest {
+public class StudentAcademicInfoRequest implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 8574625369419572426L;
 
     @NotNull
     @DepartmentID

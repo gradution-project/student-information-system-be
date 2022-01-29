@@ -12,7 +12,7 @@ public interface OfficerLoginRepository {
 
     void updatePassword(Long officerId, String password);
 
-    void updateLoginInfo(OfficerLoginInfoEntity loginEntity);
+    void updateLoginInfo(OfficerLoginInfoEntity loginInfoEntity);
 
     void updateFailCounter(Long officerId);
 }

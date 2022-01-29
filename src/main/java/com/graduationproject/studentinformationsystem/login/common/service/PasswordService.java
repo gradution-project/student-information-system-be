@@ -4,7 +4,7 @@ public interface PasswordService {
 
     String generatePassword();
 
-    String encodePassword(final String decodedPassword);
+    String encodePassword(String decodedPassword);
 
-    boolean isPasswordTrue(final CharSequence rawPassword, final String encodedPassword);
+    boolean isPasswordTrue(CharSequence rawPassword, String encodedPassword);
 }

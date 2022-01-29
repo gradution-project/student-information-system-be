@@ -1,5 +1,6 @@
 package com.graduationproject.studentinformationsystem.university.teacher.model.dto.request;
 
+import com.graduationproject.studentinformationsystem.common.util.validation.PhoneNumber;
 import com.graduationproject.studentinformationsystem.common.util.validation.id.DepartmentID;
 import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherDegree;
 import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherRole;
@@ -31,5 +32,6 @@ public class TeacherAcademicInfoRequest implements Serializable {
     private String fieldOfStudy;
 
     @NotNull
+    @PhoneNumber
     private Long phoneNumber;
 }
