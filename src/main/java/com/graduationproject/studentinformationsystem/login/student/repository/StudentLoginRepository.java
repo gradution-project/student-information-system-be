@@ -12,7 +12,7 @@ public interface StudentLoginRepository {
 
     void updatePassword(Long studentId, String password);
 
-    void updateLoginInfo(StudentLoginInfoEntity loginEntity);
+    void updateLoginInfo(StudentLoginInfoEntity loginInfoEntity);
 
     void updateFailCounter(Long studentId);
 }
