@@ -14,5 +14,6 @@ public class SisControllerEndpoint {
         public static final String TEACHER = "/teacher";
         public static final String OFFICER = "/officer";
         public static final String LESSON = "/lesson";
+        public static final String FACULTY = "/faculty";
     }
 }
