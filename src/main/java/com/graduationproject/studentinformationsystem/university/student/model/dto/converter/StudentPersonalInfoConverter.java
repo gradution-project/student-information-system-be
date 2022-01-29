@@ -104,9 +104,9 @@ public class StudentPersonalInfoConverter {
                 .phoneNumber(SisUtil.getFormattedPhoneNumber(personalInfoEntity.getPhoneNumber()))
                 .birthday(SisUtil.getFormattedDate(personalInfoEntity.getBirthday()))
                 .address(personalInfoEntity.getAddress())
-                .createdDate(SisUtil.getFormattedDate(personalInfoEntity.getCreatedDate()))
+                .createdDate(SisUtil.getFormattedDateTime(personalInfoEntity.getCreatedDate()))
                 .createdUserId(personalInfoEntity.getCreatedUserId())
-                .modifiedDate(SisUtil.getFormattedDate(personalInfoEntity.getModifiedDate()))
+                .modifiedDate(SisUtil.getFormattedDateTime(personalInfoEntity.getModifiedDate()))
                 .modifiedUserId(personalInfoEntity.getModifiedUserId()).build();
     }
 

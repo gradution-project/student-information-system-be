@@ -94,7 +94,11 @@ public class TeacherPersonalInfoConverter {
                 .email(personalInfoEntity.getEmail())
                 .phoneNumber(SisUtil.getFormattedPhoneNumber(personalInfoEntity.getPhoneNumber()))
                 .birthday(SisUtil.getFormattedDate(personalInfoEntity.getBirthday()))
-                .address(personalInfoEntity.getAddress()).build();
+                .address(personalInfoEntity.getAddress())
+                .createdUserId(personalInfoEntity.getCreatedUserId())
+                .createdDate(SisUtil.getFormattedDateTime(personalInfoEntity.getCreatedDate()))
+                .modifiedUserId(personalInfoEntity.getModifiedUserId())
+                .modifiedDate(SisUtil.getFormattedDateTime(personalInfoEntity.getModifiedDate())).build();
     }
 
     public static List<TeacherPersonalInfoResponse> entityListToResponseList(List<TeacherPersonalInfoEntity> personalInfoEntities) {

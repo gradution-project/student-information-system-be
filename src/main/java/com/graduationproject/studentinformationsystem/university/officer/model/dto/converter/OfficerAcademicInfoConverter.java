@@ -82,7 +82,7 @@ public class OfficerAcademicInfoConverter {
                 .phoneNumber(SisUtil.getFormattedPhoneNumber(academicInfoEntity.getPhoneNumber()))
                 .email(academicInfoEntity.getEmail())
                 .status(academicInfoEntity.getStatus().getName())
-                .registrationDate(SisUtil.getFormattedDateTime(academicInfoEntity.getRegistrationDate()))
+                .registrationDate(SisUtil.getFormattedDate(academicInfoEntity.getRegistrationDate()))
                 .createdUserId(academicInfoEntity.getCreatedUserId())
                 .createdDate(SisUtil.getFormattedDateTime(academicInfoEntity.getCreatedDate()))
                 .modifiedUserId(academicInfoEntity.getModifiedUserId())

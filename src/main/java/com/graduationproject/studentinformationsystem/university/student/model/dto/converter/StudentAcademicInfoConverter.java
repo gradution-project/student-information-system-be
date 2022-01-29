@@ -95,9 +95,9 @@ public class StudentAcademicInfoConverter {
                 .status(academicInfoEntity.getStatus().getName())
                 .registrationDate(SisUtil.getFormattedDate(academicInfoEntity.getRegistrationDate()))
                 .email(academicInfoEntity.getEmail())
-                .createdDate(SisUtil.getFormattedDate(academicInfoEntity.getCreatedDate()))
+                .createdDate(SisUtil.getFormattedDateTime(academicInfoEntity.getCreatedDate()))
                 .createdUserId(academicInfoEntity.getCreatedUserId())
-                .modifiedDate(SisUtil.getFormattedDate(academicInfoEntity.getModifiedDate()))
+                .modifiedDate(SisUtil.getFormattedDateTime(academicInfoEntity.getModifiedDate()))
                 .modifiedUserId(academicInfoEntity.getModifiedUserId()).build();
     }
 
