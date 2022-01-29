@@ -9,8 +9,8 @@ import java.util.Date;
 @SuperBuilder
 public abstract class SisBaseEntity {
 
-    protected Date createdDate;
     protected Long createdUserId;
-    protected Date modifiedDate;
+    protected Date createdDate;
     protected Long modifiedUserId;
+    protected Date modifiedDate;
 }
