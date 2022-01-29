@@ -1,15 +1,12 @@
 package com.graduationproject.studentinformationsystem.login.officer.model.entity;
 
+import com.graduationproject.studentinformationsystem.common.model.entity.SisBaseLoginEntity;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.Date;
-
 @Getter
 @Builder
-public class OfficerLoginInfoEntity {
+public class OfficerLoginInfoEntity extends SisBaseLoginEntity {
 
     private Long officerId;
-    private Integer failCounter;
-    private Date lastLoginDate;
 }
