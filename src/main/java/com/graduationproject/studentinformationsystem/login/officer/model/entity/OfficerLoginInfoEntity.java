@@ -1,12 +1,12 @@
 package com.graduationproject.studentinformationsystem.login.officer.model.entity;
 
-import com.graduationproject.studentinformationsystem.common.model.entity.SisBaseLoginEntity;
-import lombok.Builder;
+import com.graduationproject.studentinformationsystem.common.model.entity.SisBaseLoginInfoEntity;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
-@Builder
-public class OfficerLoginInfoEntity extends SisBaseLoginEntity {
+@SuperBuilder
+public class OfficerLoginInfoEntity extends SisBaseLoginInfoEntity {
 
     private Long officerId;
 }
