@@ -24,6 +24,10 @@ public class SisWarnLogMessageUtil {
         log.warn("{} Not Found by ID! id:{} status:{}", apiName, id, status);
     }
 
+    public void notFoundAllIds() {
+        log.warn("{} IDs Not Found!", apiName);
+    }
+
     public void notFoundAllIdsByStatus(final String status) {
         log.warn("{}s Not Found by Status! status:{}", apiName, status);
     }
