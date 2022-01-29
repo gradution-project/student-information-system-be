@@ -36,6 +36,10 @@ public class SisErrorLogMessageUtil {
         log.error("Error When Getting {} IDs by Department ID! departmentId:{}", apiName, departmentId);
     }
 
+    public void errorWhenGettingAllIdsByFacultyId(final Long facultyId) {
+        log.error("Error When Getting {} IDs by Faculty ID! facultyId:{}", apiName, facultyId);
+    }
+
 
     public void errorWhenSaving() {
         log.error("Error When Saving {}!", apiName);

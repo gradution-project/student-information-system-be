@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+import static com.graduationproject.studentinformationsystem.common.util.constant.SisConstants.DATE_PATTERN;
 import static com.graduationproject.studentinformationsystem.common.util.constant.SisConstants.DATE_TIME_PATTERN;
 
 public class SisUtil {
@@ -25,6 +26,15 @@ public class SisUtil {
     }
 
     public static String getFormattedDate(final Date date) {
+        if (date == null) {
+            return null;
+        } else {
+            final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
+            return dateFormat.format(date);
+        }
+    }
+
+    public static String getFormattedDateTime(final Date date) {
         if (date == null) {
             return null;
         } else {

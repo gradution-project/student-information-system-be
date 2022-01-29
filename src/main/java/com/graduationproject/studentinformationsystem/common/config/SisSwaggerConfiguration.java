@@ -16,6 +16,7 @@ public class SisSwaggerConfiguration {
     public static final String LOGIN_API_TAG = "Login Controller";
     public static final String STUDENT_API_TAG = "Student Controller";
     public static final String TEACHER_API_TAG = "Teacher Controller";
+    public static final String OFFICER_API_TAG = "Officer Controller";
     public static final String LESSON_API_TAG = "Lesson Controller";
 
     @Bean
@@ -29,6 +30,7 @@ public class SisSwaggerConfiguration {
                         new Tag(LOGIN_API_TAG, "AUTH_STUDENT_LOGIN & AUTH_TEACHER_LOGIN & AUTH_OFFICER_LOGIN"),
                         new Tag(STUDENT_API_TAG, "STUDENT_ACADEMIC_INFO & STUDENT_PERSONAL_INFO"),
                         new Tag(TEACHER_API_TAG, "TEACHER_ACADEMIC_INFO & TEACHER_PERSONAL_INFO"),
+                        new Tag(OFFICER_API_TAG, "OFFICER_ACADEMIC_INFO & OFFICER_PERSONAL_INFO"),
                         new Tag(LESSON_API_TAG, "UNIV_LESSON & TEACHER_LESSON")
                 );
     }

@@ -36,6 +36,10 @@ public class SisInfoLogMessageUtil {
         log.info("{} IDs Found by Department ID! departmentId:{}", apiName, departmentId);
     }
 
+    public void foundAllIdsByFacultyId(final Long facultyId) {
+        log.info("{} IDs Found by Faculty ID! facultyId:{}", apiName, facultyId);
+    }
+
 
     public void savedById(final Long id) {
         log.info("{} Saved! id:{}", apiName, id);
