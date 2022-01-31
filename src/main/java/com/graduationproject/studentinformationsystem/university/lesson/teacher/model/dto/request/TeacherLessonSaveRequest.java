@@ -16,7 +16,7 @@ public class TeacherLessonSaveRequest implements Serializable {
 
     @Valid
     @NotNull
-    private TeacherLessonRequest lessonRequest;
+    private TeacherLessonInfoRequest teacherLessonInfoRequest;
 
     @Valid
     @NotNull

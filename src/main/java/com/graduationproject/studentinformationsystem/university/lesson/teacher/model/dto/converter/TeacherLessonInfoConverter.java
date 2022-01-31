@@ -4,7 +4,7 @@ import com.graduationproject.studentinformationsystem.common.model.dto.request.S
 import com.graduationproject.studentinformationsystem.common.util.SisUtil;
 import com.graduationproject.studentinformationsystem.university.lesson.common.model.dto.converter.LessonInfoConverter;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.request.TeacherLessonDeleteRequest;
-import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.request.TeacherLessonRequest;
+import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.request.TeacherLessonInfoRequest;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.request.TeacherLessonSaveRequest;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.response.TeacherLessonResponse;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.entity.TeacherLessonDeleteEntity;
@@ -15,30 +15,30 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class TeacherLessonConverter {
+public class TeacherLessonInfoConverter {
 
-    private TeacherLessonConverter() {
+    private TeacherLessonInfoConverter() {
     }
 
     public static TeacherLessonSaveEntity generateSaveEntity(final TeacherLessonSaveRequest saveRequest) {
 
-        final TeacherLessonRequest lessonRequest = saveRequest.getLessonRequest();
+        final TeacherLessonInfoRequest teacherLessonInfoRequest = saveRequest.getTeacherLessonInfoRequest();
         final SisOperationInfoRequest operationInfoRequest = saveRequest.getOperationInfoRequest();
 
         return TeacherLessonSaveEntity.builder()
-                .teacherId(lessonRequest.getTeacherId())
-                .lessonId(lessonRequest.getLessonId())
+                .teacherId(teacherLessonInfoRequest.getTeacherId())
+                .lessonId(teacherLessonInfoRequest.getLessonId())
                 .createdUserId(operationInfoRequest.getUserId())
                 .createdDate(new Date()).build();
     }
 
     public static TeacherLessonDeleteEntity generateDeleteEntity(final TeacherLessonDeleteRequest deleteRequest) {
 
-        final TeacherLessonRequest lessonRequest = deleteRequest.getLessonRequest();
+        final TeacherLessonInfoRequest teacherLessonInfoRequest = deleteRequest.getTeacherLessonInfoRequest();
 
         return TeacherLessonDeleteEntity.builder()
-                .teacherId(lessonRequest.getTeacherId())
-                .lessonId(lessonRequest.getLessonId()).build();
+                .teacherId(teacherLessonInfoRequest.getTeacherId())
+                .lessonId(teacherLessonInfoRequest.getLessonId()).build();
     }
 
     public static TeacherLessonResponse entityToResponse(final TeacherLessonEntity teacherLessonEntity) {

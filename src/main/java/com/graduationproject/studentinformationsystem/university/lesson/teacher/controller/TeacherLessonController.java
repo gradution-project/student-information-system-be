@@ -60,10 +60,10 @@ public class TeacherLessonController {
     @DeleteMapping(TeacherLessonControllerEndpoint.DELETE)
     @ApiOperation(value = "Delete Teacher Lesson")
     public ResponseEntity<SisApiResponse> deleteTeacherLesson(
-            @RequestBody @Valid final TeacherLessonDeleteRequest updateRequest)
+            @RequestBody @Valid final TeacherLessonDeleteRequest deleteRequest)
             throws SisAlreadyException, SisNotExistException {
 
-        lessonService.deleteTeacherLesson(updateRequest);
+        lessonService.deleteTeacherLesson(deleteRequest);
         return successResponse();
     }
 }

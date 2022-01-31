@@ -9,7 +9,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 @Getter
-public class TeacherLessonRequest implements Serializable {
+public class TeacherLessonInfoRequest implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -1980596814982587730L;
