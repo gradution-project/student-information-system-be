@@ -82,7 +82,7 @@ public class TeacherController {
         return successResponse(personalInfoResponse);
     }
 
-    @DeleteMapping(TeacherControllerEndpoint.DELETE_BY_TEACHER_ID)
+    @DeleteMapping(TeacherControllerEndpoint.DELETE)
     @ApiOperation(value = "Delete Teacher")
     public ResponseEntity<SisBaseApiResponse<TeacherInfoResponse>> deleteTeacher(
             @Valid @RequestBody final TeacherDeleteRequest deleteRequest)
@@ -92,7 +92,7 @@ public class TeacherController {
         return successResponse(infoResponse);
     }
 
-    @PatchMapping(TeacherControllerEndpoint.PASSIVATE_BY_TEACHER_ID)
+    @PatchMapping(TeacherControllerEndpoint.PASSIVATE)
     @ApiOperation(value = "Passivate Teacher")
     public ResponseEntity<SisBaseApiResponse<TeacherInfoResponse>> passivateTeacher(
             @Valid @RequestBody final TeacherPassivateRequest passivateRequest)
@@ -102,7 +102,7 @@ public class TeacherController {
         return successResponse(infoResponse);
     }
 
-    @PatchMapping(TeacherControllerEndpoint.ACTIVATE_BY_TEACHER_ID)
+    @PatchMapping(TeacherControllerEndpoint.ACTIVATE)
     @ApiOperation(value = "Activate Teacher")
     public ResponseEntity<SisBaseApiResponse<TeacherInfoResponse>> activateTeacher(
             @Valid @RequestBody final TeacherActivateRequest activateRequest)

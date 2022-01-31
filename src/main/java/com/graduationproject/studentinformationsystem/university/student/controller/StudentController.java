@@ -82,7 +82,7 @@ public class StudentController {
         return successResponse(personalInfoResponse);
     }
 
-    @DeleteMapping(StudentControllerEndpoint.DELETE_BY_STUDENT_ID)
+    @DeleteMapping(StudentControllerEndpoint.DELETE)
     @ApiOperation(value = "Delete Student")
     public ResponseEntity<SisBaseApiResponse<StudentInfoResponse>> deleteStudent(
             @RequestBody @Valid final StudentDeleteRequest deleteRequest)
@@ -92,7 +92,7 @@ public class StudentController {
         return successResponse(infoResponse);
     }
 
-    @PatchMapping(StudentControllerEndpoint.PASSIVATE_BY_STUDENT_ID)
+    @PatchMapping(StudentControllerEndpoint.PASSIVATE)
     @ApiOperation(value = "Passivate Student")
     public ResponseEntity<SisBaseApiResponse<StudentInfoResponse>> passivateStudent(
             @RequestBody @Valid final StudentPassivateRequest passivateRequest)
@@ -102,7 +102,7 @@ public class StudentController {
         return successResponse(infoResponse);
     }
 
-    @PatchMapping(StudentControllerEndpoint.ACTIVATE_BY_STUDENT_ID)
+    @PatchMapping(StudentControllerEndpoint.ACTIVATE)
     @ApiOperation(value = "Activate Student")
     public ResponseEntity<SisBaseApiResponse<StudentInfoResponse>> activateStudent(
             @RequestBody @Valid final StudentActivateRequest activateRequest)
@@ -112,7 +112,7 @@ public class StudentController {
         return successResponse(infoResponse);
     }
 
-    @PatchMapping(StudentControllerEndpoint.GRADUATE_BY_STUDENT_ID)
+    @PatchMapping(StudentControllerEndpoint.GRADUATE)
     @ApiOperation(value = "Graduate Student")
     public ResponseEntity<SisBaseApiResponse<StudentInfoResponse>> graduateStudent(
             @RequestBody @Valid final StudentGraduateRequest graduateRequest)

@@ -82,7 +82,7 @@ public class OfficerController {
         return successResponse(personalInfoResponse);
     }
 
-    @DeleteMapping(OfficerControllerEndpoint.DELETE_BY_OFFICER_ID)
+    @DeleteMapping(OfficerControllerEndpoint.DELETE)
     @ApiOperation(value = "Delete Officer")
     public ResponseEntity<SisBaseApiResponse<OfficerInfoResponse>> deleteOfficer(
             @Valid @RequestBody final OfficerDeleteRequest deleteRequest)
@@ -92,7 +92,7 @@ public class OfficerController {
         return successResponse(infoResponse);
     }
 
-    @PatchMapping(OfficerControllerEndpoint.PASSIVATE_BY_OFFICER_ID)
+    @PatchMapping(OfficerControllerEndpoint.PASSIVATE)
     @ApiOperation(value = "Passivate Officer")
     public ResponseEntity<SisBaseApiResponse<OfficerInfoResponse>> passivateOfficer(
             @Valid @RequestBody final OfficerPassivateRequest passivateRequest)
@@ -102,7 +102,7 @@ public class OfficerController {
         return successResponse(infoResponse);
     }
 
-    @PatchMapping(OfficerControllerEndpoint.ACTIVATE_BY_OFFICER_ID)
+    @PatchMapping(OfficerControllerEndpoint.ACTIVATE)
     @ApiOperation(value = "Activate Officer")
     public ResponseEntity<SisBaseApiResponse<OfficerInfoResponse>> activateOfficer(
             @Valid @RequestBody final OfficerActivateRequest activateRequest)
