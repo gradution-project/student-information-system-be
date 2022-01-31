@@ -1,6 +1,8 @@
 package com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.converter;
 
 import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
+import com.graduationproject.studentinformationsystem.common.util.SisUtil;
+import com.graduationproject.studentinformationsystem.university.lesson.common.model.dto.converter.LessonInfoConverter;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.request.TeacherLessonDeleteRequest;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.request.TeacherLessonRequest;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.request.TeacherLessonSaveRequest;
@@ -39,19 +41,13 @@ public class TeacherLessonConverter {
                 .lessonId(lessonRequest.getLessonId()).build();
     }
 
-    public static TeacherLessonResponse entityToResponse(final TeacherLessonEntity lessonEntity) {
+    public static TeacherLessonResponse entityToResponse(final TeacherLessonEntity teacherLessonEntity) {
 
         return TeacherLessonResponse.builder()
-                .teacherId(lessonEntity.getTeacherId())
-                .lessonId(lessonEntity.getLessonId())
-                .departmentId(lessonEntity.getDepartmentId())
-                .name(lessonEntity.getName())
-                .semester(lessonEntity.getSemester())
-                .credit(lessonEntity.getCredit())
-                .compulsoryOrElective(lessonEntity.getCompulsoryOrElective().getName())
-                .status(lessonEntity.getStatus().getName())
-                .createdUserId(lessonEntity.getCreatedUserId())
-                .createdDate(lessonEntity.getCreatedDate()).build();
+                .teacherId(teacherLessonEntity.getTeacherId())
+                .createdUserId(teacherLessonEntity.getCreatedUserId())
+                .createdDate(SisUtil.getFormattedDateTime(teacherLessonEntity.getCreatedDate()))
+                .lessonResponse(LessonInfoConverter.entityToResponse(teacherLessonEntity.getLessonEntity())).build();
     }
 
     public static List<TeacherLessonResponse> entitiesToResponses(final List<TeacherLessonEntity> lessonEntities) {
