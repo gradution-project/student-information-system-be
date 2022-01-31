@@ -3,9 +3,9 @@ package com.graduationproject.studentinformationsystem.university.faculty.servic
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.university.faculty.model.dto.converter.FacultyInfoConverter;
-import com.graduationproject.studentinformationsystem.university.faculty.model.dto.entity.FacultyEntity;
 import com.graduationproject.studentinformationsystem.university.faculty.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.faculty.model.dto.response.FacultyResponse;
+import com.graduationproject.studentinformationsystem.university.faculty.model.entity.FacultyEntity;
 import com.graduationproject.studentinformationsystem.university.faculty.model.enums.FacultyStatus;
 import com.graduationproject.studentinformationsystem.university.faculty.model.exception.FacultyException;
 import com.graduationproject.studentinformationsystem.university.faculty.repository.FacultyRepository;
@@ -25,7 +25,7 @@ public class FacultyServiceImpl implements FacultyService {
     @Override
     public List<FacultyResponse> getAllFacultiesByStatus(final FacultyStatus status) {
         final List<FacultyEntity> facultyResponses = facultyRepository.getAllFacultiesByStatus(status);
-        return FacultyInfoConverter.entityListToResponseList(facultyResponses);
+        return FacultyInfoConverter.entitiesToResponses(facultyResponses);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class FacultyServiceImpl implements FacultyService {
     public FacultyResponse updateFaculty(final Long facultyId, final FacultyUpdateRequest updateRequest)
             throws SisNotExistException {
 
-        checkBeforeUpdatingAcademicInfo(facultyId);
+        checkBeforeUpdating(facultyId);
 
         final FacultyEntity facultyEntity = FacultyInfoConverter.generateUpdateEntity(facultyId, updateRequest);
         facultyRepository.updateFaculty(facultyEntity);
@@ -109,9 +109,7 @@ public class FacultyServiceImpl implements FacultyService {
      * Checks Before Processing
      */
 
-    private void checkBeforeUpdatingAcademicInfo(final Long facultyId)
-            throws SisNotExistException {
-
+    private void checkBeforeUpdating(final Long facultyId) throws SisNotExistException {
         ifFacultyIsNotExistThrowNotExistException(facultyId);
     }
 
@@ -129,12 +127,6 @@ public class FacultyServiceImpl implements FacultyService {
     private void checkBeforeActivating(final Long facultyId) throws SisNotExistException, SisAlreadyException {
         ifFacultyIsNotExistThrowNotExistException(facultyId);
         ifFacultyIsAlreadyActiveThrowAlreadyException(facultyId);
-        ifFacultyIsAlreadyDeletedThrowAlreadyException(facultyId);
-    }
-
-    private void checkBeforeGraduating(final Long facultyId) throws SisNotExistException, SisAlreadyException {
-        ifFacultyIsNotExistThrowNotExistException(facultyId);
-        ifFacultyIsAlreadyPassiveThrowAlreadyException(facultyId);
         ifFacultyIsAlreadyDeletedThrowAlreadyException(facultyId);
     }
 
