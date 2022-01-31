@@ -13,20 +13,15 @@ public class TeacherLessonSqlScripts {
     }
 
     /**
-     * SELECT TEACHER_ID, LESSON_ID, DEPARTMENT_ID, NAME, SEMESTER, CREDIT, COMPULSORY_OR_ELECTIVE
-     * FROM TEACHER_LESSON AS teacherLesson LEFT JOIN UNIV_LESSON AS univLesson
-     * ON teacherLesson.LESSON_ID = univLesson.ID;
+     * SELECT TEACHER_ID, LESSON_ID, CREATED_USER_ID, CREATED_DATE FROM TEACHER_LESSON;
      */
     public static final String GET_ALL_TEACHERS_LESSONS =
             sqlBuilder.delete(0, sqlBuilder.length())
-                    .append("SELECT TEACHER_ID, LESSON_ID, DEPARTMENT_ID, NAME, SEMESTER, CREDIT, COMPULSORY_OR_ELECTIVE, STATUS " +
-                            "FROM TEACHER_LESSON AS teacherLesson LEFT JOIN UNIV_LESSON AS univLesson " +
-                            "ON teacherLesson.LESSON_ID = univLesson.ID ").toString();
+                    .append("SELECT TEACHER_ID, LESSON_ID, " +
+                            "CREATED_USER_ID, CREATED_DATE FROM TEACHER_LESSON ").toString();
 
     /**
-     * SELECT TEACHER_ID, LESSON_ID, DEPARTMENT_ID, NAME, SEMESTER, CREDIT, COMPULSORY_OR_ELECTIVE
-     * FROM TEACHER_LESSON AS teacherLesson LEFT JOIN UNIV_LESSON AS univLesson
-     * ON teacherLesson.LESSON_ID = univLesson.ID WHERE TEACHER_ID=:teacherId;
+     * SELECT TEACHER_ID, LESSON_ID, CREATED_USER_ID, CREATED_DATE FROM TEACHER_LESSON WHERE TEACHER_ID=:teacherId;
      */
     public static final String GET_TEACHER_ALL_LESSONS =
             sqlBuilder.delete(0, sqlBuilder.length())
@@ -34,9 +29,8 @@ public class TeacherLessonSqlScripts {
                     .append("WHERE TEACHER_ID=:teacherId ").toString();
 
     /**
-     * SELECT TEACHER_ID, LESSON_ID, DEPARTMENT_ID, NAME, SEMESTER, CREDIT, COMPULSORY_OR_ELECTIVE
-     * FROM TEACHER_LESSON AS teacherLesson LEFT JOIN UNIV_LESSON AS univLesson
-     * ON teacherLesson.LESSON_ID = univLesson.ID WHERE TEACHER_ID=:teacherId AND LESSON_ID=:lessonId;
+     * SELECT TEACHER_ID, LESSON_ID, CREATED_USER_ID, CREATED_DATE FROM TEACHER_LESSON
+     * WHERE TEACHER_ID=:teacherId AND LESSON_ID=:lessonId;
      */
     public static final String GET_TEACHER_LESSON =
             sqlBuilder.delete(0, sqlBuilder.length())
