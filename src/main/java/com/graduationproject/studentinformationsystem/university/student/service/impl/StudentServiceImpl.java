@@ -3,6 +3,8 @@ package com.graduationproject.studentinformationsystem.university.student.servic
 import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
+import com.graduationproject.studentinformationsystem.university.department.model.exception.DepartmentException;
+import com.graduationproject.studentinformationsystem.university.department.repository.DepartmentRepository;
 import com.graduationproject.studentinformationsystem.university.mail.service.StudentMailService;
 import com.graduationproject.studentinformationsystem.university.student.model.dto.converter.StudentInfoResponseConverter;
 import com.graduationproject.studentinformationsystem.university.student.model.dto.converter.StudentResponseConverter;
@@ -25,6 +27,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
+
+    private final DepartmentRepository departmentRepository;
 
     private final StudentAcademicInfoService academicInfoService;
     private final StudentPersonalInfoService personalInfoService;
@@ -148,7 +152,7 @@ public class StudentServiceImpl implements StudentService {
      * Checks Before Processing
      */
 
-    private void checkBeforeSaving(final StudentSaveRequest studentInfoRequest) {
+    private void checkBeforeSaving(final StudentSaveRequest studentInfoRequest) throws SisNotExistException {
         ifDepartmentIdIsNotExistThrowNotExistException(studentInfoRequest.getAcademicInfoRequest().getDepartmentId());
     }
 
@@ -201,11 +205,10 @@ public class StudentServiceImpl implements StudentService {
         }
     }
 
-    private void ifDepartmentIdIsNotExistThrowNotExistException(final Long departmentId) {
-        // TODO: ifDepartmentIdIsNotExistThrowNotExistException
-//        if (!departmentService.isDepartmentExist(studentId)) {
-//            SisException.throwNotExistException();
-//        }
+    private void ifDepartmentIdIsNotExistThrowNotExistException(final Long departmentId) throws SisNotExistException {
+        if (!departmentRepository.isDepartmentExist(departmentId)) {
+            DepartmentException.throwNotExistException(departmentId);
+        }
     }
 
     private void ifStudentIsAlreadyDeletedThrowAlreadyException(final Long studentId) throws SisAlreadyException {
