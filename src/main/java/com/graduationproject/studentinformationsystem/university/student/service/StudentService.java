@@ -18,7 +18,7 @@ public interface StudentService {
     StudentInfoDetailResponse getStudentDetailById(Long studentId)
             throws SisNotExistException;
 
-    StudentInfoDetailResponse saveStudent(StudentSaveRequest saveRequest);
+    StudentInfoDetailResponse saveStudent(StudentSaveRequest saveRequest) throws SisNotExistException;
 
     StudentAcademicInfoResponse updateStudentAcademicInfo(Long studentId,
                                                           StudentAcademicInfoUpdateRequest academicInfoUpdateRequest)

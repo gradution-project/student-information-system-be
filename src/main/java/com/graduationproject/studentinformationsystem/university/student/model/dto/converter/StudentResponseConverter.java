@@ -17,7 +17,7 @@ public class StudentResponseConverter {
 
         return StudentInfoResponse.builder()
                 .studentId(academicInfoResponse.getStudentId())
-                .departmentId(academicInfoResponse.getDepartmentId())
+                .departmentResponse(academicInfoResponse.getDepartmentResponse())
                 .degree(academicInfoResponse.getDegree())
                 .classLevel(academicInfoResponse.getClassLevel())
                 .name(personalInfoResponse.getName())

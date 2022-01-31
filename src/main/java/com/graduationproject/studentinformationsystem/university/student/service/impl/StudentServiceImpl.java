@@ -44,7 +44,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentInfoDetailResponse saveStudent(final StudentSaveRequest saveRequest) {
+    public StudentInfoDetailResponse saveStudent(final StudentSaveRequest saveRequest) throws SisNotExistException {
         checkBeforeSaving(saveRequest);
 
         final Long studentId = generateStudentId(saveRequest.getAcademicInfoRequest().getDepartmentId());

@@ -1,5 +1,6 @@
 package com.graduationproject.studentinformationsystem.university.student.model.dto.response;
 
+import com.graduationproject.studentinformationsystem.university.department.model.dto.response.DepartmentResponse;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -8,7 +9,6 @@ import lombok.Getter;
 public class StudentInfoResponse {
 
     private Long studentId;
-    private Long departmentId;
     private String degree;
     private String classLevel;
     private String name;
@@ -16,4 +16,6 @@ public class StudentInfoResponse {
     private String email;
     private String status;
     private String registrationDate;
+
+    private DepartmentResponse departmentResponse;
 }
