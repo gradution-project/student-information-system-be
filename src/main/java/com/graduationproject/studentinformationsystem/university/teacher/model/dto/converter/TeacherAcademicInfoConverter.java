@@ -93,12 +93,12 @@ public class TeacherAcademicInfoConverter {
                 .status(academicInfoEntity.getStatus().getName())
                 .registrationDate(SisUtil.getFormattedDate(academicInfoEntity.getRegistrationDate()))
                 .createdUserId(academicInfoEntity.getCreatedUserId())
-                .createdDate(SisUtil.getFormattedDate(academicInfoEntity.getCreatedDate()))
+                .createdDate(SisUtil.getFormattedDateTime(academicInfoEntity.getCreatedDate()))
                 .modifiedUserId(academicInfoEntity.getModifiedUserId())
-                .modifiedDate(SisUtil.getFormattedDate(academicInfoEntity.getModifiedDate())).build();
+                .modifiedDate(SisUtil.getFormattedDateTime(academicInfoEntity.getModifiedDate())).build();
     }
 
-    public static List<TeacherAcademicInfoResponse> entityListToResponseList(final List<TeacherAcademicInfoEntity> academicInfoEntities) {
+    public static List<TeacherAcademicInfoResponse> entitiesToResponses(final List<TeacherAcademicInfoEntity> academicInfoEntities) {
         List<TeacherAcademicInfoResponse> academicInfoResponses = new ArrayList<>();
         academicInfoEntities.forEach(academicInfoEntity -> academicInfoResponses.add(entityToResponse(academicInfoEntity)));
         return academicInfoResponses;

@@ -1,20 +1,16 @@
 package com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.response;
 
-import lombok.Builder;
+import com.graduationproject.studentinformationsystem.university.lesson.common.model.dto.response.LessonResponse;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
-@Builder
+@SuperBuilder
 public class TeacherLessonResponse {
 
     private Long teacherId;
-    private Long lessonId;
-    private Long departmentId;
-    private String name;
-    private Integer semester;
-    private Integer credit;
-    private String compulsoryOrElective;
-    private String status;
     private Long createdUserId;
     private String createdDate;
+
+    private LessonResponse lessonResponse;
 }

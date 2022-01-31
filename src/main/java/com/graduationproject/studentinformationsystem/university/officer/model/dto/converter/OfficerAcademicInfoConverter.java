@@ -82,14 +82,14 @@ public class OfficerAcademicInfoConverter {
                 .phoneNumber(SisUtil.getFormattedPhoneNumber(academicInfoEntity.getPhoneNumber()))
                 .email(academicInfoEntity.getEmail())
                 .status(academicInfoEntity.getStatus().getName())
-                .registrationDate(SisUtil.getFormattedDateTime(academicInfoEntity.getRegistrationDate()))
+                .registrationDate(SisUtil.getFormattedDate(academicInfoEntity.getRegistrationDate()))
                 .createdUserId(academicInfoEntity.getCreatedUserId())
                 .createdDate(SisUtil.getFormattedDateTime(academicInfoEntity.getCreatedDate()))
                 .modifiedUserId(academicInfoEntity.getModifiedUserId())
                 .modifiedDate(SisUtil.getFormattedDateTime(academicInfoEntity.getModifiedDate())).build();
     }
 
-    public static List<OfficerAcademicInfoResponse> entityListToResponseList(final List<OfficerAcademicInfoEntity> academicInfoEntities) {
+    public static List<OfficerAcademicInfoResponse> entitiesToResponses(final List<OfficerAcademicInfoEntity> academicInfoEntities) {
         List<OfficerAcademicInfoResponse> academicInfoResponses = new ArrayList<>();
         academicInfoEntities.forEach(academicInfoEntity -> academicInfoResponses.add(entityToResponse(academicInfoEntity)));
         return academicInfoResponses;

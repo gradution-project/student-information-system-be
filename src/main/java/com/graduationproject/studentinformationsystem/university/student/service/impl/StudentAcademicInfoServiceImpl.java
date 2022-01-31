@@ -21,7 +21,7 @@ public class StudentAcademicInfoServiceImpl implements StudentAcademicInfoServic
 
     @Override
     public List<StudentAcademicInfoResponse> getAllStudentAcademicInfosByStatus(StudentStatus status) {
-        return StudentAcademicInfoConverter.entityListToResponseList(academicInfoRepository.getAllStudentAcademicInfosByStatus(status));
+        return StudentAcademicInfoConverter.entitiesToResponses(academicInfoRepository.getAllStudentAcademicInfosByStatus(status));
     }
 
     @Override

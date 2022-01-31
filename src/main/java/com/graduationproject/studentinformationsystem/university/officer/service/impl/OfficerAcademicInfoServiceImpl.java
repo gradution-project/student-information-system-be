@@ -22,7 +22,7 @@ public class OfficerAcademicInfoServiceImpl implements OfficerAcademicInfoServic
     @Override
     public List<OfficerAcademicInfoResponse> getAllOfficerAcademicInfosByStatus(final OfficerStatus status) {
         final List<OfficerAcademicInfoEntity> academicInfoEntities = academicInfoRepository.getAllOfficerAcademicInfosByStatus(status);
-        return OfficerAcademicInfoConverter.entityListToResponseList(academicInfoEntities);
+        return OfficerAcademicInfoConverter.entitiesToResponses(academicInfoEntities);
     }
 
     @Override

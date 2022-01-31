@@ -21,7 +21,7 @@ public class StudentPersonalInfoServiceImpl implements StudentPersonalInfoServic
 
     @Override
     public List<StudentPersonalInfoResponse> getAllStudentPersonalInfosByStatus(StudentStatus status) {
-        return StudentPersonalInfoConverter.entityListToResponseList(personalInfoRepository.getAllStudentPersonalInfosByStatus(status));
+        return StudentPersonalInfoConverter.entitiesToResponses(personalInfoRepository.getAllStudentPersonalInfosByStatus(status));
     }
 
     @Override

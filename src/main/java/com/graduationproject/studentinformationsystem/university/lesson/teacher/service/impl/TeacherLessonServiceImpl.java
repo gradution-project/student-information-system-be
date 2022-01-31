@@ -2,6 +2,8 @@ package com.graduationproject.studentinformationsystem.university.lesson.teacher
 
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
+import com.graduationproject.studentinformationsystem.university.lesson.common.model.entity.LessonEntity;
+import com.graduationproject.studentinformationsystem.university.lesson.common.repository.LessonRepository;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.converter.TeacherLessonConverter;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.request.TeacherLessonDeleteRequest;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.request.TeacherLessonRequest;
@@ -23,16 +25,21 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TeacherLessonServiceImpl implements TeacherLessonService {
 
-    private final TeacherLessonRepository lessonRepository;
+    private final TeacherLessonRepository teacherLessonRepository;
+    private final LessonRepository lessonRepository;
 
     @Override
     public List<TeacherLessonResponse> getAllTeachersLessons() {
-        return TeacherLessonConverter.entitiesToResponses(lessonRepository.getAllTeachersLessons());
+        final List<TeacherLessonEntity> teacherLessonEntities = teacherLessonRepository.getAllTeachersLessons();
+        setLessonEntities(teacherLessonEntities);
+        return TeacherLessonConverter.entitiesToResponses(teacherLessonEntities);
     }
 
     @Override
     public List<TeacherLessonResponse> getTeacherLessonsById(final Long teacherId) {
-        return TeacherLessonConverter.entitiesToResponses(lessonRepository.getTeacherLessonsByTeacherId(teacherId));
+        final List<TeacherLessonEntity> teacherLessonEntities = teacherLessonRepository.getTeacherLessonsByTeacherId(teacherId);
+        setLessonEntities(teacherLessonEntities);
+        return TeacherLessonConverter.entitiesToResponses(teacherLessonEntities);
     }
 
     @Override
@@ -41,7 +48,7 @@ public class TeacherLessonServiceImpl implements TeacherLessonService {
 
         final TeacherLessonSaveEntity saveEntity = TeacherLessonConverter.generateSaveEntity(saveRequest);
 
-        lessonRepository.saveTeacherLesson(saveEntity);
+        teacherLessonRepository.saveTeacherLesson(saveEntity);
         return getTeacherLessonResponse(saveEntity.getTeacherId(), saveEntity.getLessonId());
     }
 
@@ -50,12 +57,23 @@ public class TeacherLessonServiceImpl implements TeacherLessonService {
         checkBeforeDeleting(deleteRequest);
 
         final TeacherLessonDeleteEntity deleteEntity = TeacherLessonConverter.generateDeleteEntity(deleteRequest);
-        lessonRepository.deleteTeacherLesson(deleteEntity);
+        teacherLessonRepository.deleteTeacherLesson(deleteEntity);
     }
 
     private TeacherLessonResponse getTeacherLessonResponse(final Long teacherId, final Long lessonId) {
-        final TeacherLessonEntity lessonEntity = lessonRepository.getTeacherLessonByTeacherIdAndLessonId(teacherId, lessonId);
-        return TeacherLessonConverter.entityToResponse(lessonEntity);
+        final TeacherLessonEntity teacherLessonEntity = teacherLessonRepository.getTeacherLessonByTeacherIdAndLessonId(teacherId, lessonId);
+        setLessonEntity(teacherLessonEntity);
+        return TeacherLessonConverter.entityToResponse(teacherLessonEntity);
+    }
+
+    private void setLessonEntity(final TeacherLessonEntity teacherLessonEntity) {
+        final Long lessonId = teacherLessonEntity.getLessonId();
+        final LessonEntity lessonEntity = lessonRepository.getLessonById(lessonId);
+        teacherLessonEntity.setLessonEntity(lessonEntity);
+    }
+
+    private void setLessonEntities(final List<TeacherLessonEntity> teacherLessonEntities) {
+        teacherLessonEntities.forEach(this::setLessonEntity);
     }
 
 
@@ -78,14 +96,18 @@ public class TeacherLessonServiceImpl implements TeacherLessonService {
      * Throw Exceptions
      */
 
-    private void ifTeacherLessonIsExistThrowAlreadyException(final Long teacherId, final Long lessonId) throws SisAlreadyException {
-        if (lessonRepository.isTeacherLessonExist(teacherId, lessonId)) {
+    private void ifTeacherLessonIsExistThrowAlreadyException(final Long teacherId, final Long lessonId)
+            throws SisAlreadyException {
+
+        if (teacherLessonRepository.isTeacherLessonExist(teacherId, lessonId)) {
             TeacherLessonException.throwAlreadyExistException(teacherId, lessonId);
         }
     }
 
-    private void ifTeacherLessonIsNotExistThrowNotExistException(final Long teacherId, final Long lessonId) throws SisNotExistException {
-        if (!lessonRepository.isTeacherLessonExist(teacherId, lessonId)) {
+    private void ifTeacherLessonIsNotExistThrowNotExistException(final Long teacherId, final Long lessonId)
+            throws SisNotExistException {
+
+        if (!teacherLessonRepository.isTeacherLessonExist(teacherId, lessonId)) {
             TeacherLessonException.throwNotExistException(teacherId, lessonId);
         }
     }

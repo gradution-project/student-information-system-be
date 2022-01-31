@@ -22,7 +22,7 @@ public class TeacherAcademicInfoServiceImpl implements TeacherAcademicInfoServic
     @Override
     public List<TeacherAcademicInfoResponse> getAllTeacherAcademicInfosByStatus(final TeacherStatus status) {
         final List<TeacherAcademicInfoEntity> academicInfoEntities = academicInfoRepository.getAllTeacherAcademicInfosByStatus(status);
-        return TeacherAcademicInfoConverter.entityListToResponseList(academicInfoEntities);
+        return TeacherAcademicInfoConverter.entitiesToResponses(academicInfoEntities);
     }
 
     @Override

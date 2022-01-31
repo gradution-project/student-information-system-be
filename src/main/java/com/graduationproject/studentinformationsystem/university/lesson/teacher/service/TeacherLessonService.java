@@ -12,11 +12,9 @@ public interface TeacherLessonService {
 
     List<TeacherLessonResponse> getAllTeachersLessons();
 
-    List<TeacherLessonResponse> getTeacherLessonsById(final Long teacherId);
+    List<TeacherLessonResponse> getTeacherLessonsById(Long teacherId);
 
-    TeacherLessonResponse saveTeacherLesson(final TeacherLessonSaveRequest saveRequest)
-            throws SisAlreadyException;
+    TeacherLessonResponse saveTeacherLesson(TeacherLessonSaveRequest saveRequest) throws SisAlreadyException;
 
-    void deleteTeacherLesson(final TeacherLessonDeleteRequest deleteRequest)
-            throws SisAlreadyException, SisNotExistException;
+    void deleteTeacherLesson(TeacherLessonDeleteRequest deleteRequest) throws SisAlreadyException, SisNotExistException;
 }

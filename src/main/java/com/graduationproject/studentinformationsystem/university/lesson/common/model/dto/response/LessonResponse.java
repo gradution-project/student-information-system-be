@@ -8,11 +8,11 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class LessonResponse extends SisBaseResponse {
 
-    private Long id;
+    private Long lessonId;
     private Long departmentId;
     private String name;
-    private Integer semester;
+    private String status;
+    private String semester;
     private Integer credit;
     private String compulsoryOrElective;
-    private String status;
 }

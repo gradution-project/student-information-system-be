@@ -1,19 +1,21 @@
 package com.graduationproject.studentinformationsystem.university.lesson.common.model.entity;
 
-import com.graduationproject.studentinformationsystem.common.model.enums.SisStatus;
+import com.graduationproject.studentinformationsystem.common.model.entity.SisBaseEntity;
 import com.graduationproject.studentinformationsystem.university.lesson.common.model.enums.LessonCompulsoryOrElective;
-import lombok.Builder;
+import com.graduationproject.studentinformationsystem.university.lesson.common.model.enums.LessonSemester;
+import com.graduationproject.studentinformationsystem.university.lesson.common.model.enums.LessonStatus;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
-@Builder
-public class LessonEntity {
+@SuperBuilder
+public class LessonEntity extends SisBaseEntity {
 
-    private Long id;
+    private Long lessonId;
     private Long departmentId;
     private String name;
-    private Integer semester;
+    private LessonStatus status;
+    private LessonSemester semester;
     private Integer credit;
     private LessonCompulsoryOrElective compulsoryOrElective;
-    private SisStatus status;
 }
