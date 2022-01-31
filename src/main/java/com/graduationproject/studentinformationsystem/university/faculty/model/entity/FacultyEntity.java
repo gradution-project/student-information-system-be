@@ -1,4 +1,4 @@
-package com.graduationproject.studentinformationsystem.university.faculty.model.dto.entity;
+package com.graduationproject.studentinformationsystem.university.faculty.model.entity;
 
 import com.graduationproject.studentinformationsystem.common.model.entity.SisBaseEntity;
 import com.graduationproject.studentinformationsystem.university.faculty.model.enums.FacultyStatus;
