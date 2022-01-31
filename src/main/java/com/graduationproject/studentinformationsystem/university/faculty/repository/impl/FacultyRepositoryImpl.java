@@ -5,7 +5,7 @@ import com.graduationproject.studentinformationsystem.common.util.log.SisErrorLo
 import com.graduationproject.studentinformationsystem.common.util.log.SisInfoLogMessageUtil;
 import com.graduationproject.studentinformationsystem.common.util.log.SisWarnLogMessageUtil;
 import com.graduationproject.studentinformationsystem.common.util.sql.SisSqlUtil;
-import com.graduationproject.studentinformationsystem.university.faculty.model.dto.entity.FacultyEntity;
+import com.graduationproject.studentinformationsystem.university.faculty.model.entity.FacultyEntity;
 import com.graduationproject.studentinformationsystem.university.faculty.model.enums.FacultyStatus;
 import com.graduationproject.studentinformationsystem.university.faculty.repository.FacultyRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.graduationproject.studentinformationsystem.university.faculty.repository;
 
-import com.graduationproject.studentinformationsystem.university.faculty.model.dto.entity.FacultyEntity;
+import com.graduationproject.studentinformationsystem.university.faculty.model.entity.FacultyEntity;
 import com.graduationproject.studentinformationsystem.university.faculty.model.enums.FacultyStatus;
 
 import java.util.List;
