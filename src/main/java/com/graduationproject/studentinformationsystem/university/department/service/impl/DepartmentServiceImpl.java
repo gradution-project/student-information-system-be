@@ -23,8 +23,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
 
-    private final DepartmentRepository departmentRepository;
     private final FacultyRepository facultyRepository;
+
+    private final DepartmentRepository departmentRepository;
 
     @Override
     public List<DepartmentResponse> getAllDepartmentsByStatus(final DepartmentStatus status) {
