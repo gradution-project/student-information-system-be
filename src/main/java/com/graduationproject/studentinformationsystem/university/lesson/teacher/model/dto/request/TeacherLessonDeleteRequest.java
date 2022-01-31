@@ -15,5 +15,5 @@ public class TeacherLessonDeleteRequest implements Serializable {
 
     @Valid
     @NotNull
-    private TeacherLessonRequest lessonRequest;
+    private TeacherLessonInfoRequest teacherLessonInfoRequest;
 }
