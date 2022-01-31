@@ -32,9 +32,10 @@ public class SisSwaggerConfiguration {
                 .tags(
                         new Tag(FACULTY_API_TAG, "UNIV_FACULTY"),
                         new Tag(DEPARTMENT_API_TAG, "UNIV_DEPARTMENT"),
-                        new Tag(LESSON_API_TAG, "UNIV_LESSON & TEACHER_LESSON"),
+                        new Tag(LESSON_API_TAG, "UNIV_LESSON"),
                         new Tag(STUDENT_API_TAG, "STUDENT_ACADEMIC_INFO & STUDENT_PERSONAL_INFO"),
                         new Tag(TEACHER_API_TAG, "TEACHER_ACADEMIC_INFO & TEACHER_PERSONAL_INFO"),
+                        new Tag(TEACHER_LESSON_API_TAG, "TEACHER_LESSON"),
                         new Tag(OFFICER_API_TAG, "OFFICER_ACADEMIC_INFO & OFFICER_PERSONAL_INFO"),
                         new Tag(LOGIN_API_TAG, "AUTH_STUDENT_LOGIN & AUTH_TEACHER_LOGIN & AUTH_OFFICER_LOGIN")
                 );
