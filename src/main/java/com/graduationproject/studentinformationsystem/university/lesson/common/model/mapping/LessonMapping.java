@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public enum LessonMapping {
 
-    ID("ID", "id"),
+    LESSON_ID("LESSON_ID", "lessonId"),
     DEPARTMENT_ID("DEPARTMENT_ID", "departmentId"),
     NAME("NAME", "name"),
     SEMESTER("SEMESTER", "semester"),
