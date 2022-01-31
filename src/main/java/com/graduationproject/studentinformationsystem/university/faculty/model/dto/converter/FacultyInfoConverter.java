@@ -2,9 +2,9 @@ package com.graduationproject.studentinformationsystem.university.faculty.model.
 
 import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
 import com.graduationproject.studentinformationsystem.common.util.SisUtil;
-import com.graduationproject.studentinformationsystem.university.faculty.model.dto.entity.FacultyEntity;
 import com.graduationproject.studentinformationsystem.university.faculty.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.faculty.model.dto.response.FacultyResponse;
+import com.graduationproject.studentinformationsystem.university.faculty.model.entity.FacultyEntity;
 import com.graduationproject.studentinformationsystem.university.faculty.model.enums.FacultyStatus;
 
 import java.util.ArrayList;
@@ -85,7 +85,7 @@ public class FacultyInfoConverter {
                 .build();
     }
 
-    public static List<FacultyResponse> entityListToResponseList(final List<FacultyEntity> facultyEntities) {
+    public static List<FacultyResponse> entitiesToResponses(final List<FacultyEntity> facultyEntities) {
         List<FacultyResponse> facultyResponses = new ArrayList<>();
         facultyEntities.forEach(facultyEntity -> facultyResponses.add(entityToResponse(facultyEntity)));
         return facultyResponses;
