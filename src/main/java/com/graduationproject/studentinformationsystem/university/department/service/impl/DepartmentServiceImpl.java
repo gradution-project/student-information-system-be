@@ -11,6 +11,8 @@ import com.graduationproject.studentinformationsystem.university.department.mode
 import com.graduationproject.studentinformationsystem.university.department.repository.DepartmentRepository;
 import com.graduationproject.studentinformationsystem.university.department.service.DepartmentService;
 import com.graduationproject.studentinformationsystem.university.department.util.DepartmentUtil;
+import com.graduationproject.studentinformationsystem.university.faculty.model.entity.FacultyEntity;
+import com.graduationproject.studentinformationsystem.university.faculty.model.exception.FacultyException;
 import com.graduationproject.studentinformationsystem.university.faculty.repository.FacultyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,8 +28,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public List<DepartmentResponse> getAllDepartmentsByStatus(final DepartmentStatus status) {
-        final List<DepartmentEntity> departmentResponses = departmentRepository.getAllDepartmentsByStatus(status);
-        return DepartmentInfoConverter.entitiesToResponses(departmentResponses);
+        final List<DepartmentEntity> departmentEntities = departmentRepository.getAllDepartmentsByStatus(status);
+        setFacultyEntities(departmentEntities);
+        return DepartmentInfoConverter.entitiesToResponses(departmentEntities);
     }
 
     @Override
@@ -55,7 +58,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DepartmentResponse updateDepartment(final Long departmentId, final DepartmentUpdateRequest updateRequest)
             throws SisNotExistException {
 
-        checkBeforeUpdating(departmentId);
+        final Long facultyId = updateRequest.getDepartmentInfoRequest().getFacultyId();
+        checkBeforeUpdating(departmentId, facultyId);
 
         final DepartmentEntity departmentEntity = DepartmentInfoConverter.generateUpdateEntity(departmentId, updateRequest);
         departmentRepository.updateDepartment(departmentEntity);
@@ -107,7 +111,18 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     private DepartmentResponse getDepartmentResponse(final Long departmentId) {
         final DepartmentEntity departmentEntity = departmentRepository.getDepartmentById(departmentId);
+        setFacultyEntity(departmentEntity);
         return DepartmentInfoConverter.entityToResponse(departmentEntity);
+    }
+
+    private void setFacultyEntity(final DepartmentEntity departmentEntity) {
+        final Long facultyId = departmentEntity.getFacultyId();
+        final FacultyEntity facultyEntity = facultyRepository.getFacultyById(facultyId);
+        departmentEntity.setFacultyEntity(facultyEntity);
+    }
+
+    private void setFacultyEntities(final List<DepartmentEntity> departmentEntities) {
+        departmentEntities.forEach(this::setFacultyEntity);
     }
 
 
@@ -120,9 +135,10 @@ public class DepartmentServiceImpl implements DepartmentService {
         ifFacultyIsNotExistThrowNotExistException(facultyId);
     }
 
-    private void checkBeforeUpdating(final Long departmentId) throws SisNotExistException {
+    private void checkBeforeUpdating(final Long departmentId, final Long facultyId) throws SisNotExistException {
 
         ifDepartmentIsNotExistThrowNotExistException(departmentId);
+        ifFacultyIsNotExistThrowNotExistException(facultyId);
     }
 
     private void checkBeforeDeleting(final Long departmentId) throws SisNotExistException, SisAlreadyException {
@@ -149,7 +165,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     private void ifFacultyIsNotExistThrowNotExistException(final Long facultyId) throws SisNotExistException {
         if (!facultyRepository.isFacultyExist(facultyId)) {
-            DepartmentException.throwNotExistException(facultyId);
+            FacultyException.throwNotExistException(facultyId);
         }
     }
 
