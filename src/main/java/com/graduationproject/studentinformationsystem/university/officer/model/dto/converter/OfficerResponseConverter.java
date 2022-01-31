@@ -17,7 +17,7 @@ public class OfficerResponseConverter {
 
         return OfficerInfoResponse.builder()
                 .officerId(academicInfoResponse.getOfficerId())
-                .facultyId(academicInfoResponse.getFacultyId())
+                .facultyResponse(academicInfoResponse.getFacultyResponse())
                 .name(personalInfoResponse.getName())
                 .surname(personalInfoResponse.getSurname())
                 .email(academicInfoResponse.getEmail())
