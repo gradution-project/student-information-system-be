@@ -22,7 +22,7 @@ public class TeacherPersonalInfoServiceImpl implements TeacherPersonalInfoServic
     @Override
     public List<TeacherPersonalInfoResponse> getAllTeacherPersonalInfosByStatus(final TeacherStatus status) {
         final List<TeacherPersonalInfoEntity> personalInfoEntities = personalInfoRepository.getAllTeacherPersonalInfosByStatus(status);
-        return TeacherPersonalInfoConverter.entityListToResponseList(personalInfoEntities);
+        return TeacherPersonalInfoConverter.entitiesToResponses(personalInfoEntities);
     }
 
     @Override

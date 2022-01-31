@@ -101,7 +101,7 @@ public class OfficerPersonalInfoConverter {
                 .modifiedDate(SisUtil.getFormattedDateTime(personalInfoEntity.getCreatedDate())).build();
     }
 
-    public static List<OfficerPersonalInfoResponse> entityListToResponseList(List<OfficerPersonalInfoEntity> personalInfoEntities) {
+    public static List<OfficerPersonalInfoResponse> entitiesToResponses(List<OfficerPersonalInfoEntity> personalInfoEntities) {
         List<OfficerPersonalInfoResponse> personalInfoResponses = new ArrayList<>();
         personalInfoEntities.forEach(personalInfoEntity -> personalInfoResponses.add(entityToResponse(personalInfoEntity)));
         return personalInfoResponses;

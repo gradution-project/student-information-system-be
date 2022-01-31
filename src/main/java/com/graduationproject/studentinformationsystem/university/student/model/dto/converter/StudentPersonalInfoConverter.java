@@ -110,7 +110,7 @@ public class StudentPersonalInfoConverter {
                 .modifiedUserId(personalInfoEntity.getModifiedUserId()).build();
     }
 
-    public static List<StudentPersonalInfoResponse> entityListToResponseList(final List<StudentPersonalInfoEntity> personalInfoEntities) {
+    public static List<StudentPersonalInfoResponse> entitiesToResponses(final List<StudentPersonalInfoEntity> personalInfoEntities) {
         List<StudentPersonalInfoResponse> personalInfoResponses = new ArrayList<>();
         personalInfoEntities.forEach(personalInfoEntity -> personalInfoResponses.add(entityToResponse(personalInfoEntity)));
         return personalInfoResponses;

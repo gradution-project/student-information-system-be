@@ -22,7 +22,7 @@ public class OfficerPersonalInfoServiceImpl implements OfficerPersonalInfoServic
     @Override
     public List<OfficerPersonalInfoResponse> getAllOfficerPersonalInfosByStatus(final OfficerStatus status) {
         final List<OfficerPersonalInfoEntity> personalInfoEntities = personalInfoRepository.getAllOfficerPersonalInfosByStatus(status);
-        return OfficerPersonalInfoConverter.entityListToResponseList(personalInfoEntities);
+        return OfficerPersonalInfoConverter.entitiesToResponses(personalInfoEntities);
     }
 
     @Override

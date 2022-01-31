@@ -101,7 +101,7 @@ public class StudentAcademicInfoConverter {
                 .modifiedUserId(academicInfoEntity.getModifiedUserId()).build();
     }
 
-    public static List<StudentAcademicInfoResponse> entityListToResponseList(final List<StudentAcademicInfoEntity> academicInfoEntities) {
+    public static List<StudentAcademicInfoResponse> entitiesToResponses(final List<StudentAcademicInfoEntity> academicInfoEntities) {
         List<StudentAcademicInfoResponse> academicInfoResponses = new ArrayList<>();
         academicInfoEntities.forEach(academicInfoEntity -> academicInfoResponses.add(entityToResponse(academicInfoEntity)));
         return academicInfoResponses;

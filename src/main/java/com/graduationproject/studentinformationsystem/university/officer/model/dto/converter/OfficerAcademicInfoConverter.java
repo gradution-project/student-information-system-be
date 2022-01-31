@@ -89,7 +89,7 @@ public class OfficerAcademicInfoConverter {
                 .modifiedDate(SisUtil.getFormattedDateTime(academicInfoEntity.getModifiedDate())).build();
     }
 
-    public static List<OfficerAcademicInfoResponse> entityListToResponseList(final List<OfficerAcademicInfoEntity> academicInfoEntities) {
+    public static List<OfficerAcademicInfoResponse> entitiesToResponses(final List<OfficerAcademicInfoEntity> academicInfoEntities) {
         List<OfficerAcademicInfoResponse> academicInfoResponses = new ArrayList<>();
         academicInfoEntities.forEach(academicInfoEntity -> academicInfoResponses.add(entityToResponse(academicInfoEntity)));
         return academicInfoResponses;
