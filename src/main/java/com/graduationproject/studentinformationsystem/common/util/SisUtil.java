@@ -81,4 +81,12 @@ public class SisUtil {
         }
         return true;
     }
+
+    public static boolean integerToBoolean(final Integer integer) {
+        return switch (integer) {
+            case 1 -> true;
+            case 0 -> false;
+            default -> throw new IndexOutOfBoundsException();
+        };
+    }
 }
