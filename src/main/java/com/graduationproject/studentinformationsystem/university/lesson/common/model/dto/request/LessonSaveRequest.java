@@ -1,0 +1,24 @@
+package com.graduationproject.studentinformationsystem.university.lesson.common.model.dto.request;
+
+import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
+import lombok.Getter;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.io.Serial;
+import java.io.Serializable;
+
+@Getter
+public class LessonSaveRequest implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 525878900761404546L;
+
+    @Valid
+    @NotNull
+    private LessonInfoRequest lessonInfoRequest;
+
+    @Valid
+    @NotNull
+    private SisOperationInfoRequest operationInfoRequest;
+}
