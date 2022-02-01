@@ -1,8 +1,8 @@
 package com.graduationproject.studentinformationsystem.university.teacher.model.dto.converter;
 
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.response.TeacherAcademicInfoResponse;
+import com.graduationproject.studentinformationsystem.university.teacher.model.dto.response.TeacherInfoResponse;
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.response.TeacherPersonalInfoResponse;
-import com.graduationproject.studentinformationsystem.university.teacher.model.dto.response.TeacherResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +12,12 @@ public class TeacherResponseConverter {
     private TeacherResponseConverter() {
     }
 
-    public static TeacherResponse infoResponsesToResponse(TeacherAcademicInfoResponse academicInfoResponse,
-                                                          TeacherPersonalInfoResponse personalInfoResponse) {
-        return TeacherResponse.builder()
+    public static TeacherInfoResponse infoResponsesToResponse(TeacherAcademicInfoResponse academicInfoResponse,
+                                                              TeacherPersonalInfoResponse personalInfoResponse) {
+
+        return TeacherInfoResponse.builder()
                 .teacherId(academicInfoResponse.getTeacherId())
-                .departmentId(academicInfoResponse.getDepartmentId())
+                .departmentResponse(academicInfoResponse.getDepartmentResponse())
                 .degree(academicInfoResponse.getDegree())
                 .role(academicInfoResponse.getRole())
                 .fieldOfStudy(academicInfoResponse.getFieldOfStudy())
@@ -28,13 +29,13 @@ public class TeacherResponseConverter {
                 .registrationDate(academicInfoResponse.getRegistrationDate()).build();
     }
 
-    public static List<TeacherResponse> infoResponsesListToResponseList(List<TeacherAcademicInfoResponse> academicInfoResponses,
-                                                                        List<TeacherPersonalInfoResponse> personalInfoResponses) {
+    public static List<TeacherInfoResponse> infoResponsesListToResponseList(List<TeacherAcademicInfoResponse> academicInfoResponses,
+                                                                            List<TeacherPersonalInfoResponse> personalInfoResponses) {
 
-        List<TeacherResponse> studentResponseList = new ArrayList<>();
+        List<TeacherInfoResponse> infoResponses = new ArrayList<>();
         for (int i = 0; i < academicInfoResponses.size(); i++) {
-            studentResponseList.add(infoResponsesToResponse(academicInfoResponses.get(i), personalInfoResponses.get(i)));
+            infoResponses.add(infoResponsesToResponse(academicInfoResponses.get(i), personalInfoResponses.get(i)));
         }
-        return studentResponseList;
+        return infoResponses;
     }
 }

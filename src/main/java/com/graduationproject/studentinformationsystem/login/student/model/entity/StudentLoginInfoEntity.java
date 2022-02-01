@@ -1,15 +1,12 @@
 package com.graduationproject.studentinformationsystem.login.student.model.entity;
 
-import lombok.Builder;
+import com.graduationproject.studentinformationsystem.common.model.entity.SisBaseLoginInfoEntity;
 import lombok.Getter;
-
-import java.util.Date;
+import lombok.experimental.SuperBuilder;
 
 @Getter
-@Builder
-public class StudentLoginInfoEntity {
+@SuperBuilder
+public class StudentLoginInfoEntity extends SisBaseLoginInfoEntity {
 
     private Long studentId;
-    private Integer failCounter;
-    private Date lastLoginDate;
 }

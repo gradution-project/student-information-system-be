@@ -10,5 +10,6 @@ public interface OfficerLoginService {
 
     LoginResponse login(OfficerLoginRequest loginRequest);
 
-    ForgotPasswordResponse forgotPassword(OfficerForgotPasswordRequest forgotPasswordRequest) throws SisNotExistException;
+    ForgotPasswordResponse forgotPassword(OfficerForgotPasswordRequest forgotPasswordRequest)
+            throws SisNotExistException;
 }

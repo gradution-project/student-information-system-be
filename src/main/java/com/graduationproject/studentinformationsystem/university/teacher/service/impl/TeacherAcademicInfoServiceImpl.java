@@ -1,7 +1,12 @@
 package com.graduationproject.studentinformationsystem.university.teacher.service.impl;
 
+import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
+import com.graduationproject.studentinformationsystem.university.department.model.entity.DepartmentEntity;
+import com.graduationproject.studentinformationsystem.university.department.repository.DepartmentRepository;
+import com.graduationproject.studentinformationsystem.university.faculty.model.entity.FacultyEntity;
+import com.graduationproject.studentinformationsystem.university.faculty.repository.FacultyRepository;
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.converter.TeacherAcademicInfoConverter;
-import com.graduationproject.studentinformationsystem.university.teacher.model.dto.request.TeacherAcademicInfoRequest;
+import com.graduationproject.studentinformationsystem.university.teacher.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.response.TeacherAcademicInfoResponse;
 import com.graduationproject.studentinformationsystem.university.teacher.model.entity.TeacherAcademicInfoEntity;
 import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherStatus;
@@ -16,76 +21,111 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TeacherAcademicInfoServiceImpl implements TeacherAcademicInfoService {
 
+    private final FacultyRepository facultyRepository;
+    private final DepartmentRepository departmentRepository;
+
     private final TeacherAcademicInfoRepository academicInfoRepository;
 
     @Override
-    public List<TeacherAcademicInfoResponse> getAllTeacherAcademicInfosByStatus(TeacherStatus status) {
-        return TeacherAcademicInfoConverter.entityListToResponseList(academicInfoRepository.getAllTeacherAcademicInfosByStatus(status));
+    public List<TeacherAcademicInfoResponse> getAllTeacherAcademicInfosByStatus(final TeacherStatus status) {
+        final List<TeacherAcademicInfoEntity> academicInfoEntities = academicInfoRepository.getAllTeacherAcademicInfosByStatus(status);
+        setDepartmentEntities(academicInfoEntities);
+        return TeacherAcademicInfoConverter.entitiesToResponses(academicInfoEntities);
     }
 
     @Override
-    public TeacherAcademicInfoResponse getTeacherAcademicInfoById(Long teacherId) {
+    public TeacherAcademicInfoResponse getTeacherAcademicInfoById(final Long teacherId) {
         return getTeacherAcademicInfoResponse(teacherId);
     }
 
     @Override
-    public void saveTeacherAcademicInfo(Long teacherId, String teacherEmail, TeacherAcademicInfoRequest request) {
-        TeacherAcademicInfoEntity academicInfoEntity = TeacherAcademicInfoConverter.generateSaveEntity(teacherId, teacherEmail, request);
+    public void saveTeacherAcademicInfo(final Long teacherId,
+                                        final String teacherEmail,
+                                        final TeacherAcademicInfoRequest academicInfoRequest,
+                                        final SisOperationInfoRequest operationInfoRequest) {
+
+        final TeacherAcademicInfoEntity academicInfoEntity = TeacherAcademicInfoConverter
+                .generateSaveEntity(teacherId, teacherEmail, academicInfoRequest, operationInfoRequest);
+
         academicInfoRepository.saveTeacherAcademicInfo(academicInfoEntity);
     }
 
     @Override
-    public TeacherAcademicInfoResponse updateTeacherAcademicInfo(Long teacherId, TeacherAcademicInfoRequest request) {
-        TeacherAcademicInfoEntity entity = TeacherAcademicInfoConverter.generateUpdateEntity(teacherId, request);
-        academicInfoRepository.updateTeacherAcademicInfo(entity);
+    public TeacherAcademicInfoResponse updateTeacherAcademicInfo(final Long teacherId,
+                                                                 final TeacherAcademicInfoUpdateRequest academicInfoUpdateRequest) {
+
+        final TeacherAcademicInfoEntity academicInfoEntity = TeacherAcademicInfoConverter
+                .generateUpdateEntity(teacherId, academicInfoUpdateRequest);
+
+        academicInfoRepository.updateTeacherAcademicInfo(academicInfoEntity);
 
         return getTeacherAcademicInfoResponse(teacherId);
     }
 
     @Override
-    public void deleteTeacherAcademicInfo(Long teacherId) {
-        TeacherAcademicInfoEntity entity = TeacherAcademicInfoConverter.generateDeleteEntity(teacherId);
-        academicInfoRepository.updateTeacherAcademicInfoStatus(entity);
+    public void deleteTeacherAcademicInfo(final TeacherDeleteRequest deleteRequest) {
+        final TeacherAcademicInfoEntity academicInfoEntity = TeacherAcademicInfoConverter.generateDeleteEntity(deleteRequest);
+        academicInfoRepository.updateTeacherAcademicInfoStatus(academicInfoEntity);
     }
 
     @Override
-    public void passivateTeacherAcademicInfo(Long teacherId) {
-        TeacherAcademicInfoEntity entity = TeacherAcademicInfoConverter.generatePassiveEntity(teacherId);
-        academicInfoRepository.updateTeacherAcademicInfoStatus(entity);
+    public void passivateTeacherAcademicInfo(final TeacherPassivateRequest passivateRequest) {
+        final TeacherAcademicInfoEntity academicInfoEntity = TeacherAcademicInfoConverter.generatePassiveEntity(passivateRequest);
+        academicInfoRepository.updateTeacherAcademicInfoStatus(academicInfoEntity);
     }
 
     @Override
-    public void activateTeacherAcademicInfo(Long teacherId) {
-        TeacherAcademicInfoEntity entity = TeacherAcademicInfoConverter.generateActiveEntity(teacherId);
-        academicInfoRepository.updateTeacherAcademicInfoStatus(entity);
+    public void activateTeacherAcademicInfo(final TeacherActivateRequest activateRequest) {
+        final TeacherAcademicInfoEntity academicInfoEntity = TeacherAcademicInfoConverter.generateActiveEntity(activateRequest);
+        academicInfoRepository.updateTeacherAcademicInfoStatus(academicInfoEntity);
     }
 
     @Override
-    public List<Long> getAllTeacherIdsByDepartmentId(Long departmentId) {
+    public List<Long> getAllTeacherIdsByDepartmentId(final Long departmentId) {
         return academicInfoRepository.getAllTeacherIdsByDepartmentId(departmentId);
     }
 
     @Override
-    public boolean isTeacherExist(Long teacherId) {
+    public boolean isTeacherExist(final Long teacherId) {
         return academicInfoRepository.isTeacherExist(teacherId);
     }
 
     @Override
-    public boolean isTeacherDeleted(Long teacherId) {
+    public boolean isTeacherDeleted(final Long teacherId) {
         return academicInfoRepository.isTeacherDeleted(teacherId);
     }
 
     @Override
-    public boolean isTeacherPassive(Long teacherId) {
+    public boolean isTeacherPassive(final Long teacherId) {
         return academicInfoRepository.isTeacherPassive(teacherId);
     }
 
     @Override
-    public boolean isTeacherActive(Long teacherId) {
+    public boolean isTeacherActive(final Long teacherId) {
         return academicInfoRepository.isTeacherActive(teacherId);
     }
 
-    private TeacherAcademicInfoResponse getTeacherAcademicInfoResponse(Long teacherId) {
-        return TeacherAcademicInfoConverter.entityToResponse(academicInfoRepository.getTeacherAcademicInfoById(teacherId));
+
+    private TeacherAcademicInfoResponse getTeacherAcademicInfoResponse(final Long teacherId) {
+        final TeacherAcademicInfoEntity academicInfoEntity = academicInfoRepository.getTeacherAcademicInfoById(teacherId);
+        setDepartmentEntity(academicInfoEntity);
+        return TeacherAcademicInfoConverter.entityToResponse(academicInfoEntity);
+    }
+
+    private void setDepartmentEntity(final TeacherAcademicInfoEntity academicInfoEntity) {
+        final Long departmentId = academicInfoEntity.getDepartmentId();
+        final DepartmentEntity departmentEntity = departmentRepository.getDepartmentById(departmentId);
+        setFacultyEntity(departmentEntity);
+        academicInfoEntity.setDepartmentEntity(departmentEntity);
+    }
+
+    private void setDepartmentEntities(final List<TeacherAcademicInfoEntity> academicInfoEntities) {
+        academicInfoEntities.forEach(this::setDepartmentEntity);
+    }
+
+    private void setFacultyEntity(final DepartmentEntity departmentEntity) {
+        final Long facultyId = departmentEntity.getFacultyId();
+        final FacultyEntity facultyEntity = facultyRepository.getFacultyById(facultyId);
+        departmentEntity.setFacultyEntity(facultyEntity);
     }
 }

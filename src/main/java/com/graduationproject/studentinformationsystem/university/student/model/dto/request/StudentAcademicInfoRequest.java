@@ -4,13 +4,16 @@ import com.graduationproject.studentinformationsystem.common.util.validation.id.
 import com.graduationproject.studentinformationsystem.university.student.model.enums.StudentClassLevel;
 import com.graduationproject.studentinformationsystem.university.student.model.enums.StudentDegree;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serial;
+import java.io.Serializable;
 
 @Getter
-@Setter
-public class StudentAcademicInfoRequest {
+public class StudentAcademicInfoRequest implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 8574625369419572426L;
 
     @NotNull
     @DepartmentID

@@ -1,17 +1,55 @@
 package com.graduationproject.studentinformationsystem.common.util;
 
-import java.util.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Random;
+
+import static com.graduationproject.studentinformationsystem.common.util.constant.SisConstants.DATE_PATTERN;
+import static com.graduationproject.studentinformationsystem.common.util.constant.SisConstants.DATE_TIME_PATTERN;
 
 public class SisUtil {
 
     private SisUtil() {
     }
 
+    public static String getFormattedPhoneNumber(final Long phoneNumber) {
+        final String strPhoneNumber = String.valueOf(phoneNumber);
+        final String first = strPhoneNumber.substring(0, 3);
+        final String second = strPhoneNumber.substring(3, 6);
+        final String third = strPhoneNumber.substring(6, 8);
+        final String fourth = strPhoneNumber.substring(8, 10);
+        return "+90 (" + first + ") " + second + " " + third + " " + fourth;
+    }
+
+    public static String getFormattedDate(final Date date) {
+        if (date == null) {
+            return null;
+        } else {
+            final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
+            return dateFormat.format(date);
+        }
+    }
+
+    public static String getFormattedDateTime(final Date date) {
+        if (date == null) {
+            return null;
+        } else {
+            final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_TIME_PATTERN);
+            return dateFormat.format(date);
+        }
+    }
+
+    public static String getCurrentFormattedDateTime() {
+        final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
+        return dateTimeFormatter.format(LocalDateTime.now());
+    }
+
     public static String getCurrentYear() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        Integer year = calendar.get(Calendar.YEAR);
-        return String.valueOf(year);
+        return String.valueOf(LocalDateTime.now().getYear());
     }
 
     public static String stringToStringLowerCaseWithDot(String string) {
@@ -24,8 +62,8 @@ public class SisUtil {
         return string;
     }
 
-    public static Long generateRandomIdWithPrefixId(Long prefixId) {
-        Random random = new Random();
+    public static Long generateRandomIdWithPrefixId(final Long prefixId) {
+        final Random random = new Random();
         String stringNumber = String.valueOf(random.nextLong(999));
         stringNumber = switch (stringNumber.length()) {
             case 1 -> "00" + stringNumber;
@@ -35,12 +73,20 @@ public class SisUtil {
         return Long.parseLong(prefixId + stringNumber);
     }
 
-    public static boolean isExistIdInIdList(Long id, List<Long> ids) {
+    public static boolean isNotExistIdInIdList(final Long id, final List<Long> ids) {
         for (Long idInList : ids) {
             if (id.equals(idInList)) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
+    }
+
+    public static boolean integerToBoolean(final Integer integer) {
+        return switch (integer) {
+            case 1 -> true;
+            case 0 -> false;
+            default -> throw new IndexOutOfBoundsException();
+        };
     }
 }

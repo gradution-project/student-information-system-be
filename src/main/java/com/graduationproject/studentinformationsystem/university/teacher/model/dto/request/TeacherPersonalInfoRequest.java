@@ -2,9 +2,13 @@ package com.graduationproject.studentinformationsystem.university.teacher.model.
 
 import com.graduationproject.studentinformationsystem.common.model.dto.request.SisBasePersonalInfoRequest;
 import lombok.Getter;
-import lombok.Setter;
+
+import java.io.Serial;
+import java.io.Serializable;
 
 @Getter
-@Setter
-public class TeacherPersonalInfoRequest extends SisBasePersonalInfoRequest {
+public class TeacherPersonalInfoRequest extends SisBasePersonalInfoRequest implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -2109265391122063272L;
 }

@@ -11,11 +11,11 @@ public interface StudentAcademicInfoRepository {
 
     StudentAcademicInfoEntity getStudentAcademicInfoById(Long studentId);
 
-    void saveStudentAcademicInfo(StudentAcademicInfoEntity entity);
+    void saveStudentAcademicInfo(StudentAcademicInfoEntity academicInfoEntity);
 
-    void updateStudentAcademicInfo(StudentAcademicInfoEntity entity);
+    void updateStudentAcademicInfo(StudentAcademicInfoEntity academicInfoEntity);
 
-    void updateStudentAcademicInfoStatus(StudentAcademicInfoEntity entity);
+    void updateStudentAcademicInfoStatus(StudentAcademicInfoEntity academicInfoEntity);
 
     List<Long> getAllStudentIdsByDepartmentId(Long departmentId);
 

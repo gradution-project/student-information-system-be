@@ -30,16 +30,20 @@ public class StudentPersonalInfoRepositoryImpl implements StudentPersonalInfoRep
 
     private final Sql2o sql2o;
 
-    public List<StudentPersonalInfoEntity> getAllStudentPersonalInfosByStatus(StudentStatus status) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(GET_ALL_STUDENT_PERSONAL_INFOS_BY_STATUS
+    public List<StudentPersonalInfoEntity> getAllStudentPersonalInfosByStatus(final StudentStatus status) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_ALL_STUDENT_PERSONAL_INFOS_BY_STATUS
                 .concat(SisSqlUtil.querySearchByStatus(STUDENT_ID.getColumnName(), status.toString())))) {
 
-            List<StudentPersonalInfoEntity> entities = query
+            final List<StudentPersonalInfoEntity> personalInfoEntities = query
                     .setColumnMappings(COLUMN_MAPPINGS)
                     .executeAndFetch(StudentPersonalInfoEntity.class);
 
-            info.foundAllByStatus(status.toString());
-            return entities;
+            if (!personalInfoEntities.isEmpty()) {
+                info.foundAllByStatus(status.toString());
+            } else {
+                warn.notFoundAllIdsByStatus(status.getName());
+            }
+            return personalInfoEntities;
         } catch (Exception exception) {
             error.errorWhenGettingAllByStatus(status.toString());
             throw new SisDatabaseException(exception);
@@ -47,20 +51,20 @@ public class StudentPersonalInfoRepositoryImpl implements StudentPersonalInfoRep
     }
 
     @Override
-    public StudentPersonalInfoEntity getStudentPersonalInfoById(Long studentId) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(GET_STUDENT_PERSONAL_INFO_BY_STUDENT_ID)) {
+    public StudentPersonalInfoEntity getStudentPersonalInfoById(final Long studentId) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_STUDENT_PERSONAL_INFO_BY_STUDENT_ID)) {
 
-            StudentPersonalInfoEntity entity = query
+            final StudentPersonalInfoEntity personalInfoEntity = query
                     .addParameter(STUDENT_ID.getModelName(), studentId.toString())
                     .setColumnMappings(COLUMN_MAPPINGS)
                     .executeAndFetchFirst(StudentPersonalInfoEntity.class);
 
-            if (entity != null) {
+            if (personalInfoEntity != null) {
                 info.foundById(studentId);
             } else {
                 warn.notFoundById(studentId);
             }
-            return entity;
+            return personalInfoEntity;
         } catch (Exception exception) {
             error.errorWhenGetting();
             throw new SisDatabaseException(exception);
@@ -68,25 +72,25 @@ public class StudentPersonalInfoRepositoryImpl implements StudentPersonalInfoRep
     }
 
     @Override
-    public void saveStudentPersonalInfo(StudentPersonalInfoEntity entity) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(SAVE_STUDENT_PERSONAL_INFO)) {
+    public void saveStudentPersonalInfo(final StudentPersonalInfoEntity personalInfoEntity) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(SAVE_STUDENT_PERSONAL_INFO)) {
 
-            query.addParameter(STUDENT_ID.getModelName(), entity.getStudentId())
-                    .addParameter(TC_NO.getModelName(), entity.getTcNo())
-                    .addParameter(NAME.getModelName(), entity.getName())
-                    .addParameter(SURNAME.getModelName(), entity.getSurname())
-                    .addParameter(EMAIL.getModelName(), entity.getEmail())
-                    .addParameter(PHONE_NUMBER.getModelName(), entity.getPhoneNumber())
-                    .addParameter(STATUS.getModelName(), entity.getStatus())
-//                    .addParameter(PROFILE_PHOTO.getModelName(), entity.getProfilePhoto()) // TODO: Add Profile Photo Parameter
-//                    .addParameter(PROFILE_PHOTO_URL.getModelName(), entity.getProfilePhotoUrl()) // TODO: Add Profile Photo URL Parameter
-                    .addParameter(BIRTHDAY.getModelName(), entity.getBirthday())
-                    .addParameter(ADDRESS.getModelName(), entity.getAddress())
-                    .addParameter(CREATED_DATE.getModelName(), entity.getCreatedDate())
-                    .addParameter(CREATED_USER_ID.getModelName(), entity.getCreatedUserId())
+            query.addParameter(STUDENT_ID.getModelName(), personalInfoEntity.getStudentId())
+                    .addParameter(TC_NO.getModelName(), personalInfoEntity.getTcNo())
+                    .addParameter(NAME.getModelName(), personalInfoEntity.getName())
+                    .addParameter(SURNAME.getModelName(), personalInfoEntity.getSurname())
+                    .addParameter(EMAIL.getModelName(), personalInfoEntity.getEmail())
+                    .addParameter(PHONE_NUMBER.getModelName(), personalInfoEntity.getPhoneNumber())
+                    .addParameter(STATUS.getModelName(), personalInfoEntity.getStatus())
+//                    .addParameter(PROFILE_PHOTO.getModelName(), personalInfoEntity.getProfilePhoto()) // TODO: Add Profile Photo Parameter
+//                    .addParameter(PROFILE_PHOTO_URL.getModelName(), personalInfoEntity.getProfilePhotoUrl()) // TODO: Add Profile Photo URL Parameter
+                    .addParameter(BIRTHDAY.getModelName(), personalInfoEntity.getBirthday())
+                    .addParameter(ADDRESS.getModelName(), personalInfoEntity.getAddress())
+                    .addParameter(CREATED_DATE.getModelName(), personalInfoEntity.getCreatedDate())
+                    .addParameter(CREATED_USER_ID.getModelName(), personalInfoEntity.getCreatedUserId())
                     .executeUpdate();
 
-            info.savedById(entity.getStudentId());
+            info.savedById(personalInfoEntity.getStudentId());
         } catch (Exception exception) {
             error.errorWhenSaving();
             throw new SisDatabaseException(exception);
@@ -94,20 +98,21 @@ public class StudentPersonalInfoRepositoryImpl implements StudentPersonalInfoRep
     }
 
     @Override
-    public void updateStudentPersonalInfo(StudentPersonalInfoEntity entity) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(UPDATE_STUDENT_PERSONAL_INFO)) {
-            query.addParameter(TC_NO.getModelName(), entity.getTcNo())
-                    .addParameter(NAME.getModelName(), entity.getName())
-                    .addParameter(SURNAME.getModelName(), entity.getSurname())
-                    .addParameter(EMAIL.getModelName(), entity.getEmail())
-                    .addParameter(PHONE_NUMBER.getModelName(), entity.getPhoneNumber())
-//                    .addParameter(PROFILE_PHOTO.getModelName(), entity.getProfilePhoto()) // TODO: Add Profile Photo Parameter
-//                    .addParameter(PROFILE_PHOTO_URL.getModelName(), entity.getProfilePhotoUrl()) // TODO: Add Profile Photo URL Parameter
-                    .addParameter(BIRTHDAY.getModelName(), entity.getBirthday())
-                    .addParameter(ADDRESS.getModelName(), entity.getAddress())
-                    .addParameter(MODIFIED_DATE.getModelName(), entity.getModifiedDate())
-                    .addParameter(MODIFIED_USER_ID.getModelName(), entity.getModifiedUserId())
-                    .addParameter(STUDENT_ID.getModelName(), entity.getStudentId())
+    public void updateStudentPersonalInfo(StudentPersonalInfoEntity personalInfoEntity) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(UPDATE_STUDENT_PERSONAL_INFO)) {
+
+            query.addParameter(TC_NO.getModelName(), personalInfoEntity.getTcNo())
+                    .addParameter(NAME.getModelName(), personalInfoEntity.getName())
+                    .addParameter(SURNAME.getModelName(), personalInfoEntity.getSurname())
+                    .addParameter(EMAIL.getModelName(), personalInfoEntity.getEmail())
+                    .addParameter(PHONE_NUMBER.getModelName(), personalInfoEntity.getPhoneNumber())
+//                    .addParameter(PROFILE_PHOTO.getModelName(), personalInfoEntity.getProfilePhoto()) // TODO: Add Profile Photo Parameter
+//                    .addParameter(PROFILE_PHOTO_URL.getModelName(), personalInfoEntity.getProfilePhotoUrl()) // TODO: Add Profile Photo URL Parameter
+                    .addParameter(BIRTHDAY.getModelName(), personalInfoEntity.getBirthday())
+                    .addParameter(ADDRESS.getModelName(), personalInfoEntity.getAddress())
+                    .addParameter(MODIFIED_DATE.getModelName(), personalInfoEntity.getModifiedDate())
+                    .addParameter(MODIFIED_USER_ID.getModelName(), personalInfoEntity.getModifiedUserId())
+                    .addParameter(STUDENT_ID.getModelName(), personalInfoEntity.getStudentId())
                     .executeUpdate();
 
             info.updated();
@@ -118,16 +123,16 @@ public class StudentPersonalInfoRepositoryImpl implements StudentPersonalInfoRep
     }
 
     @Override
-    public void updateStudentPersonalInfoStatus(StudentPersonalInfoEntity entity) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(UPDATE_STUDENT_PERSONAL_INFO_STATUS)) {
+    public void updateStudentPersonalInfoStatus(final StudentPersonalInfoEntity personalInfoEntity) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(UPDATE_STUDENT_PERSONAL_INFO_STATUS)) {
 
-            query.addParameter(STATUS.getModelName(), entity.getStatus())
-                    .addParameter(MODIFIED_DATE.getModelName(), entity.getModifiedDate())
-                    .addParameter(MODIFIED_USER_ID.getModelName(), entity.getModifiedUserId())
-                    .addParameter(STUDENT_ID.getModelName(), entity.getStudentId())
+            query.addParameter(STATUS.getModelName(), personalInfoEntity.getStatus())
+                    .addParameter(MODIFIED_DATE.getModelName(), personalInfoEntity.getModifiedDate())
+                    .addParameter(MODIFIED_USER_ID.getModelName(), personalInfoEntity.getModifiedUserId())
+                    .addParameter(STUDENT_ID.getModelName(), personalInfoEntity.getStudentId())
                     .executeUpdate();
 
-            info.statusUpdated(entity.getStatus().toString());
+            info.statusUpdated(personalInfoEntity.getStatus().toString());
         } catch (Exception exception) {
             error.errorWhenUpdatingStatus();
             throw new SisDatabaseException(exception);

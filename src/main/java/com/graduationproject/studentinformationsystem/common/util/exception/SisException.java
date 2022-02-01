@@ -8,11 +8,11 @@ public abstract class SisException {
     protected SisException() {
     }
 
-    protected static void throwNotExistException(String message) throws SisNotExistException {
+    protected static void throwNotExistException(final String message) throws SisNotExistException {
         throw new SisNotExistException(message);
     }
 
-    protected static void throwAlreadyException(String message) throws SisAlreadyException {
+    protected static void throwAlreadyException(final String message) throws SisAlreadyException {
         throw new SisAlreadyException(message);
     }
 }

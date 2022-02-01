@@ -1,9 +1,15 @@
 package com.graduationproject.studentinformationsystem.university.teacher.model.enums;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public enum TeacherDegree {
-    RESEARCH_ASSOCIATE,
-    TEACHING_ASSOCIATE,
-    ASSISTANT_PROFESSOR,
-    ASSOCIATE_PROFESSOR,
-    PROFESSOR
+    RESEARCH_ASSOCIATE("Araştırma Görevlisi"),
+    TEACHING_ASSOCIATE("Öğretim Üyesi"),
+    ASSISTANT_PROFESSOR("Doçent"),
+    PROFESSOR("Profesör");
+
+    private final String name;
 }

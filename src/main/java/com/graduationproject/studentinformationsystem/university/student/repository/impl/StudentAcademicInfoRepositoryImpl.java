@@ -30,37 +30,36 @@ public class StudentAcademicInfoRepositoryImpl implements StudentAcademicInfoRep
 
     private final Sql2o sql2o;
 
-    public List<StudentAcademicInfoEntity> getAllStudentAcademicInfosByStatus(StudentStatus status) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(
-                GET_ALL_STUDENT_ACADEMIC_INFOS_BY_STATUS
-                        .concat(SisSqlUtil.querySearchByStatus(STUDENT_ID.getColumnName(), status.toString())))) {
+    public List<StudentAcademicInfoEntity> getAllStudentAcademicInfosByStatus(final StudentStatus status) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_ALL_STUDENT_ACADEMIC_INFOS_BY_STATUS
+                .concat(SisSqlUtil.querySearchByStatus(STUDENT_ID.getColumnName(), status.toString())))) {
 
-            List<StudentAcademicInfoEntity> entities = query
+            final List<StudentAcademicInfoEntity> academicInfoEntities = query
                     .setColumnMappings(COLUMN_MAPPINGS)
                     .executeAndFetch(StudentAcademicInfoEntity.class);
 
             info.foundAllByStatus(status.toString());
-            return entities;
+            return academicInfoEntities;
         } catch (Exception exception) {
             error.errorWhenGettingAllByStatus(status.toString());
             throw new SisDatabaseException(exception);
         }
     }
 
-    public StudentAcademicInfoEntity getStudentAcademicInfoById(Long studentId) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(GET_STUDENT_ACADEMIC_INFO_BY_STUDENT_ID)) {
+    public StudentAcademicInfoEntity getStudentAcademicInfoById(final Long studentId) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_STUDENT_ACADEMIC_INFO_BY_STUDENT_ID)) {
 
-            StudentAcademicInfoEntity entity = query
+            final StudentAcademicInfoEntity academicInfoEntity = query
                     .addParameter(STUDENT_ID.getModelName(), studentId.toString())
                     .setColumnMappings(COLUMN_MAPPINGS)
                     .executeAndFetchFirst(StudentAcademicInfoEntity.class);
 
-            if (entity != null) {
+            if (academicInfoEntity != null) {
                 info.foundById(studentId);
             } else {
                 warn.notFoundById(studentId);
             }
-            return entity;
+            return academicInfoEntity;
         } catch (Exception exception) {
             error.errorWhenGettingById(studentId);
             throw new SisDatabaseException(exception);
@@ -68,21 +67,21 @@ public class StudentAcademicInfoRepositoryImpl implements StudentAcademicInfoRep
     }
 
     @Override
-    public void saveStudentAcademicInfo(StudentAcademicInfoEntity entity) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(SAVE_STUDENT_ACADEMIC_INFO)) {
+    public void saveStudentAcademicInfo(StudentAcademicInfoEntity academicInfoEntity) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(SAVE_STUDENT_ACADEMIC_INFO)) {
 
-            query.addParameter(STUDENT_ID.getModelName(), entity.getStudentId())
-                    .addParameter(DEPARTMENT_ID.getModelName(), entity.getDepartmentId())
-                    .addParameter(DEGREE.getModelName(), entity.getDegree())
-                    .addParameter(CLASS_LEVEL.getModelName(), entity.getClassLevel())
-                    .addParameter(EMAIL.getModelName(), entity.getEmail())
-                    .addParameter(STATUS.getModelName(), entity.getStatus())
-                    .addParameter(REGISTRATION_DATE.getModelName(), entity.getRegistrationDate())
-                    .addParameter(CREATED_DATE.getModelName(), entity.getCreatedDate())
-                    .addParameter(CREATED_USER_ID.getModelName(), entity.getCreatedUserId())
+            query.addParameter(STUDENT_ID.getModelName(), academicInfoEntity.getStudentId())
+                    .addParameter(DEPARTMENT_ID.getModelName(), academicInfoEntity.getDepartmentId())
+                    .addParameter(DEGREE.getModelName(), academicInfoEntity.getDegree())
+                    .addParameter(CLASS_LEVEL.getModelName(), academicInfoEntity.getClassLevel())
+                    .addParameter(EMAIL.getModelName(), academicInfoEntity.getEmail())
+                    .addParameter(STATUS.getModelName(), academicInfoEntity.getStatus())
+                    .addParameter(REGISTRATION_DATE.getModelName(), academicInfoEntity.getRegistrationDate())
+                    .addParameter(CREATED_DATE.getModelName(), academicInfoEntity.getCreatedDate())
+                    .addParameter(CREATED_USER_ID.getModelName(), academicInfoEntity.getCreatedUserId())
                     .executeUpdate();
 
-            info.savedById(entity.getStudentId());
+            info.savedById(academicInfoEntity.getStudentId());
         } catch (Exception exception) {
             error.errorWhenSaving();
             throw new SisDatabaseException(exception);
@@ -90,8 +89,8 @@ public class StudentAcademicInfoRepositoryImpl implements StudentAcademicInfoRep
     }
 
     @Override
-    public void updateStudentAcademicInfo(StudentAcademicInfoEntity entity) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(UPDATE_STUDENT_ACADEMIC_INFO)) {
+    public void updateStudentAcademicInfo(final StudentAcademicInfoEntity entity) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(UPDATE_STUDENT_ACADEMIC_INFO)) {
 
             query.addParameter(DEPARTMENT_ID.getModelName(), entity.getDepartmentId())
                     .addParameter(DEGREE.getModelName(), entity.getDegree())
@@ -109,16 +108,16 @@ public class StudentAcademicInfoRepositoryImpl implements StudentAcademicInfoRep
     }
 
     @Override
-    public void updateStudentAcademicInfoStatus(StudentAcademicInfoEntity entity) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(UPDATE_STUDENT_ACADEMIC_INFO_STATUS)) {
+    public void updateStudentAcademicInfoStatus(final StudentAcademicInfoEntity academicInfoEntity) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(UPDATE_STUDENT_ACADEMIC_INFO_STATUS)) {
 
-            query.addParameter(STATUS.getModelName(), entity.getStatus())
-                    .addParameter(MODIFIED_DATE.getModelName(), entity.getModifiedDate())
-                    .addParameter(MODIFIED_USER_ID.getModelName(), entity.getModifiedUserId())
-                    .addParameter(STUDENT_ID.getModelName(), entity.getStudentId())
+            query.addParameter(STATUS.getModelName(), academicInfoEntity.getStatus())
+                    .addParameter(MODIFIED_DATE.getModelName(), academicInfoEntity.getModifiedDate())
+                    .addParameter(MODIFIED_USER_ID.getModelName(), academicInfoEntity.getModifiedUserId())
+                    .addParameter(STUDENT_ID.getModelName(), academicInfoEntity.getStudentId())
                     .executeUpdate();
 
-            info.statusUpdated(entity.getStatus().toString());
+            info.statusUpdated(academicInfoEntity.getStatus().toString());
         } catch (Exception exception) {
             error.errorWhenUpdatingStatus();
             throw new SisDatabaseException(exception);
@@ -126,15 +125,15 @@ public class StudentAcademicInfoRepositoryImpl implements StudentAcademicInfoRep
     }
 
     @Override
-    public List<Long> getAllStudentIdsByDepartmentId(Long departmentId) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(GET_ALL_STUDENT_IDS_BY_DEPARTMENT_ID)) {
+    public List<Long> getAllStudentIdsByDepartmentId(final Long departmentId) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_ALL_STUDENT_IDS_BY_DEPARTMENT_ID)) {
 
-            List<Long> studentIdList = query
+            final List<Long> studentIds = query
                     .addParameter(DEPARTMENT_ID.getModelName(), departmentId.toString())
                     .executeScalarList(Long.class);
 
             info.foundAllIdsByDepartmentId(departmentId);
-            return studentIdList;
+            return studentIds;
         } catch (Exception exception) {
             error.errorWhenGettingAllIdsByDepartmentId(departmentId);
             throw new SisDatabaseException(exception);
@@ -142,10 +141,10 @@ public class StudentAcademicInfoRepositoryImpl implements StudentAcademicInfoRep
     }
 
     @Override
-    public boolean isStudentExist(Long studentId) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(IS_STUDENT_EXIST_BY_ID)) {
+    public boolean isStudentExist(final Long studentId) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(IS_STUDENT_EXIST_BY_ID)) {
 
-            boolean isStudentExist = query.addParameter(STUDENT_ID.getModelName(), studentId)
+            final boolean isStudentExist = query.addParameter(STUDENT_ID.getModelName(), studentId)
                     .executeAndFetchFirst(Boolean.class);
 
             if (isStudentExist) {
@@ -162,10 +161,10 @@ public class StudentAcademicInfoRepositoryImpl implements StudentAcademicInfoRep
     }
 
     @Override
-    public boolean isStudentDeleted(Long studentId) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(IS_STUDENT_DELETED_BY_ID)) {
+    public boolean isStudentDeleted(final Long studentId) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(IS_STUDENT_DELETED_BY_ID)) {
 
-            boolean isStudentExist = query.addParameter(STUDENT_ID.getModelName(), studentId)
+            final boolean isStudentExist = query.addParameter(STUDENT_ID.getModelName(), studentId)
                     .executeAndFetchFirst(Boolean.class);
 
             if (isStudentExist) {
@@ -182,10 +181,10 @@ public class StudentAcademicInfoRepositoryImpl implements StudentAcademicInfoRep
     }
 
     @Override
-    public boolean isStudentPassive(Long studentId) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(IS_STUDENT_PASSIVE_BY_ID)) {
+    public boolean isStudentPassive(final Long studentId) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(IS_STUDENT_PASSIVE_BY_ID)) {
 
-            boolean isStudentExist = query.addParameter(STUDENT_ID.getModelName(), studentId)
+            final boolean isStudentExist = query.addParameter(STUDENT_ID.getModelName(), studentId)
                     .executeAndFetchFirst(Boolean.class);
 
             if (isStudentExist) {
@@ -202,10 +201,10 @@ public class StudentAcademicInfoRepositoryImpl implements StudentAcademicInfoRep
     }
 
     @Override
-    public boolean isStudentActive(Long studentId) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(IS_STUDENT_ACTIVE_BY_ID)) {
+    public boolean isStudentActive(final Long studentId) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(IS_STUDENT_ACTIVE_BY_ID)) {
 
-            boolean isStudentExist = query.addParameter(STUDENT_ID.getModelName(), studentId)
+            final boolean isStudentExist = query.addParameter(STUDENT_ID.getModelName(), studentId)
                     .executeAndFetchFirst(Boolean.class);
 
             if (isStudentExist) {
@@ -222,10 +221,10 @@ public class StudentAcademicInfoRepositoryImpl implements StudentAcademicInfoRep
     }
 
     @Override
-    public boolean isStudentGraduated(Long studentId) {
-        try (Connection con = sql2o.open(); Query query = con.createQuery(IS_STUDENT_GRADUATED_BY_ID)) {
+    public boolean isStudentGraduated(final Long studentId) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(IS_STUDENT_GRADUATED_BY_ID)) {
 
-            boolean isStudentExist = query.addParameter(STUDENT_ID.getModelName(), studentId)
+            final boolean isStudentExist = query.addParameter(STUDENT_ID.getModelName(), studentId)
                     .executeAndFetchFirst(Boolean.class);
 
             if (isStudentExist) {

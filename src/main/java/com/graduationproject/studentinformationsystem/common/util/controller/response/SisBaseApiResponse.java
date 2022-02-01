@@ -7,14 +7,14 @@ import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
-import static com.graduationproject.studentinformationsystem.common.util.constant.SisConstants.DATE_TIME_PATTERN;
+import static com.graduationproject.studentinformationsystem.common.util.constant.SisConstants.DATE_TIME_SECONDS_PATTERN;
 
 @Getter
 @Builder
 public class SisBaseApiResponse<T> {
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_TIME_PATTERN)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_TIME_SECONDS_PATTERN)
     private LocalDateTime requestTime;
     private HttpStatus httpStatus;
-    private T result;
+    private T response;
     private boolean isSuccess;
 }

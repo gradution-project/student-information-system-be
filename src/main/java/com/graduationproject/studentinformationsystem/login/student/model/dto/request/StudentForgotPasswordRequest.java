@@ -4,9 +4,14 @@ import com.graduationproject.studentinformationsystem.common.util.validation.id.
 import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serial;
+import java.io.Serializable;
 
 @Getter
-public class StudentForgotPasswordRequest {
+public class StudentForgotPasswordRequest implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -6073520178120747403L;
 
     @NotNull
     @StudentID

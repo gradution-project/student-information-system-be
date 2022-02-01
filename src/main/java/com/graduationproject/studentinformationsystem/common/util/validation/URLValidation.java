@@ -7,11 +7,12 @@ import javax.validation.ConstraintValidatorContext;
 
 public class URLValidation implements ConstraintValidator<URL, Object> {
 
-    public boolean isValid(Object value, ConstraintValidatorContext context) {
+    public boolean isValid(final Object value, final ConstraintValidatorContext context) {
         if (value == null) return true;
 
-        String[] schemes = {"http", "https"};
-        UrlValidator urlValidator = new UrlValidator(schemes);
+        final String[] schemes = {"http", "https"};
+        final UrlValidator urlValidator = new UrlValidator(schemes);
+
         return urlValidator.isValid(value.toString());
     }
 }

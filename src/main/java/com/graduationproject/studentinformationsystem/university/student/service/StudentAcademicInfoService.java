@@ -1,6 +1,7 @@
 package com.graduationproject.studentinformationsystem.university.student.service;
 
-import com.graduationproject.studentinformationsystem.university.student.model.dto.request.StudentAcademicInfoRequest;
+import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
+import com.graduationproject.studentinformationsystem.university.student.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.student.model.dto.response.StudentAcademicInfoResponse;
 import com.graduationproject.studentinformationsystem.university.student.model.enums.StudentStatus;
 
@@ -12,17 +13,21 @@ public interface StudentAcademicInfoService {
 
     StudentAcademicInfoResponse getStudentAcademicInfoById(Long studentId);
 
-    void saveStudentAcademicInfo(Long studentId, String studentEmail, StudentAcademicInfoRequest academicInfoRequest);
+    void saveStudentAcademicInfo(Long studentId,
+                                 String studentEmail,
+                                 StudentAcademicInfoRequest academicInfoRequest,
+                                 SisOperationInfoRequest operationInfoRequest);
 
-    StudentAcademicInfoResponse updateStudentAcademicInfo(Long studentId, StudentAcademicInfoRequest academicInfoRequest);
+    StudentAcademicInfoResponse updateStudentAcademicInfo(Long studentId,
+                                                          StudentAcademicInfoUpdateRequest academicInfoUpdateRequest);
 
-    void deleteStudentAcademicInfo(Long studentId);
+    void deleteStudentAcademicInfo(StudentDeleteRequest deleteRequest);
 
-    void passivateStudentAcademicInfo(Long studentId);
+    void passivateStudentAcademicInfo(StudentPassivateRequest passivateRequest);
 
-    void activateStudentAcademicInfo(Long studentId);
+    void activateStudentAcademicInfo(StudentActivateRequest activateRequest);
 
-    void graduateStudentAcademicInfo(Long studentId);
+    void graduateStudentAcademicInfo(StudentGraduateRequest graduateRequest);
 
     List<Long> getAllStudentIdsByDepartmentId(Long departmentId);
 

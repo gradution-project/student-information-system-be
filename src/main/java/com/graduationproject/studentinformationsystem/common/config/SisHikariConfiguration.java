@@ -7,8 +7,8 @@ public class SisHikariConfiguration {
     private SisHikariConfiguration() {
     }
 
-    public static HikariConfig getHikariConfigBaseValues(SisHikariConfigProfileDto hikariConfigProfileDto) {
-        HikariConfig hikariConfig = new HikariConfig();
+    public static HikariConfig getHikariConfigBaseValues(final SisHikariConfigProfileDto hikariConfigProfileDto) {
+        final HikariConfig hikariConfig = new HikariConfig();
 
         hikariConfig.setUsername(hikariConfigProfileDto.getUsername());
         hikariConfig.setPassword(hikariConfigProfileDto.getPassword());

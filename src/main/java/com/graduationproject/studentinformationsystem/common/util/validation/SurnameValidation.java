@@ -5,15 +5,17 @@ import javax.validation.ConstraintValidatorContext;
 
 public class SurnameValidation implements ConstraintValidator<Surname, Object> {
 
-    public boolean isValid(Object value, ConstraintValidatorContext context) {
+    public boolean isValid(final Object value, final ConstraintValidatorContext context) {
         if (value == null) return true;
-        int maxLength = 100;
-        int minLength = 2;
+
+        final int maxLength = 100;
+        final int minLength = 2;
 
         context.disableDefaultConstraintViolation();
-        context.buildConstraintViolationWithTemplate("length must be between " + minLength + " and " + maxLength).addConstraintViolation();
+        context.buildConstraintViolationWithTemplate("length must be between " + minLength + " and " + maxLength)
+                .addConstraintViolation();
 
-        int surnameLength = value.toString().length();
+        final int surnameLength = value.toString().length();
         return surnameLength >= minLength && surnameLength <= maxLength;
     }
 }

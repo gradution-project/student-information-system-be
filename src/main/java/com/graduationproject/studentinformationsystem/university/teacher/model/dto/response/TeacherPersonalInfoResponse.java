@@ -2,9 +2,9 @@ package com.graduationproject.studentinformationsystem.university.teacher.model.
 
 import com.graduationproject.studentinformationsystem.common.util.controller.response.SisBasePersonalInfoResponse;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
-@Setter
+@SuperBuilder
 public class TeacherPersonalInfoResponse extends SisBasePersonalInfoResponse {
 }
