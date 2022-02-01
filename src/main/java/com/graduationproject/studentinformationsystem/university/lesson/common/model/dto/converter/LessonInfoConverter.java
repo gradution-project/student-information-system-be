@@ -2,6 +2,7 @@ package com.graduationproject.studentinformationsystem.university.lesson.common.
 
 import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
 import com.graduationproject.studentinformationsystem.common.util.SisUtil;
+import com.graduationproject.studentinformationsystem.university.department.model.dto.converter.DepartmentInfoConverter;
 import com.graduationproject.studentinformationsystem.university.lesson.common.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.lesson.common.model.dto.response.LessonResponse;
 import com.graduationproject.studentinformationsystem.university.lesson.common.model.entity.LessonEntity;
@@ -84,7 +85,7 @@ public class LessonInfoConverter {
     public static LessonResponse entityToResponse(final LessonEntity lessonEntity) {
         return LessonResponse.builder()
                 .lessonId(lessonEntity.getLessonId())
-                .departmentId(lessonEntity.getDepartmentId())
+                .departmentResponse(DepartmentInfoConverter.entityToResponse(lessonEntity.getDepartmentEntity()))
                 .name(lessonEntity.getName())
                 .status(lessonEntity.getStatus().getName())
                 .semester(lessonEntity.getSemester().getName())

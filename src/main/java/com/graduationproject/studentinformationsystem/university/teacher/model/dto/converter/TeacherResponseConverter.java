@@ -17,7 +17,7 @@ public class TeacherResponseConverter {
 
         return TeacherInfoResponse.builder()
                 .teacherId(academicInfoResponse.getTeacherId())
-                .departmentId(academicInfoResponse.getDepartmentId())
+                .departmentResponse(academicInfoResponse.getDepartmentResponse())
                 .degree(academicInfoResponse.getDegree())
                 .role(academicInfoResponse.getRole())
                 .fieldOfStudy(academicInfoResponse.getFieldOfStudy())

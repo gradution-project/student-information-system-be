@@ -1,6 +1,8 @@
 package com.graduationproject.studentinformationsystem.university.officer.service.impl;
 
 import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
+import com.graduationproject.studentinformationsystem.university.faculty.model.entity.FacultyEntity;
+import com.graduationproject.studentinformationsystem.university.faculty.repository.FacultyRepository;
 import com.graduationproject.studentinformationsystem.university.officer.model.dto.converter.OfficerAcademicInfoConverter;
 import com.graduationproject.studentinformationsystem.university.officer.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.officer.model.dto.response.OfficerAcademicInfoResponse;
@@ -17,11 +19,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OfficerAcademicInfoServiceImpl implements OfficerAcademicInfoService {
 
+    private final FacultyRepository facultyRepository;
+
     private final OfficerAcademicInfoRepository academicInfoRepository;
 
     @Override
     public List<OfficerAcademicInfoResponse> getAllOfficerAcademicInfosByStatus(final OfficerStatus status) {
         final List<OfficerAcademicInfoEntity> academicInfoEntities = academicInfoRepository.getAllOfficerAcademicInfosByStatus(status);
+        setFacultyEntities(academicInfoEntities);
         return OfficerAcademicInfoConverter.entitiesToResponses(academicInfoEntities);
     }
 
@@ -100,6 +105,17 @@ public class OfficerAcademicInfoServiceImpl implements OfficerAcademicInfoServic
 
     private OfficerAcademicInfoResponse getOfficerAcademicInfoResponse(final Long officerId) {
         final OfficerAcademicInfoEntity academicInfoEntity = academicInfoRepository.getOfficerAcademicInfoById(officerId);
+        setFacultyEntity(academicInfoEntity);
         return OfficerAcademicInfoConverter.entityToResponse(academicInfoEntity);
+    }
+
+    private void setFacultyEntity(final OfficerAcademicInfoEntity academicInfoEntity) {
+        final Long facultyId = academicInfoEntity.getFacultyId();
+        final FacultyEntity facultyEntity = facultyRepository.getFacultyById(facultyId);
+        academicInfoEntity.setFacultyEntity(facultyEntity);
+    }
+
+    private void setFacultyEntities(final List<OfficerAcademicInfoEntity> academicInfoEntities) {
+        academicInfoEntities.forEach(this::setFacultyEntity);
     }
 }

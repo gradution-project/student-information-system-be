@@ -2,6 +2,7 @@ package com.graduationproject.studentinformationsystem.university.officer.model.
 
 import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
 import com.graduationproject.studentinformationsystem.common.util.SisUtil;
+import com.graduationproject.studentinformationsystem.university.faculty.model.dto.converter.FacultyInfoConverter;
 import com.graduationproject.studentinformationsystem.university.officer.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.officer.model.dto.response.OfficerAcademicInfoResponse;
 import com.graduationproject.studentinformationsystem.university.officer.model.entity.OfficerAcademicInfoEntity;
@@ -78,7 +79,7 @@ public class OfficerAcademicInfoConverter {
     public static OfficerAcademicInfoResponse entityToResponse(final OfficerAcademicInfoEntity academicInfoEntity) {
         return OfficerAcademicInfoResponse.builder()
                 .officerId(academicInfoEntity.getOfficerId())
-                .facultyId(academicInfoEntity.getFacultyId())
+                .facultyResponse(FacultyInfoConverter.entityToResponse(academicInfoEntity.getFacultyEntity()))
                 .phoneNumber(SisUtil.getFormattedPhoneNumber(academicInfoEntity.getPhoneNumber()))
                 .email(academicInfoEntity.getEmail())
                 .status(academicInfoEntity.getStatus().getName())

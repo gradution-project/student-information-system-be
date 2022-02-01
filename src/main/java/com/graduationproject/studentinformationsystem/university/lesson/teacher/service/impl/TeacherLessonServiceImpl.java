@@ -2,6 +2,10 @@ package com.graduationproject.studentinformationsystem.university.lesson.teacher
 
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
+import com.graduationproject.studentinformationsystem.university.department.model.entity.DepartmentEntity;
+import com.graduationproject.studentinformationsystem.university.department.repository.DepartmentRepository;
+import com.graduationproject.studentinformationsystem.university.faculty.model.entity.FacultyEntity;
+import com.graduationproject.studentinformationsystem.university.faculty.repository.FacultyRepository;
 import com.graduationproject.studentinformationsystem.university.lesson.common.model.entity.LessonEntity;
 import com.graduationproject.studentinformationsystem.university.lesson.common.repository.LessonRepository;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.converter.TeacherLessonInfoConverter;
@@ -25,8 +29,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TeacherLessonServiceImpl implements TeacherLessonService {
 
-    private final TeacherLessonRepository teacherLessonRepository;
+    private final FacultyRepository facultyRepository;
+    private final DepartmentRepository departmentRepository;
     private final LessonRepository lessonRepository;
+
+    private final TeacherLessonRepository teacherLessonRepository;
 
     @Override
     public List<TeacherLessonResponse> getAllTeachersLessons() {
@@ -69,11 +76,25 @@ public class TeacherLessonServiceImpl implements TeacherLessonService {
     private void setLessonEntity(final TeacherLessonEntity teacherLessonEntity) {
         final Long lessonId = teacherLessonEntity.getLessonId();
         final LessonEntity lessonEntity = lessonRepository.getLessonById(lessonId);
+        setDepartmentEntity(lessonEntity);
         teacherLessonEntity.setLessonEntity(lessonEntity);
     }
 
     private void setLessonEntities(final List<TeacherLessonEntity> teacherLessonEntities) {
         teacherLessonEntities.forEach(this::setLessonEntity);
+    }
+
+    private void setDepartmentEntity(final LessonEntity lessonEntity) {
+        final Long departmentId = lessonEntity.getDepartmentId();
+        final DepartmentEntity departmentEntity = departmentRepository.getDepartmentById(departmentId);
+        setFacultyEntity(departmentEntity);
+        lessonEntity.setDepartmentEntity(departmentEntity);
+    }
+
+    private void setFacultyEntity(final DepartmentEntity departmentEntity) {
+        final Long facultyId = departmentEntity.getFacultyId();
+        final FacultyEntity facultyEntity = facultyRepository.getFacultyById(facultyId);
+        departmentEntity.setFacultyEntity(facultyEntity);
     }
 
 

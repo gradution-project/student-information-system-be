@@ -2,7 +2,10 @@ package com.graduationproject.studentinformationsystem.university.lesson.common.
 
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
+import com.graduationproject.studentinformationsystem.university.department.model.entity.DepartmentEntity;
 import com.graduationproject.studentinformationsystem.university.department.repository.DepartmentRepository;
+import com.graduationproject.studentinformationsystem.university.faculty.model.entity.FacultyEntity;
+import com.graduationproject.studentinformationsystem.university.faculty.repository.FacultyRepository;
 import com.graduationproject.studentinformationsystem.university.lesson.common.model.dto.converter.LessonInfoConverter;
 import com.graduationproject.studentinformationsystem.university.lesson.common.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.lesson.common.model.dto.response.LessonResponse;
@@ -21,13 +24,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LessonServiceImpl implements LessonService {
 
-    private final LessonRepository lessonRepository;
+    private final FacultyRepository facultyRepository;
     private final DepartmentRepository departmentRepository;
+
+    private final LessonRepository lessonRepository;
 
     @Override
     public List<LessonResponse> getAllLessonsByStatus(final LessonStatus status) {
-        final List<LessonEntity> lessonResponses = lessonRepository.getAllLessonsByStatus(status);
-        return LessonInfoConverter.entitiesToResponses(lessonResponses);
+        final List<LessonEntity> lessonEntities = lessonRepository.getAllLessonsByStatus(status);
+        setDepartmentEntities(lessonEntities);
+        return LessonInfoConverter.entitiesToResponses(lessonEntities);
     }
 
     @Override
@@ -107,7 +113,25 @@ public class LessonServiceImpl implements LessonService {
 
     private LessonResponse getLessonResponse(final Long lessonId) {
         final LessonEntity lessonEntity = lessonRepository.getLessonById(lessonId);
+        setDepartmentEntity(lessonEntity);
         return LessonInfoConverter.entityToResponse(lessonEntity);
+    }
+
+    private void setDepartmentEntity(final LessonEntity lessonEntity) {
+        final Long departmentId = lessonEntity.getDepartmentId();
+        final DepartmentEntity departmentEntity = departmentRepository.getDepartmentById(departmentId);
+        setFacultyEntity(departmentEntity);
+        lessonEntity.setDepartmentEntity(departmentEntity);
+    }
+
+    private void setDepartmentEntities(final List<LessonEntity> lessonEntities) {
+        lessonEntities.forEach(this::setDepartmentEntity);
+    }
+
+    private void setFacultyEntity(final DepartmentEntity departmentEntity) {
+        final Long facultyId = departmentEntity.getFacultyId();
+        final FacultyEntity facultyEntity = facultyRepository.getFacultyById(facultyId);
+        departmentEntity.setFacultyEntity(facultyEntity);
     }
 
 

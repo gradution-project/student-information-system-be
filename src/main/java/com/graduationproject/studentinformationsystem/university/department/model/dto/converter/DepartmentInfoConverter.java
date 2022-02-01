@@ -6,6 +6,7 @@ import com.graduationproject.studentinformationsystem.university.department.mode
 import com.graduationproject.studentinformationsystem.university.department.model.dto.response.DepartmentResponse;
 import com.graduationproject.studentinformationsystem.university.department.model.entity.DepartmentEntity;
 import com.graduationproject.studentinformationsystem.university.department.model.enums.DepartmentStatus;
+import com.graduationproject.studentinformationsystem.university.faculty.model.dto.converter.FacultyInfoConverter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -82,7 +83,7 @@ public class DepartmentInfoConverter {
     public static DepartmentResponse entityToResponse(final DepartmentEntity departmentEntity) {
         return DepartmentResponse.builder()
                 .departmentId(departmentEntity.getDepartmentId())
-                .facultyId(departmentEntity.getFacultyId())
+                .facultyResponse(FacultyInfoConverter.entityToResponse(departmentEntity.getFacultyEntity()))
                 .name(departmentEntity.getName())
                 .status(departmentEntity.getStatus().getName())
                 .totalClassLevel(departmentEntity.getTotalClassLevel())
