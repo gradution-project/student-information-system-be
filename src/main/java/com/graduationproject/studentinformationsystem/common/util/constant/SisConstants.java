@@ -16,5 +16,6 @@ public class SisConstants {
 
         public static final String DEFAULT = "default";
         public static final String MYSQL = "mysql";
+        public static final String MYSQL_LIVE = "mysql-live";
     }
 }

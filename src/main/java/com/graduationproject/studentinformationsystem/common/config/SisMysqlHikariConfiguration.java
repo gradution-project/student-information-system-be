@@ -14,7 +14,7 @@ import org.sql2o.Sql2o;
 import javax.sql.DataSource;
 
 @Slf4j
-@Profile({DbProfile.MYSQL, DbProfile.DEFAULT})
+@Profile({DbProfile.MYSQL, DbProfile.MYSQL_LIVE, DbProfile.DEFAULT})
 @Configuration
 @RequiredArgsConstructor
 public class SisMysqlHikariConfiguration {
@@ -42,13 +42,13 @@ public class SisMysqlHikariConfiguration {
 
     private static SisHikariConfigProfileDto getHikariConfigProfile(final Environment environment) {
         return SisHikariConfigProfileDto.builder()
-                .username(environment.getProperty("hikariMysql.username"))
-                .password(environment.getProperty("hikariMysql.password"))
-                .maxPoolSize(environment.getProperty("hikariMysql.maxPoolSize"))
-                .tnsJdbcUrl(environment.getProperty("hikariMysql.tns.jdbc.url"))
-                .driverClassName("com.mysql.cj.jdbc.Driver")
-                .connectionTimeout(environment.getProperty("hikari.connectionTimeout"))
-                .maxLifetime(environment.getProperty("hikari.maxLifetime")).build();
+                .username(environment.getProperty("hikari-mysql.username"))
+                .password(environment.getProperty("hikari-mysql.password"))
+                .url(environment.getProperty("hikari-mysql.url"))
+                .maxPoolSize(environment.getProperty("hikari-mysql.max-pool-size"))
+                .connectionTimeout(environment.getProperty("hikari-mysql.connection-timeout"))
+                .maxLifetime(environment.getProperty("hikari-mysql.max-lifetime"))
+                .driverClassName("com.mysql.cj.jdbc.Driver").build();
     }
 
     private static HikariConfig getHikariConfig(final SisHikariConfigProfileDto hikariConfigProfileDto) {

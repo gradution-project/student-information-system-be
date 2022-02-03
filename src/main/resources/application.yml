@@ -1,0 +1,34 @@
+sis:
+  title: Student Information System API
+  version: v1.1.0
+
+---
+spring:
+  config:
+    activate:
+      on-profile: mysql
+
+server:
+  port: 8585
+
+hikari-mysql:
+  username: sis
+  password: sispass
+  url: jdbc:mysql://localhost:3306/sis
+  max-pool-size: 5
+  connection-timeout: 180000
+  max-lifetime: 170000
+
+---
+spring:
+  config:
+    activate:
+      on-profile: mysql-live
+
+hikari-mysql:
+  username: e2ikxn8dldp8frup
+  password: x6fvgr8gj62ba8b9
+  url: jdbc:mysql://r6ze0q02l4me77k3.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/lvmp8pcqa129kizx
+  max-pool-size: 5
+  connection-timeout: 180000
+  max-lifetime: 170000
