@@ -12,12 +12,12 @@ public class SisHikariConfiguration {
 
         hikariConfig.setUsername(hikariConfigProfileDto.getUsername());
         hikariConfig.setPassword(hikariConfigProfileDto.getPassword());
-        hikariConfig.setJdbcUrl(hikariConfigProfileDto.getTnsJdbcUrl());
-        hikariConfig.setDriverClassName(hikariConfigProfileDto.getDriverClassName());
-        hikariConfig.setAutoCommit(true);
+        hikariConfig.setJdbcUrl(hikariConfigProfileDto.getUrl());
+        hikariConfig.setMaximumPoolSize(Integer.parseInt(hikariConfigProfileDto.getMaxPoolSize()));
         hikariConfig.setConnectionTimeout(Long.parseLong(hikariConfigProfileDto.getConnectionTimeout()));
         hikariConfig.setMaxLifetime(Long.parseLong(hikariConfigProfileDto.getMaxLifetime()));
-        hikariConfig.setMaximumPoolSize(Integer.parseInt(hikariConfigProfileDto.getMaxPoolSize()));
+        hikariConfig.setDriverClassName(hikariConfigProfileDto.getDriverClassName());
+        hikariConfig.setAutoCommit(true);
 
         return hikariConfig;
     }

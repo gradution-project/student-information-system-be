@@ -12,11 +12,11 @@ public class SisHikariConfigProfileDto {
 
     private final String username;
     private final String password;
+    private final String url;
     private final String maxPoolSize;
-    private final String tnsJdbcUrl;
-    private final String driverClassName;
     private final String connectionTimeout;
     private final String maxLifetime;
+    private final String driverClassName;
 
     public static void checkProfileVariables(final SisHikariConfigProfileDto hikariConfigProfile) {
         if (!StringUtils.hasText(hikariConfigProfile.getUsername())) {
@@ -29,8 +29,8 @@ public class SisHikariConfigProfileDto {
             log.error(message);
             throw new NullPointerException(message);
         }
-        if (!StringUtils.hasText(hikariConfigProfile.getTnsJdbcUrl())) {
-            final String message = "Hikari tnsJdbcUrl Cannot be Empty!";
+        if (!StringUtils.hasText(hikariConfigProfile.getUrl())) {
+            final String message = "Hikari url Cannot be Empty!";
             log.error(message);
             throw new NullPointerException(message);
         }
