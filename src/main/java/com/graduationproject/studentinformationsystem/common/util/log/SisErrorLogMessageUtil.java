@@ -20,6 +20,18 @@ public class SisErrorLogMessageUtil {
         log.error("Error When Getting {} by ID! id:{}", apiName, id);
     }
 
+    public void errorWhenGettingById(final String id) {
+        log.error("Error When Getting {} by ID! id:{}", apiName, id);
+    }
+
+    public void errorWhenGettingByFacultyId(final Long facultyId) {
+        log.error("Error When Getting {} by Faculty ID! facultyId:{}", apiName, facultyId);
+    }
+
+    public void errorWhenGettingByDepartmentId(final Long departmentId) {
+        log.error("Error When Getting {} by Department ID! departmentId:{}", apiName, departmentId);
+    }
+
     public void errorWhenGettingByName(final String name) {
         log.error("Error When Getting {} by Name! name:{}", apiName, name);
     }
