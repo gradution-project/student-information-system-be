@@ -16,6 +16,18 @@ public class SisInfoLogMessageUtil {
         log.info("{} Found by ID! id:{}", apiName, id);
     }
 
+    public void foundById(final String id) {
+        log.info("{} Found by ID! id:{}", apiName, id);
+    }
+
+    public void foundByFacultyId(final Long facultyId) {
+        log.info("{} Found by Faculty ID! facultyId:{}", apiName, facultyId);
+    }
+
+    public void foundByDepartmentId(final Long departmentId) {
+        log.info("{} Found by Department ID! departmentId:{}", apiName, departmentId);
+    }
+
     public void foundByName(final String name) {
         log.info("{} Found by Name! name:{}", apiName, name);
     }
@@ -46,6 +58,10 @@ public class SisInfoLogMessageUtil {
 
 
     public void savedById(final Long id) {
+        log.info("{} Saved! id:{}", apiName, id);
+    }
+
+    public void savedById(final String id) {
         log.info("{} Saved! id:{}", apiName, id);
     }
 
