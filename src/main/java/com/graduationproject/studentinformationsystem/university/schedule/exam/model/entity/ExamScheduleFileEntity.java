@@ -1,7 +1,9 @@
 package com.graduationproject.studentinformationsystem.university.schedule.exam.model.entity;
 
+import com.graduationproject.studentinformationsystem.university.department.model.entity.DepartmentEntity;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
@@ -11,8 +13,17 @@ import java.util.Date;
 public class ExamScheduleFileEntity {
 
     private String fileId;
+    private Long facultyId;
     private Long departmentId;
-    private MultipartFile pdf;
+    private String apiUrl;
+    private String fileName;
+    private String fileType;
+    private Long fileSize;
+    private byte[] fileByte;
+    private MultipartFile file;
     private Long createdUserId;
     private Date createdDate;
+
+    @Setter
+    private DepartmentEntity departmentEntity;
 }
