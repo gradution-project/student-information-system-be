@@ -1,8 +1,8 @@
-package com.graduationproject.studentinformationsystem.university.schedule.exam.controller.enpoint;
+package com.graduationproject.studentinformationsystem.university.schedule.common.controller.endpoint;
 
-public class ExamScheduleFileControllerEndpoint {
+public class ScheduleFileControllerEndpoint {
 
-    private ExamScheduleFileControllerEndpoint() {
+    private ScheduleFileControllerEndpoint() {
     }
 
     private static final String FILE_ID = "/{fileId}";

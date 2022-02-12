@@ -9,7 +9,7 @@ import com.graduationproject.studentinformationsystem.common.util.exception.SisN
 import com.graduationproject.studentinformationsystem.common.util.validation.id.DepartmentID;
 import com.graduationproject.studentinformationsystem.common.util.validation.id.FacultyID;
 import com.graduationproject.studentinformationsystem.common.util.validation.id.OperationUserID;
-import com.graduationproject.studentinformationsystem.university.schedule.exam.controller.enpoint.ExamScheduleFileControllerEndpoint;
+import com.graduationproject.studentinformationsystem.university.schedule.common.controller.endpoint.ScheduleFileControllerEndpoint;
 import com.graduationproject.studentinformationsystem.university.schedule.exam.model.dto.response.ExamScheduleFileDetailResponse;
 import com.graduationproject.studentinformationsystem.university.schedule.exam.model.dto.response.ExamScheduleFileResponse;
 import com.graduationproject.studentinformationsystem.university.schedule.exam.service.ExamScheduleFileService;
@@ -37,7 +37,7 @@ public class ExamScheduleFileController {
 
     private final ExamScheduleFileService examScheduleFileService;
 
-    @GetMapping(ExamScheduleFileControllerEndpoint.FACULTY_ID)
+    @GetMapping(ScheduleFileControllerEndpoint.FACULTY_ID)
     @ApiOperation(value = "Get Exam Schedule Files Detail By Faculty ID")
     public ResponseEntity<SisBaseApiResponse<List<ExamScheduleFileDetailResponse>>> getExamScheduleFilesByFacultyId(
             @PathVariable final Long facultyId)
@@ -48,7 +48,7 @@ public class ExamScheduleFileController {
         return successResponse(scheduleFileDetailResponses);
     }
 
-    @GetMapping(ExamScheduleFileControllerEndpoint.VIEW)
+    @GetMapping(ScheduleFileControllerEndpoint.VIEW)
     @ApiOperation(value = "View Exam Schedule File By ID")
     public ResponseEntity<byte[]> viewExamScheduleFileById(
             @PathVariable String fileId)
@@ -62,7 +62,7 @@ public class ExamScheduleFileController {
                 .body(scheduleFileResponse.getFileByte());
     }
 
-    @GetMapping(ExamScheduleFileControllerEndpoint.DOWNLOAD)
+    @GetMapping(ScheduleFileControllerEndpoint.DOWNLOAD)
     @ApiOperation(value = "Download Exam Schedule File By ID")
     public ResponseEntity<MultipartFile> downloadExamScheduleFileById(
             @PathVariable String fileId)
@@ -74,7 +74,7 @@ public class ExamScheduleFileController {
                 .body(scheduleFileResponse.getFile());
     }
 
-    @GetMapping(ExamScheduleFileControllerEndpoint.DEPARTMENT_ID)
+    @GetMapping(ScheduleFileControllerEndpoint.DEPARTMENT_ID)
     @ApiOperation(value = "Get Exam Schedule File Detail By Department ID")
     public ResponseEntity<SisBaseApiResponse<ExamScheduleFileDetailResponse>> getExamScheduleFileByDepartmentId(
             @PathVariable final Long departmentId)
@@ -86,7 +86,7 @@ public class ExamScheduleFileController {
     }
 
     @PostMapping(
-            value = ExamScheduleFileControllerEndpoint.SAVE,
+            value = ScheduleFileControllerEndpoint.SAVE,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     @ApiOperation(value = "Save Exam Schedule File")
@@ -103,7 +103,7 @@ public class ExamScheduleFileController {
         return successResponse(scheduleFileDetailResponse);
     }
 
-    @DeleteMapping(ExamScheduleFileControllerEndpoint.DELETE)
+    @DeleteMapping(ScheduleFileControllerEndpoint.DELETE)
     @ApiOperation(value = "Delete Exam Schedule File")
     public ResponseEntity<SisApiResponse> deleteExamScheduleFile(
             @PathVariable final Long departmentId)
