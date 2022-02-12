@@ -41,7 +41,7 @@ public class StudentPersonalInfoRepositoryImpl implements StudentPersonalInfoRep
             if (!personalInfoEntities.isEmpty()) {
                 info.foundAllByStatus(status.toString());
             } else {
-                warn.notFoundAllIdsByStatus(status.getName());
+                warn.notFoundAllIdsByStatus(status.toString());
             }
             return personalInfoEntities;
         } catch (Exception exception) {

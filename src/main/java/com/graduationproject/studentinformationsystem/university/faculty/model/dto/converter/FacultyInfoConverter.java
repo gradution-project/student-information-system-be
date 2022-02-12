@@ -77,7 +77,7 @@ public class FacultyInfoConverter {
         return FacultyResponse.builder()
                 .facultyId(facultyEntity.getFacultyId())
                 .name(facultyEntity.getName())
-                .status(facultyEntity.getStatus().getName())
+                .status(facultyEntity.getStatus())
                 .createdUserId(facultyEntity.getCreatedUserId())
                 .createdDate(SisUtil.getFormattedDateTime(facultyEntity.getCreatedDate()))
                 .modifiedUserId(facultyEntity.getModifiedUserId())

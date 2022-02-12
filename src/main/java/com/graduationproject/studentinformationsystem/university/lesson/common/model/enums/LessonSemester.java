@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum LessonSemester {
+
     FIRST("1. Dönem"),
     SECOND("2. Dönem"),
     THIRD("3. Dönem"),
@@ -19,5 +20,5 @@ public enum LessonSemester {
     ELEVENTH("11. Dönem"),
     TWELFTH("12. Dönem");
 
-    private final String name;
+    private final String tr;
 }

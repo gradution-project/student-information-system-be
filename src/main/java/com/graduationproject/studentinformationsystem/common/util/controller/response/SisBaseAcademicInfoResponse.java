@@ -8,7 +8,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public abstract class SisBaseAcademicInfoResponse extends SisBaseResponse {
 
-    protected String status;
     protected String email;
     protected String registrationDate;
 }

@@ -6,11 +6,12 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum StudentStatus {
+
     ACTIVE("Aktif"),
     PASSIVE("Pasif"),
     DELETED("Silinmiş"),
     GRADUATED("Mezun"),
     ALL("Hepsi");
 
-    private final String name;
+    private final String tr;
 }

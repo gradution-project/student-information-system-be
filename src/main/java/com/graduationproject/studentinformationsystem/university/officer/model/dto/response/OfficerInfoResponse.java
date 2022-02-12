@@ -1,6 +1,7 @@
 package com.graduationproject.studentinformationsystem.university.officer.model.dto.response;
 
 import com.graduationproject.studentinformationsystem.university.faculty.model.dto.response.FacultyResponse;
+import com.graduationproject.studentinformationsystem.university.officer.model.enums.OfficerStatus;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -13,7 +14,7 @@ public class OfficerInfoResponse {
     private String surname;
     private String phoneNumber;
     private String email;
-    private String status;
+    private OfficerStatus status;
     private String registrationDate;
 
     private FacultyResponse facultyResponse;

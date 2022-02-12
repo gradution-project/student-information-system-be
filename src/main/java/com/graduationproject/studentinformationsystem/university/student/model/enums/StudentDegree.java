@@ -7,10 +7,11 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum StudentDegree {
+
     ASSOCIATE("Önlisans"),
     UNDERGRADUATE("Lisans"),
     POSTGRADUATE("Yüksek Lisans"),
     DOCTORAL("Doktora");
 
-    private final String name;
+    private final String tr;
 }
