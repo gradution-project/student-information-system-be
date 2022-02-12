@@ -3,10 +3,7 @@ package com.graduationproject.studentinformationsystem.common.util;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
+import java.util.*;
 
 import static com.graduationproject.studentinformationsystem.common.util.constant.SisConstants.DATE_PATTERN;
 import static com.graduationproject.studentinformationsystem.common.util.constant.SisConstants.DATE_TIME_PATTERN;
@@ -60,6 +57,10 @@ public class SisUtil {
             return string.replace(" ", ".");
         }
         return string;
+    }
+
+    public static String generateRandomUUID() {
+        return UUID.randomUUID().toString();
     }
 
     public static Long generateRandomIdWithPrefixId(final Long prefixId) {
