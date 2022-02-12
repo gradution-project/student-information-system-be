@@ -22,6 +22,18 @@ public class SisUtil {
         return "+90 (" + first + ") " + second + " " + third + " " + fourth;
     }
 
+    public static Long getUnformattedPhoneNumber(String phoneNumber) {
+        String[] phoneNumberArr = phoneNumber.split(" ");
+        if (phoneNumberArr.length == 5) {
+            String first = phoneNumberArr[1].replace("(", "").replace(")", "");
+            String second = phoneNumberArr[2];
+            String third = phoneNumberArr[3];
+            String fourth = phoneNumberArr[4];
+            return Long.parseLong(first + second + third + fourth);
+        }
+        return 1L;
+    }
+
     public static String getFormattedDate(final Date date) {
         if (date == null) {
             return null;

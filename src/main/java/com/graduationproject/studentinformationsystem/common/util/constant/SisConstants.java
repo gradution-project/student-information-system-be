@@ -8,6 +8,7 @@ public class SisConstants {
     public static final String DATE_PATTERN = "dd.MM.yyyy";
     public static final String DATE_TIME_PATTERN = "dd.MM.yyyy HH:mm";
     public static final String DATE_TIME_SECONDS_PATTERN = "dd.MM.yyyy HH:mm:ss";
+    public static final String PHONE_NUMBER_PATTERN = "+90 (XXX) XXX XX XX";
 
     public static class DbProfile {
 
