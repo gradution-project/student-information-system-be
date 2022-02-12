@@ -2,8 +2,8 @@ package com.graduationproject.studentinformationsystem.university.schedule.exam.
 
 import com.graduationproject.studentinformationsystem.common.util.SisUtil;
 import com.graduationproject.studentinformationsystem.university.department.model.dto.converter.DepartmentInfoConverter;
-import com.graduationproject.studentinformationsystem.university.schedule.exam.model.dto.response.ExamScheduleFileDetailResponse;
-import com.graduationproject.studentinformationsystem.university.schedule.exam.model.dto.response.ExamScheduleFileResponse;
+import com.graduationproject.studentinformationsystem.university.schedule.common.model.dto.response.ScheduleFileDetailResponse;
+import com.graduationproject.studentinformationsystem.university.schedule.common.model.dto.response.ScheduleFileResponse;
 import com.graduationproject.studentinformationsystem.university.schedule.exam.model.entity.ExamScheduleFileEntity;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,8 +39,8 @@ public class ExamScheduleFileInfoConverter {
                 .build();
     }
 
-    public static ExamScheduleFileResponse entityToResponse(final ExamScheduleFileEntity scheduleFileEntity) throws IOException {
-        return ExamScheduleFileResponse.builder()
+    public static ScheduleFileResponse entityToResponse(final ExamScheduleFileEntity scheduleFileEntity) throws IOException {
+        return ScheduleFileResponse.builder()
                 .fileName(scheduleFileEntity.getFileName())
                 .fileByte(scheduleFileEntity.getFileByte())
                 .fileSize(scheduleFileEntity.getFileSize())
@@ -48,8 +48,8 @@ public class ExamScheduleFileInfoConverter {
                 .build();
     }
 
-    public static ExamScheduleFileDetailResponse entityToDetailResponse(final ExamScheduleFileEntity scheduleFileEntity) {
-        return ExamScheduleFileDetailResponse.builder()
+    public static ScheduleFileDetailResponse entityToDetailResponse(final ExamScheduleFileEntity scheduleFileEntity) {
+        return ScheduleFileDetailResponse.builder()
                 .fileId(scheduleFileEntity.getFileId())
                 .departmentResponse(DepartmentInfoConverter.entityToResponse(scheduleFileEntity.getDepartmentEntity()))
                 .fileName(scheduleFileEntity.getFileName())
@@ -61,8 +61,8 @@ public class ExamScheduleFileInfoConverter {
                 .build();
     }
 
-    public static List<ExamScheduleFileDetailResponse> entitiesToResponses(final List<ExamScheduleFileEntity> scheduleFileEntities) {
-        List<ExamScheduleFileDetailResponse> scheduleFileDetailResponses = new ArrayList<>();
+    public static List<ScheduleFileDetailResponse> entitiesToResponses(final List<ExamScheduleFileEntity> scheduleFileEntities) {
+        List<ScheduleFileDetailResponse> scheduleFileDetailResponses = new ArrayList<>();
         scheduleFileEntities.forEach(scheduleFileEntity -> scheduleFileDetailResponses.add(entityToDetailResponse(scheduleFileEntity)));
         return scheduleFileDetailResponses;
     }

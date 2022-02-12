@@ -1,4 +1,4 @@
-package com.graduationproject.studentinformationsystem.university.schedule.exam.model.dto.response;
+package com.graduationproject.studentinformationsystem.university.schedule.common.model.dto.response;
 
 import com.graduationproject.studentinformationsystem.university.department.model.dto.response.DepartmentResponse;
 import lombok.Builder;
@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class ExamScheduleFileDetailResponse {
+public class ScheduleFileDetailResponse {
 
     private String fileId;
     private String fileName;

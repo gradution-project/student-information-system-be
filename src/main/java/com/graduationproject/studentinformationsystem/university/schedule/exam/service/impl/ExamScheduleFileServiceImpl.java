@@ -11,9 +11,9 @@ import com.graduationproject.studentinformationsystem.university.department.repo
 import com.graduationproject.studentinformationsystem.university.faculty.model.entity.FacultyEntity;
 import com.graduationproject.studentinformationsystem.university.faculty.model.exception.FacultyException;
 import com.graduationproject.studentinformationsystem.university.faculty.repository.FacultyRepository;
+import com.graduationproject.studentinformationsystem.university.schedule.common.model.dto.response.ScheduleFileDetailResponse;
+import com.graduationproject.studentinformationsystem.university.schedule.common.model.dto.response.ScheduleFileResponse;
 import com.graduationproject.studentinformationsystem.university.schedule.exam.model.dto.converter.ExamScheduleFileInfoConverter;
-import com.graduationproject.studentinformationsystem.university.schedule.exam.model.dto.response.ExamScheduleFileDetailResponse;
-import com.graduationproject.studentinformationsystem.university.schedule.exam.model.dto.response.ExamScheduleFileResponse;
 import com.graduationproject.studentinformationsystem.university.schedule.exam.model.entity.ExamScheduleFileEntity;
 import com.graduationproject.studentinformationsystem.university.schedule.exam.model.exception.ExamScheduleFileException;
 import com.graduationproject.studentinformationsystem.university.schedule.exam.repository.ExamScheduleFileRepository;
@@ -35,7 +35,7 @@ public class ExamScheduleFileServiceImpl implements ExamScheduleFileService {
     private final ExamScheduleFileRepository scheduleFileRepository;
 
     @Override
-    public List<ExamScheduleFileDetailResponse> getExamScheduleFilesByFacultyId(final Long facultyId)
+    public List<ScheduleFileDetailResponse> getExamScheduleFilesByFacultyId(final Long facultyId)
             throws SisNotExistException {
 
         checkBeforeGetFacultyId(facultyId);
@@ -43,7 +43,7 @@ public class ExamScheduleFileServiceImpl implements ExamScheduleFileService {
     }
 
     @Override
-    public ExamScheduleFileResponse getExamScheduleFileById(String fileId)
+    public ScheduleFileResponse getExamScheduleFileById(String fileId)
             throws SisNotExistException, IOException {
 
         ifExamScheduleFileIsNotExistThrowNotExistException(fileId);
@@ -51,7 +51,7 @@ public class ExamScheduleFileServiceImpl implements ExamScheduleFileService {
     }
 
     @Override
-    public ExamScheduleFileDetailResponse getExamScheduleFileByDepartmentId(final Long departmentId)
+    public ScheduleFileDetailResponse getExamScheduleFileByDepartmentId(final Long departmentId)
             throws SisNotExistException {
 
         checkBeforeGetByDepartmentId(departmentId);
@@ -59,11 +59,11 @@ public class ExamScheduleFileServiceImpl implements ExamScheduleFileService {
     }
 
     @Override
-    public ExamScheduleFileDetailResponse saveExamScheduleFile(final String apiUrl,
-                                                               final Long facultyId,
-                                                               final Long departmentId,
-                                                               final Long operationUserId,
-                                                               final MultipartFile document)
+    public ScheduleFileDetailResponse saveExamScheduleFile(final String apiUrl,
+                                                           final Long facultyId,
+                                                           final Long departmentId,
+                                                           final Long operationUserId,
+                                                           final MultipartFile document)
             throws SisNotExistException, IOException, SisAlreadyException {
 
         checkBeforeSaving(facultyId, departmentId, document.getContentType());
@@ -83,18 +83,18 @@ public class ExamScheduleFileServiceImpl implements ExamScheduleFileService {
     }
 
 
-    private ExamScheduleFileResponse getExamScheduleFileResponse(final String fileId) throws IOException {
+    private ScheduleFileResponse getExamScheduleFileResponse(final String fileId) throws IOException {
         final ExamScheduleFileEntity scheduleFileEntity = scheduleFileRepository.getExamScheduleFileById(fileId);
         return ExamScheduleFileInfoConverter.entityToResponse(scheduleFileEntity);
     }
 
-    private List<ExamScheduleFileDetailResponse> getExamScheduleFilesDetailResponses(final Long facultyId) {
+    private List<ScheduleFileDetailResponse> getExamScheduleFilesDetailResponses(final Long facultyId) {
         final List<ExamScheduleFileEntity> scheduleFileEntities = scheduleFileRepository.getExamScheduleFilesByFacultyId(facultyId);
         setDepartmentEntities(scheduleFileEntities);
         return ExamScheduleFileInfoConverter.entitiesToResponses(scheduleFileEntities);
     }
 
-    private ExamScheduleFileDetailResponse getExamScheduleFileDetailResponse(final Long departmentId) {
+    private ScheduleFileDetailResponse getExamScheduleFileDetailResponse(final Long departmentId) {
         final ExamScheduleFileEntity scheduleFileEntity = scheduleFileRepository.getExamScheduleFileByDepartmentId(departmentId);
         setDepartmentEntity(scheduleFileEntity);
         return ExamScheduleFileInfoConverter.entityToDetailResponse(scheduleFileEntity);
