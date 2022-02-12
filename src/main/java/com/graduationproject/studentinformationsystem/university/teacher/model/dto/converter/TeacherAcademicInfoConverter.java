@@ -28,7 +28,7 @@ public class TeacherAcademicInfoConverter {
                 .degree(academicInfoRequest.getDegree())
                 .role(academicInfoRequest.getRole())
                 .fieldOfStudy(academicInfoRequest.getFieldOfStudy())
-                .phoneNumber(academicInfoRequest.getPhoneNumber())
+                .phoneNumber(Long.parseLong(academicInfoRequest.getPhoneNumber()))
                 .email(teacherEmail)
                 .status(TeacherStatus.ACTIVE)
                 .registrationDate(new Date())
@@ -49,7 +49,7 @@ public class TeacherAcademicInfoConverter {
                 .degree(academicInfoRequest.getDegree())
                 .role(academicInfoRequest.getRole())
                 .fieldOfStudy(academicInfoRequest.getFieldOfStudy())
-                .phoneNumber(academicInfoRequest.getPhoneNumber())
+                .phoneNumber(Long.parseLong(academicInfoRequest.getPhoneNumber()))
                 .modifiedUserId(operationInfoRequest.getUserId())
                 .modifiedDate(new Date())
                 .build();

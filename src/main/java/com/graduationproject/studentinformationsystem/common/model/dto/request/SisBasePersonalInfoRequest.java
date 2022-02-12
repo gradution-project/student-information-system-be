@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import static com.graduationproject.studentinformationsystem.common.util.constant.SisConstants.DATE_PATTERN;
+import static com.graduationproject.studentinformationsystem.common.util.constant.SisConstants.PHONE_NUMBER_PATTERN;
 
 @Getter
 public abstract class SisBasePersonalInfoRequest implements Serializable {
@@ -36,7 +37,8 @@ public abstract class SisBasePersonalInfoRequest implements Serializable {
 
     @NotNull
     @PhoneNumber
-    protected Long phoneNumber;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = PHONE_NUMBER_PATTERN)
+    protected String phoneNumber;
 
 //    protected Byte[] profilePhoto; // TODO: Added Profile Photo
 

@@ -1,5 +1,6 @@
 package com.graduationproject.studentinformationsystem.university.teacher.model.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.graduationproject.studentinformationsystem.common.util.validation.PhoneNumber;
 import com.graduationproject.studentinformationsystem.common.util.validation.id.DepartmentID;
 import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherDegree;
@@ -10,6 +11,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serial;
 import java.io.Serializable;
+
+import static com.graduationproject.studentinformationsystem.common.util.constant.SisConstants.PHONE_NUMBER_PATTERN;
 
 @Getter
 public class TeacherAcademicInfoRequest implements Serializable {
@@ -33,5 +36,6 @@ public class TeacherAcademicInfoRequest implements Serializable {
 
     @NotNull
     @PhoneNumber
-    private Long phoneNumber;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = PHONE_NUMBER_PATTERN)
+    private String phoneNumber;
 }

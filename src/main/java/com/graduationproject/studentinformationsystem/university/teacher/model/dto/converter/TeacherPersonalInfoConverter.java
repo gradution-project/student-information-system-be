@@ -26,7 +26,7 @@ public class TeacherPersonalInfoConverter {
                 .name(personalInfoRequest.getName())
                 .surname(personalInfoRequest.getSurname())
                 .email(personalInfoRequest.getEmail())
-                .phoneNumber(personalInfoRequest.getPhoneNumber())
+                .phoneNumber(Long.parseLong(personalInfoRequest.getPhoneNumber()))
                 .status(TeacherStatus.ACTIVE)
 //                .profilePhoto(personalInfoRequest.getProfilePhoto()) // TODO: Set Profile Photo
 //                .profilePhotoUrl(personalInfoRequest.getProfilePhotoUrl()) // TODO: Set Profile Photo URL
@@ -49,7 +49,7 @@ public class TeacherPersonalInfoConverter {
                 .name(personalInfoRequest.getName())
                 .surname(personalInfoRequest.getSurname())
                 .email(personalInfoRequest.getEmail())
-                .phoneNumber(personalInfoRequest.getPhoneNumber())
+                .phoneNumber(Long.parseLong(personalInfoRequest.getPhoneNumber()))
 //                .profilePhoto(personalInfoRequest.getProfilePhoto()) // TODO: Set Profile Photo
 //                .profilePhotoUrl(personalInfoRequest.getProfilePhotoUrl()) // TODO: Set Profile Photo URL
                 .birthday(personalInfoRequest.getBirthday())
