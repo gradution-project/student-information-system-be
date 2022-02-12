@@ -85,7 +85,7 @@ public class DepartmentInfoConverter {
                 .departmentId(departmentEntity.getDepartmentId())
                 .facultyResponse(FacultyInfoConverter.entityToResponse(departmentEntity.getFacultyEntity()))
                 .name(departmentEntity.getName())
-                .status(departmentEntity.getStatus().getName())
+                .status(departmentEntity.getStatus())
                 .totalClassLevel(departmentEntity.getTotalClassLevel())
                 .isTherePreparatoryClass(departmentEntity.getIsTherePreparatoryClass())
                 .createdUserId(departmentEntity.getCreatedUserId())
