@@ -1,6 +1,6 @@
 package com.graduationproject.studentinformationsystem.university.teacher.model.dto.response;
 
-import com.graduationproject.studentinformationsystem.common.util.controller.response.SisBaseAcademicInfoResponse;
+import com.graduationproject.studentinformationsystem.common.model.dto.response.SisBaseAcademicInfoResponse;
 import com.graduationproject.studentinformationsystem.university.department.model.dto.response.DepartmentResponse;
 import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherDegree;
 import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherRole;

@@ -1,6 +1,6 @@
 package com.graduationproject.studentinformationsystem.university.officer.model.dto.response;
 
-import com.graduationproject.studentinformationsystem.common.util.controller.response.SisBaseAcademicInfoResponse;
+import com.graduationproject.studentinformationsystem.common.model.dto.response.SisBaseAcademicInfoResponse;
 import com.graduationproject.studentinformationsystem.university.faculty.model.dto.response.FacultyResponse;
 import com.graduationproject.studentinformationsystem.university.officer.model.enums.OfficerStatus;
 import lombok.Getter;
