@@ -14,7 +14,7 @@ import org.sql2o.Sql2o;
 
 import java.util.List;
 
-import static com.graduationproject.studentinformationsystem.university.schedule.exam.model.mapping.ExamScheduleFileMapping.*;
+import static com.graduationproject.studentinformationsystem.university.schedule.common.model.mapping.ScheduleFileMapping.*;
 import static com.graduationproject.studentinformationsystem.university.schedule.exam.repository.impl.scripts.ExamScheduleFileSqlScripts.*;
 
 @Repository

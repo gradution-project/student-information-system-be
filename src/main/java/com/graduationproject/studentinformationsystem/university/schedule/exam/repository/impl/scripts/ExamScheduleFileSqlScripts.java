@@ -2,7 +2,7 @@ package com.graduationproject.studentinformationsystem.university.schedule.exam.
 
 import com.graduationproject.studentinformationsystem.common.util.sql.SisSqlUtil;
 
-import static com.graduationproject.studentinformationsystem.university.schedule.exam.model.mapping.ExamScheduleFileMapping.FILE_ID;
+import static com.graduationproject.studentinformationsystem.university.schedule.common.model.mapping.ScheduleFileMapping.FILE_ID;
 
 public class ExamScheduleFileSqlScripts {
 

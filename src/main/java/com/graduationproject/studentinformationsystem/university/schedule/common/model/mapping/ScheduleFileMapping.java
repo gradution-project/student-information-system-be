@@ -1,4 +1,4 @@
-package com.graduationproject.studentinformationsystem.university.schedule.exam.model.mapping;
+package com.graduationproject.studentinformationsystem.university.schedule.common.model.mapping;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 @Getter
 @RequiredArgsConstructor
-public enum ExamScheduleFileMapping {
+public enum ScheduleFileMapping {
 
     FILE_ID("FILE_ID", "fileId"),
     FACULTY_ID("FACULTY_ID", "facultyId"),
@@ -27,5 +27,5 @@ public enum ExamScheduleFileMapping {
     private final String modelName;
 
     public static final Map<String, String> COLUMN_MAPPINGS = Stream.of(values())
-            .collect(Collectors.toMap(ExamScheduleFileMapping::getColumnName, ExamScheduleFileMapping::getModelName));
+            .collect(Collectors.toMap(ScheduleFileMapping::getColumnName, ScheduleFileMapping::getModelName));
 }
