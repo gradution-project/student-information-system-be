@@ -4,7 +4,7 @@ import com.graduationproject.studentinformationsystem.common.util.exception.SisD
 import com.graduationproject.studentinformationsystem.common.util.log.SisErrorLogMessageUtil;
 import com.graduationproject.studentinformationsystem.common.util.log.SisInfoLogMessageUtil;
 import com.graduationproject.studentinformationsystem.common.util.log.SisWarnLogMessageUtil;
-import com.graduationproject.studentinformationsystem.university.schedule.exam.model.entity.ExamScheduleFileEntity;
+import com.graduationproject.studentinformationsystem.university.schedule.common.model.entity.ScheduleFileEntity;
 import com.graduationproject.studentinformationsystem.university.schedule.exam.repository.ExamScheduleFileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -29,13 +29,13 @@ public class ExamScheduleFileRepositoryImpl implements ExamScheduleFileRepositor
     private final Sql2o sql2o;
 
     @Override
-    public List<ExamScheduleFileEntity> getExamScheduleFilesByFacultyId(Long facultyId) {
+    public List<ScheduleFileEntity> getExamScheduleFilesByFacultyId(Long facultyId) {
         try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_EXAM_SCHEDULE_FILES_BY_FACULTY_ID)) {
 
-            final List<ExamScheduleFileEntity> scheduleFileEntities = query
+            final List<ScheduleFileEntity> scheduleFileEntities = query
                     .addParameter(FACULTY_ID.getModelName(), facultyId)
                     .setColumnMappings(COLUMN_MAPPINGS)
-                    .executeAndFetch(ExamScheduleFileEntity.class);
+                    .executeAndFetch(ScheduleFileEntity.class);
 
             info.foundByFacultyId(facultyId);
             return scheduleFileEntities;
@@ -46,13 +46,13 @@ public class ExamScheduleFileRepositoryImpl implements ExamScheduleFileRepositor
     }
 
     @Override
-    public ExamScheduleFileEntity getExamScheduleFileById(String fileId) {
+    public ScheduleFileEntity getExamScheduleFileById(String fileId) {
         try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_EXAM_SCHEDULE_FILE_BY_ID)) {
 
-            final ExamScheduleFileEntity scheduleFileEntity = query
+            final ScheduleFileEntity scheduleFileEntity = query
                     .addParameter(FILE_ID.getModelName(), fileId)
                     .setColumnMappings(COLUMN_MAPPINGS)
-                    .executeAndFetchFirst(ExamScheduleFileEntity.class);
+                    .executeAndFetchFirst(ScheduleFileEntity.class);
 
             info.foundById(fileId);
             return scheduleFileEntity;
@@ -63,13 +63,13 @@ public class ExamScheduleFileRepositoryImpl implements ExamScheduleFileRepositor
     }
 
     @Override
-    public ExamScheduleFileEntity getExamScheduleFileByDepartmentId(final Long departmentId) {
+    public ScheduleFileEntity getExamScheduleFileByDepartmentId(final Long departmentId) {
         try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_EXAM_SCHEDULE_FILE_BY_DEPARTMENT_ID)) {
 
-            final ExamScheduleFileEntity scheduleFileEntity = query
+            final ScheduleFileEntity scheduleFileEntity = query
                     .addParameter(DEPARTMENT_ID.getModelName(), departmentId)
                     .setColumnMappings(COLUMN_MAPPINGS)
-                    .executeAndFetchFirst(ExamScheduleFileEntity.class);
+                    .executeAndFetchFirst(ScheduleFileEntity.class);
 
             info.foundByDepartmentId(departmentId);
             return scheduleFileEntity;
@@ -80,7 +80,7 @@ public class ExamScheduleFileRepositoryImpl implements ExamScheduleFileRepositor
     }
 
     @Override
-    public void saveExamScheduleFile(final ExamScheduleFileEntity scheduleFileEntity) {
+    public void saveExamScheduleFile(final ScheduleFileEntity scheduleFileEntity) {
         try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(SAVE_EXAM_SCHEDULE_FILE)) {
 
             query

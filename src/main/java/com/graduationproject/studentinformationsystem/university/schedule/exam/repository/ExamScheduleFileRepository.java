@@ -1,18 +1,18 @@
 package com.graduationproject.studentinformationsystem.university.schedule.exam.repository;
 
-import com.graduationproject.studentinformationsystem.university.schedule.exam.model.entity.ExamScheduleFileEntity;
+import com.graduationproject.studentinformationsystem.university.schedule.common.model.entity.ScheduleFileEntity;
 
 import java.util.List;
 
 public interface ExamScheduleFileRepository {
 
-    List<ExamScheduleFileEntity> getExamScheduleFilesByFacultyId(Long facultyId);
+    List<ScheduleFileEntity> getExamScheduleFilesByFacultyId(Long facultyId);
 
-    ExamScheduleFileEntity getExamScheduleFileById(String fileId);
+    ScheduleFileEntity getExamScheduleFileById(String fileId);
 
-    ExamScheduleFileEntity getExamScheduleFileByDepartmentId(Long departmentId);
+    ScheduleFileEntity getExamScheduleFileByDepartmentId(Long departmentId);
 
-    void saveExamScheduleFile(ExamScheduleFileEntity examScheduleFileEntity);
+    void saveExamScheduleFile(ScheduleFileEntity scheduleFileEntity);
 
     void deleteExamScheduleFile(Long departmentId);
 

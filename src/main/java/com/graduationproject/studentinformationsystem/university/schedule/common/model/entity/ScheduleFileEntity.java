@@ -1,4 +1,4 @@
-package com.graduationproject.studentinformationsystem.university.schedule.exam.model.entity;
+package com.graduationproject.studentinformationsystem.university.schedule.common.model.entity;
 
 import com.graduationproject.studentinformationsystem.university.department.model.entity.DepartmentEntity;
 import lombok.Builder;
@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Getter
 @Builder
-public class ExamScheduleFileEntity {
+public class ScheduleFileEntity {
 
     private String fileId;
     private Long facultyId;

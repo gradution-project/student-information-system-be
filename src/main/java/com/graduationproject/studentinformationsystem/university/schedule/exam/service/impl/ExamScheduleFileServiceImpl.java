@@ -13,8 +13,8 @@ import com.graduationproject.studentinformationsystem.university.faculty.model.e
 import com.graduationproject.studentinformationsystem.university.faculty.repository.FacultyRepository;
 import com.graduationproject.studentinformationsystem.university.schedule.common.model.dto.response.ScheduleFileDetailResponse;
 import com.graduationproject.studentinformationsystem.university.schedule.common.model.dto.response.ScheduleFileResponse;
+import com.graduationproject.studentinformationsystem.university.schedule.common.model.entity.ScheduleFileEntity;
 import com.graduationproject.studentinformationsystem.university.schedule.exam.model.dto.converter.ExamScheduleFileInfoConverter;
-import com.graduationproject.studentinformationsystem.university.schedule.exam.model.entity.ExamScheduleFileEntity;
 import com.graduationproject.studentinformationsystem.university.schedule.exam.model.exception.ExamScheduleFileException;
 import com.graduationproject.studentinformationsystem.university.schedule.exam.repository.ExamScheduleFileRepository;
 import com.graduationproject.studentinformationsystem.university.schedule.exam.service.ExamScheduleFileService;
@@ -69,7 +69,7 @@ public class ExamScheduleFileServiceImpl implements ExamScheduleFileService {
         checkBeforeSaving(facultyId, departmentId, document.getContentType());
 
         final String fileId = SisUtil.generateRandomUUID();
-        final ExamScheduleFileEntity scheduleFileEntity = ExamScheduleFileInfoConverter
+        final ScheduleFileEntity scheduleFileEntity = ExamScheduleFileInfoConverter
                 .generateSaveEntity(fileId, document, apiUrl, facultyId, departmentId, operationUserId);
 
         scheduleFileRepository.saveExamScheduleFile(scheduleFileEntity);
@@ -84,27 +84,27 @@ public class ExamScheduleFileServiceImpl implements ExamScheduleFileService {
 
 
     private ScheduleFileResponse getExamScheduleFileResponse(final String fileId) throws IOException {
-        final ExamScheduleFileEntity scheduleFileEntity = scheduleFileRepository.getExamScheduleFileById(fileId);
+        final ScheduleFileEntity scheduleFileEntity = scheduleFileRepository.getExamScheduleFileById(fileId);
         return ExamScheduleFileInfoConverter.entityToResponse(scheduleFileEntity);
     }
 
     private List<ScheduleFileDetailResponse> getExamScheduleFilesDetailResponses(final Long facultyId) {
-        final List<ExamScheduleFileEntity> scheduleFileEntities = scheduleFileRepository.getExamScheduleFilesByFacultyId(facultyId);
+        final List<ScheduleFileEntity> scheduleFileEntities = scheduleFileRepository.getExamScheduleFilesByFacultyId(facultyId);
         setDepartmentEntities(scheduleFileEntities);
         return ExamScheduleFileInfoConverter.entitiesToResponses(scheduleFileEntities);
     }
 
     private ScheduleFileDetailResponse getExamScheduleFileDetailResponse(final Long departmentId) {
-        final ExamScheduleFileEntity scheduleFileEntity = scheduleFileRepository.getExamScheduleFileByDepartmentId(departmentId);
+        final ScheduleFileEntity scheduleFileEntity = scheduleFileRepository.getExamScheduleFileByDepartmentId(departmentId);
         setDepartmentEntity(scheduleFileEntity);
         return ExamScheduleFileInfoConverter.entityToDetailResponse(scheduleFileEntity);
     }
 
-    private void setDepartmentEntities(final List<ExamScheduleFileEntity> scheduleFileEntities) {
+    private void setDepartmentEntities(final List<ScheduleFileEntity> scheduleFileEntities) {
         scheduleFileEntities.forEach(this::setDepartmentEntity);
     }
 
-    private void setDepartmentEntity(final ExamScheduleFileEntity scheduleFileEntity) {
+    private void setDepartmentEntity(final ScheduleFileEntity scheduleFileEntity) {
         final Long departmentId = scheduleFileEntity.getDepartmentId();
         final DepartmentEntity departmentEntity = departmentRepository.getDepartmentById(departmentId);
         setFacultyEntity(departmentEntity);
@@ -163,7 +163,7 @@ public class ExamScheduleFileServiceImpl implements ExamScheduleFileService {
     }
 
     private void ifFileIsExistThrowFileAlreadyExistException(final Long departmentId) throws SisAlreadyException {
-        final ExamScheduleFileEntity scheduleFileEntity = scheduleFileRepository.getExamScheduleFileByDepartmentId(departmentId);
+        final ScheduleFileEntity scheduleFileEntity = scheduleFileRepository.getExamScheduleFileByDepartmentId(departmentId);
         if (scheduleFileEntity != null) {
             if (scheduleFileRepository.isExamScheduleFileExist(scheduleFileEntity.getFileId())) {
                 ExamScheduleFileException.throwAlreadyExistException(scheduleFileEntity.getFileId());
@@ -172,7 +172,7 @@ public class ExamScheduleFileServiceImpl implements ExamScheduleFileService {
     }
 
     private void ifExamScheduleFileIsNotExistThrowNotExistException(final Long departmentId) throws SisNotExistException {
-        final ExamScheduleFileEntity scheduleFileEntity = scheduleFileRepository.getExamScheduleFileByDepartmentId(departmentId);
+        final ScheduleFileEntity scheduleFileEntity = scheduleFileRepository.getExamScheduleFileByDepartmentId(departmentId);
         if (scheduleFileEntity == null) {
             ExamScheduleFileException.throwNotExistException(departmentId);
         }
