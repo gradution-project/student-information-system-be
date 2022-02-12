@@ -25,7 +25,7 @@ public class OfficerAcademicInfoConverter {
         return OfficerAcademicInfoEntity.builder()
                 .officerId(officerId)
                 .facultyId(academicInfoRequest.getFacultyId())
-                .phoneNumber(Long.parseLong(academicInfoRequest.getPhoneNumber()))
+                .phoneNumber(SisUtil.getUnformattedPhoneNumber(academicInfoRequest.getPhoneNumber()))
                 .email(officerEmail)
                 .status(OfficerStatus.ACTIVE)
                 .registrationDate(new Date())
@@ -43,7 +43,7 @@ public class OfficerAcademicInfoConverter {
         return OfficerAcademicInfoEntity.builder()
                 .officerId(officerId)
                 .facultyId(academicInfoRequest.getFacultyId())
-                .phoneNumber(Long.parseLong(academicInfoRequest.getPhoneNumber()))
+                .phoneNumber(SisUtil.getUnformattedPhoneNumber(academicInfoRequest.getPhoneNumber()))
                 .modifiedUserId(operationInfoRequest.getUserId())
                 .modifiedDate(new Date())
                 .build();

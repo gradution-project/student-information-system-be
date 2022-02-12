@@ -1,5 +1,6 @@
 package com.graduationproject.studentinformationsystem.common.util.validation;
 
+import com.graduationproject.studentinformationsystem.common.util.SisUtil;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import javax.validation.ConstraintValidator;
@@ -18,20 +19,8 @@ public class PhoneNumberValidation implements ConstraintValidator<PhoneNumber, O
         context.buildConstraintViolationWithTemplate("length must be " + length + " and must be this format : " + PHONE_NUMBER_PATTERN)
                 .addConstraintViolation();
 
-        value = formattedPhoneNumberToLongTypePhoneNumber(value.toString());
+        value = SisUtil.getUnformattedPhoneNumber(value.toString());
 
         return NumberUtils.isCreatable(value.toString()) && Objects.equals(length, value.toString().length());
-    }
-
-    private String formattedPhoneNumberToLongTypePhoneNumber(String phoneNumber) {
-        String[] phoneNumberArr = phoneNumber.split(" ");
-        if (phoneNumberArr.length == 5) {
-            String first = phoneNumberArr[1].replace("(", "").replace(")", "");
-            String second = phoneNumberArr[2];
-            String third = phoneNumberArr[3];
-            String fourth = phoneNumberArr[4];
-            return first + second + third + fourth;
-        }
-        return "";
     }
 }
