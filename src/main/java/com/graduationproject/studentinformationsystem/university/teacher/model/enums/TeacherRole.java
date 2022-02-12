@@ -6,9 +6,10 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum TeacherRole {
+
     TEACHER("Öğretmen"),
     ADVISOR("Danışman"),
     HEAD_OF_DEPARTMENT("Bölüm Başkanı");
 
-    private final String name;
+    private final String tr;
 }

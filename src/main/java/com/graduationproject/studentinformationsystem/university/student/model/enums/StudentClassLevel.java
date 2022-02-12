@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum StudentClassLevel {
+
     PREPARATORY("Hazırlık Sınıfı"),
     FIRST("1. Sınıf"),
     SECOND("2. Sınıf"),
@@ -15,5 +16,5 @@ public enum StudentClassLevel {
     SIXTH("6. Sınıf"),
     GRADUATE("Mezun");
 
-    private final String name;
+    private final String tr;
 }

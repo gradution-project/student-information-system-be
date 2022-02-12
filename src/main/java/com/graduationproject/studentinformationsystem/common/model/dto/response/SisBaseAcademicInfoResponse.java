@@ -1,6 +1,5 @@
-package com.graduationproject.studentinformationsystem.common.util.controller.response;
+package com.graduationproject.studentinformationsystem.common.model.dto.response;
 
-import com.graduationproject.studentinformationsystem.common.model.dto.response.SisBaseResponse;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
@@ -8,7 +7,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public abstract class SisBaseAcademicInfoResponse extends SisBaseResponse {
 
-    protected String status;
     protected String email;
     protected String registrationDate;
 }

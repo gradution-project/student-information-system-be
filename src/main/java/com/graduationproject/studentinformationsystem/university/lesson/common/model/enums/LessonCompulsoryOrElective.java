@@ -6,8 +6,9 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum LessonCompulsoryOrElective {
+
     COMPULSORY("Zorunlu"),
     ELECTIVE("Seçmeli");
 
-    private final String name;
+    private final String tr;
 }
