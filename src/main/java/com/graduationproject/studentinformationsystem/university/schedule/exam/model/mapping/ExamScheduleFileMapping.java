@@ -12,8 +12,14 @@ import java.util.stream.Stream;
 public enum ExamScheduleFileMapping {
 
     FILE_ID("FILE_ID", "fileId"),
+    FACULTY_ID("FACULTY_ID", "facultyId"),
     DEPARTMENT_ID("DEPARTMENT_ID", "departmentId"),
-    PDF("PDF", "pdf"),
+    API_URL("API_URL", "apiUrl"),
+    FILE_NAME("FILE_NAME", "fileName"),
+    FILE_TYPE("FILE_TYPE", "fileType"),
+    FILE("FILE", "file"),
+    FILE_BYTE("FILE_BYTE", "fileByte"),
+    FILE_SIZE("FILE_SIZE", "fileSize"),
     CREATED_DATE("CREATED_DATE", "createdDate"),
     CREATED_USER_ID("CREATED_USER_ID", "createdUserId");
 
