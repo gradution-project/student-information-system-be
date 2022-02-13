@@ -4,7 +4,6 @@ import com.graduationproject.studentinformationsystem.common.util.validation.Nam
 import com.graduationproject.studentinformationsystem.common.util.validation.id.DepartmentID;
 import com.graduationproject.studentinformationsystem.university.lesson.common.model.enums.LessonCompulsoryOrElective;
 import com.graduationproject.studentinformationsystem.university.lesson.common.model.enums.LessonSemester;
-import com.graduationproject.studentinformationsystem.university.lesson.common.model.enums.LessonStatus;
 import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
@@ -24,9 +23,6 @@ public class LessonInfoRequest implements Serializable {
     @Name
     @NotNull
     private String name;
-
-    @NotNull
-    private LessonStatus status;
 
     @NotNull
     private LessonSemester semester;
