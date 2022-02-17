@@ -38,10 +38,10 @@ public class TeacherLessonController {
         return successResponse(lessonResponses);
     }
 
-    @GetMapping(TeacherLessonControllerEndpoint.TEACHER_ID)
+    @GetMapping(TeacherLessonControllerEndpoint.GET)
     @ApiOperation(value = "Get Teacher All Lessons By Teacher ID")
     public ResponseEntity<SisBaseApiResponse<List<TeacherLessonResponse>>> getTeacherLessonsById(
-            @PathVariable final Long teacherId) {
+            @RequestParam final Long teacherId) {
 
         final List<TeacherLessonResponse> lessonResponses = lessonService.getTeacherLessonsById(teacherId);
         return successResponse(lessonResponses);

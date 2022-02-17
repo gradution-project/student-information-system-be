@@ -6,6 +6,7 @@ public class TeacherLessonControllerEndpoint {
     }
 
     public static final String TEACHER_ID = "/{teacherId}";
+    public static final String GET = "/get";
     public static final String SAVE = "/save";
     public static final String DELETE = "/delete";
 }
