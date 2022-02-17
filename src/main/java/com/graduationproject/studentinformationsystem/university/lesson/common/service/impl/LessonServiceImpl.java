@@ -2,10 +2,7 @@ package com.graduationproject.studentinformationsystem.university.lesson.common.
 
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
-import com.graduationproject.studentinformationsystem.university.department.model.entity.DepartmentEntity;
-import com.graduationproject.studentinformationsystem.university.department.repository.DepartmentRepository;
-import com.graduationproject.studentinformationsystem.university.faculty.model.entity.FacultyEntity;
-import com.graduationproject.studentinformationsystem.university.faculty.repository.FacultyRepository;
+import com.graduationproject.studentinformationsystem.university.department.service.DepartmentOutService;
 import com.graduationproject.studentinformationsystem.university.lesson.common.model.dto.converter.LessonInfoConverter;
 import com.graduationproject.studentinformationsystem.university.lesson.common.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.lesson.common.model.dto.response.LessonResponse;
@@ -24,16 +21,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LessonServiceImpl implements LessonService {
 
-    private final FacultyRepository facultyRepository;
-    private final DepartmentRepository departmentRepository;
+    private final DepartmentOutService departmentOutService;
 
     private final LessonRepository lessonRepository;
+    private final LessonInfoConverter lessonInfoConverter;
 
     @Override
     public List<LessonResponse> getAllLessonsByStatus(final LessonStatus status) {
         final List<LessonEntity> lessonEntities = lessonRepository.getAllLessonsByStatus(status);
-        setDepartmentEntities(lessonEntities);
-        return LessonInfoConverter.entitiesToResponses(lessonEntities);
+        return lessonInfoConverter.entitiesToResponses(lessonEntities);
     }
 
     @Override
@@ -50,7 +46,7 @@ public class LessonServiceImpl implements LessonService {
         checkBeforeSaving(departmentId);
 
         final Long lessonId = generateLessonId(departmentId);
-        final LessonEntity lessonEntity = LessonInfoConverter.generateSaveEntity(lessonId, saveRequest);
+        final LessonEntity lessonEntity = lessonInfoConverter.generateSaveEntity(lessonId, saveRequest);
 
         lessonRepository.saveLesson(lessonEntity);
 
@@ -63,7 +59,7 @@ public class LessonServiceImpl implements LessonService {
 
         checkBeforeUpdating(lessonId);
 
-        final LessonEntity lessonEntity = LessonInfoConverter.generateUpdateEntity(lessonId, updateRequest);
+        final LessonEntity lessonEntity = lessonInfoConverter.generateUpdateEntity(lessonId, updateRequest);
         lessonRepository.updateLesson(lessonEntity);
 
         return getLessonResponse(lessonId);
@@ -75,7 +71,7 @@ public class LessonServiceImpl implements LessonService {
 
         checkBeforeDeleting(deleteRequest.getLessonId());
 
-        final LessonEntity lessonEntity = LessonInfoConverter.generateDeleteEntity(deleteRequest);
+        final LessonEntity lessonEntity = lessonInfoConverter.generateDeleteEntity(deleteRequest);
         lessonRepository.updateLessonStatus(lessonEntity);
 
         return getLessonResponse(deleteRequest.getLessonId());
@@ -87,7 +83,7 @@ public class LessonServiceImpl implements LessonService {
 
         checkBeforePassivating(passivateRequest.getLessonId());
 
-        final LessonEntity lessonEntity = LessonInfoConverter.generatePassiveEntity(passivateRequest);
+        final LessonEntity lessonEntity = lessonInfoConverter.generatePassiveEntity(passivateRequest);
         lessonRepository.updateLessonStatus(lessonEntity);
 
         return getLessonResponse(passivateRequest.getLessonId());
@@ -99,7 +95,7 @@ public class LessonServiceImpl implements LessonService {
 
         checkBeforeActivating(activateRequest.getLessonId());
 
-        final LessonEntity lessonEntity = LessonInfoConverter.generateActiveEntity(activateRequest);
+        final LessonEntity lessonEntity = lessonInfoConverter.generateActiveEntity(activateRequest);
         lessonRepository.updateLessonStatus(lessonEntity);
 
         return getLessonResponse(activateRequest.getLessonId());
@@ -113,25 +109,7 @@ public class LessonServiceImpl implements LessonService {
 
     private LessonResponse getLessonResponse(final Long lessonId) {
         final LessonEntity lessonEntity = lessonRepository.getLessonById(lessonId);
-        setDepartmentEntity(lessonEntity);
-        return LessonInfoConverter.entityToResponse(lessonEntity);
-    }
-
-    private void setDepartmentEntity(final LessonEntity lessonEntity) {
-        final Long departmentId = lessonEntity.getDepartmentId();
-        final DepartmentEntity departmentEntity = departmentRepository.getDepartmentById(departmentId);
-        setFacultyEntity(departmentEntity);
-        lessonEntity.setDepartmentEntity(departmentEntity);
-    }
-
-    private void setDepartmentEntities(final List<LessonEntity> lessonEntities) {
-        lessonEntities.forEach(this::setDepartmentEntity);
-    }
-
-    private void setFacultyEntity(final DepartmentEntity departmentEntity) {
-        final Long facultyId = departmentEntity.getFacultyId();
-        final FacultyEntity facultyEntity = facultyRepository.getFacultyById(facultyId);
-        departmentEntity.setFacultyEntity(facultyEntity);
+        return lessonInfoConverter.entityToResponse(lessonEntity);
     }
 
 
@@ -140,12 +118,10 @@ public class LessonServiceImpl implements LessonService {
      */
 
     private void checkBeforeSaving(final Long departmentId) throws SisNotExistException {
-
         ifDepartmentIsNotExistThrowNotExistException(departmentId);
     }
 
     private void checkBeforeUpdating(final Long lessonId) throws SisNotExistException {
-
         ifLessonIsNotExistThrowNotExistException(lessonId);
     }
 
@@ -172,9 +148,7 @@ public class LessonServiceImpl implements LessonService {
      */
 
     private void ifDepartmentIsNotExistThrowNotExistException(final Long departmentId) throws SisNotExistException {
-        if (!departmentRepository.isDepartmentExist(departmentId)) {
-            LessonException.throwNotExistException(departmentId);
-        }
+        departmentOutService.ifDepartmentIsNotExistThrowNotExistException(departmentId);
     }
 
     private void ifLessonIsNotExistThrowNotExistException(final Long lessonId) throws SisNotExistException {
