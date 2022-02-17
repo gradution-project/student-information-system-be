@@ -10,6 +10,7 @@ import com.graduationproject.studentinformationsystem.university.lesson.teacher.
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.entity.TeacherLessonDeleteEntity;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.entity.TeacherLessonEntity;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.entity.TeacherLessonSaveEntity;
+import com.graduationproject.studentinformationsystem.university.teacher.model.dto.converter.TeacherAcademicInfoConverter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,9 +45,9 @@ public class TeacherLessonInfoConverter {
     public static TeacherLessonResponse entityToResponse(final TeacherLessonEntity teacherLessonEntity) {
 
         return TeacherLessonResponse.builder()
-                .teacherId(teacherLessonEntity.getTeacherId())
                 .createdUserId(teacherLessonEntity.getCreatedUserId())
                 .createdDate(SisUtil.getFormattedDateTime(teacherLessonEntity.getCreatedDate()))
+                .teacherAcademicInfoResponse(TeacherAcademicInfoConverter.entityToResponse(teacherLessonEntity.getTeacherAcademicInfoEntity()))
                 .lessonResponse(LessonInfoConverter.entityToResponse(teacherLessonEntity.getLessonEntity())).build();
     }
 

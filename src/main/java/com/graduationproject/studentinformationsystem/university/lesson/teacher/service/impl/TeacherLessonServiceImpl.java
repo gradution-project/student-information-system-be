@@ -19,6 +19,8 @@ import com.graduationproject.studentinformationsystem.university.lesson.teacher.
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.exception.TeacherLessonException;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.repository.TeacherLessonRepository;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.service.TeacherLessonService;
+import com.graduationproject.studentinformationsystem.university.teacher.model.entity.TeacherAcademicInfoEntity;
+import com.graduationproject.studentinformationsystem.university.teacher.repository.TeacherAcademicInfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +34,7 @@ public class TeacherLessonServiceImpl implements TeacherLessonService {
     private final FacultyRepository facultyRepository;
     private final DepartmentRepository departmentRepository;
     private final LessonRepository lessonRepository;
+    private final TeacherAcademicInfoRepository teacherAcademicInfoRepository;
 
     private final TeacherLessonRepository teacherLessonRepository;
 
@@ -39,6 +42,7 @@ public class TeacherLessonServiceImpl implements TeacherLessonService {
     public List<TeacherLessonResponse> getAllTeachersLessons() {
         final List<TeacherLessonEntity> teacherLessonEntities = teacherLessonRepository.getAllTeachersLessons();
         setLessonEntities(teacherLessonEntities);
+        setTeacherAcademicInfoEntities(teacherLessonEntities);
         return TeacherLessonInfoConverter.entitiesToResponses(teacherLessonEntities);
     }
 
@@ -46,6 +50,7 @@ public class TeacherLessonServiceImpl implements TeacherLessonService {
     public List<TeacherLessonResponse> getTeacherLessonsById(final Long teacherId) {
         final List<TeacherLessonEntity> teacherLessonEntities = teacherLessonRepository.getTeacherLessonsByTeacherId(teacherId);
         setLessonEntities(teacherLessonEntities);
+        setTeacherAcademicInfoEntities(teacherLessonEntities);
         return TeacherLessonInfoConverter.entitiesToResponses(teacherLessonEntities);
     }
 
@@ -69,8 +74,20 @@ public class TeacherLessonServiceImpl implements TeacherLessonService {
 
     private TeacherLessonResponse getTeacherLessonResponse(final Long teacherId, final Long lessonId) {
         final TeacherLessonEntity teacherLessonEntity = teacherLessonRepository.getTeacherLessonByTeacherIdAndLessonId(teacherId, lessonId);
+        setTeacherAcademicInfoEntity(teacherLessonEntity);
         setLessonEntity(teacherLessonEntity);
         return TeacherLessonInfoConverter.entityToResponse(teacherLessonEntity);
+    }
+
+    private void setTeacherAcademicInfoEntity(final TeacherLessonEntity teacherLessonEntity) {
+        final Long teacherId = teacherLessonEntity.getTeacherId();
+        final TeacherAcademicInfoEntity teacherAcademicInfoEntity = teacherAcademicInfoRepository.getTeacherAcademicInfoById(teacherId);
+        setDepartmentEntity(teacherAcademicInfoEntity);
+        teacherLessonEntity.setTeacherAcademicInfoEntity(teacherAcademicInfoEntity);
+    }
+
+    private void setTeacherAcademicInfoEntities(List<TeacherLessonEntity> teacherLessonEntities) {
+        teacherLessonEntities.forEach(this::setTeacherAcademicInfoEntity);
     }
 
     private void setLessonEntity(final TeacherLessonEntity teacherLessonEntity) {
@@ -82,6 +99,13 @@ public class TeacherLessonServiceImpl implements TeacherLessonService {
 
     private void setLessonEntities(final List<TeacherLessonEntity> teacherLessonEntities) {
         teacherLessonEntities.forEach(this::setLessonEntity);
+    }
+
+    private void setDepartmentEntity(final TeacherAcademicInfoEntity teacherAcademicInfoEntity) {
+        final Long departmentId = teacherAcademicInfoEntity.getDepartmentId();
+        final DepartmentEntity departmentEntity = departmentRepository.getDepartmentById(departmentId);
+        setFacultyEntity(departmentEntity);
+        teacherAcademicInfoEntity.setDepartmentEntity(departmentEntity);
     }
 
     private void setDepartmentEntity(final LessonEntity lessonEntity) {
