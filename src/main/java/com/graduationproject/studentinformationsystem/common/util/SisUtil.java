@@ -100,4 +100,8 @@ public class SisUtil {
     public static boolean integerToBoolean(final Integer integer) {
         return BooleanUtils.toBooleanObject(integer);
     }
+
+    public static Integer booleanToInteger(final Boolean bool) {
+        return BooleanUtils.toIntegerObject(bool);
+    }
 }
