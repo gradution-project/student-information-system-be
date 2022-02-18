@@ -17,14 +17,15 @@ public class StudentResponseConverter {
 
         return StudentInfoResponse.builder()
                 .studentId(academicInfoResponse.getStudentId())
-                .departmentResponse(academicInfoResponse.getDepartmentResponse())
                 .degree(academicInfoResponse.getDegree())
                 .classLevel(academicInfoResponse.getClassLevel())
                 .name(personalInfoResponse.getName())
                 .surname(personalInfoResponse.getSurname())
                 .email(academicInfoResponse.getEmail())
                 .status(academicInfoResponse.getStatus())
-                .registrationDate(academicInfoResponse.getRegistrationDate()).build();
+                .registrationDate(academicInfoResponse.getRegistrationDate())
+                .departmentResponse(academicInfoResponse.getDepartmentResponse())
+                .build();
     }
 
     public static List<StudentInfoResponse> infoResponsesListToResponseList(final List<StudentAcademicInfoResponse> academicInfoResponses,
