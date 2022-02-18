@@ -1,12 +1,10 @@
 package com.graduationproject.studentinformationsystem.university.teacher.model.entity;
 
 import com.graduationproject.studentinformationsystem.common.model.entity.SisBaseEntity;
-import com.graduationproject.studentinformationsystem.university.department.model.entity.DepartmentEntity;
 import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherDegree;
 import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherRole;
 import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherStatus;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
@@ -24,7 +22,4 @@ public class TeacherAcademicInfoEntity extends SisBaseEntity {
     private String email;
     private TeacherStatus status;
     private Date registrationDate;
-
-    @Setter
-    private DepartmentEntity departmentEntity;
 }

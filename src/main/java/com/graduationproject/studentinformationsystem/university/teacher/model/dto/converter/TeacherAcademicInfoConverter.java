@@ -2,25 +2,29 @@ package com.graduationproject.studentinformationsystem.university.teacher.model.
 
 import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
 import com.graduationproject.studentinformationsystem.common.util.SisUtil;
-import com.graduationproject.studentinformationsystem.university.department.model.dto.converter.DepartmentInfoConverter;
+import com.graduationproject.studentinformationsystem.university.department.model.dto.response.DepartmentResponse;
+import com.graduationproject.studentinformationsystem.university.department.service.DepartmentOutService;
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.response.TeacherAcademicInfoResponse;
 import com.graduationproject.studentinformationsystem.university.teacher.model.entity.TeacherAcademicInfoEntity;
 import com.graduationproject.studentinformationsystem.university.teacher.model.enums.TeacherStatus;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Component
+@RequiredArgsConstructor
 public class TeacherAcademicInfoConverter {
 
-    private TeacherAcademicInfoConverter() {
-    }
+    private final DepartmentOutService departmentOutService;
 
-    public static TeacherAcademicInfoEntity generateSaveEntity(final Long teacherId,
-                                                               final String teacherEmail,
-                                                               final TeacherAcademicInfoRequest academicInfoRequest,
-                                                               final SisOperationInfoRequest operationInfoRequest) {
+    public TeacherAcademicInfoEntity generateSaveEntity(final Long teacherId,
+                                                        final String teacherEmail,
+                                                        final TeacherAcademicInfoRequest academicInfoRequest,
+                                                        final SisOperationInfoRequest operationInfoRequest) {
 
         return TeacherAcademicInfoEntity.builder()
                 .teacherId(teacherId)
@@ -37,8 +41,8 @@ public class TeacherAcademicInfoConverter {
                 .build();
     }
 
-    public static TeacherAcademicInfoEntity generateUpdateEntity(final Long teacherId,
-                                                                 final TeacherAcademicInfoUpdateRequest academicInfoUpdateRequest) {
+    public TeacherAcademicInfoEntity generateUpdateEntity(final Long teacherId,
+                                                          final TeacherAcademicInfoUpdateRequest academicInfoUpdateRequest) {
 
         final TeacherAcademicInfoRequest academicInfoRequest = academicInfoUpdateRequest.getAcademicInfoRequest();
         final SisOperationInfoRequest operationInfoRequest = academicInfoUpdateRequest.getOperationInfoRequest();
@@ -55,7 +59,7 @@ public class TeacherAcademicInfoConverter {
                 .build();
     }
 
-    public static TeacherAcademicInfoEntity generateDeleteEntity(final TeacherDeleteRequest deleteRequest) {
+    public TeacherAcademicInfoEntity generateDeleteEntity(final TeacherDeleteRequest deleteRequest) {
         return TeacherAcademicInfoEntity.builder()
                 .teacherId(deleteRequest.getTeacherId())
                 .status(TeacherStatus.DELETED)
@@ -64,7 +68,7 @@ public class TeacherAcademicInfoConverter {
                 .build();
     }
 
-    public static TeacherAcademicInfoEntity generatePassiveEntity(final TeacherPassivateRequest passivateRequest) {
+    public TeacherAcademicInfoEntity generatePassiveEntity(final TeacherPassivateRequest passivateRequest) {
         return TeacherAcademicInfoEntity.builder()
                 .teacherId(passivateRequest.getTeacherId())
                 .status(TeacherStatus.PASSIVE)
@@ -73,7 +77,7 @@ public class TeacherAcademicInfoConverter {
                 .build();
     }
 
-    public static TeacherAcademicInfoEntity generateActiveEntity(final TeacherActivateRequest activateRequest) {
+    public TeacherAcademicInfoEntity generateActiveEntity(final TeacherActivateRequest activateRequest) {
         return TeacherAcademicInfoEntity.builder()
                 .teacherId(activateRequest.getTeacherId())
                 .status(TeacherStatus.ACTIVE)
@@ -82,10 +86,12 @@ public class TeacherAcademicInfoConverter {
                 .build();
     }
 
-    public static TeacherAcademicInfoResponse entityToResponse(final TeacherAcademicInfoEntity academicInfoEntity) {
+    public TeacherAcademicInfoResponse entityToResponse(final TeacherAcademicInfoEntity academicInfoEntity) {
+
+        final DepartmentResponse departmentResponse = departmentOutService.getDepartmentResponse(academicInfoEntity.getDepartmentId());
+
         return TeacherAcademicInfoResponse.builder()
                 .teacherId(academicInfoEntity.getTeacherId())
-                .departmentResponse(DepartmentInfoConverter.entityToResponse(academicInfoEntity.getDepartmentEntity()))
                 .degree(academicInfoEntity.getDegree())
                 .role(academicInfoEntity.getRole())
                 .fieldOfStudy(academicInfoEntity.getFieldOfStudy())
@@ -96,10 +102,12 @@ public class TeacherAcademicInfoConverter {
                 .createdUserId(academicInfoEntity.getCreatedUserId())
                 .createdDate(SisUtil.getFormattedDateTime(academicInfoEntity.getCreatedDate()))
                 .modifiedUserId(academicInfoEntity.getModifiedUserId())
-                .modifiedDate(SisUtil.getFormattedDateTime(academicInfoEntity.getModifiedDate())).build();
+                .modifiedDate(SisUtil.getFormattedDateTime(academicInfoEntity.getModifiedDate()))
+                .departmentResponse(departmentResponse)
+                .build();
     }
 
-    public static List<TeacherAcademicInfoResponse> entitiesToResponses(final List<TeacherAcademicInfoEntity> academicInfoEntities) {
+    public List<TeacherAcademicInfoResponse> entitiesToResponses(final List<TeacherAcademicInfoEntity> academicInfoEntities) {
         List<TeacherAcademicInfoResponse> academicInfoResponses = new ArrayList<>();
         academicInfoEntities.forEach(academicInfoEntity -> academicInfoResponses.add(entityToResponse(academicInfoEntity)));
         return academicInfoResponses;
