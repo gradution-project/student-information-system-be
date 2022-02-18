@@ -139,14 +139,14 @@ public class OfficerServiceImpl implements OfficerService {
      */
 
     private void checkBeforeSaving(final OfficerSaveRequest saveRequest) {
-        ifFacultyIdIsNotExistThrowNotExistException(saveRequest.getAcademicInfoRequest().getFacultyId());
+        ifFacultyIsNotExistThrowNotExistException(saveRequest.getAcademicInfoRequest().getFacultyId());
     }
 
     private void checkBeforeUpdatingAcademicInfo(final Long officerId, final OfficerAcademicInfoUpdateRequest academicInfoUpdateRequest)
             throws SisNotExistException {
 
         ifOfficerIsNotExistThrowNotExistException(officerId);
-        ifFacultyIdIsNotExistThrowNotExistException(academicInfoUpdateRequest.getAcademicInfoRequest().getFacultyId());
+        ifFacultyIsNotExistThrowNotExistException(academicInfoUpdateRequest.getAcademicInfoRequest().getFacultyId());
     }
 
     private void checkBeforeUpdatingPersonalInfo(final Long officerId) throws SisNotExistException {
@@ -181,8 +181,8 @@ public class OfficerServiceImpl implements OfficerService {
         }
     }
 
-    private void ifFacultyIdIsNotExistThrowNotExistException(final Long facultyId) {
-        // TODO: ifFacultyIdIsNotExistThrowNotExistException
+    private void ifFacultyIsNotExistThrowNotExistException(final Long facultyId) {
+        // TODO: ifFacultyIsNotExistThrowNotExistException
 //        if (!facultyService.isFacultyExist(facultyId)) {
 //            SisException.throwNotExistException();
 //        }
