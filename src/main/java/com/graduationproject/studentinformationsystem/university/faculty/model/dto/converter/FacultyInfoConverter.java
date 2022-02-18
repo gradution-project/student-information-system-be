@@ -6,18 +6,17 @@ import com.graduationproject.studentinformationsystem.university.faculty.model.d
 import com.graduationproject.studentinformationsystem.university.faculty.model.dto.response.FacultyResponse;
 import com.graduationproject.studentinformationsystem.university.faculty.model.entity.FacultyEntity;
 import com.graduationproject.studentinformationsystem.university.faculty.model.enums.FacultyStatus;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Component
 public class FacultyInfoConverter {
 
-    private FacultyInfoConverter() {
-    }
-
-    public static FacultyEntity generateSaveEntity(final Long facultyId,
-                                                   final FacultySaveRequest saveRequest) {
+    public FacultyEntity generateSaveEntity(final Long facultyId,
+                                            final FacultySaveRequest saveRequest) {
 
         final FacultyInfoRequest facultyInfoRequest = saveRequest.getFacultyInfoRequest();
         final SisOperationInfoRequest operationInfoRequest = saveRequest.getOperationInfoRequest();
@@ -31,8 +30,8 @@ public class FacultyInfoConverter {
                 .build();
     }
 
-    public static FacultyEntity generateUpdateEntity(final Long facultyId,
-                                                     final FacultyUpdateRequest updateRequest) {
+    public FacultyEntity generateUpdateEntity(final Long facultyId,
+                                              final FacultyUpdateRequest updateRequest) {
 
         final FacultyInfoRequest facultyInfoRequest = updateRequest.getFacultyInfoRequest();
         final SisOperationInfoRequest operationInfoRequest = updateRequest.getOperationInfoRequest();
@@ -46,7 +45,7 @@ public class FacultyInfoConverter {
                 .build();
     }
 
-    public static FacultyEntity generateDeleteEntity(final FacultyDeleteRequest deleteRequest) {
+    public FacultyEntity generateDeleteEntity(final FacultyDeleteRequest deleteRequest) {
         return FacultyEntity.builder()
                 .facultyId(deleteRequest.getFacultyId())
                 .status(FacultyStatus.DELETED)
@@ -55,7 +54,7 @@ public class FacultyInfoConverter {
                 .build();
     }
 
-    public static FacultyEntity generatePassiveEntity(final FacultyPassivateRequest passivateRequest) {
+    public FacultyEntity generatePassiveEntity(final FacultyPassivateRequest passivateRequest) {
         return FacultyEntity.builder()
                 .facultyId(passivateRequest.getFacultyId())
                 .status(FacultyStatus.PASSIVE)
@@ -64,7 +63,7 @@ public class FacultyInfoConverter {
                 .build();
     }
 
-    public static FacultyEntity generateActiveEntity(final FacultyActivateRequest activateRequest) {
+    public FacultyEntity generateActiveEntity(final FacultyActivateRequest activateRequest) {
         return FacultyEntity.builder()
                 .facultyId(activateRequest.getFacultyId())
                 .status(FacultyStatus.ACTIVE)
@@ -73,7 +72,7 @@ public class FacultyInfoConverter {
                 .build();
     }
 
-    public static FacultyResponse entityToResponse(final FacultyEntity facultyEntity) {
+    public FacultyResponse entityToResponse(final FacultyEntity facultyEntity) {
         return FacultyResponse.builder()
                 .facultyId(facultyEntity.getFacultyId())
                 .name(facultyEntity.getName())
@@ -85,7 +84,7 @@ public class FacultyInfoConverter {
                 .build();
     }
 
-    public static List<FacultyResponse> entitiesToResponses(final List<FacultyEntity> facultyEntities) {
+    public List<FacultyResponse> entitiesToResponses(final List<FacultyEntity> facultyEntities) {
         List<FacultyResponse> facultyResponses = new ArrayList<>();
         facultyEntities.forEach(facultyEntity -> facultyResponses.add(entityToResponse(facultyEntity)));
         return facultyResponses;

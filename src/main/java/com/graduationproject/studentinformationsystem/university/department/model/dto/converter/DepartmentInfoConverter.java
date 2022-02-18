@@ -6,19 +6,23 @@ import com.graduationproject.studentinformationsystem.university.department.mode
 import com.graduationproject.studentinformationsystem.university.department.model.dto.response.DepartmentResponse;
 import com.graduationproject.studentinformationsystem.university.department.model.entity.DepartmentEntity;
 import com.graduationproject.studentinformationsystem.university.department.model.enums.DepartmentStatus;
-import com.graduationproject.studentinformationsystem.university.faculty.model.dto.converter.FacultyInfoConverter;
+import com.graduationproject.studentinformationsystem.university.faculty.model.dto.response.FacultyResponse;
+import com.graduationproject.studentinformationsystem.university.faculty.service.FacultyOutService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Component
+@RequiredArgsConstructor
 public class DepartmentInfoConverter {
 
-    private DepartmentInfoConverter() {
-    }
+    private final FacultyOutService facultyOutService;
 
-    public static DepartmentEntity generateSaveEntity(final Long departmentId,
-                                                      final DepartmentSaveRequest saveRequest) {
+    public DepartmentEntity generateSaveEntity(final Long departmentId,
+                                               final DepartmentSaveRequest saveRequest) {
 
         final DepartmentInfoRequest departmentInfoRequest = saveRequest.getDepartmentInfoRequest();
         final SisOperationInfoRequest operationInfoRequest = saveRequest.getOperationInfoRequest();
@@ -35,8 +39,8 @@ public class DepartmentInfoConverter {
                 .build();
     }
 
-    public static DepartmentEntity generateUpdateEntity(final Long departmentId,
-                                                        final DepartmentUpdateRequest updateRequest) {
+    public DepartmentEntity generateUpdateEntity(final Long departmentId,
+                                                 final DepartmentUpdateRequest updateRequest) {
 
         final DepartmentInfoRequest departmentInfoRequest = updateRequest.getDepartmentInfoRequest();
         final SisOperationInfoRequest operationInfoRequest = updateRequest.getOperationInfoRequest();
@@ -53,7 +57,7 @@ public class DepartmentInfoConverter {
                 .build();
     }
 
-    public static DepartmentEntity generateDeleteEntity(final DepartmentDeleteRequest deleteRequest) {
+    public DepartmentEntity generateDeleteEntity(final DepartmentDeleteRequest deleteRequest) {
         return DepartmentEntity.builder()
                 .departmentId(deleteRequest.getDepartmentId())
                 .status(DepartmentStatus.DELETED)
@@ -62,7 +66,7 @@ public class DepartmentInfoConverter {
                 .build();
     }
 
-    public static DepartmentEntity generatePassiveEntity(final DepartmentPassivateRequest passivateRequest) {
+    public DepartmentEntity generatePassiveEntity(final DepartmentPassivateRequest passivateRequest) {
         return DepartmentEntity.builder()
                 .departmentId(passivateRequest.getDepartmentId())
                 .status(DepartmentStatus.PASSIVE)
@@ -71,7 +75,7 @@ public class DepartmentInfoConverter {
                 .build();
     }
 
-    public static DepartmentEntity generateActiveEntity(final DepartmentActivateRequest activateRequest) {
+    public DepartmentEntity generateActiveEntity(final DepartmentActivateRequest activateRequest) {
         return DepartmentEntity.builder()
                 .departmentId(activateRequest.getDepartmentId())
                 .status(DepartmentStatus.ACTIVE)
@@ -80,10 +84,12 @@ public class DepartmentInfoConverter {
                 .build();
     }
 
-    public static DepartmentResponse entityToResponse(final DepartmentEntity departmentEntity) {
+    public DepartmentResponse entityToResponse(final DepartmentEntity departmentEntity) {
+
+        final FacultyResponse facultyResponse = facultyOutService.getFacultyResponse(departmentEntity.getFacultyId());
+
         return DepartmentResponse.builder()
                 .departmentId(departmentEntity.getDepartmentId())
-                .facultyResponse(FacultyInfoConverter.entityToResponse(departmentEntity.getFacultyEntity()))
                 .name(departmentEntity.getName())
                 .status(departmentEntity.getStatus())
                 .totalClassLevel(departmentEntity.getTotalClassLevel())
@@ -92,10 +98,11 @@ public class DepartmentInfoConverter {
                 .createdDate(SisUtil.getFormattedDateTime(departmentEntity.getCreatedDate()))
                 .modifiedUserId(departmentEntity.getModifiedUserId())
                 .modifiedDate(SisUtil.getFormattedDateTime(departmentEntity.getModifiedDate()))
+                .facultyResponse(facultyResponse)
                 .build();
     }
 
-    public static List<DepartmentResponse> entitiesToResponses(final List<DepartmentEntity> departmentEntities) {
+    public List<DepartmentResponse> entitiesToResponses(final List<DepartmentEntity> departmentEntities) {
         List<DepartmentResponse> departmentResponses = new ArrayList<>();
         departmentEntities.forEach(departmentEntity -> departmentResponses.add(entityToResponse(departmentEntity)));
         return departmentResponses;

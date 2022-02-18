@@ -21,11 +21,12 @@ import java.util.List;
 public class FacultyServiceImpl implements FacultyService {
 
     private final FacultyRepository facultyRepository;
+    private final FacultyInfoConverter facultyInfoConverter;
 
     @Override
     public List<FacultyResponse> getAllFacultiesByStatus(final FacultyStatus status) {
         final List<FacultyEntity> facultyResponses = facultyRepository.getAllFacultiesByStatus(status);
-        return FacultyInfoConverter.entitiesToResponses(facultyResponses);
+        return facultyInfoConverter.entitiesToResponses(facultyResponses);
     }
 
     @Override
@@ -38,7 +39,7 @@ public class FacultyServiceImpl implements FacultyService {
     public FacultyResponse saveFaculty(final FacultySaveRequest saveRequest) {
 
         final Long facultyId = generateFacultyId();
-        final FacultyEntity facultyEntity = FacultyInfoConverter.generateSaveEntity(facultyId, saveRequest);
+        final FacultyEntity facultyEntity = facultyInfoConverter.generateSaveEntity(facultyId, saveRequest);
 
         facultyRepository.saveFaculty(facultyEntity);
 
@@ -51,7 +52,7 @@ public class FacultyServiceImpl implements FacultyService {
 
         checkBeforeUpdating(facultyId);
 
-        final FacultyEntity facultyEntity = FacultyInfoConverter.generateUpdateEntity(facultyId, updateRequest);
+        final FacultyEntity facultyEntity = facultyInfoConverter.generateUpdateEntity(facultyId, updateRequest);
         facultyRepository.updateFaculty(facultyEntity);
 
         return getFacultyResponse(facultyId);
@@ -63,7 +64,7 @@ public class FacultyServiceImpl implements FacultyService {
 
         checkBeforeDeleting(deleteRequest.getFacultyId());
 
-        final FacultyEntity facultyEntity = FacultyInfoConverter.generateDeleteEntity(deleteRequest);
+        final FacultyEntity facultyEntity = facultyInfoConverter.generateDeleteEntity(deleteRequest);
         facultyRepository.updateFacultyStatus(facultyEntity);
 
         return getFacultyResponse(deleteRequest.getFacultyId());
@@ -75,7 +76,7 @@ public class FacultyServiceImpl implements FacultyService {
 
         checkBeforePassivating(passivateRequest.getFacultyId());
 
-        final FacultyEntity facultyEntity = FacultyInfoConverter.generatePassiveEntity(passivateRequest);
+        final FacultyEntity facultyEntity = facultyInfoConverter.generatePassiveEntity(passivateRequest);
         facultyRepository.updateFacultyStatus(facultyEntity);
 
         return getFacultyResponse(passivateRequest.getFacultyId());
@@ -87,7 +88,7 @@ public class FacultyServiceImpl implements FacultyService {
 
         checkBeforeActivating(activateRequest.getFacultyId());
 
-        final FacultyEntity facultyEntity = FacultyInfoConverter.generateActiveEntity(activateRequest);
+        final FacultyEntity facultyEntity = facultyInfoConverter.generateActiveEntity(activateRequest);
         facultyRepository.updateFacultyStatus(facultyEntity);
 
         return getFacultyResponse(activateRequest.getFacultyId());
@@ -101,7 +102,7 @@ public class FacultyServiceImpl implements FacultyService {
 
     private FacultyResponse getFacultyResponse(final Long facultyId) {
         final FacultyEntity facultyEntity = facultyRepository.getFacultyById(facultyId);
-        return FacultyInfoConverter.entityToResponse(facultyEntity);
+        return facultyInfoConverter.entityToResponse(facultyEntity);
     }
 
 
