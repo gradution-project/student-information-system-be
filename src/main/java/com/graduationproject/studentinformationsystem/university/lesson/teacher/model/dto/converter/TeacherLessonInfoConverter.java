@@ -11,7 +11,7 @@ import com.graduationproject.studentinformationsystem.university.lesson.teacher.
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.entity.TeacherLessonDeleteEntity;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.entity.TeacherLessonEntity;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.entity.TeacherLessonSaveEntity;
-import com.graduationproject.studentinformationsystem.university.teacher.model.dto.response.TeacherAcademicInfoResponse;
+import com.graduationproject.studentinformationsystem.university.teacher.model.dto.response.TeacherInfoResponse;
 import com.graduationproject.studentinformationsystem.university.teacher.service.TeacherOutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -50,14 +50,14 @@ public class TeacherLessonInfoConverter {
 
     public TeacherLessonResponse entityToResponse(final TeacherLessonEntity teacherLessonEntity) {
 
-        final TeacherAcademicInfoResponse teacherAcademicInfoResponse = teacherOutService.getTeacherAcademicInfoResponse(teacherLessonEntity.getTeacherId());
+        final TeacherInfoResponse teacherInfoResponse = teacherOutService.getTeacherInfoResponse(teacherLessonEntity.getTeacherId());
         final LessonResponse lessonResponse = lessonOutService.getLessonResponse(teacherLessonEntity.getLessonId());
 
         return TeacherLessonResponse.builder()
                 .createdUserId(teacherLessonEntity.getCreatedUserId())
                 .createdDate(SisUtil.getFormattedDateTime(teacherLessonEntity.getCreatedDate()))
                 .lessonResponse(lessonResponse)
-                .teacherAcademicInfoResponse(teacherAcademicInfoResponse).build();
+                .teacherInfoResponse(teacherInfoResponse).build();
     }
 
     public List<TeacherLessonResponse> entitiesToResponses(final List<TeacherLessonEntity> lessonEntities) {
