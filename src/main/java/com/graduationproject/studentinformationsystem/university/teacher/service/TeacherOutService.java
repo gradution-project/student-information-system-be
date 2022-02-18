@@ -1,8 +1,8 @@
 package com.graduationproject.studentinformationsystem.university.teacher.service;
 
-import com.graduationproject.studentinformationsystem.university.teacher.model.dto.response.TeacherAcademicInfoResponse;
+import com.graduationproject.studentinformationsystem.university.teacher.model.dto.response.TeacherInfoResponse;
 
 public interface TeacherOutService {
 
-    TeacherAcademicInfoResponse getTeacherAcademicInfoResponse(Long teacherId);
+    TeacherInfoResponse getTeacherInfoResponse(Long teacherId);
 }
