@@ -93,7 +93,7 @@ public class DepartmentInfoConverter {
                 .name(departmentEntity.getName())
                 .status(departmentEntity.getStatus())
                 .totalClassLevel(departmentEntity.getTotalClassLevel())
-                .isTherePreparatoryClass(departmentEntity.getIsTherePreparatoryClass())
+                .isTherePreparatoryClass(SisUtil.booleanToInteger(departmentEntity.getIsTherePreparatoryClass()))
                 .createdUserId(departmentEntity.getCreatedUserId())
                 .createdDate(SisUtil.getFormattedDateTime(departmentEntity.getCreatedDate()))
                 .modifiedUserId(departmentEntity.getModifiedUserId())

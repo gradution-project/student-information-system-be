@@ -1,5 +1,7 @@
 package com.graduationproject.studentinformationsystem.common.util;
 
+import org.apache.commons.lang3.BooleanUtils;
+
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -96,10 +98,10 @@ public class SisUtil {
     }
 
     public static boolean integerToBoolean(final Integer integer) {
-        return switch (integer) {
-            case 1 -> true;
-            case 0 -> false;
-            default -> throw new IndexOutOfBoundsException();
-        };
+        return BooleanUtils.toBooleanObject(integer);
+    }
+
+    public static Integer booleanToInteger(final Boolean bool) {
+        return BooleanUtils.toIntegerObject(bool);
     }
 }
