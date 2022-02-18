@@ -1,9 +1,7 @@
 package com.graduationproject.studentinformationsystem.university.schedule.common.model.entity;
 
-import com.graduationproject.studentinformationsystem.university.department.model.entity.DepartmentEntity;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
@@ -23,7 +21,4 @@ public class ScheduleFileEntity {
     private MultipartFile file;
     private Long createdUserId;
     private Date createdDate;
-
-    @Setter
-    private DepartmentEntity departmentEntity;
 }
