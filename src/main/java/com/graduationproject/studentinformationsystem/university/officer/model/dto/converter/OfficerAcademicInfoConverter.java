@@ -2,25 +2,29 @@ package com.graduationproject.studentinformationsystem.university.officer.model.
 
 import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
 import com.graduationproject.studentinformationsystem.common.util.SisUtil;
-import com.graduationproject.studentinformationsystem.university.faculty.model.dto.converter.FacultyInfoConverter;
+import com.graduationproject.studentinformationsystem.university.faculty.model.dto.response.FacultyResponse;
+import com.graduationproject.studentinformationsystem.university.faculty.service.FacultyOutService;
 import com.graduationproject.studentinformationsystem.university.officer.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.officer.model.dto.response.OfficerAcademicInfoResponse;
 import com.graduationproject.studentinformationsystem.university.officer.model.entity.OfficerAcademicInfoEntity;
 import com.graduationproject.studentinformationsystem.university.officer.model.enums.OfficerStatus;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Component
+@RequiredArgsConstructor
 public class OfficerAcademicInfoConverter {
 
-    private OfficerAcademicInfoConverter() {
-    }
+    private final FacultyOutService facultyOutService;
 
-    public static OfficerAcademicInfoEntity generateSaveEntity(final Long officerId,
-                                                               final String officerEmail,
-                                                               final OfficerAcademicInfoRequest academicInfoRequest,
-                                                               final SisOperationInfoRequest operationInfoRequest) {
+    public OfficerAcademicInfoEntity generateSaveEntity(final Long officerId,
+                                                        final String officerEmail,
+                                                        final OfficerAcademicInfoRequest academicInfoRequest,
+                                                        final SisOperationInfoRequest operationInfoRequest) {
 
         return OfficerAcademicInfoEntity.builder()
                 .officerId(officerId)
@@ -34,8 +38,8 @@ public class OfficerAcademicInfoConverter {
                 .build();
     }
 
-    public static OfficerAcademicInfoEntity generateUpdateEntity(final Long officerId,
-                                                                 final OfficerAcademicInfoUpdateRequest academicInfoUpdateRequest) {
+    public OfficerAcademicInfoEntity generateUpdateEntity(final Long officerId,
+                                                          final OfficerAcademicInfoUpdateRequest academicInfoUpdateRequest) {
 
         final OfficerAcademicInfoRequest academicInfoRequest = academicInfoUpdateRequest.getAcademicInfoRequest();
         final SisOperationInfoRequest operationInfoRequest = academicInfoUpdateRequest.getOperationInfoRequest();
@@ -49,7 +53,7 @@ public class OfficerAcademicInfoConverter {
                 .build();
     }
 
-    public static OfficerAcademicInfoEntity generateDeleteEntity(final OfficerDeleteRequest deleteRequest) {
+    public OfficerAcademicInfoEntity generateDeleteEntity(final OfficerDeleteRequest deleteRequest) {
         return OfficerAcademicInfoEntity.builder()
                 .officerId(deleteRequest.getOfficerId())
                 .status(OfficerStatus.DELETED)
@@ -58,7 +62,7 @@ public class OfficerAcademicInfoConverter {
                 .build();
     }
 
-    public static OfficerAcademicInfoEntity generatePassiveEntity(final OfficerPassivateRequest passivateRequest) {
+    public OfficerAcademicInfoEntity generatePassiveEntity(final OfficerPassivateRequest passivateRequest) {
         return OfficerAcademicInfoEntity.builder()
                 .officerId(passivateRequest.getOfficerId())
                 .status(OfficerStatus.PASSIVE)
@@ -67,7 +71,7 @@ public class OfficerAcademicInfoConverter {
                 .build();
     }
 
-    public static OfficerAcademicInfoEntity generateActiveEntity(final OfficerActivateRequest activateRequest) {
+    public OfficerAcademicInfoEntity generateActiveEntity(final OfficerActivateRequest activateRequest) {
         return OfficerAcademicInfoEntity.builder()
                 .officerId(activateRequest.getOfficerId())
                 .status(OfficerStatus.ACTIVE)
@@ -76,10 +80,12 @@ public class OfficerAcademicInfoConverter {
                 .build();
     }
 
-    public static OfficerAcademicInfoResponse entityToResponse(final OfficerAcademicInfoEntity academicInfoEntity) {
+    public OfficerAcademicInfoResponse entityToResponse(final OfficerAcademicInfoEntity academicInfoEntity) {
+
+        final FacultyResponse facultyResponse = facultyOutService.getFacultyResponse(academicInfoEntity.getFacultyId());
+
         return OfficerAcademicInfoResponse.builder()
                 .officerId(academicInfoEntity.getOfficerId())
-                .facultyResponse(FacultyInfoConverter.entityToResponse(academicInfoEntity.getFacultyEntity()))
                 .phoneNumber(SisUtil.getFormattedPhoneNumber(academicInfoEntity.getPhoneNumber()))
                 .email(academicInfoEntity.getEmail())
                 .status(academicInfoEntity.getStatus())
@@ -87,10 +93,12 @@ public class OfficerAcademicInfoConverter {
                 .createdUserId(academicInfoEntity.getCreatedUserId())
                 .createdDate(SisUtil.getFormattedDateTime(academicInfoEntity.getCreatedDate()))
                 .modifiedUserId(academicInfoEntity.getModifiedUserId())
-                .modifiedDate(SisUtil.getFormattedDateTime(academicInfoEntity.getModifiedDate())).build();
+                .modifiedDate(SisUtil.getFormattedDateTime(academicInfoEntity.getModifiedDate()))
+                .facultyResponse(facultyResponse)
+                .build();
     }
 
-    public static List<OfficerAcademicInfoResponse> entitiesToResponses(final List<OfficerAcademicInfoEntity> academicInfoEntities) {
+    public List<OfficerAcademicInfoResponse> entitiesToResponses(final List<OfficerAcademicInfoEntity> academicInfoEntities) {
         List<OfficerAcademicInfoResponse> academicInfoResponses = new ArrayList<>();
         academicInfoEntities.forEach(academicInfoEntity -> academicInfoResponses.add(entityToResponse(academicInfoEntity)));
         return academicInfoResponses;

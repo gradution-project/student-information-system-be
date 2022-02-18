@@ -17,13 +17,13 @@ public class OfficerResponseConverter {
 
         return OfficerInfoResponse.builder()
                 .officerId(academicInfoResponse.getOfficerId())
-                .facultyResponse(academicInfoResponse.getFacultyResponse())
                 .name(personalInfoResponse.getName())
                 .surname(personalInfoResponse.getSurname())
                 .email(academicInfoResponse.getEmail())
                 .phoneNumber(academicInfoResponse.getPhoneNumber())
                 .status(academicInfoResponse.getStatus())
-                .registrationDate(academicInfoResponse.getRegistrationDate()).build();
+                .registrationDate(academicInfoResponse.getRegistrationDate())
+                .facultyResponse(academicInfoResponse.getFacultyResponse()).build();
     }
 
     public static List<OfficerInfoResponse> infoResponsesListToResponseList(List<OfficerAcademicInfoResponse> academicInfoResponses,
