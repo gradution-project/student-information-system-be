@@ -98,7 +98,7 @@ public class OfficerPersonalInfoConverter {
                 .createdUserId(personalInfoEntity.getCreatedUserId())
                 .createdDate(SisUtil.getFormattedDateTime(personalInfoEntity.getCreatedDate()))
                 .modifiedUserId(personalInfoEntity.getModifiedUserId())
-                .modifiedDate(SisUtil.getFormattedDateTime(personalInfoEntity.getCreatedDate())).build();
+                .modifiedDate(SisUtil.getFormattedDateTime(personalInfoEntity.getModifiedDate())).build();
     }
 
     public static List<OfficerPersonalInfoResponse> entitiesToResponses(List<OfficerPersonalInfoEntity> personalInfoEntities) {

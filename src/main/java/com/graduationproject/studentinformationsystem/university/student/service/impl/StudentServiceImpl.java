@@ -3,8 +3,7 @@ package com.graduationproject.studentinformationsystem.university.student.servic
 import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
-import com.graduationproject.studentinformationsystem.university.department.model.exception.DepartmentException;
-import com.graduationproject.studentinformationsystem.university.department.repository.DepartmentRepository;
+import com.graduationproject.studentinformationsystem.university.department.service.DepartmentOutService;
 import com.graduationproject.studentinformationsystem.university.mail.service.StudentMailService;
 import com.graduationproject.studentinformationsystem.university.student.model.dto.converter.StudentInfoResponseConverter;
 import com.graduationproject.studentinformationsystem.university.student.model.dto.converter.StudentResponseConverter;
@@ -28,7 +27,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
 
-    private final DepartmentRepository departmentRepository;
+    private final DepartmentOutService departmentOutService;
 
     private final StudentAcademicInfoService academicInfoService;
     private final StudentPersonalInfoService personalInfoService;
@@ -153,14 +152,14 @@ public class StudentServiceImpl implements StudentService {
      */
 
     private void checkBeforeSaving(final StudentSaveRequest studentInfoRequest) throws SisNotExistException {
-        ifDepartmentIdIsNotExistThrowNotExistException(studentInfoRequest.getAcademicInfoRequest().getDepartmentId());
+        ifDepartmentIsNotExistThrowNotExistException(studentInfoRequest.getAcademicInfoRequest().getDepartmentId());
     }
 
     private void checkBeforeUpdatingAcademicInfo(final Long studentId, final StudentAcademicInfoUpdateRequest academicInfoUpdateRequest)
             throws SisNotExistException {
 
         ifStudentIsNotExistThrowNotExistException(studentId);
-        ifDepartmentIdIsNotExistThrowNotExistException(academicInfoUpdateRequest.getAcademicInfoRequest().getDepartmentId());
+        ifDepartmentIsNotExistThrowNotExistException(academicInfoUpdateRequest.getAcademicInfoRequest().getDepartmentId());
     }
 
     private void checkBeforeUpdatingPersonalInfo(final Long studentId) throws SisNotExistException {
@@ -199,15 +198,13 @@ public class StudentServiceImpl implements StudentService {
      * Throw Exceptions
      */
 
+    private void ifDepartmentIsNotExistThrowNotExistException(final Long departmentId) throws SisNotExistException {
+        departmentOutService.ifDepartmentIsNotExistThrowNotExistException(departmentId);
+    }
+
     private void ifStudentIsNotExistThrowNotExistException(final Long studentId) throws SisNotExistException {
         if (!academicInfoService.isStudentExist(studentId)) {
             StudentException.throwNotExistException(studentId);
-        }
-    }
-
-    private void ifDepartmentIdIsNotExistThrowNotExistException(final Long departmentId) throws SisNotExistException {
-        if (!departmentRepository.isDepartmentExist(departmentId)) {
-            DepartmentException.throwNotExistException(departmentId);
         }
     }
 

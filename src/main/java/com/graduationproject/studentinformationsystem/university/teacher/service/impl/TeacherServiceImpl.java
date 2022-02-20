@@ -139,14 +139,14 @@ public class TeacherServiceImpl implements TeacherService {
      */
 
     private void checkBeforeSaving(final TeacherSaveRequest saveRequest) {
-        ifDepartmentIdIsNotExistThrowNotExistException(saveRequest.getAcademicInfoRequest().getDepartmentId());
+        ifDepartmentIsNotExistThrowNotExistException(saveRequest.getAcademicInfoRequest().getDepartmentId());
     }
 
     private void checkBeforeUpdatingAcademicInfo(final Long teacherId, final TeacherAcademicInfoUpdateRequest academicInfoUpdateRequest)
             throws SisNotExistException {
 
         ifTeacherIsNotExistThrowNotExistException(teacherId);
-        ifDepartmentIdIsNotExistThrowNotExistException(academicInfoUpdateRequest.getAcademicInfoRequest().getDepartmentId());
+        ifDepartmentIsNotExistThrowNotExistException(academicInfoUpdateRequest.getAcademicInfoRequest().getDepartmentId());
     }
 
     private void checkBeforeUpdatingPersonalInfo(final Long teacherId) throws SisNotExistException {
@@ -181,8 +181,8 @@ public class TeacherServiceImpl implements TeacherService {
         }
     }
 
-    private void ifDepartmentIdIsNotExistThrowNotExistException(final Long departmentId) {
-        // TODO: ifDepartmentIdIsNotExistThrowNotExistException
+    private void ifDepartmentIsNotExistThrowNotExistException(final Long departmentId) {
+        // TODO: ifDepartmentIsNotExistThrowNotExistException
 //        if (!departmentService.isDepartmentExist(teacherId)) {
 //            SisException.throwNotExistException();
 //        }

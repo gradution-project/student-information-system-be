@@ -14,7 +14,7 @@ public class DepartmentResponse extends SisBaseResponse {
     private String name;
     private DepartmentStatus status;
     private Integer totalClassLevel;
-    private Boolean isTherePreparatoryClass;
+    private Integer isTherePreparatoryClass;
 
     private FacultyResponse facultyResponse;
 }

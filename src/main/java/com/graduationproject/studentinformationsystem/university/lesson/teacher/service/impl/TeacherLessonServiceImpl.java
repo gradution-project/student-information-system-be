@@ -2,15 +2,8 @@ package com.graduationproject.studentinformationsystem.university.lesson.teacher
 
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
-import com.graduationproject.studentinformationsystem.university.department.model.entity.DepartmentEntity;
-import com.graduationproject.studentinformationsystem.university.department.repository.DepartmentRepository;
-import com.graduationproject.studentinformationsystem.university.faculty.model.entity.FacultyEntity;
-import com.graduationproject.studentinformationsystem.university.faculty.repository.FacultyRepository;
-import com.graduationproject.studentinformationsystem.university.lesson.common.model.entity.LessonEntity;
-import com.graduationproject.studentinformationsystem.university.lesson.common.repository.LessonRepository;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.converter.TeacherLessonInfoConverter;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.request.TeacherLessonDeleteRequest;
-import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.request.TeacherLessonInfoRequest;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.request.TeacherLessonSaveRequest;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.response.TeacherLessonResponse;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.entity.TeacherLessonDeleteEntity;
@@ -29,72 +22,54 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TeacherLessonServiceImpl implements TeacherLessonService {
 
-    private final FacultyRepository facultyRepository;
-    private final DepartmentRepository departmentRepository;
-    private final LessonRepository lessonRepository;
-
     private final TeacherLessonRepository teacherLessonRepository;
+    private final TeacherLessonInfoConverter teacherLessonInfoConverter;
 
     @Override
     public List<TeacherLessonResponse> getAllTeachersLessons() {
         final List<TeacherLessonEntity> teacherLessonEntities = teacherLessonRepository.getAllTeachersLessons();
-        setLessonEntities(teacherLessonEntities);
-        return TeacherLessonInfoConverter.entitiesToResponses(teacherLessonEntities);
+        return teacherLessonInfoConverter.entitiesToResponses(teacherLessonEntities);
     }
 
     @Override
     public List<TeacherLessonResponse> getTeacherLessonsById(final Long teacherId) {
-        final List<TeacherLessonEntity> teacherLessonEntities = teacherLessonRepository.getTeacherLessonsByTeacherId(teacherId);
-        setLessonEntities(teacherLessonEntities);
-        return TeacherLessonInfoConverter.entitiesToResponses(teacherLessonEntities);
+
+        final List<TeacherLessonEntity> teacherLessonEntities = teacherLessonRepository
+                .getTeacherLessonsByTeacherId(teacherId);
+
+        return teacherLessonInfoConverter.entitiesToResponses(teacherLessonEntities);
     }
 
     @Override
-    public TeacherLessonResponse saveTeacherLesson(final TeacherLessonSaveRequest saveRequest) throws SisAlreadyException {
-        checkBeforeSaving(saveRequest);
+    public TeacherLessonResponse saveTeacherLesson(final TeacherLessonSaveRequest teacherLessonSaveRequest)
+            throws SisAlreadyException {
 
-        final TeacherLessonSaveEntity saveEntity = TeacherLessonInfoConverter.generateSaveEntity(saveRequest);
+        checkBeforeSaving(teacherLessonSaveRequest);
 
-        teacherLessonRepository.saveTeacherLesson(saveEntity);
-        return getTeacherLessonResponse(saveEntity.getTeacherId(), saveEntity.getLessonId());
+        final TeacherLessonSaveEntity teacherLessonSaveEntity = teacherLessonInfoConverter
+                .generateSaveEntity(teacherLessonSaveRequest);
+
+        teacherLessonRepository.saveTeacherLesson(teacherLessonSaveEntity);
+        return getTeacherLessonResponse(teacherLessonSaveEntity.getTeacherId(), teacherLessonSaveEntity.getLessonId());
     }
 
     @Override
-    public void deleteTeacherLesson(final TeacherLessonDeleteRequest deleteRequest) throws SisNotExistException {
-        checkBeforeDeleting(deleteRequest);
+    public void deleteTeacherLesson(final TeacherLessonDeleteRequest teacherLessonDeleteRequest)
+            throws SisNotExistException {
 
-        final TeacherLessonDeleteEntity deleteEntity = TeacherLessonInfoConverter.generateDeleteEntity(deleteRequest);
-        teacherLessonRepository.deleteTeacherLesson(deleteEntity);
+        checkBeforeDeleting(teacherLessonDeleteRequest);
+
+        final TeacherLessonDeleteEntity teacherLessonDeleteEntity = teacherLessonInfoConverter
+                .generateDeleteEntity(teacherLessonDeleteRequest);
+
+        teacherLessonRepository.deleteTeacherLesson(teacherLessonDeleteEntity);
     }
 
     private TeacherLessonResponse getTeacherLessonResponse(final Long teacherId, final Long lessonId) {
-        final TeacherLessonEntity teacherLessonEntity = teacherLessonRepository.getTeacherLessonByTeacherIdAndLessonId(teacherId, lessonId);
-        setLessonEntity(teacherLessonEntity);
-        return TeacherLessonInfoConverter.entityToResponse(teacherLessonEntity);
-    }
+        final TeacherLessonEntity teacherLessonEntity = teacherLessonRepository
+                .getTeacherLessonByTeacherIdAndLessonId(teacherId, lessonId);
 
-    private void setLessonEntity(final TeacherLessonEntity teacherLessonEntity) {
-        final Long lessonId = teacherLessonEntity.getLessonId();
-        final LessonEntity lessonEntity = lessonRepository.getLessonById(lessonId);
-        setDepartmentEntity(lessonEntity);
-        teacherLessonEntity.setLessonEntity(lessonEntity);
-    }
-
-    private void setLessonEntities(final List<TeacherLessonEntity> teacherLessonEntities) {
-        teacherLessonEntities.forEach(this::setLessonEntity);
-    }
-
-    private void setDepartmentEntity(final LessonEntity lessonEntity) {
-        final Long departmentId = lessonEntity.getDepartmentId();
-        final DepartmentEntity departmentEntity = departmentRepository.getDepartmentById(departmentId);
-        setFacultyEntity(departmentEntity);
-        lessonEntity.setDepartmentEntity(departmentEntity);
-    }
-
-    private void setFacultyEntity(final DepartmentEntity departmentEntity) {
-        final Long facultyId = departmentEntity.getFacultyId();
-        final FacultyEntity facultyEntity = facultyRepository.getFacultyById(facultyId);
-        departmentEntity.setFacultyEntity(facultyEntity);
+        return teacherLessonInfoConverter.entityToResponse(teacherLessonEntity);
     }
 
 
@@ -105,12 +80,15 @@ public class TeacherLessonServiceImpl implements TeacherLessonService {
     private void checkBeforeSaving(final TeacherLessonSaveRequest saveRequest) throws SisAlreadyException {
         final Long teacherId = saveRequest.getTeacherLessonInfoRequest().getTeacherId();
         final Long lessonId = saveRequest.getTeacherLessonInfoRequest().getLessonId();
+
         ifTeacherLessonIsExistThrowAlreadyException(teacherId, lessonId);
     }
 
     private void checkBeforeDeleting(final TeacherLessonDeleteRequest deleteRequest) throws SisNotExistException {
-        final TeacherLessonInfoRequest teacherLessonInfoRequest = deleteRequest.getTeacherLessonInfoRequest();
-        ifTeacherLessonIsNotExistThrowNotExistException(teacherLessonInfoRequest.getTeacherId(), teacherLessonInfoRequest.getLessonId());
+        final Long teacherId = deleteRequest.getTeacherLessonInfoRequest().getTeacherId();
+        final Long lessonId = deleteRequest.getTeacherLessonInfoRequest().getLessonId();
+
+        ifTeacherLessonIsNotExistThrowNotExistException(teacherId, lessonId);
     }
 
 

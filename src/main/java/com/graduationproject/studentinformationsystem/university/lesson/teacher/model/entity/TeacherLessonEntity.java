@@ -1,9 +1,7 @@
 package com.graduationproject.studentinformationsystem.university.lesson.teacher.model.entity;
 
-import com.graduationproject.studentinformationsystem.university.lesson.common.model.entity.LessonEntity;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Date;
 
@@ -15,7 +13,4 @@ public class TeacherLessonEntity {
     private Long lessonId;
     private Long createdUserId;
     private Date createdDate;
-
-    @Setter
-    private LessonEntity lessonEntity;
 }
