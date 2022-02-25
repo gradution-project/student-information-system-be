@@ -1,7 +1,7 @@
 package com.graduationproject.studentinformationsystem.university.department.repository.impl.scripts;
 
 import com.graduationproject.studentinformationsystem.common.util.sql.SisSqlUtil;
-import com.graduationproject.studentinformationsystem.university.officer.model.enums.OfficerStatus;
+import com.graduationproject.studentinformationsystem.university.department.model.enums.DepartmentStatus;
 
 import static com.graduationproject.studentinformationsystem.university.department.model.mapping.DepartmentMapping.DEPARTMENT_ID;
 
@@ -99,7 +99,7 @@ public class DepartmentSqlScripts {
             .isExistByColumnNameAndStatus("UNIV_DEPARTMENT",
                     DEPARTMENT_ID.getColumnName(),
                     DEPARTMENT_ID.getModelName(),
-                    OfficerStatus.DELETED.toString());
+                    DepartmentStatus.DELETED.toString());
 
     /**
      * SELECT CASE WHEN MAX(DEPARTMENT_ID) IS NULL THEN 'false' ELSE 'true' END IS_EXIST
@@ -109,7 +109,7 @@ public class DepartmentSqlScripts {
             .isExistByColumnNameAndStatus("UNIV_DEPARTMENT",
                     DEPARTMENT_ID.getColumnName(),
                     DEPARTMENT_ID.getModelName(),
-                    OfficerStatus.PASSIVE.toString());
+                    DepartmentStatus.PASSIVE.toString());
 
     /**
      * SELECT CASE WHEN MAX(DEPARTMENT_ID) IS NULL THEN 'false' ELSE 'true' END IS_EXIST
@@ -119,5 +119,5 @@ public class DepartmentSqlScripts {
             .isExistByColumnNameAndStatus("UNIV_DEPARTMENT",
                     DEPARTMENT_ID.getColumnName(),
                     DEPARTMENT_ID.getModelName(),
-                    OfficerStatus.ACTIVE.toString());
+                    DepartmentStatus.ACTIVE.toString());
 }

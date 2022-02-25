@@ -30,9 +30,9 @@ public class LessonController {
     private final LessonService lessonService;
 
     @GetMapping
-    @ApiOperation(value = "Get All Lesson By Status")
+    @ApiOperation(value = "Get All Lessons By Status")
     public ResponseEntity<SisBaseApiResponse<List<LessonResponse>>> getAllFacultiesByStatus(
-            final LessonStatus status) {
+            @RequestParam final LessonStatus status) {
 
         final List<LessonResponse> lessonResponses = lessonService.getAllLessonsByStatus(status);
         return successResponse(lessonResponses);

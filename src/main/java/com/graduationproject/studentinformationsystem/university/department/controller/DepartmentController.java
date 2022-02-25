@@ -30,9 +30,9 @@ public class DepartmentController {
     private final DepartmentService departmentService;
 
     @GetMapping
-    @ApiOperation(value = "Get All Department By Status")
+    @ApiOperation(value = "Get All Departments By Status")
     public ResponseEntity<SisBaseApiResponse<List<DepartmentResponse>>> getAllDepartmentsByStatus(
-            final DepartmentStatus status) {
+            @RequestParam final DepartmentStatus status) {
 
         final List<DepartmentResponse> departmentResponses = departmentService.getAllDepartmentsByStatus(status);
         return successResponse(departmentResponses);
