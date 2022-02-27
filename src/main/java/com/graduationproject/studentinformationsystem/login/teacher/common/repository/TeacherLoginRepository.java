@@ -8,11 +8,13 @@ public interface TeacherLoginRepository {
 
     String getPassword(Long teacherId);
 
-    void saveFirstPassword(Long teacherId, String password);
+    void savePassword(Long teacherId, String encodedPassword);
 
-    void updatePassword(Long teacherId, String password);
+    void updatePassword(Long teacherId, String encodedPassword);
 
     void updateLoginInfo(TeacherLoginInfoEntity loginInfoEntity);
 
     void updateFailCounter(Long teacherId);
+
+    boolean isPasswordExist(Long teacherId);
 }
