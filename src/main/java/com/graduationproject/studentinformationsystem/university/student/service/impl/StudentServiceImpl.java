@@ -3,6 +3,7 @@ package com.graduationproject.studentinformationsystem.university.student.servic
 import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
+import com.graduationproject.studentinformationsystem.login.student.password.service.StudentPasswordOperationOutService;
 import com.graduationproject.studentinformationsystem.university.department.service.DepartmentOutService;
 import com.graduationproject.studentinformationsystem.university.mail.service.StudentMailService;
 import com.graduationproject.studentinformationsystem.university.student.model.dto.converter.StudentInfoResponseConverter;
@@ -28,6 +29,7 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService {
 
     private final DepartmentOutService departmentOutService;
+    private final StudentPasswordOperationOutService passwordOperationOutService;
 
     private final StudentAcademicInfoService academicInfoService;
     private final StudentPersonalInfoService personalInfoService;
@@ -43,7 +45,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentInfoDetailResponse getStudentDetailById(final Long studentId) throws SisNotExistException {
         ifStudentIsNotExistThrowNotExistException(studentId);
-        return getStudentInfoResponse(studentId);
+        return getStudentInfoDetailResponse(studentId);
     }
 
     @Override
@@ -59,8 +61,10 @@ public class StudentServiceImpl implements StudentService {
         academicInfoService.saveStudentAcademicInfo(studentId, studentEmail, academicInfoRequest, operationInfoRequest);
         personalInfoService.saveStudentPersonalInfo(studentId, personalInfoRequest, operationInfoRequest);
 
-        final StudentInfoDetailResponse studentInfoDetailResponse = getStudentInfoResponse(studentId);
-        mailService.sendFirstPasswordEmail(studentInfoDetailResponse);
+        final StudentInfoDetailResponse studentInfoDetailResponse = getStudentInfoDetailResponse(studentId);
+
+        passwordOperationOutService.saveOrUpdatePasswordOperation(studentId, saveRequest.getOperationInfoRequest().getFeUrl());
+        mailService.sendSavedEmail(studentInfoDetailResponse);
         return studentInfoDetailResponse;
     }
 
@@ -89,7 +93,7 @@ public class StudentServiceImpl implements StudentService {
         checkBeforeDeleting(deleteRequest.getStudentId());
         academicInfoService.deleteStudentAcademicInfo(deleteRequest);
         personalInfoService.deleteStudentPersonalInfo(deleteRequest);
-        return getStudentResponse(deleteRequest.getStudentId());
+        return getStudentInfoResponse(deleteRequest.getStudentId());
     }
 
     @Override
@@ -99,7 +103,7 @@ public class StudentServiceImpl implements StudentService {
         checkBeforePassivating(passivateRequest.getStudentId());
         academicInfoService.passivateStudentAcademicInfo(passivateRequest);
         personalInfoService.passivateStudentPersonalInfo(passivateRequest);
-        return getStudentResponse(passivateRequest.getStudentId());
+        return getStudentInfoResponse(passivateRequest.getStudentId());
     }
 
     @Override
@@ -109,7 +113,7 @@ public class StudentServiceImpl implements StudentService {
         checkBeforeActivating(activateRequest.getStudentId());
         academicInfoService.activateStudentAcademicInfo(activateRequest);
         personalInfoService.activateStudentPersonalInfo(activateRequest);
-        return getStudentResponse(activateRequest.getStudentId());
+        return getStudentInfoResponse(activateRequest.getStudentId());
     }
 
     @Override
@@ -119,7 +123,7 @@ public class StudentServiceImpl implements StudentService {
         checkBeforeGraduating(graduateRequest.getStudentId());
         academicInfoService.graduateStudentAcademicInfo(graduateRequest);
         personalInfoService.graduateStudentPersonalInfo(graduateRequest);
-        return getStudentResponse(graduateRequest.getStudentId());
+        return getStudentInfoResponse(graduateRequest.getStudentId());
     }
 
 
@@ -134,13 +138,13 @@ public class StudentServiceImpl implements StudentService {
         return StudentUtil.generateStudentEmail(name, surname);
     }
 
-    private StudentInfoDetailResponse getStudentInfoResponse(final Long studentId) {
+    private StudentInfoDetailResponse getStudentInfoDetailResponse(final Long studentId) {
         final StudentAcademicInfoResponse academicInfoResponse = academicInfoService.getStudentAcademicInfoById(studentId);
         final StudentPersonalInfoResponse personalInfoResponse = personalInfoService.getStudentPersonalInfoById(studentId);
         return StudentInfoResponseConverter.convert(academicInfoResponse, personalInfoResponse);
     }
 
-    private StudentInfoResponse getStudentResponse(final Long studentId) {
+    private StudentInfoResponse getStudentInfoResponse(final Long studentId) {
         final StudentAcademicInfoResponse academicInfoResponse = academicInfoService.getStudentAcademicInfoById(studentId);
         final StudentPersonalInfoResponse personalInfoResponse = personalInfoService.getStudentPersonalInfoById(studentId);
         return StudentResponseConverter.infoResponsesToResponse(academicInfoResponse, personalInfoResponse);
