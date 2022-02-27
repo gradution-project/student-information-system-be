@@ -22,7 +22,7 @@ public class StudentOutServiceImpl implements StudentOutService {
     private final StudentPersonalInfoService personalInfoService;
 
     @Override
-    public StudentInfoDetailResponse getStudentInfoDetailResponse(Long studentId) {
+    public StudentInfoDetailResponse getStudentInfoDetailResponse(final Long studentId) {
         final StudentAcademicInfoResponse academicInfoResponse = academicInfoService.getStudentAcademicInfoById(studentId);
         final StudentPersonalInfoResponse personalInfoResponse = personalInfoService.getStudentPersonalInfoById(studentId);
         return StudentInfoResponseConverter.convert(academicInfoResponse, personalInfoResponse);
