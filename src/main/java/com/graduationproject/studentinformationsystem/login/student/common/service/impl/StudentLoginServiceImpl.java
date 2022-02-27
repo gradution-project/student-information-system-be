@@ -1,17 +1,12 @@
-package com.graduationproject.studentinformationsystem.login.student.service.impl;
+package com.graduationproject.studentinformationsystem.login.student.common.service.impl;
 
-import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
-import com.graduationproject.studentinformationsystem.login.common.model.response.ForgotPasswordResponse;
 import com.graduationproject.studentinformationsystem.login.common.model.response.LoginResponse;
 import com.graduationproject.studentinformationsystem.login.common.service.PasswordService;
-import com.graduationproject.studentinformationsystem.login.student.model.dto.request.StudentForgotPasswordRequest;
-import com.graduationproject.studentinformationsystem.login.student.model.dto.request.StudentLoginRequest;
-import com.graduationproject.studentinformationsystem.login.student.model.entity.StudentLoginInfoEntity;
-import com.graduationproject.studentinformationsystem.login.student.repository.StudentLoginRepository;
-import com.graduationproject.studentinformationsystem.login.student.service.StudentLoginService;
-import com.graduationproject.studentinformationsystem.university.mail.service.StudentMailService;
+import com.graduationproject.studentinformationsystem.login.student.common.model.dto.request.StudentLoginRequest;
+import com.graduationproject.studentinformationsystem.login.student.common.model.entity.StudentLoginInfoEntity;
+import com.graduationproject.studentinformationsystem.login.student.common.repository.StudentLoginRepository;
+import com.graduationproject.studentinformationsystem.login.student.common.service.StudentLoginService;
 import com.graduationproject.studentinformationsystem.university.student.service.StudentAcademicInfoService;
-import com.graduationproject.studentinformationsystem.university.student.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +16,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class StudentLoginServiceImpl implements StudentLoginService {
 
-    private final StudentService studentService;
     private final StudentAcademicInfoService academicInfoService;
-    private final StudentMailService mailService;
 
     private final StudentLoginRepository loginRepository;
     private final PasswordService passwordService;
@@ -45,12 +38,6 @@ public class StudentLoginServiceImpl implements StudentLoginService {
         }
 
         return getFailLoginResponse();
-    }
-
-    @Override
-    public ForgotPasswordResponse forgotPassword(StudentForgotPasswordRequest forgotPasswordRequest) throws SisNotExistException {
-        mailService.sendForgotPasswordEmail(studentService.getStudentDetailById(forgotPasswordRequest.getStudentId()));
-        return ForgotPasswordResponse.builder().isForgotPasswordSuccess(true).build();
     }
 
 
