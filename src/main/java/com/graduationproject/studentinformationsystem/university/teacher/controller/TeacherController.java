@@ -54,7 +54,7 @@ public class TeacherController {
     @PostMapping(TeacherControllerEndpoint.SAVE)
     @ApiOperation(value = "Save Teacher")
     public ResponseEntity<SisBaseApiResponse<TeacherInfoDetailResponse>> saveTeacher(
-            @Valid @RequestBody final TeacherSaveRequest saveRequest) {
+            @Valid @RequestBody final TeacherSaveRequest saveRequest) throws SisNotExistException {
 
         final TeacherInfoDetailResponse infoDetailResponse = teacherService.saveTeacher(saveRequest);
         return successResponse(infoDetailResponse);
