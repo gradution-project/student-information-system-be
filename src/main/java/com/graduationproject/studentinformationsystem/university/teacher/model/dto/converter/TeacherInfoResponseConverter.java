@@ -9,8 +9,8 @@ public class TeacherInfoResponseConverter {
     private TeacherInfoResponseConverter() {
     }
 
-    public static TeacherInfoDetailResponse convert(TeacherAcademicInfoResponse academicInfoResponse,
-                                                    TeacherPersonalInfoResponse personalInfoResponse) {
+    public static TeacherInfoDetailResponse convert(final TeacherAcademicInfoResponse academicInfoResponse,
+                                                    final TeacherPersonalInfoResponse personalInfoResponse) {
 
         return TeacherInfoDetailResponse.builder()
                 .academicInfoResponse(academicInfoResponse)
