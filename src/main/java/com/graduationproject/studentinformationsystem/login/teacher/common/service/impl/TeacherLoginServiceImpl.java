@@ -1,14 +1,14 @@
-package com.graduationproject.studentinformationsystem.login.teacher.service.impl;
+package com.graduationproject.studentinformationsystem.login.teacher.common.service.impl;
 
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
-import com.graduationproject.studentinformationsystem.login.common.model.response.ForgotPasswordResponse;
 import com.graduationproject.studentinformationsystem.login.common.model.response.LoginResponse;
 import com.graduationproject.studentinformationsystem.login.common.service.PasswordService;
-import com.graduationproject.studentinformationsystem.login.teacher.model.dto.request.TeacherForgotPasswordRequest;
-import com.graduationproject.studentinformationsystem.login.teacher.model.dto.request.TeacherLoginRequest;
-import com.graduationproject.studentinformationsystem.login.teacher.model.entity.TeacherLoginInfoEntity;
-import com.graduationproject.studentinformationsystem.login.teacher.repository.TeacherLoginRepository;
-import com.graduationproject.studentinformationsystem.login.teacher.service.TeacherLoginService;
+import com.graduationproject.studentinformationsystem.login.student.password.model.dto.response.StudentPasswordForgotResponse;
+import com.graduationproject.studentinformationsystem.login.teacher.common.model.dto.request.TeacherForgotPasswordRequest;
+import com.graduationproject.studentinformationsystem.login.teacher.common.model.dto.request.TeacherLoginRequest;
+import com.graduationproject.studentinformationsystem.login.teacher.common.model.entity.TeacherLoginInfoEntity;
+import com.graduationproject.studentinformationsystem.login.teacher.common.repository.TeacherLoginRepository;
+import com.graduationproject.studentinformationsystem.login.teacher.common.service.TeacherLoginService;
 import com.graduationproject.studentinformationsystem.university.mail.service.TeacherMailService;
 import com.graduationproject.studentinformationsystem.university.teacher.service.TeacherAcademicInfoService;
 import com.graduationproject.studentinformationsystem.university.teacher.service.TeacherService;
@@ -49,9 +49,9 @@ public class TeacherLoginServiceImpl implements TeacherLoginService {
     }
 
     @Override
-    public ForgotPasswordResponse forgotPassword(TeacherForgotPasswordRequest forgotPasswordRequest) throws SisNotExistException {
+    public StudentPasswordForgotResponse forgotPassword(TeacherForgotPasswordRequest forgotPasswordRequest) throws SisNotExistException {
         mailService.sendForgotPasswordEmail(teacherService.getTeacherDetailById(forgotPasswordRequest.getTeacherId()));
-        return ForgotPasswordResponse.builder().isForgotPasswordSuccess(true).build();
+        return StudentPasswordForgotResponse.builder().isForgotPasswordSuccess(true).build();
     }
 
 

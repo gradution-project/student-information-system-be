@@ -1,4 +1,4 @@
-package com.graduationproject.studentinformationsystem.login.teacher.repository.impl.scripts;
+package com.graduationproject.studentinformationsystem.login.teacher.common.repository.impl.scripts;
 
 public class TeacherLoginSqlScripts {
 

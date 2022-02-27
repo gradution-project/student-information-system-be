@@ -1,17 +1,17 @@
-package com.graduationproject.studentinformationsystem.login.teacher.repository.impl;
+package com.graduationproject.studentinformationsystem.login.teacher.common.repository.impl;
 
 import com.graduationproject.studentinformationsystem.common.util.exception.SisDatabaseException;
 import com.graduationproject.studentinformationsystem.login.common.service.PasswordService;
-import com.graduationproject.studentinformationsystem.login.teacher.model.entity.TeacherLoginInfoEntity;
-import com.graduationproject.studentinformationsystem.login.teacher.repository.TeacherLoginRepository;
+import com.graduationproject.studentinformationsystem.login.teacher.common.model.entity.TeacherLoginInfoEntity;
+import com.graduationproject.studentinformationsystem.login.teacher.common.model.mapping.TeacherLoginMapping;
+import com.graduationproject.studentinformationsystem.login.teacher.common.repository.TeacherLoginRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Connection;
 import org.sql2o.Query;
 import org.sql2o.Sql2o;
 
-import static com.graduationproject.studentinformationsystem.login.teacher.model.mapping.TeacherLoginMapping.*;
-import static com.graduationproject.studentinformationsystem.login.teacher.repository.impl.scripts.TeacherLoginSqlScripts.*;
+import static com.graduationproject.studentinformationsystem.login.teacher.common.repository.impl.scripts.TeacherLoginSqlScripts.*;
 
 @Repository
 @RequiredArgsConstructor
@@ -25,8 +25,8 @@ public class TeacherLoginRepositoryImpl implements TeacherLoginRepository {
     public Integer getFailCounter(final Long teacherId) {
         try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_TEACHER_LOGIN_FAIL_COUNTER)) {
 
-            return query.addParameter(TEACHER_ID.getModelName(), teacherId)
-                    .setColumnMappings(COLUMN_MAPPINGS)
+            return query.addParameter(TeacherLoginMapping.TEACHER_ID.getModelName(), teacherId)
+                    .setColumnMappings(TeacherLoginMapping.COLUMN_MAPPINGS)
                     .executeScalar(Integer.class);
 
 //            TODO: Specific Info Log Must be Added
@@ -40,8 +40,8 @@ public class TeacherLoginRepositoryImpl implements TeacherLoginRepository {
     public String getPassword(final Long teacherId) {
         try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_TEACHER_PASSWORD)) {
 
-            return query.addParameter(TEACHER_ID.getModelName(), teacherId)
-                    .setColumnMappings(COLUMN_MAPPINGS)
+            return query.addParameter(TeacherLoginMapping.TEACHER_ID.getModelName(), teacherId)
+                    .setColumnMappings(TeacherLoginMapping.COLUMN_MAPPINGS)
                     .executeScalar(String.class);
 
 //            TODO: Specific Info Log Must be Added
@@ -55,9 +55,9 @@ public class TeacherLoginRepositoryImpl implements TeacherLoginRepository {
     public void saveFirstPassword(final Long teacherId, final String password) {
         try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(SAVE_TEACHER_FIRST_PASSWORD)) {
 
-            query.addParameter(TEACHER_ID.getModelName(), teacherId)
-                    .addParameter(PASSWORD.getModelName(), passwordService.encodePassword(password))
-                    .addParameter(FAIL_COUNTER.getModelName(), 0)
+            query.addParameter(TeacherLoginMapping.TEACHER_ID.getModelName(), teacherId)
+                    .addParameter(TeacherLoginMapping.PASSWORD.getModelName(), passwordService.encodePassword(password))
+                    .addParameter(TeacherLoginMapping.FAIL_COUNTER.getModelName(), 0)
                     .executeUpdate();
 
 //            TODO: Specific Info Log Must be Added
@@ -71,8 +71,8 @@ public class TeacherLoginRepositoryImpl implements TeacherLoginRepository {
     public void updatePassword(final Long teacherId, final String password) {
         try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(UPDATE_TEACHER_PASSWORD)) {
 
-            query.addParameter(TEACHER_ID.getModelName(), teacherId)
-                    .addParameter(PASSWORD.getModelName(), passwordService.encodePassword(password))
+            query.addParameter(TeacherLoginMapping.TEACHER_ID.getModelName(), teacherId)
+                    .addParameter(TeacherLoginMapping.PASSWORD.getModelName(), passwordService.encodePassword(password))
                     .executeUpdate();
 
 //            TODO: Specific Info Log Must be Added
@@ -86,9 +86,9 @@ public class TeacherLoginRepositoryImpl implements TeacherLoginRepository {
     public void updateLoginInfo(final TeacherLoginInfoEntity loginInfoEntity) {
         try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(UPDATE_TEACHER_LOGIN_INFO)) {
 
-            query.addParameter(TEACHER_ID.getModelName(), loginInfoEntity.getTeacherId())
-                    .addParameter(FAIL_COUNTER.getModelName(), loginInfoEntity.getFailCounter())
-                    .addParameter(LAST_LOGIN_DATE.getModelName(), loginInfoEntity.getLastLoginDate())
+            query.addParameter(TeacherLoginMapping.TEACHER_ID.getModelName(), loginInfoEntity.getTeacherId())
+                    .addParameter(TeacherLoginMapping.FAIL_COUNTER.getModelName(), loginInfoEntity.getFailCounter())
+                    .addParameter(TeacherLoginMapping.LAST_LOGIN_DATE.getModelName(), loginInfoEntity.getLastLoginDate())
                     .executeUpdate();
 
 //            TODO: Specific Info Log Must be Added
@@ -102,8 +102,8 @@ public class TeacherLoginRepositoryImpl implements TeacherLoginRepository {
     public void updateFailCounter(final Long teacherId) {
         try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(UPDATE_TEACHER_FAIL_COUNTER)) {
 
-            query.addParameter(TEACHER_ID.getModelName(), teacherId)
-                    .addParameter(FAIL_COUNTER.getModelName(), getFailCounter(teacherId) + 1)
+            query.addParameter(TeacherLoginMapping.TEACHER_ID.getModelName(), teacherId)
+                    .addParameter(TeacherLoginMapping.FAIL_COUNTER.getModelName(), getFailCounter(teacherId) + 1)
                     .executeUpdate();
 
 //            TODO: Specific Info Log Must be Added

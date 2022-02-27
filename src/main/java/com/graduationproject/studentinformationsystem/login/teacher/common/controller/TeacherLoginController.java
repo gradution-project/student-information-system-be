@@ -1,13 +1,13 @@
-package com.graduationproject.studentinformationsystem.login.teacher.controller;
+package com.graduationproject.studentinformationsystem.login.teacher.common.controller;
 
 import com.graduationproject.studentinformationsystem.common.util.controller.response.SisBaseApiResponse;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.login.common.controller.enpoint.LoginControllerEndpoint;
-import com.graduationproject.studentinformationsystem.login.common.model.response.ForgotPasswordResponse;
 import com.graduationproject.studentinformationsystem.login.common.model.response.LoginResponse;
-import com.graduationproject.studentinformationsystem.login.teacher.model.dto.request.TeacherForgotPasswordRequest;
-import com.graduationproject.studentinformationsystem.login.teacher.model.dto.request.TeacherLoginRequest;
-import com.graduationproject.studentinformationsystem.login.teacher.service.TeacherLoginService;
+import com.graduationproject.studentinformationsystem.login.student.password.model.dto.response.StudentPasswordForgotResponse;
+import com.graduationproject.studentinformationsystem.login.teacher.common.model.dto.request.TeacherForgotPasswordRequest;
+import com.graduationproject.studentinformationsystem.login.teacher.common.model.dto.request.TeacherLoginRequest;
+import com.graduationproject.studentinformationsystem.login.teacher.common.service.TeacherLoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -42,11 +42,11 @@ public class TeacherLoginController {
 
     @PostMapping(LoginControllerEndpoint.TEACHER_FORGOT_PASSWORD)
     @ApiOperation(value = "Teacher Forgot Password")
-    public ResponseEntity<SisBaseApiResponse<ForgotPasswordResponse>> teacherForgotPassword(
+    public ResponseEntity<SisBaseApiResponse<StudentPasswordForgotResponse>> teacherForgotPassword(
             @RequestBody @Valid final TeacherForgotPasswordRequest forgotPasswordRequest)
             throws SisNotExistException {
 
-        final ForgotPasswordResponse forgotPasswordResponse = loginService.forgotPassword(forgotPasswordRequest);
-        return successResponse(forgotPasswordResponse);
+        final StudentPasswordForgotResponse studentPasswordForgotResponse = loginService.forgotPassword(forgotPasswordRequest);
+        return successResponse(studentPasswordForgotResponse);
     }
 }

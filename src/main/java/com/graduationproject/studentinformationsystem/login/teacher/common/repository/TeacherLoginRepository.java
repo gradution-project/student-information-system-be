@@ -1,6 +1,6 @@
-package com.graduationproject.studentinformationsystem.login.teacher.repository;
+package com.graduationproject.studentinformationsystem.login.teacher.common.repository;
 
-import com.graduationproject.studentinformationsystem.login.teacher.model.entity.TeacherLoginInfoEntity;
+import com.graduationproject.studentinformationsystem.login.teacher.common.model.entity.TeacherLoginInfoEntity;
 
 public interface TeacherLoginRepository {
 
