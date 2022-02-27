@@ -1,13 +1,10 @@
-package com.graduationproject.studentinformationsystem.login.student.controller;
+package com.graduationproject.studentinformationsystem.login.student.common.controller;
 
 import com.graduationproject.studentinformationsystem.common.util.controller.response.SisBaseApiResponse;
-import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.login.common.controller.enpoint.LoginControllerEndpoint;
-import com.graduationproject.studentinformationsystem.login.common.model.response.ForgotPasswordResponse;
 import com.graduationproject.studentinformationsystem.login.common.model.response.LoginResponse;
-import com.graduationproject.studentinformationsystem.login.student.model.dto.request.StudentForgotPasswordRequest;
-import com.graduationproject.studentinformationsystem.login.student.model.dto.request.StudentLoginRequest;
-import com.graduationproject.studentinformationsystem.login.student.service.StudentLoginService;
+import com.graduationproject.studentinformationsystem.login.student.common.model.dto.request.StudentLoginRequest;
+import com.graduationproject.studentinformationsystem.login.student.common.service.StudentLoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -38,15 +35,5 @@ public class StudentLoginController {
 
         final LoginResponse loginResponse = loginService.login(loginRequest);
         return successResponse(loginResponse);
-    }
-
-    @PostMapping(LoginControllerEndpoint.STUDENT_FORGOT_PASSWORD)
-    @ApiOperation(value = "Student Forgot Password")
-    public ResponseEntity<SisBaseApiResponse<ForgotPasswordResponse>> studentForgotPassword(
-            @RequestBody @Valid final StudentForgotPasswordRequest forgotPasswordRequest)
-            throws SisNotExistException {
-
-        final ForgotPasswordResponse forgotPasswordResponse = loginService.forgotPassword(forgotPasswordRequest);
-        return successResponse(forgotPasswordResponse);
     }
 }
