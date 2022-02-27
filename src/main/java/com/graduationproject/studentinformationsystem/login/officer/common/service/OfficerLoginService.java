@@ -1,4 +1,4 @@
-package com.graduationproject.studentinformationsystem.login.officer.service;
+package com.graduationproject.studentinformationsystem.login.officer.common.service;
 
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.login.common.model.response.ForgotPasswordResponse;

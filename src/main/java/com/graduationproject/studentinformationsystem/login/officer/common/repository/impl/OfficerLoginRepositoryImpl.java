@@ -1,4 +1,4 @@
-package com.graduationproject.studentinformationsystem.login.officer.repository.impl;
+package com.graduationproject.studentinformationsystem.login.officer.common.repository.impl;
 
 import com.graduationproject.studentinformationsystem.common.util.exception.SisDatabaseException;
 import com.graduationproject.studentinformationsystem.login.common.service.PasswordService;

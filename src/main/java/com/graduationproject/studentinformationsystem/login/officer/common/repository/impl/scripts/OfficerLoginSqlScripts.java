@@ -1,4 +1,4 @@
-package com.graduationproject.studentinformationsystem.login.officer.repository.impl.scripts;
+package com.graduationproject.studentinformationsystem.login.officer.common.repository.impl.scripts;
 
 public class OfficerLoginSqlScripts {
 

@@ -1,4 +1,4 @@
-package com.graduationproject.studentinformationsystem.login.officer.model.entity;
+package com.graduationproject.studentinformationsystem.login.officer.common.model.entity;
 
 import com.graduationproject.studentinformationsystem.common.model.entity.SisBaseLoginInfoEntity;
 import lombok.Getter;

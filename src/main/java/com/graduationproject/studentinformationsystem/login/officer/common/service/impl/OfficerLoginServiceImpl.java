@@ -1,7 +1,6 @@
-package com.graduationproject.studentinformationsystem.login.officer.service.impl;
+package com.graduationproject.studentinformationsystem.login.officer.common.service.impl;
 
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
-import com.graduationproject.studentinformationsystem.login.common.model.response.ForgotPasswordResponse;
 import com.graduationproject.studentinformationsystem.login.common.model.response.LoginResponse;
 import com.graduationproject.studentinformationsystem.login.common.service.PasswordService;
 import com.graduationproject.studentinformationsystem.login.officer.model.dto.request.OfficerForgotPasswordRequest;
@@ -49,12 +48,12 @@ public class OfficerLoginServiceImpl implements OfficerLoginService {
     }
 
     @Override
-    public ForgotPasswordResponse forgotPassword(final OfficerForgotPasswordRequest forgotPasswordRequest) throws SisNotExistException {
+    public StudentPasswordForgotResponse forgotPassword(final OfficerForgotPasswordRequest forgotPasswordRequest) throws SisNotExistException {
         final OfficerInfoDetailResponse infoDetailResponse = studentService.getOfficerDetailById(forgotPasswordRequest.getOfficerId());
 
         mailService.sendForgotPasswordEmail(infoDetailResponse);
 
-        return ForgotPasswordResponse.builder()
+        return StudentPasswordForgotResponse.builder()
                 .isForgotPasswordSuccess(true).build();
     }
 

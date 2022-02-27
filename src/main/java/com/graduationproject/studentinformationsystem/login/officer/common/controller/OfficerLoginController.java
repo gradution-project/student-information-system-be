@@ -1,4 +1,4 @@
-package com.graduationproject.studentinformationsystem.login.officer.controller;
+package com.graduationproject.studentinformationsystem.login.officer.common.controller;
 
 import com.graduationproject.studentinformationsystem.common.util.controller.response.SisBaseApiResponse;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;

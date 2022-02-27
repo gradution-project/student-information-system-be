@@ -1,4 +1,4 @@
-package com.graduationproject.studentinformationsystem.login.officer.repository;
+package com.graduationproject.studentinformationsystem.login.officer.common.repository;
 
 import com.graduationproject.studentinformationsystem.login.officer.model.entity.OfficerLoginInfoEntity;
 
