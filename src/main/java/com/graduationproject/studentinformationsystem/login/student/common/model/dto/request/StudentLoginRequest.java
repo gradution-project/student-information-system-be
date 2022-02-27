@@ -1,4 +1,4 @@
-package com.graduationproject.studentinformationsystem.login.student.model.dto.request;
+package com.graduationproject.studentinformationsystem.login.student.common.model.dto.request;
 
 import com.graduationproject.studentinformationsystem.common.util.validation.id.StudentID;
 import lombok.Getter;
