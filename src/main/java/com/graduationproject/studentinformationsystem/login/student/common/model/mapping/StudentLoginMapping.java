@@ -1,4 +1,4 @@
-package com.graduationproject.studentinformationsystem.login.student.model.mapping;
+package com.graduationproject.studentinformationsystem.login.student.common.model.mapping;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
