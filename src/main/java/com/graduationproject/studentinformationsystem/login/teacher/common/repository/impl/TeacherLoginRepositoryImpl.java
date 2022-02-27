@@ -1,7 +1,6 @@
 package com.graduationproject.studentinformationsystem.login.teacher.common.repository.impl;
 
 import com.graduationproject.studentinformationsystem.common.util.exception.SisDatabaseException;
-import com.graduationproject.studentinformationsystem.login.common.service.PasswordService;
 import com.graduationproject.studentinformationsystem.login.teacher.common.model.entity.TeacherLoginInfoEntity;
 import com.graduationproject.studentinformationsystem.login.teacher.common.repository.TeacherLoginRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +15,6 @@ import static com.graduationproject.studentinformationsystem.login.teacher.commo
 @Repository
 @RequiredArgsConstructor
 public class TeacherLoginRepositoryImpl implements TeacherLoginRepository {
-
-    private final PasswordService passwordService;
 
     private final Sql2o sql2o;
 
