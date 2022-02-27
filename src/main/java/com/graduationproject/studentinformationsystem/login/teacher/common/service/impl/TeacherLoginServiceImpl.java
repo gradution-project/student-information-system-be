@@ -1,17 +1,12 @@
 package com.graduationproject.studentinformationsystem.login.teacher.common.service.impl;
 
-import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.login.common.model.response.LoginResponse;
 import com.graduationproject.studentinformationsystem.login.common.service.PasswordService;
-import com.graduationproject.studentinformationsystem.login.student.password.model.dto.response.StudentPasswordForgotResponse;
-import com.graduationproject.studentinformationsystem.login.teacher.common.model.dto.request.TeacherForgotPasswordRequest;
 import com.graduationproject.studentinformationsystem.login.teacher.common.model.dto.request.TeacherLoginRequest;
 import com.graduationproject.studentinformationsystem.login.teacher.common.model.entity.TeacherLoginInfoEntity;
 import com.graduationproject.studentinformationsystem.login.teacher.common.repository.TeacherLoginRepository;
 import com.graduationproject.studentinformationsystem.login.teacher.common.service.TeacherLoginService;
-import com.graduationproject.studentinformationsystem.university.mail.service.TeacherMailService;
 import com.graduationproject.studentinformationsystem.university.teacher.service.TeacherAcademicInfoService;
-import com.graduationproject.studentinformationsystem.university.teacher.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +17,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class TeacherLoginServiceImpl implements TeacherLoginService {
 
-    private final TeacherService teacherService;
     private final TeacherAcademicInfoService academicInfoService;
-    private final TeacherMailService mailService;
 
     private final TeacherLoginRepository loginRepository;
     private final PasswordService passwordService;
@@ -46,12 +39,6 @@ public class TeacherLoginServiceImpl implements TeacherLoginService {
         }
 
         return getFailLoginResponse();
-    }
-
-    @Override
-    public StudentPasswordForgotResponse forgotPassword(TeacherForgotPasswordRequest forgotPasswordRequest) throws SisNotExistException {
-        mailService.sendForgotPasswordEmail(teacherService.getTeacherDetailById(forgotPasswordRequest.getTeacherId()));
-        return StudentPasswordForgotResponse.builder().isForgotPasswordSuccess(true).build();
     }
 
 
