@@ -112,7 +112,7 @@ public class StudentLoginRepositoryImpl implements StudentLoginRepository {
     }
 
     @Override
-    public boolean isPasswordExist(Long studentId) {
+    public boolean isPasswordExist(final Long studentId) {
         try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(IS_STUDENT_PASSWORD_EXIST)) {
 
             return query.addParameter(STUDENT_ID.getModelName(), studentId)
