@@ -32,6 +32,7 @@ public class SisSwaggerConfiguration {
     public static final String OFFICER_API_TAG = "Officer Controller";
     public static final String LOGIN_API_TAG = "Login Controller";
     public static final String STUDENT_PASSWORD_OPERATION_API_TAG = "Student Password Operation Controller";
+    public static final String TEACHER_PASSWORD_OPERATION_API_TAG = "Teacher Password Operation Controller";
 
     @Bean
     public Docket api() {
@@ -53,7 +54,8 @@ public class SisSwaggerConfiguration {
                         new Tag(TEACHER_LESSON_API_TAG, "TEACHER_LESSON"),
                         new Tag(OFFICER_API_TAG, "OFFICER_ACADEMIC_INFO & OFFICER_PERSONAL_INFO"),
                         new Tag(LOGIN_API_TAG, "AUTH_STUDENT_LOGIN & AUTH_TEACHER_LOGIN & AUTH_OFFICER_LOGIN"),
-                        new Tag(STUDENT_PASSWORD_OPERATION_API_TAG, "AUTH_STUDENT_PASSWORD_OPERATION")
+                        new Tag(STUDENT_PASSWORD_OPERATION_API_TAG, "AUTH_STUDENT_PASSWORD_OPERATION"),
+                        new Tag(TEACHER_PASSWORD_OPERATION_API_TAG, "AUTH_TEACHER_PASSWORD_OPERATION")
                 );
     }
 
