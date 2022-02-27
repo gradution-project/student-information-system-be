@@ -1,17 +1,12 @@
 package com.graduationproject.studentinformationsystem.login.officer.common.service.impl;
 
-import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.login.common.model.response.LoginResponse;
 import com.graduationproject.studentinformationsystem.login.common.service.PasswordService;
-import com.graduationproject.studentinformationsystem.login.officer.model.dto.request.OfficerForgotPasswordRequest;
-import com.graduationproject.studentinformationsystem.login.officer.model.dto.request.OfficerLoginRequest;
-import com.graduationproject.studentinformationsystem.login.officer.model.entity.OfficerLoginInfoEntity;
-import com.graduationproject.studentinformationsystem.login.officer.repository.OfficerLoginRepository;
-import com.graduationproject.studentinformationsystem.login.officer.service.OfficerLoginService;
-import com.graduationproject.studentinformationsystem.university.mail.service.OfficerMailService;
-import com.graduationproject.studentinformationsystem.university.officer.model.dto.response.OfficerInfoDetailResponse;
+import com.graduationproject.studentinformationsystem.login.officer.common.model.dto.request.OfficerLoginRequest;
+import com.graduationproject.studentinformationsystem.login.officer.common.model.entity.OfficerLoginInfoEntity;
+import com.graduationproject.studentinformationsystem.login.officer.common.repository.OfficerLoginRepository;
+import com.graduationproject.studentinformationsystem.login.officer.common.service.OfficerLoginService;
 import com.graduationproject.studentinformationsystem.university.officer.service.OfficerAcademicInfoService;
-import com.graduationproject.studentinformationsystem.university.officer.service.OfficerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +16,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class OfficerLoginServiceImpl implements OfficerLoginService {
 
-    private final OfficerService studentService;
     private final OfficerAcademicInfoService academicInfoService;
-    private final OfficerMailService mailService;
 
     private final OfficerLoginRepository loginRepository;
     private final PasswordService passwordService;
@@ -45,16 +38,6 @@ public class OfficerLoginServiceImpl implements OfficerLoginService {
         }
 
         return getFailLoginResponse();
-    }
-
-    @Override
-    public StudentPasswordForgotResponse forgotPassword(final OfficerForgotPasswordRequest forgotPasswordRequest) throws SisNotExistException {
-        final OfficerInfoDetailResponse infoDetailResponse = studentService.getOfficerDetailById(forgotPasswordRequest.getOfficerId());
-
-        mailService.sendForgotPasswordEmail(infoDetailResponse);
-
-        return StudentPasswordForgotResponse.builder()
-                .isForgotPasswordSuccess(true).build();
     }
 
 
