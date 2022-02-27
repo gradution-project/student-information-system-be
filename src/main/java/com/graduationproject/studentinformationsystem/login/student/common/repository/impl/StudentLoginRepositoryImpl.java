@@ -1,23 +1,20 @@
-package com.graduationproject.studentinformationsystem.login.student.repository.impl;
+package com.graduationproject.studentinformationsystem.login.student.common.repository.impl;
 
 import com.graduationproject.studentinformationsystem.common.util.exception.SisDatabaseException;
-import com.graduationproject.studentinformationsystem.login.common.service.PasswordService;
-import com.graduationproject.studentinformationsystem.login.student.model.entity.StudentLoginInfoEntity;
-import com.graduationproject.studentinformationsystem.login.student.repository.StudentLoginRepository;
+import com.graduationproject.studentinformationsystem.login.student.common.model.entity.StudentLoginInfoEntity;
+import com.graduationproject.studentinformationsystem.login.student.common.repository.StudentLoginRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Connection;
 import org.sql2o.Query;
 import org.sql2o.Sql2o;
 
-import static com.graduationproject.studentinformationsystem.login.student.model.mapping.StudentLoginMapping.*;
-import static com.graduationproject.studentinformationsystem.login.student.repository.impl.scripts.StudentLoginSqlScripts.*;
+import static com.graduationproject.studentinformationsystem.login.student.common.model.mapping.StudentLoginMapping.*;
+import static com.graduationproject.studentinformationsystem.login.student.common.repository.impl.scripts.StudentLoginSqlScripts.*;
 
 @Repository
 @RequiredArgsConstructor
 public class StudentLoginRepositoryImpl implements StudentLoginRepository {
-
-    private final PasswordService passwordService;
 
     private final Sql2o sql2o;
 
@@ -52,11 +49,11 @@ public class StudentLoginRepositoryImpl implements StudentLoginRepository {
     }
 
     @Override
-    public void saveFirstPassword(final Long studentId, final String password) {
-        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(SAVE_STUDENT_FIRST_PASSWORD)) {
+    public void savePassword(final Long studentId, final String encodedPassword) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(SAVE_STUDENT_PASSWORD)) {
 
             query.addParameter(STUDENT_ID.getModelName(), studentId)
-                    .addParameter(PASSWORD.getModelName(), passwordService.encodePassword(password))
+                    .addParameter(PASSWORD.getModelName(), encodedPassword)
                     .addParameter(FAIL_COUNTER.getModelName(), 0)
                     .executeUpdate();
 
@@ -68,11 +65,12 @@ public class StudentLoginRepositoryImpl implements StudentLoginRepository {
     }
 
     @Override
-    public void updatePassword(final Long studentId, final String password) {
+    public void updatePassword(final Long studentId, final String encodedPassword) {
         try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(UPDATE_STUDENT_PASSWORD)) {
 
             query.addParameter(STUDENT_ID.getModelName(), studentId)
-                    .addParameter(PASSWORD.getModelName(), passwordService.encodePassword(password))
+                    .addParameter(PASSWORD.getModelName(), encodedPassword)
+                    .addParameter(FAIL_COUNTER.getModelName(), 0)
                     .executeUpdate();
 
 //            TODO: Specific Info Log Must be Added
@@ -113,21 +111,17 @@ public class StudentLoginRepositoryImpl implements StudentLoginRepository {
         }
     }
 
-//    TODO: Change or Update Password
-//    @Override
-//    public void updatePassword(final StudentLoginEntity loginInfoEntity) {
-//        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(UPDATE_STUDENT_PASSWORD)) {
-//
-//            query.addParameter(STUDENT_ID.getModelName(), loginInfoEntity.getStudentId())
-//                    .addParameter(PASSWORD.getModelName(), loginInfoEntity.getPassword())
-//                    .addParameter(FAIL_COUNTER.getModelName(), loginInfoEntity.getFailCounter())
-//                    .addParameter(LAST_LOGIN_DATE.getModelName(), loginInfoEntity.getLastLoginDate())
-//                    .executeUpdate();
-//
+    @Override
+    public boolean isPasswordExist(Long studentId) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(IS_STUDENT_PASSWORD_EXIST)) {
+
+            return query.addParameter(STUDENT_ID.getModelName(), studentId)
+                    .executeScalar(Boolean.class);
+
 //            TODO: Specific Info Log Must be Added
-//        } catch (Exception exception) {
+        } catch (Exception exception) {
 //            TODO: Specific Error Log Must be Added
-//            throw new SisDatabaseException(exception);
-//        }
-//    }
+            throw new SisDatabaseException(exception);
+        }
+    }
 }

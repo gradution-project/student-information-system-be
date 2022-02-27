@@ -1,4 +1,4 @@
-package com.graduationproject.studentinformationsystem.login.student.repository.impl.scripts;
+package com.graduationproject.studentinformationsystem.login.student.common.repository.impl.scripts;
 
 public class StudentLoginSqlScripts {
 
@@ -24,17 +24,18 @@ public class StudentLoginSqlScripts {
     /**
      * INSERT INTO AUTH_STUDENT_LOGIN SET STUDENT_ID=:studentId, PASSWORD=:password, FAIL_COUNTER=:failCounter;
      */
-    public static final String SAVE_STUDENT_FIRST_PASSWORD =
+    public static final String SAVE_STUDENT_PASSWORD =
             sqlBuilder.delete(0, sqlBuilder.length())
                     .append("INSERT INTO AUTH_STUDENT_LOGIN SET STUDENT_ID=:studentId, PASSWORD=:password," +
                             " FAIL_COUNTER=:failCounter").toString();
 
     /**
-     * UPDATE AUTH_STUDENT_LOGIN SET PASSWORD=:password WHERE STUDENT_ID=:studentId;
+     * UPDATE AUTH_STUDENT_LOGIN SET PASSWORD=:password, FAIL_COUNTER=:failCounter WHERE STUDENT_ID=:studentId;
      */
     public static final String UPDATE_STUDENT_PASSWORD =
             sqlBuilder.delete(0, sqlBuilder.length())
-                    .append("UPDATE AUTH_STUDENT_LOGIN SET PASSWORD=:password WHERE STUDENT_ID=:studentId").toString();
+                    .append("UPDATE AUTH_STUDENT_LOGIN SET PASSWORD=:password, FAIL_COUNTER=:failCounter " +
+                            "WHERE STUDENT_ID=:studentId").toString();
 
     /**
      * UPDATE AUTH_STUDENT_LOGIN SET FAIL_COUNTER=:failCounter, LAST_LOGIN_DATE=:lastLoginDate
@@ -52,4 +53,13 @@ public class StudentLoginSqlScripts {
             sqlBuilder.delete(0, sqlBuilder.length())
                     .append("UPDATE AUTH_STUDENT_LOGIN SET FAIL_COUNTER=:failCounter " +
                             "WHERE STUDENT_ID=:studentId").toString();
+
+    /**
+     * SELECT CASE WHEN MAX(STUDENT_ID) IS NULL THEN 'false' ELSE 'true' END IS_EXIST
+     * FROM AUTH_STUDENT_LOGIN WHERE STUDENT_ID=:studentId;
+     */
+    public static final String IS_STUDENT_PASSWORD_EXIST =
+            sqlBuilder.delete(0, sqlBuilder.length())
+                    .append("SELECT CASE WHEN MAX(STUDENT_ID) IS NULL THEN 'false' ELSE 'true' END IS_EXIST " +
+                            "FROM AUTH_STUDENT_LOGIN WHERE STUDENT_ID=:studentId").toString();
 }
