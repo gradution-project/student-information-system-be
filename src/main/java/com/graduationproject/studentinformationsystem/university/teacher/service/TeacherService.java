@@ -18,7 +18,7 @@ public interface TeacherService {
     TeacherInfoDetailResponse getTeacherDetailById(Long teacherId)
             throws SisNotExistException;
 
-    TeacherInfoDetailResponse saveTeacher(TeacherSaveRequest studentInfoRequest);
+    TeacherInfoDetailResponse saveTeacher(TeacherSaveRequest studentInfoRequest) throws SisNotExistException;
 
     TeacherAcademicInfoResponse updateTeacherAcademicInfo(Long teacherId,
                                                           TeacherAcademicInfoUpdateRequest academicInfoUpdateRequest)
