@@ -81,7 +81,7 @@ public class TeacherMailServiceImpl implements TeacherMailService {
     }
 
 
-    private Map<String, String> getMailValues(final TeacherInfoDetailResponse infoDetailResponse) throws SisNotExistException {
+    private Map<String, String> getMailValues(final TeacherInfoDetailResponse infoDetailResponse) {
         final Long teacherId = infoDetailResponse.getAcademicInfoResponse().getTeacherId();
         final String name = infoDetailResponse.getPersonalInfoResponse().getName();
         final String surname = infoDetailResponse.getPersonalInfoResponse().getSurname();
