@@ -30,11 +30,12 @@ public class OfficerLoginSqlScripts {
                             " FAIL_COUNTER=:failCounter").toString();
 
     /**
-     * UPDATE AUTH_OFFICER_LOGIN SET PASSWORD=:password WHERE OFFICER_ID=:officerId;
+     * UPDATE AUTH_OFFICER_LOGIN SET PASSWORD=:password, FAIL_COUNTER=:failCounter WHERE OFFICER_ID=:officerId;
      */
     public static final String UPDATE_OFFICER_PASSWORD =
             sqlBuilder.delete(0, sqlBuilder.length())
-                    .append("UPDATE AUTH_OFFICER_LOGIN SET PASSWORD=:password WHERE OFFICER_ID=:officerId").toString();
+                    .append("UPDATE AUTH_OFFICER_LOGIN SET PASSWORD=:password, FAIL_COUNTER=:failCounter " +
+                            "WHERE OFFICER_ID=:officerId").toString();
 
     /**
      * UPDATE AUTH_OFFICER_LOGIN SET FAIL_COUNTER=:failCounter, LAST_LOGIN_DATE=:lastLoginDate
@@ -52,4 +53,14 @@ public class OfficerLoginSqlScripts {
             sqlBuilder.delete(0, sqlBuilder.length())
                     .append("UPDATE AUTH_OFFICER_LOGIN SET FAIL_COUNTER=:failCounter " +
                             "WHERE OFFICER_ID=:officerId").toString();
+
+    /**
+     * SELECT CASE WHEN MAX(OFFICER_ID) IS NULL THEN 'false' ELSE 'true' END IS_EXIST
+     * FROM AUTH_OFFICER_LOGIN WHERE OFFICER_ID=:officerId;
+     */
+    public static final String IS_OFFICER_PASSWORD_EXIST =
+            sqlBuilder.delete(0, sqlBuilder.length())
+                    .append("SELECT CASE WHEN MAX(OFFICER_ID) IS NULL THEN 'false' ELSE 'true' END IS_EXIST " +
+                            "FROM AUTH_OFFICER_LOGIN WHERE OFFICER_ID=:officerId").toString();
+
 }

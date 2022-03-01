@@ -1,6 +1,6 @@
 package com.graduationproject.studentinformationsystem.login.officer.common.repository;
 
-import com.graduationproject.studentinformationsystem.login.officer.model.entity.OfficerLoginInfoEntity;
+import com.graduationproject.studentinformationsystem.login.officer.common.model.entity.OfficerLoginInfoEntity;
 
 public interface OfficerLoginRepository {
 
@@ -8,11 +8,13 @@ public interface OfficerLoginRepository {
 
     String getPassword(Long officerId);
 
-    void saveFirstPassword(Long officerId, String password);
+    void savePassword(Long officerId, String encodedPassword);
 
-    void updatePassword(Long officerId, String password);
+    void updatePassword(Long officerId, String encodedPassword);
 
     void updateLoginInfo(OfficerLoginInfoEntity loginInfoEntity);
 
     void updateFailCounter(Long officerId);
+
+    boolean isPasswordExist(Long officerId);
 }
