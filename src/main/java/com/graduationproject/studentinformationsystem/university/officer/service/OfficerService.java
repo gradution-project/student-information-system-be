@@ -18,7 +18,7 @@ public interface OfficerService {
     OfficerInfoDetailResponse getOfficerDetailById(Long officerId)
             throws SisNotExistException;
 
-    OfficerInfoDetailResponse saveOfficer(OfficerSaveRequest studentInfoRequest);
+    OfficerInfoDetailResponse saveOfficer(OfficerSaveRequest studentInfoRequest) throws SisNotExistException;
 
     OfficerAcademicInfoResponse updateOfficerAcademicInfo(Long officerId,
                                                           OfficerAcademicInfoUpdateRequest academicInfoUpdateRequest)
