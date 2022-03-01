@@ -26,5 +26,6 @@ public class SisControllerEndpoint {
         public static final String LOGIN = "/login";
         public static final String STUDENT_PASSWORD_OPERATION = STUDENT + PASSWORD_OPERATION;
         public static final String TEACHER_PASSWORD_OPERATION = TEACHER + PASSWORD_OPERATION;
+        public static final String OFFICER_PASSWORD_OPERATION = OFFICER + PASSWORD_OPERATION;
     }
 }
