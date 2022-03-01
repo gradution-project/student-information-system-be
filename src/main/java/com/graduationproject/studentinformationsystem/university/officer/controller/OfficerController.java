@@ -54,7 +54,7 @@ public class OfficerController {
     @PostMapping(OfficerControllerEndpoint.SAVE)
     @ApiOperation(value = "Save Officer")
     public ResponseEntity<SisBaseApiResponse<OfficerInfoDetailResponse>> saveOfficer(
-            @Valid @RequestBody final OfficerSaveRequest saveRequest) {
+            @Valid @RequestBody final OfficerSaveRequest saveRequest) throws SisNotExistException {
 
         final OfficerInfoDetailResponse infoDetailResponse = officerService.saveOfficer(saveRequest);
         return successResponse(infoDetailResponse);
