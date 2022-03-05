@@ -33,9 +33,9 @@ public class TeacherController {
     private final TeacherService teacherService;
 
     @GetMapping
-    @ApiOperation(value = "Get All Teacher By Status")
+    @ApiOperation(value = "Get All Teachers By Status")
     public ResponseEntity<SisBaseApiResponse<List<TeacherInfoResponse>>> getAllTeachersByStatus(
-            final TeacherStatus status) {
+            @RequestParam final TeacherStatus status) {
 
         final List<TeacherInfoResponse> infoResponses = teacherService.getAllTeachersByStatus(status);
         return successResponse(infoResponses);
@@ -54,7 +54,7 @@ public class TeacherController {
     @PostMapping(TeacherControllerEndpoint.SAVE)
     @ApiOperation(value = "Save Teacher")
     public ResponseEntity<SisBaseApiResponse<TeacherInfoDetailResponse>> saveTeacher(
-            @Valid @RequestBody final TeacherSaveRequest saveRequest) {
+            @Valid @RequestBody final TeacherSaveRequest saveRequest) throws SisNotExistException {
 
         final TeacherInfoDetailResponse infoDetailResponse = teacherService.saveTeacher(saveRequest);
         return successResponse(infoDetailResponse);

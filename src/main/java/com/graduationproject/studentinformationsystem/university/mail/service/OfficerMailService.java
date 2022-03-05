@@ -4,7 +4,7 @@ import com.graduationproject.studentinformationsystem.university.officer.model.d
 
 public interface OfficerMailService {
 
-    void sendFirstPasswordEmail(final OfficerInfoDetailResponse infoDetailResponse);
+    void sendSavedEmail(final OfficerInfoDetailResponse infoDetailResponse);
 
     void sendForgotPasswordEmail(final OfficerInfoDetailResponse infoDetailResponse);
 }

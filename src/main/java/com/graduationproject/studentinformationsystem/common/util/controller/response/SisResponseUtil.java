@@ -18,6 +18,14 @@ public class SisResponseUtil {
                         .isSuccess(true).build(), HttpStatus.OK);
     }
 
+    public static ResponseEntity<SisApiResponse> unauthorizedResponse() {
+        return new ResponseEntity<>(
+                SisApiResponse.builder()
+                        .requestTime(LocalDateTime.now())
+                        .httpStatus(HttpStatus.UNAUTHORIZED)
+                        .isSuccess(false).build(), HttpStatus.UNAUTHORIZED);
+    }
+
     public static <T> ResponseEntity<SisBaseApiResponse<T>> successResponse(final T response) {
         return new ResponseEntity<>(
                 SisBaseApiResponse.<T>builder()

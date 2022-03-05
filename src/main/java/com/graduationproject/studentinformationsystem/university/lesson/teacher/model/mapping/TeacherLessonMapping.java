@@ -13,12 +13,6 @@ public enum TeacherLessonMapping {
 
     TEACHER_ID("TEACHER_ID", "teacherId"),
     LESSON_ID("LESSON_ID", "lessonId"),
-    DEPARTMENT_ID("DEPARTMENT_ID", "departmentId"),
-    NAME("NAME", "name"),
-    SEMESTER("SEMESTER", "semester"),
-    CREDIT("CREDIT", "credit"),
-    COMPULSORY_OR_ELECTIVE("COMPULSORY_OR_ELECTIVE", "compulsoryOrElective"),
-    STATUS("STATUS", "status"),
     CREATED_DATE("CREATED_DATE", "createdDate"),
     CREATED_USER_ID("CREATED_USER_ID", "createdUserId");
 

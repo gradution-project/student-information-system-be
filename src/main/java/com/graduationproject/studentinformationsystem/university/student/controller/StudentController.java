@@ -33,9 +33,9 @@ public class StudentController {
     private final StudentService studentService;
 
     @GetMapping
-    @ApiOperation(value = "Get All Student By Status")
+    @ApiOperation(value = "Get All Students By Status")
     public ResponseEntity<SisBaseApiResponse<List<StudentInfoResponse>>> getAllStudentsByStatus(
-            final StudentStatus status) {
+            @RequestParam final StudentStatus status) {
 
         final List<StudentInfoResponse> infoResponses = studentService.getAllStudentsByStatus(status);
         return successResponse(infoResponses);

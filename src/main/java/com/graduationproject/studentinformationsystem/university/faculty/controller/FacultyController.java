@@ -30,9 +30,9 @@ public class FacultyController {
     private final FacultyService facultyService;
 
     @GetMapping
-    @ApiOperation(value = "Get All Faculty By Status")
+    @ApiOperation(value = "Get All Faculties By Status")
     public ResponseEntity<SisBaseApiResponse<List<FacultyResponse>>> getAllFacultiesByStatus(
-            final FacultyStatus status) {
+            @RequestParam final FacultyStatus status) {
 
         final List<FacultyResponse> facultyResponses = facultyService.getAllFacultiesByStatus(status);
         return successResponse(facultyResponses);

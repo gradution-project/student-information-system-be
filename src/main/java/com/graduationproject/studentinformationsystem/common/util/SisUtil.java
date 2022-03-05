@@ -1,7 +1,10 @@
 package com.graduationproject.studentinformationsystem.common.util;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.apache.commons.lang3.BooleanUtils;
 
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -103,5 +106,15 @@ public class SisUtil {
 
     public static Integer booleanToInteger(final Boolean bool) {
         return BooleanUtils.toIntegerObject(bool);
+    }
+
+    public static String longListToString(final List<Long> values) {
+        return new Gson().toJson(values);
+    }
+
+    public static List<Long> longArrayToLongList(final String values) {
+        Type type = new TypeToken<List<Long>>() {
+        }.getType();
+        return new Gson().fromJson(values, type);
     }
 }

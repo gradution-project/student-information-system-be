@@ -3,6 +3,7 @@ package com.graduationproject.studentinformationsystem.university.officer.servic
 import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
+import com.graduationproject.studentinformationsystem.login.officer.password.service.OfficerPasswordOperationOutService;
 import com.graduationproject.studentinformationsystem.university.mail.service.OfficerMailService;
 import com.graduationproject.studentinformationsystem.university.officer.model.dto.converter.OfficerInfoResponseConverter;
 import com.graduationproject.studentinformationsystem.university.officer.model.dto.converter.OfficerResponseConverter;
@@ -26,6 +27,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OfficerServiceImpl implements OfficerService {
 
+    private final OfficerPasswordOperationOutService passwordOperationOutService;
+
     private final OfficerAcademicInfoService academicInfoService;
     private final OfficerPersonalInfoService personalInfoService;
     private final OfficerMailService officerMailService;
@@ -44,7 +47,7 @@ public class OfficerServiceImpl implements OfficerService {
     }
 
     @Override
-    public OfficerInfoDetailResponse saveOfficer(final OfficerSaveRequest saveRequest) {
+    public OfficerInfoDetailResponse saveOfficer(final OfficerSaveRequest saveRequest) throws SisNotExistException {
         checkBeforeSaving(saveRequest);
 
         final Long officerId = generateOfficerId(saveRequest.getAcademicInfoRequest().getFacultyId());
@@ -57,7 +60,9 @@ public class OfficerServiceImpl implements OfficerService {
         personalInfoService.saveOfficerPersonalInfo(officerId, personalInfoRequest, operationInfoRequest);
 
         final OfficerInfoDetailResponse infoDetailResponse = getOfficerInfoResponse(officerId);
-        officerMailService.sendFirstPasswordEmail(infoDetailResponse);
+
+        passwordOperationOutService.saveOrUpdatePasswordOperation(officerId, saveRequest.getOperationInfoRequest().getFeUrl());
+        officerMailService.sendSavedEmail(infoDetailResponse);
         return infoDetailResponse;
     }
 

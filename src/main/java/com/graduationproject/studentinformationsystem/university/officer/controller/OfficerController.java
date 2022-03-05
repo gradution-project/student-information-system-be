@@ -33,9 +33,9 @@ public class OfficerController {
     private final OfficerService officerService;
 
     @GetMapping
-    @ApiOperation(value = "Get All Officer By Status")
+    @ApiOperation(value = "Get All Officers By Status")
     public ResponseEntity<SisBaseApiResponse<List<OfficerInfoResponse>>> getAllOfficersByStatus(
-            final OfficerStatus status) {
+            @RequestParam final OfficerStatus status) {
 
         final List<OfficerInfoResponse> infoResponses = officerService.getAllOfficersByStatus(status);
         return successResponse(infoResponses);
@@ -54,7 +54,7 @@ public class OfficerController {
     @PostMapping(OfficerControllerEndpoint.SAVE)
     @ApiOperation(value = "Save Officer")
     public ResponseEntity<SisBaseApiResponse<OfficerInfoDetailResponse>> saveOfficer(
-            @Valid @RequestBody final OfficerSaveRequest saveRequest) {
+            @Valid @RequestBody final OfficerSaveRequest saveRequest) throws SisNotExistException {
 
         final OfficerInfoDetailResponse infoDetailResponse = officerService.saveOfficer(saveRequest);
         return successResponse(infoDetailResponse);

@@ -1,8 +1,8 @@
 package com.graduationproject.studentinformationsystem.university.mail.service.impl;
 
 import com.graduationproject.studentinformationsystem.common.util.SisUtil;
-import com.graduationproject.studentinformationsystem.login.common.service.PasswordService;
-import com.graduationproject.studentinformationsystem.login.student.repository.StudentLoginRepository;
+import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
+import com.graduationproject.studentinformationsystem.login.student.password.service.StudentPasswordOperationOutService;
 import com.graduationproject.studentinformationsystem.university.mail.model.entity.SisMailEntity;
 import com.graduationproject.studentinformationsystem.university.mail.service.MailService;
 import com.graduationproject.studentinformationsystem.university.mail.service.StudentMailService;
@@ -22,10 +22,9 @@ import java.util.Properties;
 @RequiredArgsConstructor
 public class StudentMailServiceImpl implements StudentMailService {
 
-    private final MailService mailService;
+    private final StudentPasswordOperationOutService passwordOperationOutService;
 
-    private final StudentLoginRepository loginRepository;
-    private final PasswordService passwordService;
+    private final MailService mailService;
 
     private final ParameterRepository parameterRepository;
 
@@ -33,8 +32,8 @@ public class StudentMailServiceImpl implements StudentMailService {
 
     private static final String STUDENT_NAME = "studentName";
     private static final String STUDENT_NUMBER = "studentNumber";
-    private static final String PASSWORD = "password";
     private static final String DATE = "date";
+    private static final String CHANGE_PASSWORD_URL = "changePasswordUrl";
 
     @PostConstruct
     void before() {
@@ -52,39 +51,48 @@ public class StudentMailServiceImpl implements StudentMailService {
     }
 
     @Override
-    public void sendFirstPasswordEmail(final StudentInfoDetailResponse infoDetailResponse) {
-        Map<String, String> values = new HashMap<>();
-        values.put(STUDENT_NAME, getStudentName(infoDetailResponse));
-        values.put(STUDENT_NUMBER, getStudentNumber(infoDetailResponse));
-        values.put(PASSWORD, getFirstPassword(infoDetailResponse));
-        values.put(DATE, SisUtil.getCurrentFormattedDateTime());
+    public void sendSavedEmail(final StudentInfoDetailResponse infoDetailResponse) throws SisNotExistException {
+        final String personalEmail = infoDetailResponse.getPersonalInfoResponse().getEmail();
+
+        Map<String, String> values = getMailValues(infoDetailResponse);
 
         mailEntity.setTitle("Öğrenci Hesabınız Başarıyla Oluşturuldu!");
         mailEntity.setTemplate(parameterRepository.getStudentParameterByName("MAIL_TEMPLATE_FIRST_PASSWORD"));
-        mailEntity.setTo(getStudentPersonalEmail(infoDetailResponse));
+        mailEntity.setTo(personalEmail);
         mailEntity.setValues(values);
 
         mailService.sendMail(mailEntity);
-        log.info("First Password Email Successfully Sent to " + mailEntity.getTo());
+        log.info("Student Saved Email Successfully Sent to " + mailEntity.getTo());
     }
 
     @Override
-    public void sendForgotPasswordEmail(final StudentInfoDetailResponse infoDetailResponse) {
-        Map<String, String> values = new HashMap<>();
-        values.put(STUDENT_NAME, getStudentName(infoDetailResponse));
-        values.put(STUDENT_NUMBER, getStudentNumber(infoDetailResponse));
-        values.put(PASSWORD, getChangedPassword(infoDetailResponse));
-        values.put(DATE, SisUtil.getCurrentFormattedDateTime());
+    public void sendForgotPasswordEmail(final StudentInfoDetailResponse infoDetailResponse) throws SisNotExistException {
+        final String personalEmail = infoDetailResponse.getPersonalInfoResponse().getEmail();
 
-        mailEntity.setTitle("Şifreniz Başarıyla Değiştirildi!");
+        Map<String, String> values = getMailValues(infoDetailResponse);
+
+        mailEntity.setTitle("Şifre Değiştirme İsteğiniz İle İlgili!");
         mailEntity.setTemplate(parameterRepository.getStudentParameterByName("MAIL_TEMPLATE_FORGOT_PASSWORD"));
-        mailEntity.setTo(getStudentPersonalEmail(infoDetailResponse));
+        mailEntity.setTo(personalEmail);
         mailEntity.setValues(values);
 
         mailService.sendMail(mailEntity);
-        log.info("Forgot Password Email Successfully Sent to " + mailEntity.getTo());
+        log.info("Student Forgot Password Email Successfully Sent to " + mailEntity.getTo());
     }
 
+
+    private Map<String, String> getMailValues(final StudentInfoDetailResponse infoDetailResponse) throws SisNotExistException {
+        final Long studentId = infoDetailResponse.getAcademicInfoResponse().getStudentId();
+        final String name = infoDetailResponse.getPersonalInfoResponse().getName();
+        final String surname = infoDetailResponse.getPersonalInfoResponse().getSurname();
+
+        Map<String, String> values = new HashMap<>();
+        values.put(STUDENT_NAME, getStudentFullName(name, surname));
+        values.put(STUDENT_NUMBER, getStudentNumber(studentId));
+        values.put(DATE, SisUtil.getCurrentFormattedDateTime());
+        values.put(CHANGE_PASSWORD_URL, getChangePasswordUrl(studentId));
+        return values;
+    }
 
     private Properties getProperties() {
         Properties properties = new Properties();
@@ -95,32 +103,16 @@ public class StudentMailServiceImpl implements StudentMailService {
         return properties;
     }
 
-    private String getStudentName(final StudentInfoDetailResponse infoDetailResponse) {
-        final String name = infoDetailResponse.getPersonalInfoResponse().getName();
-        final String surname = infoDetailResponse.getPersonalInfoResponse().getSurname();
+    private String getStudentFullName(final String name, final String surname) {
         return name + " " + surname;
     }
 
-    private String getStudentNumber(final StudentInfoDetailResponse infoDetailResponse) {
-        return String.valueOf(infoDetailResponse.getAcademicInfoResponse().getStudentId());
-    }
-
-    private String getStudentPersonalEmail(final StudentInfoDetailResponse infoDetailResponse) {
-        return infoDetailResponse.getPersonalInfoResponse().getEmail();
+    private String getStudentNumber(final Long studentId) {
+        return String.valueOf(studentId);
     }
 
 
-    protected String getFirstPassword(final StudentInfoDetailResponse infoDetailResponse) {
-        final Long studentId = infoDetailResponse.getAcademicInfoResponse().getStudentId();
-        final String password = passwordService.generatePassword();
-        loginRepository.saveFirstPassword(studentId, password);
-        return password;
-    }
-
-    protected String getChangedPassword(final StudentInfoDetailResponse infoDetailResponse) {
-        final Long studentId = infoDetailResponse.getAcademicInfoResponse().getStudentId();
-        final String password = passwordService.generatePassword();
-        loginRepository.updatePassword(studentId, password);
-        return password;
+    protected String getChangePasswordUrl(final Long studentId) {
+        return passwordOperationOutService.getPasswordChangeUrl(studentId);
     }
 }

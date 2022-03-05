@@ -3,6 +3,7 @@ package com.graduationproject.studentinformationsystem.university.teacher.servic
 import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
+import com.graduationproject.studentinformationsystem.login.teacher.password.service.TeacherPasswordOperationOutService;
 import com.graduationproject.studentinformationsystem.university.mail.service.TeacherMailService;
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.converter.TeacherInfoResponseConverter;
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.converter.TeacherResponseConverter;
@@ -26,6 +27,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TeacherServiceImpl implements TeacherService {
 
+    private final TeacherPasswordOperationOutService passwordOperationOutService;
+
     private final TeacherAcademicInfoService academicInfoService;
     private final TeacherPersonalInfoService personalInfoService;
     private final TeacherMailService teacherMailService;
@@ -44,7 +47,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public TeacherInfoDetailResponse saveTeacher(final TeacherSaveRequest saveRequest) {
+    public TeacherInfoDetailResponse saveTeacher(final TeacherSaveRequest saveRequest) throws SisNotExistException {
         checkBeforeSaving(saveRequest);
 
         final Long teacherId = generateTeacherId(saveRequest.getAcademicInfoRequest().getDepartmentId());
@@ -57,7 +60,9 @@ public class TeacherServiceImpl implements TeacherService {
         personalInfoService.saveTeacherPersonalInfo(teacherId, personalInfoRequest, operationInfoRequest);
 
         final TeacherInfoDetailResponse infoDetailResponse = getTeacherInfoResponse(teacherId);
-        teacherMailService.sendFirstPasswordEmail(infoDetailResponse);
+
+        passwordOperationOutService.saveOrUpdatePasswordOperation(teacherId, saveRequest.getOperationInfoRequest().getFeUrl());
+        teacherMailService.sendSavedEmail(infoDetailResponse);
         return infoDetailResponse;
     }
 

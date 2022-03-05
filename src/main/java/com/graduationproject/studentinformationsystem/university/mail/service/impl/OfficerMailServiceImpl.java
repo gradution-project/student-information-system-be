@@ -1,8 +1,7 @@
 package com.graduationproject.studentinformationsystem.university.mail.service.impl;
 
 import com.graduationproject.studentinformationsystem.common.util.SisUtil;
-import com.graduationproject.studentinformationsystem.login.common.service.PasswordService;
-import com.graduationproject.studentinformationsystem.login.officer.repository.OfficerLoginRepository;
+import com.graduationproject.studentinformationsystem.login.officer.password.service.OfficerPasswordOperationOutService;
 import com.graduationproject.studentinformationsystem.university.mail.model.entity.SisMailEntity;
 import com.graduationproject.studentinformationsystem.university.mail.service.MailService;
 import com.graduationproject.studentinformationsystem.university.mail.service.OfficerMailService;
@@ -22,10 +21,9 @@ import java.util.Properties;
 @RequiredArgsConstructor
 public class OfficerMailServiceImpl implements OfficerMailService {
 
-    private final MailService mailService;
+    private final OfficerPasswordOperationOutService passwordOperationOutService;
 
-    private final OfficerLoginRepository loginRepository;
-    private final PasswordService passwordService;
+    private final MailService mailService;
 
     private final ParameterRepository parameterRepository;
 
@@ -33,8 +31,8 @@ public class OfficerMailServiceImpl implements OfficerMailService {
 
     private static final String OFFICER_NAME = "officerName";
     private static final String OFFICER_NUMBER = "officerNumber";
-    private static final String PASSWORD = "password";
     private static final String DATE = "date";
+    private static final String CHANGE_PASSWORD_URL = "changePasswordUrl";
 
     @PostConstruct
     void before() {
@@ -52,37 +50,47 @@ public class OfficerMailServiceImpl implements OfficerMailService {
     }
 
     @Override
-    public void sendFirstPasswordEmail(final OfficerInfoDetailResponse infoDetailResponse) {
-        Map<String, String> values = new HashMap<>();
-        values.put(OFFICER_NAME, getOfficerName(infoDetailResponse));
-        values.put(OFFICER_NUMBER, getOfficerNumber(infoDetailResponse));
-        values.put(PASSWORD, getFirstPassword(infoDetailResponse));
-        values.put(DATE, SisUtil.getCurrentFormattedDateTime());
+    public void sendSavedEmail(final OfficerInfoDetailResponse infoDetailResponse) {
+        final String personalEmail = infoDetailResponse.getPersonalInfoResponse().getEmail();
+
+        Map<String, String> values = getMailValues(infoDetailResponse);
 
         mailEntity.setTitle("Personel Hesabınız Başarıyla Oluşturuldu!");
         mailEntity.setTemplate(parameterRepository.getOfficerParameterByName("MAIL_TEMPLATE_FIRST_PASSWORD"));
-        mailEntity.setTo(getOfficerPersonalEmail(infoDetailResponse));
+        mailEntity.setTo(personalEmail);
         mailEntity.setValues(values);
 
         mailService.sendMail(mailEntity);
-        log.info("First Password Email Successfully Sent to " + mailEntity.getTo());
+        log.info("Officer First Password Email Successfully Sent to " + mailEntity.getTo());
     }
 
     @Override
     public void sendForgotPasswordEmail(final OfficerInfoDetailResponse infoDetailResponse) {
-        Map<String, String> values = new HashMap<>();
-        values.put(OFFICER_NAME, getOfficerName(infoDetailResponse));
-        values.put(OFFICER_NUMBER, getOfficerNumber(infoDetailResponse));
-        values.put(PASSWORD, getChangedPassword(infoDetailResponse));
-        values.put(DATE, SisUtil.getCurrentFormattedDateTime());
+        final String personalEmail = infoDetailResponse.getPersonalInfoResponse().getEmail();
 
-        mailEntity.setTitle("Şifreniz Başarıyla Değiştirildi!");
+        Map<String, String> values = getMailValues(infoDetailResponse);
+
+        mailEntity.setTitle("Şifre Değiştirme İsteğiniz İle İlgili!");
         mailEntity.setTemplate(parameterRepository.getOfficerParameterByName("MAIL_TEMPLATE_FORGOT_PASSWORD"));
-        mailEntity.setTo(getOfficerPersonalEmail(infoDetailResponse));
+        mailEntity.setTo(personalEmail);
         mailEntity.setValues(values);
 
         mailService.sendMail(mailEntity);
-        log.info("Forgot Password Email Successfully Sent to " + mailEntity.getTo());
+        log.info("Officer Forgot Password Email Successfully Sent to " + mailEntity.getTo());
+    }
+
+
+    private Map<String, String> getMailValues(final OfficerInfoDetailResponse infoDetailResponse) {
+        final Long officerId = infoDetailResponse.getAcademicInfoResponse().getOfficerId();
+        final String name = infoDetailResponse.getPersonalInfoResponse().getName();
+        final String surname = infoDetailResponse.getPersonalInfoResponse().getSurname();
+
+        Map<String, String> values = new HashMap<>();
+        values.put(OFFICER_NAME, getOfficerFullName(name, surname));
+        values.put(OFFICER_NUMBER, getOfficerNumber(officerId));
+        values.put(DATE, SisUtil.getCurrentFormattedDateTime());
+        values.put(CHANGE_PASSWORD_URL, getChangePasswordUrl(officerId));
+        return values;
     }
 
     private Properties getProperties() {
@@ -94,32 +102,16 @@ public class OfficerMailServiceImpl implements OfficerMailService {
         return properties;
     }
 
-    private String getOfficerName(final OfficerInfoDetailResponse infoDetailResponse) {
-        final String name = infoDetailResponse.getPersonalInfoResponse().getName();
-        final String surname = infoDetailResponse.getPersonalInfoResponse().getSurname();
+    private String getOfficerFullName(final String name, final String surname) {
         return name + " " + surname;
     }
 
-    private String getOfficerNumber(final OfficerInfoDetailResponse infoDetailResponse) {
-        return String.valueOf(infoDetailResponse.getAcademicInfoResponse().getOfficerId());
-    }
-
-    private String getOfficerPersonalEmail(final OfficerInfoDetailResponse infoDetailResponse) {
-        return infoDetailResponse.getPersonalInfoResponse().getEmail();
+    private String getOfficerNumber(final Long officerId) {
+        return String.valueOf(officerId);
     }
 
 
-    protected String getFirstPassword(final OfficerInfoDetailResponse infoDetailResponse) {
-        final Long officerId = infoDetailResponse.getAcademicInfoResponse().getOfficerId();
-        final String password = passwordService.generatePassword();
-        loginRepository.saveFirstPassword(officerId, password);
-        return password;
-    }
-
-    protected String getChangedPassword(final OfficerInfoDetailResponse infoDetailResponse) {
-        final Long officerId = infoDetailResponse.getAcademicInfoResponse().getOfficerId();
-        final String password = passwordService.generatePassword();
-        loginRepository.updatePassword(officerId, password);
-        return password;
+    protected String getChangePasswordUrl(final Long officerId) {
+        return passwordOperationOutService.getPasswordChangeUrl(officerId);
     }
 }
