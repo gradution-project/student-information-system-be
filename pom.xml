@@ -179,7 +179,8 @@
 					<appName>sis-be</appName>
 					<jdkVersion>17.0.1</jdkVersion>
 					<processTypes>
-						<web>java -Dserver.port=$PORT -Dspring.profiles.active=mysql-live $JAVA_OPTS -jar target/*.war
+						<web>
+							java -Dserver.port=$PORT -Dspring.profiles.active=mysql-live $JAVA_OPTS -jar target/*.war
 						</web>
 					</processTypes>
 				</configuration>
