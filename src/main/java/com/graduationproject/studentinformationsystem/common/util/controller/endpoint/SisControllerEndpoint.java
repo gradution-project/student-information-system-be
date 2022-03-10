@@ -17,6 +17,7 @@ public class SisControllerEndpoint {
         public static final String LESSON = "/lesson";
         public static final String EXAM_SCHEDULE_FILE = "/exam-schedule-file";
         public static final String LESSON_SCHEDULE_FILE = "/lesson-schedule-file";
+        public static final String FEATURE_TOGGLE = "/feature-toggle";
         public static final String STUDENT = "/student";
         public static final String STUDENT_LESSON = STUDENT + LESSON;
         public static final String STUDENT_LESSON_REGISTRATION = STUDENT_LESSON + REGISTRATION;
