@@ -107,6 +107,16 @@ public class StudentLessonRegistrationServiceImpl implements StudentLessonRegist
         return getStudentLessonRegistrationDetailByRegistrationId(registrationId);
     }
 
+    @Override
+    public boolean isStudentLessonRegistrationWaiting(final String registrationId) {
+        return studentLessonRegistrationRepository.isStudentLessonRegistrationWaiting(registrationId);
+    }
+
+    @Override
+    public boolean isStudentLessonRegistrationApproved(final String registrationId) {
+        return studentLessonRegistrationRepository.isStudentLessonRegistrationApproved(registrationId);
+    }
+
 
     /**
      * Checks Before Processing

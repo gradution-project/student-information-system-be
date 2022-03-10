@@ -11,4 +11,6 @@ public class StudentLessonRegistrationControllerEndpoint {
     public static final String SAVE = "/save";
     public static final String APPROVE = "/approve";
     public static final String REJECT = "/reject";
+    public static final String WAITING_BY_REGISTRATION_ID = "/waiting" + REGISTRATION_ID;
+    public static final String APPROVED_BY_REGISTRATION_ID = "/approved" + REGISTRATION_ID;
 }

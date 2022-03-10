@@ -1,5 +1,6 @@
 package com.graduationproject.studentinformationsystem.university.lesson.student.registration.controller;
 
+import com.graduationproject.studentinformationsystem.common.util.controller.response.SisApiResponse;
 import com.graduationproject.studentinformationsystem.common.util.controller.response.SisBaseApiResponse;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
@@ -22,6 +23,7 @@ import java.util.List;
 
 import static com.graduationproject.studentinformationsystem.common.config.SisSwaggerConfiguration.STUDENT_LESSON_REGISTRATION_API_TAG;
 import static com.graduationproject.studentinformationsystem.common.util.controller.endpoint.SisControllerEndpoint.Path.STUDENT_LESSON_REGISTRATION;
+import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.failResponse;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.successResponse;
 
 @RestController
@@ -50,6 +52,34 @@ public class StudentLessonRegistrationController {
         final StudentLessonRegistrationDetailResponse registrationDetailResponse = studentLessonRegistrationService
                 .getStudentLessonRegistrationDetailByRegistrationId(registrationId);
         return successResponse(registrationDetailResponse);
+    }
+
+    @GetMapping(StudentLessonRegistrationControllerEndpoint.WAITING_BY_REGISTRATION_ID)
+    @ApiOperation(value = "Is Student Lesson Registration Waiting")
+    public ResponseEntity<SisApiResponse> isStudentLessonRegistrationWaiting(
+            @PathVariable final String registrationId) {
+
+        final boolean isStudentLessonRegistrationExist = studentLessonRegistrationService.isStudentLessonRegistrationWaiting(registrationId);
+
+        if (isStudentLessonRegistrationExist) {
+            return successResponse();
+        } else {
+            return failResponse();
+        }
+    }
+
+    @GetMapping(StudentLessonRegistrationControllerEndpoint.APPROVED_BY_REGISTRATION_ID)
+    @ApiOperation(value = "Is Student Lesson Registration Approved")
+    public ResponseEntity<SisApiResponse> isStudentLessonRegistrationApproved(
+            @PathVariable final String registrationId) {
+
+        final boolean isStudentLessonRegistrationExist = studentLessonRegistrationService.isStudentLessonRegistrationApproved(registrationId);
+
+        if (isStudentLessonRegistrationExist) {
+            return successResponse();
+        } else {
+            return failResponse();
+        }
     }
 
     @PostMapping(StudentLessonRegistrationControllerEndpoint.SAVE)
