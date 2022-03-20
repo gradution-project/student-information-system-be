@@ -1,7 +1,9 @@
 package com.graduationproject.studentinformationsystem.university.lesson.student.registration.service.impl;
 
+import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
+import com.graduationproject.studentinformationsystem.university.lesson.common.model.dto.response.LessonResponse;
 import com.graduationproject.studentinformationsystem.university.lesson.common.service.LessonOutService;
 import com.graduationproject.studentinformationsystem.university.lesson.student.common.service.StudentLessonOutService;
 import com.graduationproject.studentinformationsystem.university.lesson.student.registration.model.dto.converter.StudentLessonRegistrationInfoConverter;
@@ -15,6 +17,7 @@ import com.graduationproject.studentinformationsystem.university.lesson.student.
 import com.graduationproject.studentinformationsystem.university.lesson.student.registration.model.exception.StudentLessonRegistrationException;
 import com.graduationproject.studentinformationsystem.university.lesson.student.registration.repository.StudentLessonRegistrationRepository;
 import com.graduationproject.studentinformationsystem.university.lesson.student.registration.service.StudentLessonRegistrationService;
+import com.graduationproject.studentinformationsystem.university.note.service.StudentLessonNoteOutService;
 import com.graduationproject.studentinformationsystem.university.student.service.StudentOutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,7 @@ public class StudentLessonRegistrationServiceImpl implements StudentLessonRegist
     private final StudentOutService studentOutService;
     private final LessonOutService lessonOutService;
     private final StudentLessonOutService studentLessonOutService;
+    private final StudentLessonNoteOutService studentLessonNoteOutService;
 
     private final StudentLessonRegistrationRepository studentLessonRegistrationRepository;
     private final StudentLessonRegistrationInfoConverter studentLessonRegistrationInfoConverter;
@@ -87,6 +91,11 @@ public class StudentLessonRegistrationServiceImpl implements StudentLessonRegist
 
         if (StudentLessonRegistrationStatus.APPROVED.equals(registrationDetailResponse.getStatus())) {
             studentLessonOutService.saveStudentLessons(registrationDetailResponse);
+
+            final Long studentId = registrationDetailResponse.getStudentInfoResponse().getStudentId();
+            final List<LessonResponse> lessonResponses = registrationDetailResponse.getLessonResponses();
+            final SisOperationInfoRequest operationInfoRequest = approveRequest.getOperationInfoRequest();
+            studentLessonNoteOutService.saveStudentLessonsNotesRegistrations(studentId, lessonResponses, operationInfoRequest);
         }
 
         return registrationDetailResponse;

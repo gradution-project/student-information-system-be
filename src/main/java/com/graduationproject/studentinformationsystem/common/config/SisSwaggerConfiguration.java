@@ -28,6 +28,7 @@ public class SisSwaggerConfiguration {
     public static final String STUDENT_API_TAG = "Student Controller";
     public static final String STUDENT_LESSON_API_TAG = "Student Lesson Controller";
     public static final String STUDENT_LESSON_REGISTRATION_API_TAG = "Student Lesson Registration Controller";
+    public static final String STUDENT_LESSON_NOTE_API_TAG = "Student Lesson Note Controller";
     public static final String TEACHER_API_TAG = "Teacher Controller";
     public static final String TEACHER_LESSON_API_TAG = "Teacher Lesson Controller";
     public static final String OFFICER_API_TAG = "Officer Controller";
@@ -53,6 +54,7 @@ public class SisSwaggerConfiguration {
                         new Tag(STUDENT_API_TAG, "STUDENT_ACADEMIC_INFO & STUDENT_PERSONAL_INFO"),
                         new Tag(STUDENT_LESSON_API_TAG, "STUDENT_LESSON"),
                         new Tag(STUDENT_LESSON_REGISTRATION_API_TAG, "STUDENT_LESSON_REGISTRATION"),
+                        new Tag(STUDENT_LESSON_NOTE_API_TAG, "STUDENT_LESSON_NOTE"),
                         new Tag(TEACHER_API_TAG, "TEACHER_ACADEMIC_INFO & TEACHER_PERSONAL_INFO"),
                         new Tag(TEACHER_LESSON_API_TAG, "TEACHER_LESSON"),
                         new Tag(OFFICER_API_TAG, "OFFICER_ACADEMIC_INFO & OFFICER_PERSONAL_INFO"),
