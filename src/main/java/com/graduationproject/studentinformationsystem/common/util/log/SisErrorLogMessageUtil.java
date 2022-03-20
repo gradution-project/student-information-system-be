@@ -48,6 +48,14 @@ public class SisErrorLogMessageUtil {
         log.error("Error When Getting {}s by Status! status:{}", apiName, status);
     }
 
+    public void errorWhenGettingAllByStudentId(final Long studentId) {
+        log.error("Error When Getting {}s by Student ID! studentId:{}", apiName, studentId);
+    }
+
+    public void errorWhenGettingAllByLessonId(final Long lessonId) {
+        log.error("Error When Getting {}s by Lesson ID! lessonId:{}", apiName, lessonId);
+    }
+
     public void errorWhenGettingAllIdsByDepartmentId(final Long departmentId) {
         log.error("Error When Getting {} IDs by Department ID! departmentId:{}", apiName, departmentId);
     }
