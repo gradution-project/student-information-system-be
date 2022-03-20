@@ -34,4 +34,20 @@ public class SisResponseUtil {
                         .isSuccess(true)
                         .response(response).build(), HttpStatus.OK);
     }
+
+    public static ResponseEntity<SisApiResponse> failResponse() {
+        return new ResponseEntity<>(
+                SisApiResponse.builder()
+                        .requestTime(LocalDateTime.now())
+                        .httpStatus(HttpStatus.NOT_FOUND)
+                        .isSuccess(false).build(), HttpStatus.NOT_FOUND);
+    }
+
+    public static ResponseEntity<SisApiResponse> unauthorizedResponse() {
+        return new ResponseEntity<>(
+                SisApiResponse.builder()
+                        .requestTime(LocalDateTime.now())
+                        .httpStatus(HttpStatus.UNAUTHORIZED)
+                        .isSuccess(false).build(), HttpStatus.UNAUTHORIZED);
+    }
 }

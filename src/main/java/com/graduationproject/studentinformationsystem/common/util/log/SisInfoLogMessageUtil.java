@@ -44,6 +44,14 @@ public class SisInfoLogMessageUtil {
         log.info("{} IDs Found!", apiName);
     }
 
+    public void foundAllByLessonId(final Long lessonId) {
+        log.info("{}s Found by Lesson ID! lessonId:{}", apiName, lessonId);
+    }
+
+    public void foundAllByStudentId(final Long studentId) {
+        log.info("{}s Found by Student ID! studentId:{}", apiName, studentId);
+    }
+
     public void foundAllByStatus(final String status) {
         log.info("{}s Found by Status! status:{}", apiName, status);
     }

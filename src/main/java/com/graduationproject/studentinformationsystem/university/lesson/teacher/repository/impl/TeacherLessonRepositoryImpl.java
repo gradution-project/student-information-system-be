@@ -137,4 +137,18 @@ public class TeacherLessonRepositoryImpl implements TeacherLessonRepository {
             throw new SisDatabaseException(exception);
         }
     }
+
+    @Override
+    public Long getTeacherIdByLessonId(Long lessonId) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_TEACHER_ID_BY_LESSON_ID)) {
+
+            return query.addParameter(LESSON_ID.getModelName(), lessonId)
+                    .setColumnMappings(COLUMN_MAPPINGS)
+                    .executeScalar(Long.class);
+
+        } catch (Exception exception) {
+            error.errorWhenGetting();
+            throw new SisDatabaseException(exception);
+        }
+    }
 }

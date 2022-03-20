@@ -26,4 +26,8 @@ public interface StudentLessonRegistrationService {
 
     StudentLessonRegistrationDetailResponse rejectStudentLessonRegistration(StudentLessonRegistrationRejectRequest rejectRequest)
             throws SisAlreadyException, SisNotExistException;
+
+    boolean isStudentLessonRegistrationWaiting(String registrationId);
+
+    boolean isStudentLessonRegistrationApproved(String registrationId);
 }

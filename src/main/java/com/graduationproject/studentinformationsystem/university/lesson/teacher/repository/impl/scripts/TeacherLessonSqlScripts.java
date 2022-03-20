@@ -63,4 +63,11 @@ public class TeacherLessonSqlScripts {
                     TEACHER_ID.getModelName(),
                     LESSON_ID.getColumnName(),
                     LESSON_ID.getModelName());
+
+    /**
+     * SELECT TEACHER_ID FROM TEACHER_LESSON WHERE LESSON_ID=:lessonId;
+     */
+    public static final String GET_TEACHER_ID_BY_LESSON_ID =
+            sqlBuilder.delete(0, sqlBuilder.length())
+                    .append("SELECT TEACHER_ID FROM TEACHER_LESSON WHERE LESSON_ID=:lessonId").toString();
 }
