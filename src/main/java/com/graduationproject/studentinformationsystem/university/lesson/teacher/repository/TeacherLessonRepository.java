@@ -19,4 +19,6 @@ public interface TeacherLessonRepository {
     void deleteTeacherLesson(TeacherLessonDeleteEntity deleteLessonEntity);
 
     boolean isTeacherLessonExist(Long teacherId, Long lessonId);
+
+    Long getTeacherIdByLessonId(Long lessonId);
 }
