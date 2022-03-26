@@ -54,4 +54,9 @@ public class StudentLessonNoteOutServiceImpl implements StudentLessonNoteOutServ
             StudentLessonNoteException.throwAlreadyExistException(studentId);
         }
     }
+
+    @Override
+    public boolean isStudentGraduationEnabled(final Long studentId) {
+        return lessonNoteRepository.hasTheStudentPassedAllLessons(studentId);
+    }
 }

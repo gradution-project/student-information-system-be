@@ -29,4 +29,6 @@ public interface StudentGraduationService {
 
     StudentGraduationResponse unconfirmStudentGraduation(StudentGraduationUnconfirmRequest unconfirmRequest)
             throws SisAlreadyException, SisNotExistException;
+
+    boolean isStudentGraduationEnabled(Long studentId) throws SisAlreadyException, SisNotExistException;
 }
