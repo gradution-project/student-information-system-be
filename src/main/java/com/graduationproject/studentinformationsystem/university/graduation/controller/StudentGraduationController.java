@@ -1,8 +1,10 @@
 package com.graduationproject.studentinformationsystem.university.graduation.controller;
 
+import com.graduationproject.studentinformationsystem.common.util.controller.response.SisApiResponse;
 import com.graduationproject.studentinformationsystem.common.util.controller.response.SisBaseApiResponse;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
+import com.graduationproject.studentinformationsystem.common.util.validation.id.StudentID;
 import com.graduationproject.studentinformationsystem.university.graduation.controller.endpoint.StudentGraduationControllerEndpoint;
 import com.graduationproject.studentinformationsystem.university.graduation.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.graduation.model.dto.response.StudentGraduationResponse;
@@ -19,6 +21,7 @@ import java.util.List;
 
 import static com.graduationproject.studentinformationsystem.common.config.SisSwaggerConfiguration.STUDENT_GRADUATION_API_TAG;
 import static com.graduationproject.studentinformationsystem.common.util.controller.endpoint.SisControllerEndpoint.Path.STUDENT_GRADUATION;
+import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.failResponse;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.successResponse;
 
 @RestController
@@ -98,5 +101,20 @@ public class StudentGraduationController {
 
         final StudentGraduationResponse graduationResponse = studentGraduationService.unconfirmStudentGraduation(unconfirmRequest);
         return successResponse(graduationResponse);
+    }
+
+    @GetMapping(StudentGraduationControllerEndpoint.ENABLED)
+    @ApiOperation(value = "Is Student Graduation Enabled")
+    public ResponseEntity<SisApiResponse> isStudentGraduationEnabled(
+            @PathVariable @StudentID final Long studentId)
+            throws SisNotExistException, SisAlreadyException {
+
+        final boolean isStudentGraduationEnabled = studentGraduationService.isStudentGraduationEnabled(studentId);
+
+        if (isStudentGraduationEnabled) {
+            return successResponse();
+        } else {
+            return failResponse();
+        }
     }
 }

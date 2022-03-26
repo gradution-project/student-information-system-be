@@ -5,6 +5,7 @@ public class StudentGraduationControllerEndpoint {
     private StudentGraduationControllerEndpoint() {
     }
 
+    private static final String STUDENT_ID = "/{studentId}";
     private static final String GRADUATION_ID = "/{graduationId}";
     public static final String GET = "/get";
     public static final String GET_BY_GRADUATION_ID = GET + GRADUATION_ID;
@@ -13,4 +14,5 @@ public class StudentGraduationControllerEndpoint {
     public static final String REJECT = "/reject";
     public static final String CONFIRM = "/confirm";
     public static final String UNCONFIRM = "/unconfirm";
+    public static final String ENABLED = "/enabled" + STUDENT_ID;
 }
