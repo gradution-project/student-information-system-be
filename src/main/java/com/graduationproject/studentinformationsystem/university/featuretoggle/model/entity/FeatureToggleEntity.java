@@ -14,5 +14,6 @@ public class FeatureToggleEntity extends SisBaseEntity {
     private Long id;
     private FeatureToggleName name;
     private Boolean isEnabled;
-    private Date date;
+    private Date startDate;
+    private Date endDate;
 }

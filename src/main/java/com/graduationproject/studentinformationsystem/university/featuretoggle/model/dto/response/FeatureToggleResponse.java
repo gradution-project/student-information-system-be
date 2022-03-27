@@ -12,5 +12,6 @@ public class FeatureToggleResponse extends SisBaseResponse {
     private Long id;
     private FeatureToggleName name;
     private Boolean isEnabled;
-    private String date;
+    private String startDate;
+    private String endDate;
 }
