@@ -202,4 +202,24 @@ public class StudentLessonNoteRepositoryImpl implements StudentLessonNoteReposit
             throw new SisDatabaseException(exception);
         }
     }
+
+    @Override
+    public boolean hasTheStudentPassedAllLessons(final Long studentId) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(HAS_THE_STUDENT_PASSED_ALL_LESSONS_BY_STUDENT_ID)) {
+
+            final boolean hasTheStudentPassedAllLessons = query.addParameter(STUDENT_ID.getModelName(), studentId)
+                    .executeAndFetchFirst(Boolean.class);
+
+            if (hasTheStudentPassedAllLessons) {
+                info.foundById(studentId);
+                return true;
+            } else {
+                warn.notFoundById(studentId);
+                return false;
+            }
+        } catch (Exception exception) {
+            error.errorWhenGettingById(studentId);
+            throw new SisDatabaseException(exception);
+        }
+    }
 }

@@ -105,6 +105,16 @@ public class StudentLessonNoteSqlScripts {
                     ID.getModelName());
 
     /**
+     * SELECT CASE WHEN MAX(STUDENT_ID) IS NULL THEN 'true' ELSE 'false' END IS_EXIST
+     * FROM STUDENT_LESSON_NOTE WHERE STUDENT_ID=:studentId AND (STATUS='FAILED' OR STATUS='UNFINALISED');
+     */
+    public static final String HAS_THE_STUDENT_PASSED_ALL_LESSONS_BY_STUDENT_ID =
+            sqlBuilder.delete(0, sqlBuilder.length())
+                    .append("SELECT CASE WHEN MAX(STUDENT_ID) IS NULL THEN 'true' ELSE 'false' END IS_EXIST " +
+                            "FROM STUDENT_LESSON_NOTE WHERE STUDENT_ID=:studentId AND (STATUS='FAILED' " +
+                            "OR STATUS='UNFINALISED')").toString();
+
+    /**
      * SELECT MIDTERM_NOTE FROM STUDENT_LESSON_NOTE WHERE ID=:id;
      */
     public static final String GET_MIDTERM_NOTE_BY_ID =
