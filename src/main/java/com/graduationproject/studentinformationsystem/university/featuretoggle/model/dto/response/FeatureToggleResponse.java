@@ -5,8 +5,6 @@ import com.graduationproject.studentinformationsystem.university.featuretoggle.m
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
-import java.util.Date;
-
 @Getter
 @SuperBuilder
 public class FeatureToggleResponse extends SisBaseResponse {
@@ -14,5 +12,6 @@ public class FeatureToggleResponse extends SisBaseResponse {
     private Long id;
     private FeatureToggleName name;
     private Boolean isEnabled;
-    private Date date;
+    private String startDate;
+    private String endDate;
 }

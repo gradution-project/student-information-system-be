@@ -12,17 +12,17 @@ public class FeatureToggleSqlScripts {
     }
 
     /**
-     * SELECT ID, NAME, IS_ENABLED, DATE,
+     * SELECT ID, NAME, IS_ENABLED, START_DATE, END_DATE,
      * CREATED_DATE, CREATED_USER_ID, MODIFIED_DATE, MODIFIED_USER_ID FROM UNIV_FEATURE_TOGGLE;
      */
     public static final String GET_ALL_FEATURE_TOGGLES =
             sqlBuilder.delete(0, sqlBuilder.length())
-                    .append("SELECT ID, NAME, IS_ENABLED, DATE, " +
+                    .append("SELECT ID, NAME, IS_ENABLED, START_DATE, END_DATE, " +
                             "CREATED_DATE, CREATED_USER_ID, MODIFIED_DATE, MODIFIED_USER_ID " +
                             "FROM UNIV_FEATURE_TOGGLE ").toString();
 
     /**
-     * SELECT ID, NAME, IS_ENABLED, DATE,
+     * SELECT ID, NAME, IS_ENABLED, START_DATE, END_DATE,
      * CREATED_DATE, CREATED_USER_ID, MODIFIED_DATE, MODIFIED_USER_ID FROM UNIV_FEATURE_TOGGLE
      * WHERE NAME=:name;
      */
@@ -64,11 +64,13 @@ public class FeatureToggleSqlScripts {
 
     /**
      * SELECT CASE WHEN MAX(NAME) IS NULL THEN 'false' ELSE 'true' END IS_EXIST
-     * FROM UNIV_FEATURE_TOGGLE WHERE NAME=:name AND IS_ENABLED=1 AND DATE < NOW();
+     * FROM UNIV_FEATURE_TOGGLE WHERE NAME=:name AND IS_ENABLED=1 AND
+     * NOW() > START_DATE AND NOW() < END_DATE;
      */
     public static final String IS_FEATURE_TOGGLE_ENABLED =
             sqlBuilder.delete(0, sqlBuilder.length())
                     .append("SELECT CASE WHEN MAX(NAME) IS NULL " +
                             "THEN 'false' ELSE 'true' END IS_EXIST FROM UNIV_FEATURE_TOGGLE " +
-                            "WHERE NAME=:name AND IS_ENABLED='1' AND DATE < NOW()").toString();
+                            "WHERE NAME=:name AND IS_ENABLED='1' AND " +
+                            "NOW() > START_DATE AND NOW() < END_DATE").toString();
 }

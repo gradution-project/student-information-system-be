@@ -23,4 +23,6 @@ public interface StudentLessonNoteRepository {
     Double getMidtermNoteById(String id);
 
     boolean isStudentLessonNotesExist(String id);
+
+    boolean hasTheStudentPassedAllLessons(Long studentId);
 }
