@@ -59,7 +59,7 @@ public class DepartmentController {
     }
 
     @PutMapping(DepartmentControllerEndpoint.UPDATE_BY_DEPARTMENT_ID)
-    @ApiOperation(value = "Update Department Academic Info")
+    @ApiOperation(value = "Update Department")
     public ResponseEntity<SisBaseApiResponse<DepartmentResponse>> updateDepartment(
             @PathVariable final Long departmentId,
             @Valid @RequestBody final DepartmentUpdateRequest updateRequest)
