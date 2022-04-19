@@ -28,14 +28,14 @@ public class StudentPasswordOperationOutServiceImpl implements StudentPasswordOp
     }
 
     @Override
-    public void saveOrUpdatePasswordOperation(final Long studentId, final String feUrl) throws SisNotExistException {
+    public void saveOrUpdatePasswordOperation(final Long studentId) throws SisNotExistException {
 
         boolean isOperationExist = isOperationExist(studentId);
 
         if (!isOperationExist) {
-            savePasswordOperation(studentId, feUrl);
+            savePasswordOperation(studentId);
         } else {
-            updatePasswordOperation(studentId, feUrl);
+            updatePasswordOperation(studentId);
         }
     }
 
@@ -46,25 +46,21 @@ public class StudentPasswordOperationOutServiceImpl implements StudentPasswordOp
         return passwordOperationInfoConverter.entityToResponse(passwordOperationEntity);
     }
 
-    private void savePasswordOperation(final Long studentId, final String feUrl)
+    private void savePasswordOperation(final Long studentId)
             throws SisNotExistException {
 
         checkBeforeSaving(studentId);
 
-        final StudentPasswordOperationEntity passwordOperationEntity = passwordOperationInfoConverter
-                .generateEntity(studentId, feUrl);
-
+        final StudentPasswordOperationEntity passwordOperationEntity = passwordOperationInfoConverter.generateEntity(studentId);
         passwordOperationRepository.savePasswordOperation(passwordOperationEntity);
     }
 
-    private void updatePasswordOperation(final Long studentId, final String feUrl)
+    private void updatePasswordOperation(final Long studentId)
             throws SisNotExistException {
 
         checkBeforeUpdating(studentId);
 
-        final StudentPasswordOperationEntity passwordOperationEntity = passwordOperationInfoConverter
-                .generateEntity(studentId, feUrl);
-
+        final StudentPasswordOperationEntity passwordOperationEntity = passwordOperationInfoConverter.generateEntity(studentId);
         passwordOperationRepository.updatePasswordOperation(passwordOperationEntity);
     }
 

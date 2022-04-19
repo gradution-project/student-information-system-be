@@ -13,8 +13,7 @@ public enum OfficerPasswordOperationMapping {
 
     OPERATION_ID("OPERATION_ID", "operationId"),
     OFFICER_ID("OFFICER_ID", "officerId"),
-    EXPIRE_DATE("EXPIRE_DATE", "expireDate"),
-    FE_URL("FE_URL", "feUrl");
+    EXPIRE_DATE("EXPIRE_DATE", "expireDate");
 
     private final String columnName;
     private final String modelName;

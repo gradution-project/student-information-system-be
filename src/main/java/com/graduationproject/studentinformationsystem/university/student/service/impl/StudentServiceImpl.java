@@ -63,7 +63,7 @@ public class StudentServiceImpl implements StudentService {
 
         final StudentInfoDetailResponse studentInfoDetailResponse = getStudentInfoDetailResponse(studentId);
 
-        passwordOperationOutService.saveOrUpdatePasswordOperation(studentId, saveRequest.getOperationInfoRequest().getFeUrl());
+        passwordOperationOutService.saveOrUpdatePasswordOperation(studentId);
         mailService.sendSavedEmail(studentInfoDetailResponse);
         return studentInfoDetailResponse;
     }

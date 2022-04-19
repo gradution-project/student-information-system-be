@@ -56,7 +56,7 @@ public class OfficerPasswordOperationServiceImpl implements OfficerPasswordOpera
 
         final OfficerInfoDetailResponse infoDetailResponse = officerOutService.getOfficerInfoDetailResponse(officerId);
 
-        passwordOperationOutService.saveOrUpdatePasswordOperation(officerId, passwordForgotRequest.getFeUrl());
+        passwordOperationOutService.saveOrUpdatePasswordOperation(officerId);
         officerMailService.sendForgotPasswordEmail(infoDetailResponse);
 
         return OfficerPasswordForgotResponse.builder()

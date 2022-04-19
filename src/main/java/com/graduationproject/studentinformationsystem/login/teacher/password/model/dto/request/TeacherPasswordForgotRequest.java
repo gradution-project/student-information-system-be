@@ -16,7 +16,4 @@ public class TeacherPasswordForgotRequest implements Serializable {
     @NotNull
     @TeacherID
     private Long teacherId;
-
-    @NotNull
-    private String feUrl;
 }

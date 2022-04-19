@@ -63,7 +63,7 @@ public class TeacherServiceImpl implements TeacherService {
 
         final TeacherInfoDetailResponse infoDetailResponse = getTeacherInfoResponse(teacherId);
 
-        passwordOperationOutService.saveOrUpdatePasswordOperation(teacherId, saveRequest.getOperationInfoRequest().getFeUrl());
+        passwordOperationOutService.saveOrUpdatePasswordOperation(teacherId);
         teacherMailService.sendSavedEmail(infoDetailResponse);
         return infoDetailResponse;
     }

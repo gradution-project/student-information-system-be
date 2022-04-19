@@ -13,8 +13,7 @@ public enum StudentPasswordOperationMapping {
 
     OPERATION_ID("OPERATION_ID", "operationId"),
     STUDENT_ID("STUDENT_ID", "studentId"),
-    EXPIRE_DATE("EXPIRE_DATE", "expireDate"),
-    FE_URL("FE_URL", "feUrl");
+    EXPIRE_DATE("EXPIRE_DATE", "expireDate");
 
     private final String columnName;
     private final String modelName;
