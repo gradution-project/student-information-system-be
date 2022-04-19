@@ -51,7 +51,7 @@ public class TeacherLessonController {
     @ApiOperation(value = "Save Teacher Lesson")
     public ResponseEntity<SisBaseApiResponse<TeacherLessonResponse>> saveTeacherLesson(
             @RequestBody @Valid final TeacherLessonSaveRequest saveRequest)
-            throws SisAlreadyException {
+            throws SisAlreadyException, SisNotExistException {
 
         final TeacherLessonResponse lessonResponse = lessonService.saveTeacherLesson(saveRequest);
         return successResponse(lessonResponse);
