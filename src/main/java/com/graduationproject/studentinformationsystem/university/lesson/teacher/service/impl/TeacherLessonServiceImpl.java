@@ -12,6 +12,7 @@ import com.graduationproject.studentinformationsystem.university.lesson.teacher.
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.exception.TeacherLessonException;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.repository.TeacherLessonRepository;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.service.TeacherLessonService;
+import com.graduationproject.studentinformationsystem.university.teacher.service.TeacherOutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TeacherLessonServiceImpl implements TeacherLessonService {
+
+    private final TeacherOutService teacherOutService;
 
     private final TeacherLessonRepository teacherLessonRepository;
     private final TeacherLessonInfoConverter teacherLessonInfoConverter;
@@ -42,7 +45,7 @@ public class TeacherLessonServiceImpl implements TeacherLessonService {
 
     @Override
     public TeacherLessonResponse saveTeacherLesson(final TeacherLessonSaveRequest teacherLessonSaveRequest)
-            throws SisAlreadyException {
+            throws SisAlreadyException, SisNotExistException {
 
         checkBeforeSaving(teacherLessonSaveRequest);
 
@@ -77,10 +80,11 @@ public class TeacherLessonServiceImpl implements TeacherLessonService {
      * Checks Before Processing
      */
 
-    private void checkBeforeSaving(final TeacherLessonSaveRequest saveRequest) throws SisAlreadyException {
+    private void checkBeforeSaving(final TeacherLessonSaveRequest saveRequest) throws SisAlreadyException, SisNotExistException {
         final Long teacherId = saveRequest.getTeacherLessonInfoRequest().getTeacherId();
         final Long lessonId = saveRequest.getTeacherLessonInfoRequest().getLessonId();
 
+        ifTeacherIsNotExistThrowNotExistException(teacherId);
         ifTeacherLessonIsExistThrowAlreadyException(teacherId, lessonId);
     }
 
@@ -110,5 +114,9 @@ public class TeacherLessonServiceImpl implements TeacherLessonService {
         if (!teacherLessonRepository.isTeacherLessonExist(teacherId, lessonId)) {
             TeacherLessonException.throwNotExistException(teacherId, lessonId);
         }
+    }
+
+    private void ifTeacherIsNotExistThrowNotExistException(final Long teacherId) throws SisNotExistException {
+        teacherOutService.ifTeacherIsNotExistThrowNotExistException(teacherId);
     }
 }
