@@ -2,6 +2,7 @@ package com.graduationproject.studentinformationsystem.university.lesson.teacher
 
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
+import com.graduationproject.studentinformationsystem.university.lesson.common.service.LessonOutService;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.converter.TeacherLessonInfoConverter;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.request.TeacherLessonDeleteRequest;
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.model.dto.request.TeacherLessonSaveRequest;
@@ -24,6 +25,7 @@ import java.util.List;
 public class TeacherLessonServiceImpl implements TeacherLessonService {
 
     private final TeacherOutService teacherOutService;
+    private final LessonOutService lessonOutService;
 
     private final TeacherLessonRepository teacherLessonRepository;
     private final TeacherLessonInfoConverter teacherLessonInfoConverter;
@@ -85,6 +87,7 @@ public class TeacherLessonServiceImpl implements TeacherLessonService {
         final Long lessonId = saveRequest.getTeacherLessonInfoRequest().getLessonId();
 
         ifTeacherIsNotExistThrowNotExistException(teacherId);
+        ifLessonIsNotExistThrowNotExistException(lessonId);
         ifTeacherLessonIsExistThrowAlreadyException(teacherId, lessonId);
     }
 
@@ -118,5 +121,9 @@ public class TeacherLessonServiceImpl implements TeacherLessonService {
 
     private void ifTeacherIsNotExistThrowNotExistException(final Long teacherId) throws SisNotExistException {
         teacherOutService.ifTeacherIsNotExistThrowNotExistException(teacherId);
+    }
+
+    private void ifLessonIsNotExistThrowNotExistException(final Long lessonId) throws SisNotExistException {
+        lessonOutService.ifLessonIsNotExistThrowNotExistException(lessonId);
     }
 }
