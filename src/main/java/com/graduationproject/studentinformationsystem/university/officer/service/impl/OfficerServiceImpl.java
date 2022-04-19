@@ -4,6 +4,7 @@ import com.graduationproject.studentinformationsystem.common.model.dto.request.S
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.login.officer.password.service.OfficerPasswordOperationOutService;
+import com.graduationproject.studentinformationsystem.university.faculty.service.FacultyOutService;
 import com.graduationproject.studentinformationsystem.university.mail.service.OfficerMailService;
 import com.graduationproject.studentinformationsystem.university.officer.model.dto.converter.OfficerInfoResponseConverter;
 import com.graduationproject.studentinformationsystem.university.officer.model.dto.converter.OfficerResponseConverter;
@@ -27,6 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OfficerServiceImpl implements OfficerService {
 
+    private final FacultyOutService facultyOutService;
     private final OfficerPasswordOperationOutService passwordOperationOutService;
 
     private final OfficerAcademicInfoService academicInfoService;
@@ -143,15 +145,20 @@ public class OfficerServiceImpl implements OfficerService {
      * Checks Before Processing
      */
 
-    private void checkBeforeSaving(final OfficerSaveRequest saveRequest) {
-        ifFacultyIsNotExistThrowNotExistException(saveRequest.getAcademicInfoRequest().getFacultyId());
+    private void checkBeforeSaving(final OfficerSaveRequest saveRequest) throws SisNotExistException {
+
+        final Long facultyId = saveRequest.getAcademicInfoRequest().getFacultyId();
+
+        ifFacultyIsNotExistThrowNotExistException(facultyId);
     }
 
     private void checkBeforeUpdatingAcademicInfo(final Long officerId, final OfficerAcademicInfoUpdateRequest academicInfoUpdateRequest)
             throws SisNotExistException {
 
+        final Long facultyId = academicInfoUpdateRequest.getAcademicInfoRequest().getFacultyId();
+
         ifOfficerIsNotExistThrowNotExistException(officerId);
-        ifFacultyIsNotExistThrowNotExistException(academicInfoUpdateRequest.getAcademicInfoRequest().getFacultyId());
+        ifFacultyIsNotExistThrowNotExistException(facultyId);
     }
 
     private void checkBeforeUpdatingPersonalInfo(final Long officerId) throws SisNotExistException {
@@ -186,11 +193,8 @@ public class OfficerServiceImpl implements OfficerService {
         }
     }
 
-    private void ifFacultyIsNotExistThrowNotExistException(final Long facultyId) {
-        // TODO: ifFacultyIsNotExistThrowNotExistException
-//        if (!facultyService.isFacultyExist(facultyId)) {
-//            SisException.throwNotExistException();
-//        }
+    private void ifFacultyIsNotExistThrowNotExistException(final Long facultyId) throws SisNotExistException {
+        facultyOutService.ifFacultyIsNotExistThrowNotExistException(facultyId);
     }
 
     private void ifOfficerIsAlreadyDeletedThrowAlreadyException(final Long officerId) throws SisAlreadyException {
