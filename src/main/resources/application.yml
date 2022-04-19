@@ -11,6 +11,10 @@ spring:
     activate:
       on-profile: mysql
 
+sis:
+  be-url: http://localhost:8585
+  fe-url: http://localhost:8586
+
 hikari-mysql:
   username: sis
   password: sispass
@@ -24,6 +28,10 @@ spring:
   config:
     activate:
       on-profile: mysql-live
+
+sis:
+  be-url: https://sis-be.herokuapp.com
+  fe-url: https://sis-fe.herokuapp.com
 
 hikari-mysql:
   username: e2ikxn8dldp8frup
