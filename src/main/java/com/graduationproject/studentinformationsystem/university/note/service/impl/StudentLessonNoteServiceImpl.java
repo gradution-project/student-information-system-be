@@ -46,6 +46,7 @@ public class StudentLessonNoteServiceImpl implements StudentLessonNoteService {
             throws SisNotExistException {
 
         ifStudentIsNotExistThrowNotExistException(studentId);
+        ifStudentLessonsNotesAreNotExistThrowNotExistException(studentId);
 
         final List<StudentLessonNoteEntity> entities = lessonNoteRepository.getAllStudentLessonsNotesByStudentId(studentId);
         return lessonNoteInfoConverter.entitiesToResponses(entities);
@@ -166,9 +167,15 @@ public class StudentLessonNoteServiceImpl implements StudentLessonNoteService {
         studentOutService.ifStudentIsNotExistThrowNotExistException(studentId);
     }
 
+    private void ifStudentLessonsNotesAreNotExistThrowNotExistException(final Long studentId) throws SisNotExistException {
+        if (!lessonNoteRepository.isStudentLessonsNotesExist(studentId)) {
+            StudentLessonNoteException.throwNotExistExceptionByStudentId(studentId);
+        }
+    }
+
     private void ifStudentLessonNotesAreNotExistThrowNotExistException(final String id) throws SisNotExistException {
         if (!lessonNoteRepository.isStudentLessonNotesExist(id)) {
-            StudentLessonNoteException.throwNotExistException(id);
+            StudentLessonNoteException.throwNotExistExceptionById(id);
         }
     }
 }

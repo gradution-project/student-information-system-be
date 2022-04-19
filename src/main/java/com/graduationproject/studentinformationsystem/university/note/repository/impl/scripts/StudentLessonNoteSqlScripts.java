@@ -3,6 +3,7 @@ package com.graduationproject.studentinformationsystem.university.note.repositor
 import com.graduationproject.studentinformationsystem.common.util.sql.SisSqlUtil;
 
 import static com.graduationproject.studentinformationsystem.university.note.model.mapping.StudentLessonNoteMapping.ID;
+import static com.graduationproject.studentinformationsystem.university.note.model.mapping.StudentLessonNoteMapping.STUDENT_ID;
 
 public class StudentLessonNoteSqlScripts {
 
@@ -103,6 +104,15 @@ public class StudentLessonNoteSqlScripts {
             .isExistByColumnName("STUDENT_LESSON_NOTE",
                     ID.getColumnName(),
                     ID.getModelName());
+
+    /**
+     * SELECT CASE WHEN MAX(STUDENT_ID) IS NULL THEN 'false' ELSE 'true' END IS_EXIST
+     * FROM STUDENT_LESSON_NOTE WHERE STUDENT_ID=:studentId;
+     */
+    public static final String IS_STUDENT_LESSONS_NOTES_EXIST_BY_STUDENT_ID = SisSqlUtil
+            .isExistByColumnName("STUDENT_LESSON_NOTE",
+                    STUDENT_ID.getColumnName(),
+                    STUDENT_ID.getModelName());
 
     /**
      * SELECT CASE WHEN MAX(STUDENT_ID) IS NULL THEN 'true' ELSE 'false' END IS_EXIST
