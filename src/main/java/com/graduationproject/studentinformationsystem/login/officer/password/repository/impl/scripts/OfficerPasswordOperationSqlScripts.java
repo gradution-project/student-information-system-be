@@ -8,31 +8,31 @@ public class OfficerPasswordOperationSqlScripts {
     }
 
     /**
-     * SELECT OPERATION_ID, OFFICER_ID, EXPIRE_DATE, FE_URL FROM AUTH_OFFICER_PASSWORD_OPERATION
+     * SELECT OPERATION_ID, OFFICER_ID, EXPIRE_DATE FROM AUTH_OFFICER_PASSWORD_OPERATION
      * WHERE OFFICER_ID=:officerId;
      */
     public static final String GET_OFFICER_PASSWORD_OPERATION =
             sqlBuilder.delete(0, sqlBuilder.length())
-                    .append("SELECT OPERATION_ID, OFFICER_ID, EXPIRE_DATE, FE_URL " +
+                    .append("SELECT OPERATION_ID, OFFICER_ID, EXPIRE_DATE " +
                             "FROM AUTH_OFFICER_PASSWORD_OPERATION WHERE OFFICER_ID=:officerId").toString();
 
     /**
      * INSERT INTO AUTH_OFFICER_PASSWORD_OPERATION SET OPERATION_ID=:operationId,
-     * OFFICER_ID=:officerId, EXPIRE_DATE=:expireDate, FE_URL=:feUrl;
+     * OFFICER_ID=:officerId, EXPIRE_DATE=:expireDate;
      */
     public static final String SAVE_OFFICER_PASSWORD_OPERATION =
             sqlBuilder.delete(0, sqlBuilder.length())
                     .append("INSERT INTO AUTH_OFFICER_PASSWORD_OPERATION SET OPERATION_ID=:operationId, " +
-                            "OFFICER_ID=:officerId, EXPIRE_DATE=:expireDate, FE_URL=:feUrl").toString();
+                            "OFFICER_ID=:officerId, EXPIRE_DATE=:expireDate").toString();
 
     /**
-     * UPDATE AUTH_OFFICER_PASSWORD_OPERATION SET OPERATION_ID=:operationId, EXPIRE_DATE=:expireDate, FE_URL=:feUrl
+     * UPDATE AUTH_OFFICER_PASSWORD_OPERATION SET OPERATION_ID=:operationId, EXPIRE_DATE=:expireDate
      * WHERE OFFICER_ID=:officerId;
      */
     public static final String UPDATE_OFFICER_PASSWORD_OPERATION =
             sqlBuilder.delete(0, sqlBuilder.length())
                     .append("UPDATE AUTH_OFFICER_PASSWORD_OPERATION SET OPERATION_ID=:operationId, " +
-                            "EXPIRE_DATE=:expireDate, FE_URL=:feUrl WHERE OFFICER_ID=:officerId").toString();
+                            "EXPIRE_DATE=:expireDate WHERE OFFICER_ID=:officerId").toString();
 
     /**
      * DELETE FROM AUTH_OFFICER_PASSWORD_OPERATION WHERE OPERATION_ID=:operationId;

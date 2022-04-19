@@ -23,48 +23,42 @@ public class TeacherPasswordOperationOutServiceImpl implements TeacherPasswordOp
     public String getPasswordChangeUrl(final Long teacherId) {
 
         final TeacherPasswordOperationResponse passwordOperationResponse = getPasswordOperation(teacherId);
-
         return passwordOperationResponse.getPasswordChangeUrl();
     }
 
     @Override
-    public void saveOrUpdatePasswordOperation(final Long teacherId, final String feUrl) throws SisNotExistException {
+    public void saveOrUpdatePasswordOperation(final Long teacherId) throws SisNotExistException {
 
         boolean isOperationExist = isOperationExist(teacherId);
 
         if (!isOperationExist) {
-            savePasswordOperation(teacherId, feUrl);
+            savePasswordOperation(teacherId);
         } else {
-            updatePasswordOperation(teacherId, feUrl);
+            updatePasswordOperation(teacherId);
         }
     }
 
     private TeacherPasswordOperationResponse getPasswordOperation(final Long teacherId) {
 
         final TeacherPasswordOperationEntity passwordOperationEntity = passwordOperationRepository.getPasswordOperation(teacherId);
-
         return passwordOperationInfoConverter.entityToResponse(passwordOperationEntity);
     }
 
-    private void savePasswordOperation(final Long teacherId, final String feUrl)
+    private void savePasswordOperation(final Long teacherId)
             throws SisNotExistException {
 
         checkBeforeSaving(teacherId);
 
-        final TeacherPasswordOperationEntity passwordOperationEntity = passwordOperationInfoConverter
-                .generateEntity(teacherId, feUrl);
-
+        final TeacherPasswordOperationEntity passwordOperationEntity = passwordOperationInfoConverter.generateEntity(teacherId);
         passwordOperationRepository.savePasswordOperation(passwordOperationEntity);
     }
 
-    private void updatePasswordOperation(final Long teacherId, final String feUrl)
+    private void updatePasswordOperation(final Long teacherId)
             throws SisNotExistException {
 
         checkBeforeUpdating(teacherId);
 
-        final TeacherPasswordOperationEntity passwordOperationEntity = passwordOperationInfoConverter
-                .generateEntity(teacherId, feUrl);
-
+        final TeacherPasswordOperationEntity passwordOperationEntity = passwordOperationInfoConverter.generateEntity(teacherId);
         passwordOperationRepository.updatePasswordOperation(passwordOperationEntity);
     }
 

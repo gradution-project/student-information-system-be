@@ -63,7 +63,7 @@ public class OfficerServiceImpl implements OfficerService {
 
         final OfficerInfoDetailResponse infoDetailResponse = getOfficerInfoResponse(officerId);
 
-        passwordOperationOutService.saveOrUpdatePasswordOperation(officerId, saveRequest.getOperationInfoRequest().getFeUrl());
+        passwordOperationOutService.saveOrUpdatePasswordOperation(officerId);
         officerMailService.sendSavedEmail(infoDetailResponse);
         return infoDetailResponse;
     }

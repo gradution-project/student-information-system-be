@@ -16,6 +16,4 @@ public class SisOperationInfoRequest implements Serializable {
     @NotNull
     @OperationUserID
     private Long userId;
-
-    private String feUrl;
 }

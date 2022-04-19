@@ -3,6 +3,7 @@ package com.graduationproject.studentinformationsystem.login.student.password.mo
 import com.graduationproject.studentinformationsystem.common.util.SisUtil;
 import com.graduationproject.studentinformationsystem.login.student.password.model.dto.response.StudentPasswordOperationResponse;
 import com.graduationproject.studentinformationsystem.login.student.password.model.entity.StudentPasswordOperationEntity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -10,13 +11,15 @@ import java.time.LocalDateTime;
 @Component
 public class StudentPasswordOperationInfoConverter {
 
-    public StudentPasswordOperationEntity generateEntity(final Long studentId, final String feUrl) {
+    @Value("${sis.fe-url}")
+    private String feUrl;
+
+    public StudentPasswordOperationEntity generateEntity(final Long studentId) {
 
         return StudentPasswordOperationEntity.builder()
                 .operationId(SisUtil.generateRandomUUID())
                 .studentId(studentId)
                 .expireDate(LocalDateTime.now().plusDays(1))
-                .feUrl(feUrl)
                 .build();
     }
 
@@ -28,7 +31,7 @@ public class StudentPasswordOperationInfoConverter {
                 .operationId(operationId)
                 .studentId(passwordOperationEntity.getStudentId())
                 .expireDate(passwordOperationEntity.getExpireDate())
-                .passwordChangeUrl(passwordOperationEntity.getFeUrl() + "/login/student/change-password/" + operationId)
+                .passwordChangeUrl(feUrl + "/login/student/change-password/" + operationId)
                 .build();
     }
 }

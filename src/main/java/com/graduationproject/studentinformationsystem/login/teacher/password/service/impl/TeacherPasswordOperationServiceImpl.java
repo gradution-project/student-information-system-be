@@ -56,7 +56,7 @@ public class TeacherPasswordOperationServiceImpl implements TeacherPasswordOpera
 
         final TeacherInfoDetailResponse infoDetailResponse = teacherOutService.getTeacherInfoDetailResponse(teacherId);
 
-        passwordOperationOutService.saveOrUpdatePasswordOperation(teacherId, passwordForgotRequest.getFeUrl());
+        passwordOperationOutService.saveOrUpdatePasswordOperation(teacherId);
         teacherMailService.sendForgotPasswordEmail(infoDetailResponse);
 
         return TeacherPasswordForgotResponse.builder()
