@@ -24,5 +24,7 @@ public interface StudentLessonNoteRepository {
 
     boolean isStudentLessonNotesExist(String id);
 
+    boolean isStudentLessonsNotesExist(Long studentId);
+
     boolean hasTheStudentPassedAllLessons(Long studentId);
 }
