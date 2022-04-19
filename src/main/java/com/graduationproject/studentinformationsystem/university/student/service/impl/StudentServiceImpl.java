@@ -156,14 +156,18 @@ public class StudentServiceImpl implements StudentService {
      */
 
     private void checkBeforeSaving(final StudentSaveRequest studentInfoRequest) throws SisNotExistException {
-        ifDepartmentIsNotExistThrowNotExistException(studentInfoRequest.getAcademicInfoRequest().getDepartmentId());
+        final Long departmentId = studentInfoRequest.getAcademicInfoRequest().getDepartmentId();
+
+        ifDepartmentIsNotExistThrowNotExistException(departmentId);
     }
 
     private void checkBeforeUpdatingAcademicInfo(final Long studentId, final StudentAcademicInfoUpdateRequest academicInfoUpdateRequest)
             throws SisNotExistException {
 
+        final Long departmentId = academicInfoUpdateRequest.getAcademicInfoRequest().getDepartmentId();
+
         ifStudentIsNotExistThrowNotExistException(studentId);
-        ifDepartmentIsNotExistThrowNotExistException(academicInfoUpdateRequest.getAcademicInfoRequest().getDepartmentId());
+        ifDepartmentIsNotExistThrowNotExistException(departmentId);
     }
 
     private void checkBeforeUpdatingPersonalInfo(final Long studentId) throws SisNotExistException {
