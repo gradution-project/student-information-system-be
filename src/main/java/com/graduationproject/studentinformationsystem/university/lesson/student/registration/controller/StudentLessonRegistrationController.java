@@ -4,6 +4,7 @@ import com.graduationproject.studentinformationsystem.common.util.controller.res
 import com.graduationproject.studentinformationsystem.common.util.controller.response.SisBaseApiResponse;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
+import com.graduationproject.studentinformationsystem.common.util.validation.id.StudentID;
 import com.graduationproject.studentinformationsystem.university.lesson.student.registration.controller.endpoint.StudentLessonRegistrationControllerEndpoint;
 import com.graduationproject.studentinformationsystem.university.lesson.student.registration.model.dto.request.StudentLessonRegistrationApproveRequest;
 import com.graduationproject.studentinformationsystem.university.lesson.student.registration.model.dto.request.StudentLessonRegistrationRejectRequest;
@@ -54,17 +55,19 @@ public class StudentLessonRegistrationController {
         return successResponse(registrationDetailResponse);
     }
 
-    @GetMapping(StudentLessonRegistrationControllerEndpoint.WAITING_BY_REGISTRATION_ID)
-    @ApiOperation(value = "Is Student Lesson Registration Waiting")
-    public ResponseEntity<SisApiResponse> isStudentLessonRegistrationWaiting(
-            @PathVariable final String registrationId) {
+    @GetMapping(StudentLessonRegistrationControllerEndpoint.WAITING_BY_STUDENT_ID)
+    @ApiOperation(value = "Get Waiting Student Lessons Detail By Student ID")
+    public ResponseEntity<SisBaseApiResponse<Object>> getWaitingStudentLessonsDetailByStudentId(
+            @PathVariable @StudentID final Long studentId)
+            throws SisNotExistException {
 
-        final boolean isStudentLessonRegistrationExist = studentLessonRegistrationService.isStudentLessonRegistrationWaiting(registrationId);
+        final StudentLessonRegistrationDetailResponse registrationDetailResponse = studentLessonRegistrationService
+                .getWaitingStudentLessonsDetailByStudentId(studentId);
 
-        if (isStudentLessonRegistrationExist) {
-            return successResponse();
+        if (registrationDetailResponse != null) {
+            return successResponse(registrationDetailResponse);
         } else {
-            return failResponse();
+            return failResponse(null);
         }
     }
 
