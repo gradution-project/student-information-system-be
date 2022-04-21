@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum FeatureToggleName {
 
-    LESSON_REGISTRATION_OPERATIONS("Ders Kayıt İşlemleri"),
+    FIRST_SEMESTER_LESSON_REGISTRATION_OPERATIONS("1. Dönem Ders Kayıt İşlemleri"),
+    SECOND_SEMESTER_LESSON_REGISTRATION_OPERATIONS("2. Dönem Ders Kayıt İşlemleri"),
     NOTE_OPERATIONS("Not İşlemleri"),
     MIDTERM_NOTE_OPERATIONS("Vize Not İşlemleri"),
     FINAL_NOTE_OPERATIONS("Final Not İşlemleri"),

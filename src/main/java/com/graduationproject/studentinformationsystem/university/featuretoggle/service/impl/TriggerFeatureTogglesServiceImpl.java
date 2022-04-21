@@ -23,6 +23,12 @@ public class TriggerFeatureTogglesServiceImpl implements TriggerFeatureTogglesSe
         final SisOperationInfoRequest operationInfoRequest = featureToggleRequest.getOperationInfoRequest();
 
         switch (featureToggleRequest.getName()) {
+            case FIRST_SEMESTER_LESSON_REGISTRATION_OPERATIONS -> {
+                disableSecondSemesterLessonRegistrationOperationFeatureToggle(operationInfoRequest);
+            }
+            case SECOND_SEMESTER_LESSON_REGISTRATION_OPERATIONS -> {
+                disableFirstSemesterLessonRegistrationOperationFeatureToggle(operationInfoRequest);
+            }
             case MIDTERM_NOTE_OPERATIONS -> {
                 enableNoteOperationsFeatureToggle(operationInfoRequest);
                 disableFinalNoteOperationsFeatureToggle(operationInfoRequest);
@@ -53,6 +59,24 @@ public class TriggerFeatureTogglesServiceImpl implements TriggerFeatureTogglesSe
                 disableResitNoteOperationsFeatureToggle(operationInfoRequest);
             }
         }
+    }
+
+    private void disableFirstSemesterLessonRegistrationOperationFeatureToggle(final SisOperationInfoRequest operationInfoRequest) {
+        final FeatureToggleEntity featureToggleEntity = FeatureToggleEntity.builder()
+                .name(FeatureToggleName.FIRST_SEMESTER_LESSON_REGISTRATION_OPERATIONS)
+                .modifiedUserId(operationInfoRequest.getUserId())
+                .modifiedDate(new Date())
+                .build();
+        featureToggleRepository.disableFeatureToggle(featureToggleEntity);
+    }
+
+    private void disableSecondSemesterLessonRegistrationOperationFeatureToggle(final SisOperationInfoRequest operationInfoRequest) {
+        final FeatureToggleEntity featureToggleEntity = FeatureToggleEntity.builder()
+                .name(FeatureToggleName.SECOND_SEMESTER_LESSON_REGISTRATION_OPERATIONS)
+                .modifiedUserId(operationInfoRequest.getUserId())
+                .modifiedDate(new Date())
+                .build();
+        featureToggleRepository.disableFeatureToggle(featureToggleEntity);
     }
 
     private void enableNoteOperationsFeatureToggle(final SisOperationInfoRequest operationInfoRequest) {
