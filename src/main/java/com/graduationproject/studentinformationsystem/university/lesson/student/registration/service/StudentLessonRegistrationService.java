@@ -18,6 +18,9 @@ public interface StudentLessonRegistrationService {
     StudentLessonRegistrationDetailResponse getStudentLessonRegistrationDetailByRegistrationId(String registrationId)
             throws SisNotExistException;
 
+    StudentLessonRegistrationDetailResponse getWaitingStudentLessonsDetailByStudentId(Long studentId)
+            throws SisNotExistException;
+
     StudentLessonRegistrationDetailResponse saveStudentLessonRegistration(StudentLessonRegistrationSaveRequest saveRequest)
             throws SisAlreadyException, SisNotExistException;
 
