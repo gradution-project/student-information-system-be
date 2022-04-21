@@ -35,6 +35,17 @@ public class StudentLessonRegistrationSqlScripts {
                             "FROM STUDENT_LESSON_REGISTRATION WHERE REGISTRATION_ID=:registrationId ").toString();
 
     /**
+     * SELECT REGISTRATION_ID, STUDENT_ID, LESSONS_IDS, STATUS,
+     * CREATED_DATE, CREATED_USER_ID, MODIFIED_DATE, MODIFIED_USER_ID FROM STUDENT_LESSON_REGISTRATION
+     * WHERE STUDENT_ID=:studentId AND STATUS='WAITING';
+     */
+    public static final String GET_WAITING_STUDENT_LESSON_REGISTRATION_BY_STUDENT_ID =
+            sqlBuilder.delete(0, sqlBuilder.length())
+                    .append("SELECT REGISTRATION_ID, STUDENT_ID, LESSONS_IDS, STATUS, " +
+                            "CREATED_DATE, CREATED_USER_ID, MODIFIED_DATE, MODIFIED_USER_ID " +
+                            "FROM STUDENT_LESSON_REGISTRATION WHERE STUDENT_ID=:studentId AND STATUS='WAITING'").toString();
+
+    /**
      * INSERT INTO STUDENT_LESSON_REGISTRATION (REGISTRATION_ID, STUDENT_ID, LESSONS_IDS, STATUS,
      * CREATED_DATE, CREATED_USER_ID) VALUES (:registrationId, :studentId, lessonsIds, status,
      * :createdDate, :createdUserId);
