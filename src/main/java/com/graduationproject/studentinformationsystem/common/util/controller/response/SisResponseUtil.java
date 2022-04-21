@@ -35,6 +35,14 @@ public class SisResponseUtil {
                         .isSuccess(false).build(), HttpStatus.NOT_FOUND);
     }
 
+    public static <T> ResponseEntity<SisBaseApiResponse<T>> failResponse(final T response) {
+        return new ResponseEntity<>(
+                SisBaseApiResponse.<T>builder()
+                        .requestTime(LocalDateTime.now())
+                        .httpStatus(HttpStatus.NOT_FOUND)
+                        .isSuccess(false).build(), HttpStatus.NOT_FOUND);
+    }
+
     public static ResponseEntity<SisApiResponse> unauthorizedResponse() {
         return new ResponseEntity<>(
                 SisApiResponse.builder()
