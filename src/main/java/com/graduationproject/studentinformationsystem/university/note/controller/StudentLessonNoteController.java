@@ -51,7 +51,7 @@ public class StudentLessonNoteController {
     }
 
     @PutMapping(StudentLessonNoteControllerEndpoint.MIDTERM)
-    @ApiOperation(value = "Update Student Lesson Midterm Note")
+    @ApiOperation(value = "Update Students Lesson Midterm Notes")
     public ResponseEntity<SisBaseApiResponse<List<StudentLessonNoteResponse>>> updateStudentsLessonMidtermNotes(
             @RequestBody @Valid final StudentsLessonMidtermNotesUpdateRequest updateRequest)
             throws SisNotExistException {
@@ -61,7 +61,7 @@ public class StudentLessonNoteController {
     }
 
     @PutMapping(StudentLessonNoteControllerEndpoint.FINAL)
-    @ApiOperation(value = "Update Student Lesson Final Note")
+    @ApiOperation(value = "Update Students Lesson Final Notes")
     public ResponseEntity<SisBaseApiResponse<List<StudentLessonNoteResponse>>> updateStudentsLessonFinalNotes(
             @RequestBody @Valid final StudentsLessonFinalNotesUpdateRequest updateRequest)
             throws SisNotExistException {
@@ -71,7 +71,7 @@ public class StudentLessonNoteController {
     }
 
     @PutMapping(StudentLessonNoteControllerEndpoint.RESIT)
-    @ApiOperation(value = "Update Student Lesson Resit Note")
+    @ApiOperation(value = "Update Students Lesson Resit Notes")
     public ResponseEntity<SisBaseApiResponse<List<StudentLessonNoteResponse>>> updateStudentsLessonResitNotes(
             @RequestBody final StudentsLessonResitNotesUpdateRequest updateRequest)
             throws SisNotExistException {
