@@ -3,9 +3,9 @@ package com.graduationproject.studentinformationsystem.university.note.service.i
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.university.lesson.common.service.LessonOutService;
 import com.graduationproject.studentinformationsystem.university.note.model.dto.converter.StudentLessonNoteInfoConverter;
-import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentLessonFinalNoteUpdateRequest;
-import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentLessonMidtermNoteUpdateRequest;
-import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentLessonResitNoteUpdateRequest;
+import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentsLessonFinalNotesUpdateRequest;
+import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentsLessonMidtermNotesUpdateRequest;
+import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentsLessonResitNotesUpdateRequest;
 import com.graduationproject.studentinformationsystem.university.note.model.dto.response.StudentLessonNoteResponse;
 import com.graduationproject.studentinformationsystem.university.note.model.entity.StudentLessonFinalNoteUpdateEntity;
 import com.graduationproject.studentinformationsystem.university.note.model.entity.StudentLessonMidtermNoteUpdateEntity;
@@ -19,7 +19,9 @@ import com.graduationproject.studentinformationsystem.university.student.service
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -53,91 +55,107 @@ public class StudentLessonNoteServiceImpl implements StudentLessonNoteService {
     }
 
     @Override
-    public StudentLessonNoteResponse updateStudentLessonMidtermNote(final StudentLessonMidtermNoteUpdateRequest updateRequest)
+    public List<StudentLessonNoteResponse> updateStudentsLessonMidtermNotes(final StudentsLessonMidtermNotesUpdateRequest updateRequest)
             throws SisNotExistException {
 
-        final String id = updateRequest.getId();
+        final Map<String, Double> midtermNoteIdsAndNotes = updateRequest.getMidtermNoteIdsAndNotes();
+        checkBeforeUpdateNotes(midtermNoteIdsAndNotes);
 
-        ifStudentLessonNotesAreNotExistThrowNotExistException(id);
+        final List<StudentLessonNoteResponse> studentLessonNoteResponses = new ArrayList<>();
+        for (Map.Entry<String, Double> noteIdAndNote : midtermNoteIdsAndNotes.entrySet()) {
+            final String lessonNoteId = noteIdAndNote.getKey();
+            final Double midtermNote = noteIdAndNote.getValue();
+            final StudentLessonMidtermNoteUpdateEntity noteUpdateEntity = lessonNoteInfoConverter
+                    .generateMidtermNoteUpdateEntity(lessonNoteId, midtermNote, updateRequest.getOperationInfoRequest());
 
-        final StudentLessonMidtermNoteUpdateEntity noteUpdateEntity = lessonNoteInfoConverter
-                .generateMidtermNoteUpdateEntity(updateRequest);
+            lessonNoteRepository.updateStudentLessonMidtermNote(noteUpdateEntity);
 
-        lessonNoteRepository.updateStudentLessonMidtermNote(noteUpdateEntity);
+            studentLessonNoteResponses.add(getStudentLessonNoteById(lessonNoteId));
+        }
 
-        return getStudentLessonNoteById(id);
+        return studentLessonNoteResponses;
     }
 
     @Override
-    public StudentLessonNoteResponse updateStudentLessonFinalNote(final StudentLessonFinalNoteUpdateRequest updateRequest)
+    public List<StudentLessonNoteResponse> updateStudentsLessonFinalNotes(final StudentsLessonFinalNotesUpdateRequest updateRequest)
             throws SisNotExistException {
 
-        final String id = updateRequest.getId();
+        final Map<String, Double> finalNoteIdsAndNotes = updateRequest.getFinalNoteIdsAndNotes();
+        checkBeforeUpdateNotes(finalNoteIdsAndNotes);
 
-        ifStudentLessonNotesAreNotExistThrowNotExistException(id);
+        List<StudentLessonNoteResponse> studentLessonNoteResponses = new ArrayList<>();
+        for (Map.Entry<String, Double> noteIdAndNote : finalNoteIdsAndNotes.entrySet()) {
+            final String lessonNoteId = noteIdAndNote.getKey();
+            final Double midtermNote = lessonNoteRepository.getMidtermNoteById(lessonNoteId);
 
-        final Double midtermNote = lessonNoteRepository.getMidtermNoteById(id);
+            Double meanOfNote;
+            StudentLessonNoteStatus status;
 
-        Double meanOfNote;
-        StudentLessonNoteStatus status;
+            final Double finalNote = noteIdAndNote.getValue();
+            if (finalNote >= 50.0) {
 
-        final Double finalNote = updateRequest.getFinalNote();
-        if (finalNote >= 50.0) {
+                meanOfNote = calculateMeanOfNoteWithFinalNote(midtermNote, finalNote);
 
-            meanOfNote = calculateMeanOfNoteWithFinalNote(midtermNote, finalNote);
-
-            if (meanOfNote >= 60.0) {
-                status = StudentLessonNoteStatus.PASSED;
+                if (meanOfNote >= 60.0) {
+                    status = StudentLessonNoteStatus.PASSED;
+                } else {
+                    status = StudentLessonNoteStatus.UNFINALISED;
+                }
             } else {
+                meanOfNote = calculateMeanOfNoteWithFinalNote(midtermNote, finalNote);
                 status = StudentLessonNoteStatus.UNFINALISED;
             }
-        } else {
-            meanOfNote = calculateMeanOfNoteWithFinalNote(midtermNote, finalNote);
-            status = StudentLessonNoteStatus.UNFINALISED;
+
+            final StudentLessonFinalNoteUpdateEntity noteUpdateEntity = lessonNoteInfoConverter
+                    .generateFinalNoteUpdateEntity(lessonNoteId, finalNote, meanOfNote, status, updateRequest.getOperationInfoRequest());
+
+            lessonNoteRepository.updateStudentLessonFinalNote(noteUpdateEntity);
+
+            studentLessonNoteResponses.add(getStudentLessonNoteById(lessonNoteId));
         }
 
-        final StudentLessonFinalNoteUpdateEntity noteUpdateEntity = lessonNoteInfoConverter
-                .generateFinalNoteUpdateEntity(meanOfNote, status, updateRequest);
-
-        lessonNoteRepository.updateStudentLessonFinalNote(noteUpdateEntity);
-
-        return getStudentLessonNoteById(id);
+        return studentLessonNoteResponses;
     }
 
     @Override
-    public StudentLessonNoteResponse updateStudentLessonResitNote(final StudentLessonResitNoteUpdateRequest updateRequest)
+    public List<StudentLessonNoteResponse> updateStudentsLessonResitNotes(final StudentsLessonResitNotesUpdateRequest updateRequest)
             throws SisNotExistException {
 
-        final String id = updateRequest.getId();
+        final Map<String, Double> resitNoteIdsAndNotes = updateRequest.getResitNoteIdsAndNotes();
+        checkBeforeUpdateNotes(resitNoteIdsAndNotes);
 
-        ifStudentLessonNotesAreNotExistThrowNotExistException(id);
+        List<StudentLessonNoteResponse> studentLessonNoteResponses = new ArrayList<>();
+        for (Map.Entry<String, Double> noteIdAndNote : resitNoteIdsAndNotes.entrySet()) {
+            final String lessonNoteId = noteIdAndNote.getKey();
+            final Double midtermNote = lessonNoteRepository.getMidtermNoteById(lessonNoteId);
 
-        final Double midtermNote = lessonNoteRepository.getMidtermNoteById(id);
+            Double meanOfNote;
+            StudentLessonNoteStatus status;
 
-        Double meanOfNote;
-        StudentLessonNoteStatus status;
+            final Double resitNote = noteIdAndNote.getValue();
+            if (resitNote >= 50.0) {
 
-        final Double resitNote = updateRequest.getResitNote();
-        if (resitNote >= 50.0) {
+                meanOfNote = calculateMeanOfNoteWithResitNote(midtermNote, resitNote);
 
-            meanOfNote = calculateMeanOfNoteWithResitNote(midtermNote, resitNote);
-
-            if (meanOfNote >= 60.0) {
-                status = StudentLessonNoteStatus.PASSED;
+                if (meanOfNote >= 60.0) {
+                    status = StudentLessonNoteStatus.PASSED;
+                } else {
+                    status = StudentLessonNoteStatus.FAILED;
+                }
             } else {
+                meanOfNote = calculateMeanOfNoteWithResitNote(midtermNote, resitNote);
                 status = StudentLessonNoteStatus.FAILED;
             }
-        } else {
-            meanOfNote = calculateMeanOfNoteWithResitNote(midtermNote, resitNote);
-            status = StudentLessonNoteStatus.FAILED;
+
+            final StudentLessonResitNoteUpdateEntity noteUpdateEntity = lessonNoteInfoConverter
+                    .generateResitNoteUpdateEntity(lessonNoteId, midtermNote, meanOfNote, status, updateRequest.getOperationInfoRequest());
+
+            lessonNoteRepository.updateStudentLessonResitNote(noteUpdateEntity);
+
+            studentLessonNoteResponses.add(getStudentLessonNoteById(lessonNoteId));
         }
 
-        final StudentLessonResitNoteUpdateEntity noteUpdateEntity = lessonNoteInfoConverter
-                .generateResitNoteUpdateEntity(meanOfNote, status, updateRequest);
-
-        lessonNoteRepository.updateStudentLessonResitNote(noteUpdateEntity);
-
-        return getStudentLessonNoteById(id);
+        return studentLessonNoteResponses;
     }
 
 
@@ -152,6 +170,20 @@ public class StudentLessonNoteServiceImpl implements StudentLessonNoteService {
 
     protected final Double calculateMeanOfNoteWithResitNote(final Double midtermNote, Double finalNote) {
         return midtermNote * 0.4 + finalNote * 0.6;
+    }
+
+
+    /**
+     * Checks Before Processing
+     */
+
+    private void checkBeforeUpdateNotes(final Map<String, Double> noteIdsAndNotes)
+            throws SisNotExistException {
+
+        for (Map.Entry<String, Double> noteIdAndNote : noteIdsAndNotes.entrySet()) {
+            final String lessonNoteId = noteIdAndNote.getKey();
+            ifStudentLessonNotesAreNotExistThrowNotExistException(lessonNoteId);
+        }
     }
 
 
