@@ -4,10 +4,7 @@ import com.graduationproject.studentinformationsystem.common.model.dto.request.S
 import com.graduationproject.studentinformationsystem.common.util.SisUtil;
 import com.graduationproject.studentinformationsystem.university.lesson.common.model.dto.response.LessonResponse;
 import com.graduationproject.studentinformationsystem.university.lesson.common.service.LessonOutService;
-import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentLessonFinalNoteUpdateRequest;
-import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentLessonMidtermNoteUpdateRequest;
 import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentLessonNoteSaveRequest;
-import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentLessonResitNoteUpdateRequest;
 import com.graduationproject.studentinformationsystem.university.note.model.dto.response.StudentLessonNoteResponse;
 import com.graduationproject.studentinformationsystem.university.note.model.entity.*;
 import com.graduationproject.studentinformationsystem.university.note.model.enums.StudentLessonNoteStatus;
@@ -46,27 +43,27 @@ public class StudentLessonNoteInfoConverter {
                 .build();
     }
 
-    public StudentLessonMidtermNoteUpdateEntity generateMidtermNoteUpdateEntity(final StudentLessonMidtermNoteUpdateRequest updateRequest) {
-
-        final SisOperationInfoRequest operationInfoRequest = updateRequest.getOperationInfoRequest();
+    public StudentLessonMidtermNoteUpdateEntity generateMidtermNoteUpdateEntity(final String lessonNoteId,
+                                                                                final Double midtermNote,
+                                                                                final SisOperationInfoRequest operationInfoRequest) {
 
         return StudentLessonMidtermNoteUpdateEntity.builder()
-                .id(updateRequest.getId())
-                .midtermNote(updateRequest.getMidtermNote())
+                .id(lessonNoteId)
+                .midtermNote(midtermNote)
                 .modifiedUserId(operationInfoRequest.getUserId())
                 .modifiedDate(new Date())
                 .build();
     }
 
-    public StudentLessonFinalNoteUpdateEntity generateFinalNoteUpdateEntity(final Double meanOfNote,
+    public StudentLessonFinalNoteUpdateEntity generateFinalNoteUpdateEntity(final String lessonNoteId,
+                                                                            final Double finalNote,
+                                                                            final Double meanOfNote,
                                                                             final StudentLessonNoteStatus status,
-                                                                            final StudentLessonFinalNoteUpdateRequest updateRequest) {
-
-        final SisOperationInfoRequest operationInfoRequest = updateRequest.getOperationInfoRequest();
+                                                                            final SisOperationInfoRequest operationInfoRequest) {
 
         return StudentLessonFinalNoteUpdateEntity.builder()
-                .id(updateRequest.getId())
-                .finalNote(updateRequest.getFinalNote())
+                .id(lessonNoteId)
+                .finalNote(finalNote)
                 .meanOfNote(meanOfNote)
                 .status(status)
                 .modifiedUserId(operationInfoRequest.getUserId())
@@ -74,15 +71,15 @@ public class StudentLessonNoteInfoConverter {
                 .build();
     }
 
-    public StudentLessonResitNoteUpdateEntity generateResitNoteUpdateEntity(final Double meanOfNote,
+    public StudentLessonResitNoteUpdateEntity generateResitNoteUpdateEntity(final String lessonNoteId,
+                                                                            final Double finalNote,
+                                                                            final Double meanOfNote,
                                                                             final StudentLessonNoteStatus status,
-                                                                            final StudentLessonResitNoteUpdateRequest updateRequest) {
-
-        final SisOperationInfoRequest operationInfoRequest = updateRequest.getOperationInfoRequest();
+                                                                            final SisOperationInfoRequest operationInfoRequest) {
 
         return StudentLessonResitNoteUpdateEntity.builder()
-                .id(updateRequest.getId())
-                .resitNote(updateRequest.getResitNote())
+                .id(lessonNoteId)
+                .resitNote(finalNote)
                 .meanOfNote(meanOfNote)
                 .status(status)
                 .modifiedUserId(operationInfoRequest.getUserId())

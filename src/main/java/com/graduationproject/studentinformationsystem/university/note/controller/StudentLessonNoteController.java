@@ -3,9 +3,9 @@ package com.graduationproject.studentinformationsystem.university.note.controlle
 import com.graduationproject.studentinformationsystem.common.util.controller.response.SisBaseApiResponse;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.university.note.controller.endpoint.StudentLessonNoteControllerEndpoint;
-import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentLessonFinalNoteUpdateRequest;
-import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentLessonMidtermNoteUpdateRequest;
-import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentLessonResitNoteUpdateRequest;
+import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentsLessonFinalNotesUpdateRequest;
+import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentsLessonMidtermNotesUpdateRequest;
+import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentsLessonResitNotesUpdateRequest;
 import com.graduationproject.studentinformationsystem.university.note.model.dto.response.StudentLessonNoteResponse;
 import com.graduationproject.studentinformationsystem.university.note.service.StudentLessonNoteService;
 import io.swagger.annotations.Api;
@@ -52,31 +52,31 @@ public class StudentLessonNoteController {
 
     @PutMapping(StudentLessonNoteControllerEndpoint.MIDTERM)
     @ApiOperation(value = "Update Student Lesson Midterm Note")
-    public ResponseEntity<SisBaseApiResponse<StudentLessonNoteResponse>> updateStudentLessonMidtermNote(
-            @RequestBody @Valid final StudentLessonMidtermNoteUpdateRequest updateRequest)
+    public ResponseEntity<SisBaseApiResponse<List<StudentLessonNoteResponse>>> updateStudentsLessonMidtermNotes(
+            @RequestBody @Valid final StudentsLessonMidtermNotesUpdateRequest updateRequest)
             throws SisNotExistException {
 
-        final StudentLessonNoteResponse noteResponse = studentLessonNoteService.updateStudentLessonMidtermNote(updateRequest);
-        return successResponse(noteResponse);
+        final List<StudentLessonNoteResponse> noteResponses = studentLessonNoteService.updateStudentsLessonMidtermNotes(updateRequest);
+        return successResponse(noteResponses);
     }
 
     @PutMapping(StudentLessonNoteControllerEndpoint.FINAL)
     @ApiOperation(value = "Update Student Lesson Final Note")
-    public ResponseEntity<SisBaseApiResponse<StudentLessonNoteResponse>> updateStudentLessonFinalNote(
-            @RequestBody @Valid final StudentLessonFinalNoteUpdateRequest updateRequest)
+    public ResponseEntity<SisBaseApiResponse<List<StudentLessonNoteResponse>>> updateStudentsLessonFinalNotes(
+            @RequestBody @Valid final StudentsLessonFinalNotesUpdateRequest updateRequest)
             throws SisNotExistException {
 
-        final StudentLessonNoteResponse noteResponse = studentLessonNoteService.updateStudentLessonFinalNote(updateRequest);
-        return successResponse(noteResponse);
+        final List<StudentLessonNoteResponse> noteResponses = studentLessonNoteService.updateStudentsLessonFinalNotes(updateRequest);
+        return successResponse(noteResponses);
     }
 
     @PutMapping(StudentLessonNoteControllerEndpoint.RESIT)
     @ApiOperation(value = "Update Student Lesson Resit Note")
-    public ResponseEntity<SisBaseApiResponse<StudentLessonNoteResponse>> updateStudentLessonResitNote(
-            @RequestBody final StudentLessonResitNoteUpdateRequest updateRequest)
+    public ResponseEntity<SisBaseApiResponse<List<StudentLessonNoteResponse>>> updateStudentsLessonResitNotes(
+            @RequestBody final StudentsLessonResitNotesUpdateRequest updateRequest)
             throws SisNotExistException {
 
-        final StudentLessonNoteResponse noteResponse = studentLessonNoteService.updateStudentLessonResitNote(updateRequest);
-        return successResponse(noteResponse);
+        final List<StudentLessonNoteResponse> noteResponses = studentLessonNoteService.updateStudentsLessonResitNotes(updateRequest);
+        return successResponse(noteResponses);
     }
 }

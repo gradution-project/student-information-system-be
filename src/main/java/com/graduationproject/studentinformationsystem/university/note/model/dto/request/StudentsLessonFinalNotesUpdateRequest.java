@@ -6,23 +6,21 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Map;
 
 @Getter
 @SuperBuilder
 @NoArgsConstructor
-public class StudentLessonFinalNoteUpdateRequest implements Serializable {
+public class StudentsLessonFinalNotesUpdateRequest implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = -1731196715166066519L;
+    private static final long serialVersionUID = 5093920385984058988L;
 
-    @NotNull
-    private String id;
-
-    @NotNull
-    private Double finalNote;
+    @NotEmpty
+    private Map<String, Double> finalNoteIdsAndNotes;
 
     @Valid
     private SisOperationInfoRequest operationInfoRequest;
