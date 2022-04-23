@@ -9,20 +9,18 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Map;
 
 @Getter
 @SuperBuilder
 @NoArgsConstructor
-public class StudentLessonResitNoteUpdateRequest implements Serializable {
+public class StudentsLessonResitNotesUpdateRequest implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = -6303107915064579379L;
+    private static final long serialVersionUID = 4495180748614571012L;
 
     @NotNull
-    private String id;
-
-    @NotNull
-    private Double resitNote;
+    private Map<String, Double> resitNoteIdsAndNotes;
 
     @Valid
     private SisOperationInfoRequest operationInfoRequest;
