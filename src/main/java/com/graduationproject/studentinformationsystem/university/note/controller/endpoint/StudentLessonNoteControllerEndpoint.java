@@ -12,6 +12,9 @@ public class StudentLessonNoteControllerEndpoint {
     public static final String GET_ALL_BY_STUDENT_ID = "/get/student" + STUDENT_ID;
     public static final String GET_ALL_BY_LESSON_ID = "/get/lesson" + LESSON_ID;
     public static final String MIDTERM = "/midterm";
+    public static final String MIDTERM_CONFIRM = MIDTERM + "/confirm";
     public static final String FINAL = "/final";
+    public static final String FINAL_CONFIRM = FINAL + "/confirm";
     public static final String RESIT = "/resit";
+    public static final String RESIT_CONFIRM = RESIT + "/confirm";
 }
