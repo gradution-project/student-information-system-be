@@ -97,14 +97,15 @@ public class StudentLessonNoteInfoConverter {
     }
 
     public StudentLessonResitNoteUpdateEntity generateResitNoteUpdateEntity(final String lessonNoteId,
-                                                                            final Double finalNote,
+                                                                            final Double resitNote,
                                                                             final Double meanOfNote,
                                                                             final StudentLessonNoteStatus status,
                                                                             final SisOperationInfoRequest operationInfoRequest) {
 
         return StudentLessonResitNoteUpdateEntity.builder()
                 .id(lessonNoteId)
-                .resitNote(finalNote)
+                .resitNote(resitNote)
+                .resitNoteState(StudentLessonNoteState.UNCONFIRMED)
                 .meanOfNote(meanOfNote)
                 .status(status)
                 .modifiedUserId(operationInfoRequest.getUserId())
