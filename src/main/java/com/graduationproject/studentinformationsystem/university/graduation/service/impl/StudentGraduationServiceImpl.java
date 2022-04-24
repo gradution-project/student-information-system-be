@@ -97,10 +97,24 @@ public class StudentGraduationServiceImpl implements StudentGraduationService {
         final String graduationId = confirmRequest.getGraduationId();
         checkBeforeConfirmed(graduationId);
 
-        final StudentGraduationEntity graduationEntity = studentGraduationInfoConverter.generateConfirmedEntity(confirmRequest);
-        studentGraduationRepository.updateStudentGraduationStatus(graduationEntity);
+        confirmStudentGraduationOperation(confirmRequest);
+        graduateStudent(graduationId, confirmRequest);
 
         return getStudentGraduationDetailByGraduationId(graduationId);
+    }
+
+    private void confirmStudentGraduationOperation(final StudentGraduationConfirmRequest confirmRequest) {
+        final StudentGraduationEntity graduationEntity = studentGraduationInfoConverter
+                .generateConfirmedEntity(confirmRequest);
+
+        studentGraduationRepository.updateStudentGraduationStatus(graduationEntity);
+    }
+
+    private void graduateStudent(final String graduationId, final StudentGraduationConfirmRequest confirmRequest)
+            throws SisNotExistException, SisAlreadyException {
+
+        final Long studentId = studentGraduationRepository.getStudentId(graduationId);
+        studentOutService.graduateStudent(studentId, confirmRequest.getOperationInfoRequest());
     }
 
     @Override
@@ -108,7 +122,7 @@ public class StudentGraduationServiceImpl implements StudentGraduationService {
             throws SisAlreadyException, SisNotExistException {
 
         final String graduationId = unconfirmRequest.getGraduationId();
-        checkBeforeConfirmed(graduationId);
+        checkBeforeUnconfirmed(graduationId);
 
         final StudentGraduationEntity graduationEntity = studentGraduationInfoConverter.generateUnconfirmedEntity(unconfirmRequest);
         studentGraduationRepository.updateStudentGraduationStatus(graduationEntity);

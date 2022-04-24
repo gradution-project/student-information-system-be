@@ -116,16 +116,6 @@ public class StudentServiceImpl implements StudentService {
         return getStudentInfoResponse(activateRequest.getStudentId());
     }
 
-    @Override
-    public StudentInfoResponse graduateStudent(final StudentGraduateRequest graduateRequest)
-            throws SisNotExistException, SisAlreadyException {
-
-        checkBeforeGraduating(graduateRequest.getStudentId());
-        academicInfoService.graduateStudentAcademicInfo(graduateRequest);
-        personalInfoService.graduateStudentPersonalInfo(graduateRequest);
-        return getStudentInfoResponse(graduateRequest.getStudentId());
-    }
-
 
     private Long generateStudentId(final Long departmentId) {
         final List<Long> studentIds = academicInfoService.getAllStudentIdsByDepartmentId(departmentId);
@@ -191,13 +181,6 @@ public class StudentServiceImpl implements StudentService {
         ifStudentIsNotExistThrowNotExistException(studentId);
         ifStudentIsAlreadyActiveThrowAlreadyException(studentId);
         ifStudentIsAlreadyGraduatedThrowAlreadyException(studentId);
-        ifStudentIsAlreadyDeletedThrowAlreadyException(studentId);
-    }
-
-    private void checkBeforeGraduating(final Long studentId) throws SisNotExistException, SisAlreadyException {
-        ifStudentIsNotExistThrowNotExistException(studentId);
-        ifStudentIsAlreadyGraduatedThrowAlreadyException(studentId);
-        ifStudentIsAlreadyPassiveThrowAlreadyException(studentId);
         ifStudentIsAlreadyDeletedThrowAlreadyException(studentId);
     }
 
