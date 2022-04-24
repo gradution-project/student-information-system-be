@@ -185,7 +185,7 @@ public class StudentLessonNoteServiceImpl implements StudentLessonNoteService {
             }
 
             final StudentLessonResitNoteUpdateEntity noteUpdateEntity = lessonNoteInfoConverter
-                    .generateResitNoteUpdateEntity(lessonNoteId, midtermNote, meanOfNote, status, updateRequest.getOperationInfoRequest());
+                    .generateResitNoteUpdateEntity(lessonNoteId, resitNote, meanOfNote, status, updateRequest.getOperationInfoRequest());
 
             lessonNoteRepository.updateStudentLessonResitNote(noteUpdateEntity);
 
