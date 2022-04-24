@@ -116,10 +116,28 @@ public class StudentLessonNoteRepositoryImpl implements StudentLessonNoteReposit
 
             query.addParameter(ID.getModelName(), updateEntity.getId())
                     .addParameter(MIDTERM_NOTE.getModelName(), updateEntity.getMidtermNote())
+                    .addParameter(MIDTERM_NOTE_STATE.getModelName(), updateEntity.getMidtermNoteState())
                     .addParameter(MODIFIED_DATE.getModelName(), updateEntity.getModifiedDate())
                     .addParameter(MODIFIED_USER_ID.getModelName(), updateEntity.getModifiedUserId())
                     .executeUpdate();
 
+        } catch (Exception exception) {
+            error.errorWhenUpdating();
+            throw new SisDatabaseException(exception);
+        }
+    }
+
+    @Override
+    public void confirmStudentLessonMidtermNote(final StudentLessonMidtermNoteConfirmEntity confirmEntity) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(CONFIRM_STUDENT_LESSON_MIDTERM_NOTE)) {
+
+            query.addParameter(ID.getModelName(), confirmEntity.getId())
+                    .addParameter(MIDTERM_NOTE_STATE.getModelName(), confirmEntity.getNoteState())
+                    .addParameter(MODIFIED_DATE.getModelName(), confirmEntity.getModifiedDate())
+                    .addParameter(MODIFIED_USER_ID.getModelName(), confirmEntity.getModifiedUserId())
+                    .executeUpdate();
+
+            info.updated();
         } catch (Exception exception) {
             error.errorWhenUpdating();
             throw new SisDatabaseException(exception);
@@ -132,6 +150,7 @@ public class StudentLessonNoteRepositoryImpl implements StudentLessonNoteReposit
 
             query.addParameter(ID.getModelName(), updateEntity.getId())
                     .addParameter(FINAL_NOTE.getModelName(), updateEntity.getFinalNote())
+                    .addParameter(FINAL_NOTE_STATE.getModelName(), updateEntity.getFinalNoteState())
                     .addParameter(MEAN_OF_NOTE.getModelName(), updateEntity.getMeanOfNote())
                     .addParameter(STATUS.getModelName(), updateEntity.getStatus())
                     .addParameter(MODIFIED_DATE.getModelName(), updateEntity.getModifiedDate())
@@ -145,17 +164,52 @@ public class StudentLessonNoteRepositoryImpl implements StudentLessonNoteReposit
     }
 
     @Override
+    public void confirmStudentLessonFinalNote(final StudentLessonFinalNoteConfirmEntity confirmEntity) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(CONFIRM_STUDENT_LESSON_FINAL_NOTE)) {
+
+            query.addParameter(ID.getModelName(), confirmEntity.getId())
+                    .addParameter(FINAL_NOTE_STATE.getModelName(), confirmEntity.getNoteState())
+                    .addParameter(MODIFIED_DATE.getModelName(), confirmEntity.getModifiedDate())
+                    .addParameter(MODIFIED_USER_ID.getModelName(), confirmEntity.getModifiedUserId())
+                    .executeUpdate();
+
+            info.updated();
+        } catch (Exception exception) {
+            error.errorWhenUpdating();
+            throw new SisDatabaseException(exception);
+        }
+    }
+
+    @Override
     public void updateStudentLessonResitNote(final StudentLessonResitNoteUpdateEntity updateEntity) {
         try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(UPDATE_STUDENT_LESSON_RESIT_AND_MEAN_OF_NOTES)) {
 
             query.addParameter(ID.getModelName(), updateEntity.getId())
                     .addParameter(RESIT_NOTE.getModelName(), updateEntity.getResitNote())
+                    .addParameter(RESIT_NOTE_STATE.getModelName(), updateEntity.getResitNoteState())
                     .addParameter(MEAN_OF_NOTE.getModelName(), updateEntity.getMeanOfNote())
                     .addParameter(STATUS.getModelName(), updateEntity.getStatus())
                     .addParameter(MODIFIED_DATE.getModelName(), updateEntity.getModifiedDate())
                     .addParameter(MODIFIED_USER_ID.getModelName(), updateEntity.getModifiedUserId())
                     .executeUpdate();
 
+        } catch (Exception exception) {
+            error.errorWhenUpdating();
+            throw new SisDatabaseException(exception);
+        }
+    }
+
+    @Override
+    public void confirmStudentLessonResitNote(final StudentLessonResitNoteConfirmEntity confirmEntity) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(CONFIRM_STUDENT_LESSON_RESIT_NOTE)) {
+
+            query.addParameter(ID.getModelName(), confirmEntity.getId())
+                    .addParameter(RESIT_NOTE_STATE.getModelName(), confirmEntity.getNoteState())
+                    .addParameter(MODIFIED_DATE.getModelName(), confirmEntity.getModifiedDate())
+                    .addParameter(MODIFIED_USER_ID.getModelName(), confirmEntity.getModifiedUserId())
+                    .executeUpdate();
+
+            info.updated();
         } catch (Exception exception) {
             error.errorWhenUpdating();
             throw new SisDatabaseException(exception);

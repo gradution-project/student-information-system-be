@@ -1,5 +1,6 @@
 package com.graduationproject.studentinformationsystem.university.note.model.entity;
 
+import com.graduationproject.studentinformationsystem.university.note.model.enums.StudentLessonNoteState;
 import com.graduationproject.studentinformationsystem.university.note.model.enums.StudentLessonNoteStatus;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,6 +13,7 @@ public class StudentLessonResitNoteUpdateEntity {
 
     private String id;
     private Double resitNote;
+    private StudentLessonNoteState resitNoteState;
     private Double meanOfNote;
     private StudentLessonNoteStatus status;
     private Long modifiedUserId;

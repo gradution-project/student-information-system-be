@@ -3,14 +3,9 @@ package com.graduationproject.studentinformationsystem.university.note.service.i
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.university.lesson.common.service.LessonOutService;
 import com.graduationproject.studentinformationsystem.university.note.model.dto.converter.StudentLessonNoteInfoConverter;
-import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentsLessonFinalNotesUpdateRequest;
-import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentsLessonMidtermNotesUpdateRequest;
-import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentsLessonResitNotesUpdateRequest;
+import com.graduationproject.studentinformationsystem.university.note.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.note.model.dto.response.StudentLessonNoteResponse;
-import com.graduationproject.studentinformationsystem.university.note.model.entity.StudentLessonFinalNoteUpdateEntity;
-import com.graduationproject.studentinformationsystem.university.note.model.entity.StudentLessonMidtermNoteUpdateEntity;
-import com.graduationproject.studentinformationsystem.university.note.model.entity.StudentLessonNoteEntity;
-import com.graduationproject.studentinformationsystem.university.note.model.entity.StudentLessonResitNoteUpdateEntity;
+import com.graduationproject.studentinformationsystem.university.note.model.entity.*;
 import com.graduationproject.studentinformationsystem.university.note.model.enums.StudentLessonNoteStatus;
 import com.graduationproject.studentinformationsystem.university.note.model.exception.StudentLessonNoteException;
 import com.graduationproject.studentinformationsystem.university.note.repository.StudentLessonNoteRepository;
@@ -77,6 +72,27 @@ public class StudentLessonNoteServiceImpl implements StudentLessonNoteService {
     }
 
     @Override
+    public List<StudentLessonNoteResponse> confirmStudentsLessonMidtermNotes(final StudentsLessonMidtermNotesConfirmRequest confirmRequest)
+            throws SisNotExistException {
+
+        final List<String> lessonNoteIds = confirmRequest.getLessonNoteIds();
+        checkBeforeConfirmNotes(lessonNoteIds);
+
+        final List<StudentLessonNoteResponse> studentLessonNoteResponses = new ArrayList<>();
+        lessonNoteIds.forEach(lessonNoteId -> {
+
+            final StudentLessonMidtermNoteConfirmEntity noteConfirmEntity = lessonNoteInfoConverter
+                    .generateMidtermNoteConfirmEntity(lessonNoteId, confirmRequest.getOperationInfoRequest());
+
+            lessonNoteRepository.confirmStudentLessonMidtermNote(noteConfirmEntity);
+
+            studentLessonNoteResponses.add(getStudentLessonNoteById(lessonNoteId));
+        });
+
+        return studentLessonNoteResponses;
+    }
+
+    @Override
     public List<StudentLessonNoteResponse> updateStudentsLessonFinalNotes(final StudentsLessonFinalNotesUpdateRequest updateRequest)
             throws SisNotExistException {
 
@@ -118,6 +134,27 @@ public class StudentLessonNoteServiceImpl implements StudentLessonNoteService {
     }
 
     @Override
+    public List<StudentLessonNoteResponse> confirmStudentsLessonFinalNotes(final StudentsLessonFinalNotesConfirmRequest confirmRequest)
+            throws SisNotExistException {
+
+        final List<String> lessonNoteIds = confirmRequest.getLessonNoteIds();
+        checkBeforeConfirmNotes(lessonNoteIds);
+
+        final List<StudentLessonNoteResponse> studentLessonNoteResponses = new ArrayList<>();
+        lessonNoteIds.forEach(lessonNoteId -> {
+
+            final StudentLessonFinalNoteConfirmEntity noteConfirmEntity = lessonNoteInfoConverter
+                    .generateFinalNoteConfirmEntity(lessonNoteId, confirmRequest.getOperationInfoRequest());
+
+            lessonNoteRepository.confirmStudentLessonFinalNote(noteConfirmEntity);
+
+            studentLessonNoteResponses.add(getStudentLessonNoteById(lessonNoteId));
+        });
+
+        return studentLessonNoteResponses;
+    }
+
+    @Override
     public List<StudentLessonNoteResponse> updateStudentsLessonResitNotes(final StudentsLessonResitNotesUpdateRequest updateRequest)
             throws SisNotExistException {
 
@@ -148,12 +185,33 @@ public class StudentLessonNoteServiceImpl implements StudentLessonNoteService {
             }
 
             final StudentLessonResitNoteUpdateEntity noteUpdateEntity = lessonNoteInfoConverter
-                    .generateResitNoteUpdateEntity(lessonNoteId, midtermNote, meanOfNote, status, updateRequest.getOperationInfoRequest());
+                    .generateResitNoteUpdateEntity(lessonNoteId, resitNote, meanOfNote, status, updateRequest.getOperationInfoRequest());
 
             lessonNoteRepository.updateStudentLessonResitNote(noteUpdateEntity);
 
             studentLessonNoteResponses.add(getStudentLessonNoteById(lessonNoteId));
         }
+
+        return studentLessonNoteResponses;
+    }
+
+    @Override
+    public List<StudentLessonNoteResponse> confirmStudentsLessonResitNotes(final StudentsLessonResitNotesConfirmRequest confirmRequest)
+            throws SisNotExistException {
+
+        final List<String> lessonNoteIds = confirmRequest.getLessonNoteIds();
+        checkBeforeConfirmNotes(lessonNoteIds);
+
+        final List<StudentLessonNoteResponse> studentLessonNoteResponses = new ArrayList<>();
+        lessonNoteIds.forEach(lessonNoteId -> {
+
+            final StudentLessonResitNoteConfirmEntity noteConfirmEntity = lessonNoteInfoConverter
+                    .generateResitNoteConfirmEntity(lessonNoteId, confirmRequest.getOperationInfoRequest());
+
+            lessonNoteRepository.confirmStudentLessonResitNote(noteConfirmEntity);
+
+            studentLessonNoteResponses.add(getStudentLessonNoteById(lessonNoteId));
+        });
 
         return studentLessonNoteResponses;
     }
@@ -183,6 +241,14 @@ public class StudentLessonNoteServiceImpl implements StudentLessonNoteService {
         for (Map.Entry<String, Double> noteIdAndNote : noteIdsAndNotes.entrySet()) {
             final String lessonNoteId = noteIdAndNote.getKey();
             ifStudentLessonNotesAreNotExistThrowNotExistException(lessonNoteId);
+        }
+    }
+
+    private void checkBeforeConfirmNotes(final List<String> noteIds)
+            throws SisNotExistException {
+
+        for (String noteId : noteIds) {
+            ifStudentLessonNotesAreNotExistThrowNotExistException(noteId);
         }
     }
 

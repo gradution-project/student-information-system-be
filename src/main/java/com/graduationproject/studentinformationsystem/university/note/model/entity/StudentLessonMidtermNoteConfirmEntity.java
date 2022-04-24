@@ -8,11 +8,10 @@ import java.util.Date;
 
 @Getter
 @Builder
-public class StudentLessonMidtermNoteUpdateEntity {
+public class StudentLessonMidtermNoteConfirmEntity {
 
     private String id;
-    private Double midtermNote;
-    private StudentLessonNoteState midtermNoteState;
+    private StudentLessonNoteState noteState;
     private Long modifiedUserId;
     private Date modifiedDate;
 }
