@@ -16,6 +16,8 @@ public enum LessonMapping {
     NAME("NAME", "name"),
     SEMESTER("SEMESTER", "semester"),
     CREDIT("CREDIT", "credit"),
+    THEORETICAL_HOURS("THEORETICAL_HOURS", "theoreticalHours"),
+    PRACTICE_HOURS("PRACTICE_HOURS", "practiceHours"),
     COMPULSORY_OR_ELECTIVE("COMPULSORY_OR_ELECTIVE", "compulsoryOrElective"),
     STATUS("STATUS", "status"),
     CREATED_DATE("CREATED_DATE", "createdDate"),
