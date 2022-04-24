@@ -6,6 +6,7 @@ import com.graduationproject.studentinformationsystem.university.lesson.common.m
 import com.graduationproject.studentinformationsystem.university.lesson.common.model.enums.LessonSemester;
 import lombok.Getter;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
@@ -29,6 +30,14 @@ public class LessonInfoRequest implements Serializable {
 
     @NotNull
     private Integer credit;
+
+    @NotNull
+    @Max(99)
+    private Integer theoreticalHours;
+
+    @NotNull
+    @Max(99)
+    private Integer practiceHours;
 
     @NotNull
     private LessonCompulsoryOrElective compulsoryOrElective;
