@@ -36,7 +36,4 @@ public interface StudentService {
 
     StudentInfoResponse activateStudent(StudentActivateRequest activateRequest)
             throws SisNotExistException, SisAlreadyException;
-
-    StudentInfoResponse graduateStudent(StudentGraduateRequest graduateRequest)
-            throws SisNotExistException, SisAlreadyException;
 }

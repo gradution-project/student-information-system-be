@@ -111,14 +111,4 @@ public class StudentController {
         final StudentInfoResponse infoResponse = studentService.activateStudent(activateRequest);
         return successResponse(infoResponse);
     }
-
-    @PatchMapping(StudentControllerEndpoint.GRADUATE)
-    @ApiOperation(value = "Graduate Student")
-    public ResponseEntity<SisBaseApiResponse<StudentInfoResponse>> graduateStudent(
-            @RequestBody @Valid final StudentGraduateRequest graduateRequest)
-            throws SisNotExistException, SisAlreadyException {
-
-        final StudentInfoResponse infoResponse = studentService.graduateStudent(graduateRequest);
-        return successResponse(infoResponse);
-    }
 }
