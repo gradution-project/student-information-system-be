@@ -108,7 +108,7 @@ public class StudentGraduationServiceImpl implements StudentGraduationService {
             throws SisAlreadyException, SisNotExistException {
 
         final String graduationId = unconfirmRequest.getGraduationId();
-        checkBeforeConfirmed(graduationId);
+        checkBeforeUnconfirmed(graduationId);
 
         final StudentGraduationEntity graduationEntity = studentGraduationInfoConverter.generateUnconfirmedEntity(unconfirmRequest);
         studentGraduationRepository.updateStudentGraduationStatus(graduationEntity);
