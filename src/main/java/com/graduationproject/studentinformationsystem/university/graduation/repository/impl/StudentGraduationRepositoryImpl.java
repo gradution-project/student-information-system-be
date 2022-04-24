@@ -156,6 +156,27 @@ public class StudentGraduationRepositoryImpl implements StudentGraduationReposit
         }
     }
 
+    @Override
+    public Long getStudentId(final String graduationId) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_STUDENT_ID_BY_GRADUATION_ID)) {
+
+            final Long studentId = query
+                    .addParameter(GRADUATION_ID.getModelName(), graduationId)
+                    .executeScalar(Long.class);
+
+            if (studentId != null) {
+                info.foundById(graduationId);
+                return studentId;
+            } else {
+                warn.notFoundById(graduationId);
+                return null;
+            }
+        } catch (Exception exception) {
+            error.errorWhenGettingById(graduationId);
+            throw new SisDatabaseException(exception);
+        }
+    }
+
     private boolean checkOperation(final String graduationId, final String sql) {
         try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(sql)) {
 
