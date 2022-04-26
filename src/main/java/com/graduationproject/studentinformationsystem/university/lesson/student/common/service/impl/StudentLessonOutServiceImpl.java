@@ -1,6 +1,7 @@
 package com.graduationproject.studentinformationsystem.university.lesson.student.common.service.impl;
 
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
+import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.university.lesson.common.model.dto.response.LessonResponse;
 import com.graduationproject.studentinformationsystem.university.lesson.student.common.model.dto.converter.StudentLessonInfoConverter;
 import com.graduationproject.studentinformationsystem.university.lesson.student.common.model.dto.response.StudentLessonsResponse;
@@ -43,6 +44,14 @@ public class StudentLessonOutServiceImpl implements StudentLessonOutService {
         }
 
         return getStudentLessonsResponse(studentId);
+    }
+
+    @Override
+    public boolean ifStudentLessonsAreNotExistThrowNotExistException(final Long studentId) throws SisNotExistException {
+        if (!studentLessonRepository.isStudentLessonsExist(studentId)) {
+            StudentLessonException.throwNotExistException(studentId);
+        }
+        return true;
     }
 
     private StudentLessonsResponse getStudentLessonsResponse(final Long studentId) {

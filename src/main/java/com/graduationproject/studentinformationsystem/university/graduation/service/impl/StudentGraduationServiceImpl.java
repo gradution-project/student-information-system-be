@@ -10,6 +10,7 @@ import com.graduationproject.studentinformationsystem.university.graduation.mode
 import com.graduationproject.studentinformationsystem.university.graduation.model.exception.StudentGraduationException;
 import com.graduationproject.studentinformationsystem.university.graduation.repository.StudentGraduationRepository;
 import com.graduationproject.studentinformationsystem.university.graduation.service.StudentGraduationService;
+import com.graduationproject.studentinformationsystem.university.lesson.student.common.service.StudentLessonOutService;
 import com.graduationproject.studentinformationsystem.university.note.service.StudentLessonNoteOutService;
 import com.graduationproject.studentinformationsystem.university.student.service.StudentOutService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.List;
 public class StudentGraduationServiceImpl implements StudentGraduationService {
 
     private final StudentOutService studentOutService;
+    private final StudentLessonOutService studentLessonOutService;
     private final StudentLessonNoteOutService studentLessonNoteOutService;
 
     private final StudentGraduationRepository studentGraduationRepository;
@@ -131,8 +133,13 @@ public class StudentGraduationServiceImpl implements StudentGraduationService {
     }
 
     @Override
-    public boolean isStudentGraduationEnabled(final Long studentId) throws SisAlreadyException {
-        return studentLessonNoteOutService.isStudentGraduationEnabled(studentId);
+    public boolean isStudentGraduationEnabled(final Long studentId) throws SisAlreadyException, SisNotExistException {
+
+        ifStudentIsNotExistThrowNotExistException(studentId);
+        ifStudentLessonsAreNotExistThrowNotExistException(studentId);
+        ifStudentIsNotPassedAllLessonsThrowUnfinalisedOrFailedLessonNoteExistException(studentId);
+
+        return true;
     }
 
 
@@ -195,6 +202,11 @@ public class StudentGraduationServiceImpl implements StudentGraduationService {
     private void ifStudentIsNotExistThrowNotExistException(final Long studentId) throws SisNotExistException {
         studentOutService.ifStudentIsNotExistThrowNotExistException(studentId);
     }
+
+    private void ifStudentLessonsAreNotExistThrowNotExistException(final Long studentId) throws SisNotExistException {
+        studentLessonOutService.ifStudentLessonsAreNotExistThrowNotExistException(studentId);
+    }
+
 
     private void ifStudentIsNotPassedAllLessonsThrowUnfinalisedOrFailedLessonNoteExistException(final Long studentId) throws SisAlreadyException {
         studentLessonNoteOutService.hasTheStudentPassedAllLessons(studentId);
