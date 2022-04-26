@@ -131,7 +131,10 @@ public class StudentGraduationServiceImpl implements StudentGraduationService {
     }
 
     @Override
-    public boolean isStudentGraduationEnabled(final Long studentId) throws SisAlreadyException {
+    public boolean isStudentGraduationEnabled(final Long studentId) throws SisAlreadyException, SisNotExistException {
+
+        ifStudentIsNotExistThrowNotExistException(studentId);
+
         return studentLessonNoteOutService.isStudentGraduationEnabled(studentId);
     }
 
