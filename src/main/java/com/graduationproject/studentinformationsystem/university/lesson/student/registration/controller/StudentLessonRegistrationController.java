@@ -43,8 +43,8 @@ public class StudentLessonRegistrationController {
         return successResponse(registrationResponses);
     }
 
-    @GetMapping(StudentLessonRegistrationControllerEndpoint.BY_REGISTRATION_ID)
-    @ApiOperation(value = "Get Student Lesson Registration By Registration ID")
+    @GetMapping(StudentLessonRegistrationControllerEndpoint.DETAIL_BY_REGISTRATION_ID)
+    @ApiOperation(value = "Get Student Lesson Registration Detail By Registration ID")
     public ResponseEntity<SisBaseApiResponse<StudentLessonRegistrationDetailResponse>> getStudentLessonRegistrationDetailByRegistrationId(
             @PathVariable final String registrationId) throws SisNotExistException {
 
@@ -53,15 +53,14 @@ public class StudentLessonRegistrationController {
         return successResponse(registrationDetailResponse);
     }
 
-    @GetMapping(StudentLessonRegistrationControllerEndpoint.BY_STUDENT_ID)
+    @GetMapping(StudentLessonRegistrationControllerEndpoint.ID_BY_STUDENT_ID)
     @ApiOperation(value = "Get Student Lesson Registrations Detail By Student ID")
-    public ResponseEntity<SisBaseApiResponse<Object>> getStudentLessonRegistrationDetailByStudentId(
+    public ResponseEntity<SisBaseApiResponse<String>> getStudentLessonRegistrationIdByStudentId(
             @PathVariable @StudentID final Long studentId)
             throws SisNotExistException {
 
-        final StudentLessonRegistrationDetailResponse registrationDetailResponse = studentLessonRegistrationService
-                .getStudentLessonRegistrationDetailByStudentId(studentId);
-        return successResponse(registrationDetailResponse);
+        final String registrationId = studentLessonRegistrationService.getStudentLessonRegistrationIdByStudentId(studentId);
+        return successResponse(registrationId);
     }
 
     @PostMapping(StudentLessonRegistrationControllerEndpoint.SAVE)
