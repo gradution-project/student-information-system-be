@@ -58,15 +58,18 @@ public class StudentLessonRegistrationServiceImpl implements StudentLessonRegist
     }
 
     @Override
-    public String getStudentLessonRegistrationIdByStudentId(final Long studentId) throws SisNotExistException {
+    public StudentLessonRegistrationDetailResponse getStudentLessonRegistrationDetailByStudentId(final Long studentId)
+            throws SisNotExistException {
 
         ifStudentIsNotExistThrowNotExistException(studentId);
 
         final String registrationId = studentLessonRegistrationRepository.getRegistrationId(studentId);
-
         ifStudentLessonRegistrationIsNotExistThrowNotExistException(registrationId);
 
-        return registrationId;
+        final StudentLessonRegistrationEntity registrationEntity = studentLessonRegistrationRepository
+                .getStudentLessonRegistrationByRegistrationId(registrationId);
+
+        return studentLessonRegistrationInfoConverter.entityToResponse(registrationEntity);
     }
 
     @Override
