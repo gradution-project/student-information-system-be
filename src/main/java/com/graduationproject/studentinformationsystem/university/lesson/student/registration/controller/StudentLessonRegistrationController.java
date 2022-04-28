@@ -23,6 +23,7 @@ import java.util.List;
 
 import static com.graduationproject.studentinformationsystem.common.config.SisSwaggerConfiguration.STUDENT_LESSON_REGISTRATION_API_TAG;
 import static com.graduationproject.studentinformationsystem.common.util.controller.endpoint.SisControllerEndpoint.Path.STUDENT_LESSON_REGISTRATION;
+import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.failResponse;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.successResponse;
 
 @RestController
