@@ -18,7 +18,7 @@ public interface StudentLessonRegistrationService {
     StudentLessonRegistrationDetailResponse getStudentLessonRegistrationDetailByRegistrationId(String registrationId)
             throws SisNotExistException;
 
-    StudentLessonRegistrationDetailResponse getWaitingStudentLessonsDetailByStudentId(Long studentId)
+    StudentLessonRegistrationDetailResponse getStudentLessonRegistrationDetailByStudentId(Long studentId)
             throws SisNotExistException;
 
     StudentLessonRegistrationDetailResponse saveStudentLessonRegistration(StudentLessonRegistrationSaveRequest saveRequest)
@@ -29,8 +29,4 @@ public interface StudentLessonRegistrationService {
 
     StudentLessonRegistrationDetailResponse rejectStudentLessonRegistration(StudentLessonRegistrationRejectRequest rejectRequest)
             throws SisAlreadyException, SisNotExistException;
-
-    boolean isStudentLessonRegistrationWaiting(String registrationId);
-
-    boolean isStudentLessonRegistrationApproved(String registrationId);
 }

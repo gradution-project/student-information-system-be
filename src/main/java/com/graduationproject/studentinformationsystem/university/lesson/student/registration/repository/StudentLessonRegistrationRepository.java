@@ -11,8 +11,6 @@ public interface StudentLessonRegistrationRepository {
 
     StudentLessonRegistrationEntity getStudentLessonRegistrationByRegistrationId(String registrationId);
 
-    StudentLessonRegistrationEntity getWaitingStudentLessonsDetailByStudentId(Long registrationId);
-
     void saveStudentLessonRegistration(StudentLessonRegistrationEntity registrationEntity);
 
     void updateStudentLessonRegistrationStatus(StudentLessonRegistrationEntity registrationEntity);

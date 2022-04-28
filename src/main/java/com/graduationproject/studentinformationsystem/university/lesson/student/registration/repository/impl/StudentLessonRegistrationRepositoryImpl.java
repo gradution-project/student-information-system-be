@@ -70,27 +70,6 @@ public class StudentLessonRegistrationRepositoryImpl implements StudentLessonReg
     }
 
     @Override
-    public StudentLessonRegistrationEntity getWaitingStudentLessonsDetailByStudentId(final Long studentId) {
-        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_WAITING_STUDENT_LESSON_REGISTRATION_BY_STUDENT_ID)) {
-
-            final StudentLessonRegistrationEntity registrationEntity = query
-                    .addParameter(STUDENT_ID.getModelName(), studentId)
-                    .setColumnMappings(COLUMN_MAPPINGS)
-                    .executeAndFetchFirst(StudentLessonRegistrationEntity.class);
-
-            if (registrationEntity != null) {
-                info.foundById(studentId);
-            } else {
-                warn.notFoundById(studentId);
-            }
-            return registrationEntity;
-        } catch (Exception exception) {
-            error.errorWhenGettingById(studentId);
-            throw new SisDatabaseException(exception);
-        }
-    }
-
-    @Override
     public void saveStudentLessonRegistration(final StudentLessonRegistrationEntity registrationEntity) {
         try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(SAVE_STUDENT_LESSON_REGISTRATION)) {
 

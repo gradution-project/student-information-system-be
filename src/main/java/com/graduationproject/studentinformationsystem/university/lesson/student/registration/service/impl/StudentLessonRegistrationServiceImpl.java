@@ -58,19 +58,18 @@ public class StudentLessonRegistrationServiceImpl implements StudentLessonRegist
     }
 
     @Override
-    public StudentLessonRegistrationDetailResponse getWaitingStudentLessonsDetailByStudentId(final Long studentId)
+    public StudentLessonRegistrationDetailResponse getStudentLessonRegistrationDetailByStudentId(final Long studentId)
             throws SisNotExistException {
 
         ifStudentIsNotExistThrowNotExistException(studentId);
 
-        final StudentLessonRegistrationEntity registrationEntity = studentLessonRegistrationRepository
-                .getWaitingStudentLessonsDetailByStudentId(studentId);
+        final String registrationId = studentLessonRegistrationRepository.getRegistrationId(studentId);
+        ifStudentLessonRegistrationIsNotExistThrowNotExistException(registrationId);
 
-        if (registrationEntity != null) {
-            return studentLessonRegistrationInfoConverter.entityToResponse(registrationEntity);
-        } else {
-            return null;
-        }
+        final StudentLessonRegistrationEntity registrationEntity = studentLessonRegistrationRepository
+                .getStudentLessonRegistrationByRegistrationId(registrationId);
+
+        return studentLessonRegistrationInfoConverter.entityToResponse(registrationEntity);
     }
 
     @Override
@@ -130,16 +129,6 @@ public class StudentLessonRegistrationServiceImpl implements StudentLessonRegist
 
         studentLessonRegistrationRepository.updateStudentLessonRegistrationStatus(registrationEntity);
         return getStudentLessonRegistrationDetailByRegistrationId(registrationId);
-    }
-
-    @Override
-    public boolean isStudentLessonRegistrationWaiting(final String registrationId) {
-        return studentLessonRegistrationRepository.isStudentLessonRegistrationWaiting(registrationId);
-    }
-
-    @Override
-    public boolean isStudentLessonRegistrationApproved(final String registrationId) {
-        return studentLessonRegistrationRepository.isStudentLessonRegistrationApproved(registrationId);
     }
 
 
