@@ -58,19 +58,15 @@ public class StudentLessonRegistrationServiceImpl implements StudentLessonRegist
     }
 
     @Override
-    public StudentLessonRegistrationDetailResponse getWaitingStudentLessonsDetailByStudentId(final Long studentId)
-            throws SisNotExistException {
+    public String getStudentLessonRegistrationIdByStudentId(final Long studentId) throws SisNotExistException {
 
         ifStudentIsNotExistThrowNotExistException(studentId);
 
-        final StudentLessonRegistrationEntity registrationEntity = studentLessonRegistrationRepository
-                .getWaitingStudentLessonsDetailByStudentId(studentId);
+        final String registrationId = studentLessonRegistrationRepository.getRegistrationId(studentId);
 
-        if (registrationEntity != null) {
-            return studentLessonRegistrationInfoConverter.entityToResponse(registrationEntity);
-        } else {
-            return null;
-        }
+        ifStudentLessonRegistrationIsNotExistThrowNotExistException(registrationId);
+
+        return registrationId;
     }
 
     @Override
@@ -130,16 +126,6 @@ public class StudentLessonRegistrationServiceImpl implements StudentLessonRegist
 
         studentLessonRegistrationRepository.updateStudentLessonRegistrationStatus(registrationEntity);
         return getStudentLessonRegistrationDetailByRegistrationId(registrationId);
-    }
-
-    @Override
-    public boolean isStudentLessonRegistrationWaiting(final String registrationId) {
-        return studentLessonRegistrationRepository.isStudentLessonRegistrationWaiting(registrationId);
-    }
-
-    @Override
-    public boolean isStudentLessonRegistrationApproved(final String registrationId) {
-        return studentLessonRegistrationRepository.isStudentLessonRegistrationApproved(registrationId);
     }
 
 

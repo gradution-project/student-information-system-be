@@ -1,6 +1,5 @@
 package com.graduationproject.studentinformationsystem.university.lesson.student.registration.controller;
 
-import com.graduationproject.studentinformationsystem.common.util.controller.response.SisApiResponse;
 import com.graduationproject.studentinformationsystem.common.util.controller.response.SisBaseApiResponse;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
@@ -24,7 +23,6 @@ import java.util.List;
 
 import static com.graduationproject.studentinformationsystem.common.config.SisSwaggerConfiguration.STUDENT_LESSON_REGISTRATION_API_TAG;
 import static com.graduationproject.studentinformationsystem.common.util.controller.endpoint.SisControllerEndpoint.Path.STUDENT_LESSON_REGISTRATION;
-import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.failResponse;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.successResponse;
 
 @RestController
@@ -35,7 +33,7 @@ public class StudentLessonRegistrationController {
 
     private final StudentLessonRegistrationService studentLessonRegistrationService;
 
-    @GetMapping(StudentLessonRegistrationControllerEndpoint.GET)
+    @GetMapping
     @ApiOperation(value = "Get All Student Lesson Registrations By Status")
     public ResponseEntity<SisBaseApiResponse<List<StudentLessonRegistrationResponse>>> getAllStudentLessonRegistrationsByStatus(
             @RequestParam final StudentLessonRegistrationStatus status) {
@@ -45,8 +43,8 @@ public class StudentLessonRegistrationController {
         return successResponse(registrationResponses);
     }
 
-    @GetMapping(StudentLessonRegistrationControllerEndpoint.GET_BY_REGISTRATION_ID)
-    @ApiOperation(value = "Get Student Lesson Registration By Registration ID")
+    @GetMapping(StudentLessonRegistrationControllerEndpoint.DETAIL_BY_REGISTRATION_ID)
+    @ApiOperation(value = "Get Student Lesson Registration Detail By Registration ID")
     public ResponseEntity<SisBaseApiResponse<StudentLessonRegistrationDetailResponse>> getStudentLessonRegistrationDetailByRegistrationId(
             @PathVariable final String registrationId) throws SisNotExistException {
 
@@ -55,34 +53,14 @@ public class StudentLessonRegistrationController {
         return successResponse(registrationDetailResponse);
     }
 
-    @GetMapping(StudentLessonRegistrationControllerEndpoint.WAITING_BY_STUDENT_ID)
-    @ApiOperation(value = "Get Waiting Student Lessons Detail By Student ID")
-    public ResponseEntity<SisBaseApiResponse<Object>> getWaitingStudentLessonsDetailByStudentId(
+    @GetMapping(StudentLessonRegistrationControllerEndpoint.ID_BY_STUDENT_ID)
+    @ApiOperation(value = "Get Student Lesson Registrations Detail By Student ID")
+    public ResponseEntity<SisBaseApiResponse<String>> getStudentLessonRegistrationIdByStudentId(
             @PathVariable @StudentID final Long studentId)
             throws SisNotExistException {
 
-        final StudentLessonRegistrationDetailResponse registrationDetailResponse = studentLessonRegistrationService
-                .getWaitingStudentLessonsDetailByStudentId(studentId);
-
-        if (registrationDetailResponse != null) {
-            return successResponse(registrationDetailResponse);
-        } else {
-            return failResponse(null);
-        }
-    }
-
-    @GetMapping(StudentLessonRegistrationControllerEndpoint.APPROVED_BY_REGISTRATION_ID)
-    @ApiOperation(value = "Is Student Lesson Registration Approved")
-    public ResponseEntity<SisApiResponse> isStudentLessonRegistrationApproved(
-            @PathVariable final String registrationId) {
-
-        final boolean isStudentLessonRegistrationExist = studentLessonRegistrationService.isStudentLessonRegistrationApproved(registrationId);
-
-        if (isStudentLessonRegistrationExist) {
-            return successResponse();
-        } else {
-            return failResponse();
-        }
+        final String registrationId = studentLessonRegistrationService.getStudentLessonRegistrationIdByStudentId(studentId);
+        return successResponse(registrationId);
     }
 
     @PostMapping(StudentLessonRegistrationControllerEndpoint.SAVE)
