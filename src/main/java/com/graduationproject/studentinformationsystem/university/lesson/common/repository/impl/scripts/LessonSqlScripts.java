@@ -13,18 +13,18 @@ public class LessonSqlScripts {
     }
 
     /**
-     * SELECT LESSON_ID, DEPARTMENT_ID, NAME, STATUS, SEMESTER, CREDIT, COMPULSORY_OR_ELECTIVE,
-     * CREATED_DATE, CREATED_USER_ID, MODIFIED_DATE, MODIFIED_USER_ID FROM UNIV_LESSON;
+     * SELECT LESSON_ID, DEPARTMENT_ID, NAME, STATUS, SEMESTER, CREDIT, THEORETICAL_HOURS, PRACTICE_HOURS,
+     * COMPULSORY_OR_ELECTIVE, CREATED_DATE, CREATED_USER_ID, MODIFIED_DATE, MODIFIED_USER_ID FROM UNIV_LESSON;
      */
     private static final String GET_UNIV_LESSONS =
             sqlBuilder.delete(0, sqlBuilder.length())
-                    .append("SELECT LESSON_ID, DEPARTMENT_ID, NAME, STATUS, SEMESTER, CREDIT, COMPULSORY_OR_ELECTIVE," +
-                            "CREATED_DATE, CREATED_USER_ID, MODIFIED_DATE, MODIFIED_USER_ID " +
-                            "FROM UNIV_LESSON ").toString();
+                    .append("SELECT LESSON_ID, DEPARTMENT_ID, NAME, STATUS, SEMESTER, CREDIT, THEORETICAL_HOURS, " +
+                            "PRACTICE_HOURS, COMPULSORY_OR_ELECTIVE, CREATED_DATE, CREATED_USER_ID, " +
+                            "MODIFIED_DATE, MODIFIED_USER_ID FROM UNIV_LESSON ").toString();
 
     /**
-     * SELECT LESSON_ID, DEPARTMENT_ID, NAME, STATUS, SEMESTER, CREDIT, COMPULSORY_OR_ELECTIVE,
-     * CREATED_DATE, CREATED_USER_ID, MODIFIED_DATE, MODIFIED_USER_ID FROM UNIV_LESSON
+     * SELECT LESSON_ID, DEPARTMENT_ID, NAME, STATUS, SEMESTER, CREDIT, THEORETICAL_HOURS, PRACTICE_HOURS,
+     * COMPULSORY_OR_ELECTIVE, CREATED_DATE, CREATED_USER_ID, MODIFIED_DATE, MODIFIED_USER_ID FROM UNIV_LESSON
      * WHERE STATUS IN '=:status';
      */
     public static final String GET_ALL_LESSONS_BY_STATUS =
@@ -33,8 +33,8 @@ public class LessonSqlScripts {
                     .append("WHERE STATUS IN ").toString();
 
     /**
-     * SELECT LESSON_ID, DEPARTMENT_ID, NAME, STATUS, SEMESTER, CREDIT, COMPULSORY_OR_ELECTIVE,
-     * CREATED_DATE, CREATED_USER_ID, MODIFIED_DATE, MODIFIED_USER_ID FROM UNIV_LESSON
+     * SELECT LESSON_ID, DEPARTMENT_ID, NAME, STATUS, SEMESTER, CREDIT, THEORETICAL_HOURS, PRACTICE_HOURS,
+     * COMPULSORY_OR_ELECTIVE, CREATED_DATE, CREATED_USER_ID, MODIFIED_DATE, MODIFIED_USER_ID FROM UNIV_LESSON
      * WHERE LESSON_ID=:lessonId;
      */
     public static final String GET_LESSON_BY_ID =
@@ -43,26 +43,29 @@ public class LessonSqlScripts {
                     .append("WHERE LESSON_ID=:lessonId").toString();
 
     /**
-     * INSERT INTO UNIV_LESSON (LESSON_ID, DEPARTMENT_ID, NAME, STATUS, SEMESTER, CREDIT, COMPULSORY_OR_ELECTIVE,
-     * CREATED_DATE, CREATED_USER_ID) VALUES (:lessonId, :departmentId, :name, :status, :semester, :credit,
-     * :compulsoryOrElective, :createdDate, :createdUserId);
+     * INSERT INTO UNIV_LESSON (LESSON_ID, DEPARTMENT_ID, NAME, STATUS, SEMESTER, CREDIT, THEORETICAL_HOURS,
+     * PRACTICE_HOURS, COMPULSORY_OR_ELECTIVE, CREATED_DATE, CREATED_USER_ID) VALUES (:lessonId, :departmentId,
+     * :name, :status, :semester, :credit, :theoreticalHours, :practiceHours, :compulsoryOrElective,
+     * :createdDate, :createdUserId);
      */
     public static final String SAVE_LESSON =
             sqlBuilder.delete(0, sqlBuilder.length())
                     .append("INSERT INTO UNIV_LESSON (LESSON_ID, DEPARTMENT_ID, NAME, STATUS, SEMESTER, CREDIT, " +
-                            "COMPULSORY_OR_ELECTIVE, CREATED_DATE, CREATED_USER_ID) VALUES (:lessonId, " +
-                            ":departmentId, :name, :status, :semester, :credit, :compulsoryOrElective, " +
-                            ":createdDate, :createdUserId)").toString();
+                            "THEORETICAL_HOURS, PRACTICE_HOURS, COMPULSORY_OR_ELECTIVE, CREATED_DATE, CREATED_USER_ID)" +
+                            " VALUES (:lessonId, :departmentId, :name, :status, :semester, :credit, :theoreticalHours, " +
+                            ":practiceHours, :compulsoryOrElective, :createdDate, :createdUserId)").toString();
 
     /**
      * UPDATE UNIV_LESSON SET LESSON_ID=:lessonId, DEPARTMENT_ID=:departmentId, NAME=:name, SEMESTER=:semester,
-     * CREDIT=:credit, COMPULSORY_OR_ELECTIVE=:compulsoryOrElective,
-     * MODIFIED_DATE=:modifiedDate, MODIFIED_USER_ID=:modifiedUserId WHERE LESSON_ID=:lessonId;
+     * CREDIT=:credit, THEORETICAL_HOURS=:theoreticalHours, PRACTICE_HOURS=:practiceHours,
+     * COMPULSORY_OR_ELECTIVE=:compulsoryOrElective, MODIFIED_DATE=:modifiedDate, MODIFIED_USER_ID=:modifiedUserId
+     * WHERE LESSON_ID=:lessonId;
      */
     public static final String UPDATE_LESSON =
             sqlBuilder.delete(0, sqlBuilder.length())
                     .append("UPDATE UNIV_LESSON SET LESSON_ID=:lessonId, DEPARTMENT_ID=:departmentId, NAME=:name, " +
-                            "SEMESTER=:semester, CREDIT=:credit, COMPULSORY_OR_ELECTIVE=:compulsoryOrElective, " +
+                            "SEMESTER=:semester, CREDIT=:credit, THEORETICAL_HOURS=:theoreticalHours, " +
+                            "PRACTICE_HOURS=:practiceHours, COMPULSORY_OR_ELECTIVE=:compulsoryOrElective, " +
                             "MODIFIED_DATE=:modifiedDate, MODIFIED_USER_ID=:modifiedUserId " +
                             "WHERE LESSON_ID=:lessonId").toString();
 

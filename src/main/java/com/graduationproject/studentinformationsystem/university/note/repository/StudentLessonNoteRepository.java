@@ -16,13 +16,21 @@ public interface StudentLessonNoteRepository {
 
     void updateStudentLessonMidtermNote(StudentLessonMidtermNoteUpdateEntity updateEntity);
 
+    void confirmStudentLessonMidtermNote(StudentLessonMidtermNoteConfirmEntity confirmEntity);
+
     void updateStudentLessonFinalNote(StudentLessonFinalNoteUpdateEntity updateEntity);
 
+    void confirmStudentLessonFinalNote(StudentLessonFinalNoteConfirmEntity confirmEntity);
+
     void updateStudentLessonResitNote(StudentLessonResitNoteUpdateEntity updateEntity);
+
+    void confirmStudentLessonResitNote(StudentLessonResitNoteConfirmEntity confirmEntity);
 
     Double getMidtermNoteById(String id);
 
     boolean isStudentLessonNotesExist(String id);
+
+    boolean isStudentLessonsNotesExist(Long studentId);
 
     boolean hasTheStudentPassedAllLessons(Long studentId);
 }

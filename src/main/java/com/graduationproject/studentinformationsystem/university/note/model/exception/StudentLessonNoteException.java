@@ -11,8 +11,12 @@ public class StudentLessonNoteException extends SisException {
     private StudentLessonNoteException() {
     }
 
-    public static void throwNotExistException(final String id) throws SisNotExistException {
+    public static void throwNotExistExceptionById(final String id) throws SisNotExistException {
         SisException.throwNotExistException("STUDENT LESSON NOTES ARE NOT EXIST! id:" + id);
+    }
+
+    public static void throwNotExistExceptionByStudentId(final Long studentId) throws SisNotExistException {
+        SisException.throwNotExistException("STUDENT LESSON NOTES ARE NOT EXIST! studentId:" + studentId);
     }
 
     public static void throwAlreadyExistException(final Long studentId) throws SisAlreadyException {

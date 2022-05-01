@@ -12,5 +12,4 @@ public class TeacherPasswordOperationEntity {
     private String operationId;
     private Long teacherId;
     private LocalDateTime expireDate;
-    private String feUrl;
 }

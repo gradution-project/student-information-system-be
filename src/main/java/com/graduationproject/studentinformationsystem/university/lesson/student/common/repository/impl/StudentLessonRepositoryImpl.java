@@ -80,7 +80,7 @@ public class StudentLessonRepositoryImpl implements StudentLessonRepository {
     }
 
     @Override
-    public boolean isStudentLessonsExist(Long studentId) {
+    public boolean isStudentLessonsExist(final Long studentId) {
         try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(IS_STUDENT_LESSONS_EXIST)) {
 
             final boolean isLessonsExist = query
