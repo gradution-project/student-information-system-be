@@ -1,9 +1,7 @@
 package com.graduationproject.studentinformationsystem.university.note.service;
 
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
-import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentLessonFinalNoteUpdateRequest;
-import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentLessonMidtermNoteUpdateRequest;
-import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentLessonResitNoteUpdateRequest;
+import com.graduationproject.studentinformationsystem.university.note.model.dto.request.*;
 import com.graduationproject.studentinformationsystem.university.note.model.dto.response.StudentLessonNoteResponse;
 
 import java.util.List;
@@ -14,9 +12,21 @@ public interface StudentLessonNoteService {
 
     List<StudentLessonNoteResponse> getAllStudentLessonsNotesByStudentId(Long studentId) throws SisNotExistException;
 
-    StudentLessonNoteResponse updateStudentLessonMidtermNote(StudentLessonMidtermNoteUpdateRequest updateRequest) throws SisNotExistException;
+    List<StudentLessonNoteResponse> updateStudentsLessonMidtermNotes(StudentsLessonMidtermNotesUpdateRequest updateRequest)
+            throws SisNotExistException;
 
-    StudentLessonNoteResponse updateStudentLessonFinalNote(StudentLessonFinalNoteUpdateRequest updateRequest) throws SisNotExistException;
+    List<StudentLessonNoteResponse> confirmStudentsLessonMidtermNotes(StudentsLessonMidtermNotesConfirmRequest confirmRequest)
+            throws SisNotExistException;
 
-    StudentLessonNoteResponse updateStudentLessonResitNote(StudentLessonResitNoteUpdateRequest updateRequest) throws SisNotExistException;
+    List<StudentLessonNoteResponse> updateStudentsLessonFinalNotes(StudentsLessonFinalNotesUpdateRequest updateRequest)
+            throws SisNotExistException;
+
+    List<StudentLessonNoteResponse> confirmStudentsLessonFinalNotes(StudentsLessonFinalNotesConfirmRequest confirmRequest)
+            throws SisNotExistException;
+
+    List<StudentLessonNoteResponse> updateStudentsLessonResitNotes(StudentsLessonResitNotesUpdateRequest updateRequest)
+            throws SisNotExistException;
+
+    List<StudentLessonNoteResponse> confirmStudentsLessonResitNotes(StudentsLessonResitNotesConfirmRequest confirmRequest)
+            throws SisNotExistException;
 }

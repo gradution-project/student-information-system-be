@@ -4,6 +4,7 @@ import com.graduationproject.studentinformationsystem.common.model.dto.request.S
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.login.teacher.password.service.TeacherPasswordOperationOutService;
+import com.graduationproject.studentinformationsystem.university.department.service.DepartmentOutService;
 import com.graduationproject.studentinformationsystem.university.mail.service.TeacherMailService;
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.converter.TeacherInfoResponseConverter;
 import com.graduationproject.studentinformationsystem.university.teacher.model.dto.converter.TeacherResponseConverter;
@@ -27,6 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TeacherServiceImpl implements TeacherService {
 
+    private final DepartmentOutService departmentOutService;
     private final TeacherPasswordOperationOutService passwordOperationOutService;
 
     private final TeacherAcademicInfoService academicInfoService;
@@ -61,7 +63,7 @@ public class TeacherServiceImpl implements TeacherService {
 
         final TeacherInfoDetailResponse infoDetailResponse = getTeacherInfoResponse(teacherId);
 
-        passwordOperationOutService.saveOrUpdatePasswordOperation(teacherId, saveRequest.getOperationInfoRequest().getFeUrl());
+        passwordOperationOutService.saveOrUpdatePasswordOperation(teacherId);
         teacherMailService.sendSavedEmail(infoDetailResponse);
         return infoDetailResponse;
     }
@@ -143,15 +145,20 @@ public class TeacherServiceImpl implements TeacherService {
      * Checks Before Processing
      */
 
-    private void checkBeforeSaving(final TeacherSaveRequest saveRequest) {
-        ifDepartmentIsNotExistThrowNotExistException(saveRequest.getAcademicInfoRequest().getDepartmentId());
+    private void checkBeforeSaving(final TeacherSaveRequest saveRequest) throws SisNotExistException {
+
+        final Long departmentId = saveRequest.getAcademicInfoRequest().getDepartmentId();
+
+        ifDepartmentIsNotExistThrowNotExistException(departmentId);
     }
 
     private void checkBeforeUpdatingAcademicInfo(final Long teacherId, final TeacherAcademicInfoUpdateRequest academicInfoUpdateRequest)
             throws SisNotExistException {
 
+        final Long departmentId = academicInfoUpdateRequest.getAcademicInfoRequest().getDepartmentId();
+
         ifTeacherIsNotExistThrowNotExistException(teacherId);
-        ifDepartmentIsNotExistThrowNotExistException(academicInfoUpdateRequest.getAcademicInfoRequest().getDepartmentId());
+        ifDepartmentIsNotExistThrowNotExistException(departmentId);
     }
 
     private void checkBeforeUpdatingPersonalInfo(final Long teacherId) throws SisNotExistException {
@@ -186,11 +193,8 @@ public class TeacherServiceImpl implements TeacherService {
         }
     }
 
-    private void ifDepartmentIsNotExistThrowNotExistException(final Long departmentId) {
-        // TODO: ifDepartmentIsNotExistThrowNotExistException
-//        if (!departmentService.isDepartmentExist(teacherId)) {
-//            SisException.throwNotExistException();
-//        }
+    private void ifDepartmentIsNotExistThrowNotExistException(final Long departmentId) throws SisNotExistException {
+        departmentOutService.ifDepartmentIsNotExistThrowNotExistException(departmentId);
     }
 
     private void ifTeacherIsAlreadyDeletedThrowAlreadyException(final Long teacherId) throws SisAlreadyException {

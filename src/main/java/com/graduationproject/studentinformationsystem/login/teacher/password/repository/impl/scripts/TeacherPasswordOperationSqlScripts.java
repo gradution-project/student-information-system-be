@@ -8,31 +8,31 @@ public class TeacherPasswordOperationSqlScripts {
     }
 
     /**
-     * SELECT OPERATION_ID, TEACHER_ID, EXPIRE_DATE, FE_URL FROM AUTH_TEACHER_PASSWORD_OPERATION
+     * SELECT OPERATION_ID, TEACHER_ID, EXPIRE_DATE FROM AUTH_TEACHER_PASSWORD_OPERATION
      * WHERE TEACHER_ID=:teacherId;
      */
     public static final String GET_TEACHER_PASSWORD_OPERATION =
             sqlBuilder.delete(0, sqlBuilder.length())
-                    .append("SELECT OPERATION_ID, TEACHER_ID, EXPIRE_DATE, FE_URL " +
+                    .append("SELECT OPERATION_ID, TEACHER_ID, EXPIRE_DATE " +
                             "FROM AUTH_TEACHER_PASSWORD_OPERATION WHERE TEACHER_ID=:teacherId").toString();
 
     /**
      * INSERT INTO AUTH_TEACHER_PASSWORD_OPERATION SET OPERATION_ID=:operationId,
-     * TEACHER_ID=:teacherId, EXPIRE_DATE=:expireDate, FE_URL=:feUrl;
+     * TEACHER_ID=:teacherId, EXPIRE_DATE=:expireDate;
      */
     public static final String SAVE_TEACHER_PASSWORD_OPERATION =
             sqlBuilder.delete(0, sqlBuilder.length())
                     .append("INSERT INTO AUTH_TEACHER_PASSWORD_OPERATION SET OPERATION_ID=:operationId, " +
-                            "TEACHER_ID=:teacherId, EXPIRE_DATE=:expireDate, FE_URL=:feUrl").toString();
+                            "TEACHER_ID=:teacherId, EXPIRE_DATE=:expireDate").toString();
 
     /**
-     * UPDATE AUTH_TEACHER_PASSWORD_OPERATION SET OPERATION_ID=:operationId, EXPIRE_DATE=:expireDate, FE_URL=:feUrl
+     * UPDATE AUTH_TEACHER_PASSWORD_OPERATION SET OPERATION_ID=:operationId, EXPIRE_DATE=:expireDate
      * WHERE TEACHER_ID=:teacherId;
      */
     public static final String UPDATE_TEACHER_PASSWORD_OPERATION =
             sqlBuilder.delete(0, sqlBuilder.length())
                     .append("UPDATE AUTH_TEACHER_PASSWORD_OPERATION SET OPERATION_ID=:operationId, " +
-                            "EXPIRE_DATE=:expireDate, FE_URL=:feUrl WHERE TEACHER_ID=:teacherId").toString();
+                            "EXPIRE_DATE=:expireDate WHERE TEACHER_ID=:teacherId").toString();
 
     /**
      * DELETE FROM AUTH_TEACHER_PASSWORD_OPERATION WHERE OPERATION_ID=:operationId;

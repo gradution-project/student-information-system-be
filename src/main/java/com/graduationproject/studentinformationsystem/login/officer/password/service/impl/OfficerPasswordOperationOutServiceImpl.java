@@ -23,19 +23,18 @@ public class OfficerPasswordOperationOutServiceImpl implements OfficerPasswordOp
     public String getPasswordChangeUrl(final Long officerId) {
 
         final OfficerPasswordOperationResponse passwordOperationResponse = getPasswordOperation(officerId);
-
         return passwordOperationResponse.getPasswordChangeUrl();
     }
 
     @Override
-    public void saveOrUpdatePasswordOperation(final Long officerId, final String feUrl) throws SisNotExistException {
+    public void saveOrUpdatePasswordOperation(final Long officerId) throws SisNotExistException {
 
         boolean isOperationExist = isOperationExist(officerId);
 
         if (!isOperationExist) {
-            savePasswordOperation(officerId, feUrl);
+            savePasswordOperation(officerId);
         } else {
-            updatePasswordOperation(officerId, feUrl);
+            updatePasswordOperation(officerId);
         }
     }
 
@@ -46,24 +45,24 @@ public class OfficerPasswordOperationOutServiceImpl implements OfficerPasswordOp
         return passwordOperationInfoConverter.entityToResponse(passwordOperationEntity);
     }
 
-    private void savePasswordOperation(final Long officerId, final String feUrl)
+    private void savePasswordOperation(final Long officerId)
             throws SisNotExistException {
 
         checkBeforeSaving(officerId);
 
         final OfficerPasswordOperationEntity passwordOperationEntity = passwordOperationInfoConverter
-                .generateEntity(officerId, feUrl);
+                .generateEntity(officerId);
 
         passwordOperationRepository.savePasswordOperation(passwordOperationEntity);
     }
 
-    private void updatePasswordOperation(final Long officerId, final String feUrl)
+    private void updatePasswordOperation(final Long officerId)
             throws SisNotExistException {
 
         checkBeforeUpdating(officerId);
 
         final OfficerPasswordOperationEntity passwordOperationEntity = passwordOperationInfoConverter
-                .generateEntity(officerId, feUrl);
+                .generateEntity(officerId);
 
         passwordOperationRepository.updatePasswordOperation(passwordOperationEntity);
     }

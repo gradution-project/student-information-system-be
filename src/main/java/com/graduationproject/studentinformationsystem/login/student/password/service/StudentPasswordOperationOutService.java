@@ -6,5 +6,5 @@ public interface StudentPasswordOperationOutService {
 
     String getPasswordChangeUrl(Long studentId);
 
-    void saveOrUpdatePasswordOperation(Long studentId, String feUrl) throws SisNotExistException;
+    void saveOrUpdatePasswordOperation(Long studentId) throws SisNotExistException;
 }

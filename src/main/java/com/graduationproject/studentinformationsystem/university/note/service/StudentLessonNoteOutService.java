@@ -13,6 +13,4 @@ public interface StudentLessonNoteOutService {
                                               SisOperationInfoRequest operationInfoRequest);
 
     void hasTheStudentPassedAllLessons(Long studentId) throws SisAlreadyException;
-
-    boolean isStudentGraduationEnabled(Long studentId) throws SisAlreadyException;
 }

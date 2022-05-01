@@ -40,7 +40,6 @@ public class StudentPasswordOperationRepositoryImpl implements StudentPasswordOp
             query.addParameter(OPERATION_ID.getModelName(), passwordOperationEntity.getOperationId())
                     .addParameter(STUDENT_ID.getModelName(), passwordOperationEntity.getStudentId())
                     .addParameter(EXPIRE_DATE.getModelName(), passwordOperationEntity.getExpireDate())
-                    .addParameter(FE_URL.getModelName(), passwordOperationEntity.getFeUrl())
                     .executeUpdate();
 
 //            TODO: Specific Info Log Must be Added
@@ -57,7 +56,6 @@ public class StudentPasswordOperationRepositoryImpl implements StudentPasswordOp
             query.addParameter(OPERATION_ID.getModelName(), passwordOperationEntity.getOperationId())
                     .addParameter(STUDENT_ID.getModelName(), passwordOperationEntity.getStudentId())
                     .addParameter(EXPIRE_DATE.getModelName(), passwordOperationEntity.getExpireDate())
-                    .addParameter(FE_URL.getModelName(), passwordOperationEntity.getFeUrl())
                     .executeUpdate();
 
 //            TODO: Specific Info Log Must be Added

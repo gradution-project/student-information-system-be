@@ -122,4 +122,11 @@ public class StudentGraduationSqlScripts {
             sqlBuilder.delete(0, sqlBuilder.length())
                     .append("SELECT GRADUATION_ID FROM STUDENT_GRADUATION " +
                             "WHERE STUDENT_ID=:studentId").toString();
+
+    /**
+     * SELECT STUDENT_ID FROM STUDENT_GRADUATION WHERE GRADUATION_ID=:graduationId;
+     */
+    public static final String GET_STUDENT_ID_BY_GRADUATION_ID =
+            sqlBuilder.delete(0, sqlBuilder.length())
+                    .append("SELECT STUDENT_ID FROM STUDENT_GRADUATION WHERE GRADUATION_ID=:graduationId").toString();
 }

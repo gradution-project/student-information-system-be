@@ -17,6 +17,8 @@ public class LessonResponse extends SisBaseResponse {
     private LessonStatus status;
     private LessonSemester semester;
     private Integer credit;
+    private Integer theoreticalHours;
+    private Integer practiceHours;
     private LessonCompulsoryOrElective compulsoryOrElective;
 
     private DepartmentResponse departmentResponse;

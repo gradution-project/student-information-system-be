@@ -28,4 +28,6 @@ public interface StudentGraduationRepository {
     boolean isStudentGraduationUnconfirmed(String graduationId);
 
     String getGraduationId(Long studentId);
+
+    Long getStudentId(String graduationId);
 }

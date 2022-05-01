@@ -2,6 +2,7 @@ package com.graduationproject.studentinformationsystem.university.student.model.
 
 import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
 import com.graduationproject.studentinformationsystem.common.util.validation.id.StudentID;
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.Valid;
@@ -10,6 +11,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 @Getter
+@Builder
 public class StudentGraduateRequest implements Serializable {
 
     @Serial

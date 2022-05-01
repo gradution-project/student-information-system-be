@@ -10,6 +10,7 @@ import com.graduationproject.studentinformationsystem.university.featuretoggle.m
 import com.graduationproject.studentinformationsystem.university.featuretoggle.model.exception.FeatureToggleException;
 import com.graduationproject.studentinformationsystem.university.featuretoggle.repository.FeatureToggleRepository;
 import com.graduationproject.studentinformationsystem.university.featuretoggle.service.FeatureToggleService;
+import com.graduationproject.studentinformationsystem.university.featuretoggle.service.TriggerFeatureTogglesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class FeatureToggleServiceImpl implements FeatureToggleService {
+
+    private final TriggerFeatureTogglesService triggerFeatureTogglesService;
 
     private final FeatureToggleRepository featureToggleRepository;
     private final FeatureToggleInfoConverter featureToggleInfoConverter;
@@ -45,6 +48,8 @@ public class FeatureToggleServiceImpl implements FeatureToggleService {
         final FeatureToggleEntity featureToggleEntity = featureToggleInfoConverter.generateEntity(featureToggleRequest);
         featureToggleRepository.enableFeatureToggle(featureToggleEntity);
 
+        triggerFeatureTogglesService.triggerEnableFeatureToggles(featureToggleRequest);
+
         return getFeatureToggleByName(featureToggleRequest.getName());
     }
 
@@ -55,6 +60,8 @@ public class FeatureToggleServiceImpl implements FeatureToggleService {
 
         final FeatureToggleEntity featureToggleEntity = featureToggleInfoConverter.generateEntity(featureToggleRequest);
         featureToggleRepository.disableFeatureToggle(featureToggleEntity);
+
+        triggerFeatureTogglesService.triggerDisableFeatureToggles(featureToggleRequest);
 
         return getFeatureToggleByName(featureToggleRequest.getName());
     }

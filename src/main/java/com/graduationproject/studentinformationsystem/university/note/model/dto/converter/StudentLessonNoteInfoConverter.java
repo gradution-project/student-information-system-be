@@ -4,12 +4,10 @@ import com.graduationproject.studentinformationsystem.common.model.dto.request.S
 import com.graduationproject.studentinformationsystem.common.util.SisUtil;
 import com.graduationproject.studentinformationsystem.university.lesson.common.model.dto.response.LessonResponse;
 import com.graduationproject.studentinformationsystem.university.lesson.common.service.LessonOutService;
-import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentLessonFinalNoteUpdateRequest;
-import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentLessonMidtermNoteUpdateRequest;
 import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentLessonNoteSaveRequest;
-import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentLessonResitNoteUpdateRequest;
 import com.graduationproject.studentinformationsystem.university.note.model.dto.response.StudentLessonNoteResponse;
 import com.graduationproject.studentinformationsystem.university.note.model.entity.*;
+import com.graduationproject.studentinformationsystem.university.note.model.enums.StudentLessonNoteState;
 import com.graduationproject.studentinformationsystem.university.note.model.enums.StudentLessonNoteStatus;
 import com.graduationproject.studentinformationsystem.university.note.util.StudentLessonNoteUtil;
 import com.graduationproject.studentinformationsystem.university.student.model.dto.response.StudentInfoResponse;
@@ -40,33 +38,49 @@ public class StudentLessonNoteInfoConverter {
                 .teacherId(saveRequest.getTeacherId())
                 .studentId(saveRequest.getStudentId())
                 .lessonId(saveRequest.getLessonId())
+                .midtermNoteState(StudentLessonNoteState.NOT_ENTERED)
+                .finalNoteState(StudentLessonNoteState.NOT_ENTERED)
+                .resitNoteState(StudentLessonNoteState.NOT_ENTERED)
                 .status(StudentLessonNoteStatus.UNFINALISED)
                 .createdUserId(operationInfoRequest.getUserId())
                 .createdDate(new Date())
                 .build();
     }
 
-    public StudentLessonMidtermNoteUpdateEntity generateMidtermNoteUpdateEntity(final StudentLessonMidtermNoteUpdateRequest updateRequest) {
-
-        final SisOperationInfoRequest operationInfoRequest = updateRequest.getOperationInfoRequest();
+    public StudentLessonMidtermNoteUpdateEntity generateMidtermNoteUpdateEntity(final String lessonNoteId,
+                                                                                final Double midtermNote,
+                                                                                final SisOperationInfoRequest operationInfoRequest) {
 
         return StudentLessonMidtermNoteUpdateEntity.builder()
-                .id(updateRequest.getId())
-                .midtermNote(updateRequest.getMidtermNote())
+                .id(lessonNoteId)
+                .midtermNote(midtermNote)
+                .midtermNoteState(StudentLessonNoteState.UNCONFIRMED)
                 .modifiedUserId(operationInfoRequest.getUserId())
                 .modifiedDate(new Date())
                 .build();
     }
 
-    public StudentLessonFinalNoteUpdateEntity generateFinalNoteUpdateEntity(final Double meanOfNote,
-                                                                            final StudentLessonNoteStatus status,
-                                                                            final StudentLessonFinalNoteUpdateRequest updateRequest) {
+    public StudentLessonMidtermNoteConfirmEntity generateMidtermNoteConfirmEntity(final String lessonNoteId,
+                                                                                  final SisOperationInfoRequest operationInfoRequest) {
 
-        final SisOperationInfoRequest operationInfoRequest = updateRequest.getOperationInfoRequest();
+        return StudentLessonMidtermNoteConfirmEntity.builder()
+                .id(lessonNoteId)
+                .noteState(StudentLessonNoteState.CONFIRMED)
+                .modifiedUserId(operationInfoRequest.getUserId())
+                .modifiedDate(new Date())
+                .build();
+    }
+
+    public StudentLessonFinalNoteUpdateEntity generateFinalNoteUpdateEntity(final String lessonNoteId,
+                                                                            final Double finalNote,
+                                                                            final Double meanOfNote,
+                                                                            final StudentLessonNoteStatus status,
+                                                                            final SisOperationInfoRequest operationInfoRequest) {
 
         return StudentLessonFinalNoteUpdateEntity.builder()
-                .id(updateRequest.getId())
-                .finalNote(updateRequest.getFinalNote())
+                .id(lessonNoteId)
+                .finalNote(finalNote)
+                .finalNoteState(StudentLessonNoteState.UNCONFIRMED)
                 .meanOfNote(meanOfNote)
                 .status(status)
                 .modifiedUserId(operationInfoRequest.getUserId())
@@ -74,17 +88,40 @@ public class StudentLessonNoteInfoConverter {
                 .build();
     }
 
-    public StudentLessonResitNoteUpdateEntity generateResitNoteUpdateEntity(final Double meanOfNote,
-                                                                            final StudentLessonNoteStatus status,
-                                                                            final StudentLessonResitNoteUpdateRequest updateRequest) {
+    public StudentLessonFinalNoteConfirmEntity generateFinalNoteConfirmEntity(final String lessonNoteId,
+                                                                              final SisOperationInfoRequest operationInfoRequest) {
 
-        final SisOperationInfoRequest operationInfoRequest = updateRequest.getOperationInfoRequest();
+        return StudentLessonFinalNoteConfirmEntity.builder()
+                .id(lessonNoteId)
+                .noteState(StudentLessonNoteState.CONFIRMED)
+                .modifiedUserId(operationInfoRequest.getUserId())
+                .modifiedDate(new Date())
+                .build();
+    }
+
+    public StudentLessonResitNoteUpdateEntity generateResitNoteUpdateEntity(final String lessonNoteId,
+                                                                            final Double resitNote,
+                                                                            final Double meanOfNote,
+                                                                            final StudentLessonNoteStatus status,
+                                                                            final SisOperationInfoRequest operationInfoRequest) {
 
         return StudentLessonResitNoteUpdateEntity.builder()
-                .id(updateRequest.getId())
-                .resitNote(updateRequest.getResitNote())
+                .id(lessonNoteId)
+                .resitNote(resitNote)
+                .resitNoteState(StudentLessonNoteState.UNCONFIRMED)
                 .meanOfNote(meanOfNote)
                 .status(status)
+                .modifiedUserId(operationInfoRequest.getUserId())
+                .modifiedDate(new Date())
+                .build();
+    }
+
+    public StudentLessonResitNoteConfirmEntity generateResitNoteConfirmEntity(final String lessonNoteId,
+                                                                              final SisOperationInfoRequest operationInfoRequest) {
+
+        return StudentLessonResitNoteConfirmEntity.builder()
+                .id(lessonNoteId)
+                .noteState(StudentLessonNoteState.CONFIRMED)
                 .modifiedUserId(operationInfoRequest.getUserId())
                 .modifiedDate(new Date())
                 .build();
@@ -107,8 +144,11 @@ public class StudentLessonNoteInfoConverter {
                 .studentResponse(studentResponse)
                 .lessonResponse(lessonResponse)
                 .midtermNote(noteEntity.getMidtermNote())
+                .midtermNoteState(noteEntity.getMidtermNoteState())
                 .finalNote(noteEntity.getFinalNote())
+                .finalNoteState(noteEntity.getFinalNoteState())
                 .resitNote(noteEntity.getResitNote())
+                .resitNoteState(noteEntity.getResitNoteState())
                 .meanOfNote(StudentLessonNoteUtil.getMeanOfNoteWith2NumberAfterDot(noteEntity.getMeanOfNote()))
                 .status(noteEntity.getStatus())
                 .createdDate(SisUtil.getFormattedDateTime(noteEntity.getCreatedDate()))

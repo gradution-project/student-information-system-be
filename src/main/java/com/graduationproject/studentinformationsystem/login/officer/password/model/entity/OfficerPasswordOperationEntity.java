@@ -12,5 +12,4 @@ public class OfficerPasswordOperationEntity {
     private String operationId;
     private Long officerId;
     private LocalDateTime expireDate;
-    private String feUrl;
 }

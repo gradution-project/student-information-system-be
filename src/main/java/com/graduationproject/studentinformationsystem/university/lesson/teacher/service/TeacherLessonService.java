@@ -14,7 +14,7 @@ public interface TeacherLessonService {
 
     List<TeacherLessonResponse> getTeacherLessonsById(Long teacherId);
 
-    TeacherLessonResponse saveTeacherLesson(TeacherLessonSaveRequest saveRequest) throws SisAlreadyException;
+    TeacherLessonResponse saveTeacherLesson(TeacherLessonSaveRequest saveRequest) throws SisAlreadyException, SisNotExistException;
 
     void deleteTeacherLesson(TeacherLessonDeleteRequest deleteRequest) throws SisAlreadyException, SisNotExistException;
 }
