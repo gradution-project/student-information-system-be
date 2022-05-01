@@ -23,7 +23,6 @@ import java.util.List;
 
 import static com.graduationproject.studentinformationsystem.common.config.SisSwaggerConfiguration.STUDENT_LESSON_REGISTRATION_API_TAG;
 import static com.graduationproject.studentinformationsystem.common.util.controller.endpoint.SisControllerEndpoint.Path.STUDENT_LESSON_REGISTRATION;
-import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.failResponse;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.successResponse;
 
 @RestController
@@ -56,13 +55,12 @@ public class StudentLessonRegistrationController {
 
     @GetMapping(StudentLessonRegistrationControllerEndpoint.BY_STUDENT_ID)
     @ApiOperation(value = "Get Student Lesson Registrations Detail By Student ID")
-    public ResponseEntity<SisBaseApiResponse<Object>> getStudentLessonRegistrationDetailByStudentId(
+    public ResponseEntity<SisBaseApiResponse<String>> getStudentLessonRegistrationDetailByStudentId(
             @PathVariable @StudentID final Long studentId)
             throws SisNotExistException {
 
-        final StudentLessonRegistrationDetailResponse registrationDetailResponse = studentLessonRegistrationService
-                .getStudentLessonRegistrationDetailByStudentId(studentId);
-        return successResponse(registrationDetailResponse);
+        final String registrationId = studentLessonRegistrationService.getStudentLessonRegistrationIdByStudentId(studentId);
+        return successResponse(registrationId);
     }
 
     @PostMapping(StudentLessonRegistrationControllerEndpoint.SAVE)
