@@ -34,7 +34,7 @@ public class StudentLessonRegistrationController {
     private final StudentLessonRegistrationService studentLessonRegistrationService;
 
     @GetMapping
-    @ApiOperation(value = "Get All Student Lesson Registrations By Status")
+    @ApiOperation(value = "Get All Students Lessons Registrations By Status")
     public ResponseEntity<SisBaseApiResponse<List<StudentLessonRegistrationResponse>>> getAllStudentLessonRegistrationsByStatus(
             @RequestParam final StudentLessonRegistrationStatus status) {
 
@@ -54,7 +54,7 @@ public class StudentLessonRegistrationController {
     }
 
     @GetMapping(StudentLessonRegistrationControllerEndpoint.ID_BY_STUDENT_ID)
-    @ApiOperation(value = "Get Student Lesson Registrations Detail By Student ID")
+    @ApiOperation(value = "Get Student Lesson Registration ID By Student ID")
     public ResponseEntity<SisBaseApiResponse<String>> getStudentLessonRegistrationIdByStudentId(
             @PathVariable @StudentID final Long studentId)
             throws SisNotExistException {
