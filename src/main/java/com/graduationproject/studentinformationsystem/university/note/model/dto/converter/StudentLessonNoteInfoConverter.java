@@ -5,6 +5,7 @@ import com.graduationproject.studentinformationsystem.common.util.SisUtil;
 import com.graduationproject.studentinformationsystem.university.lesson.common.model.dto.response.LessonResponse;
 import com.graduationproject.studentinformationsystem.university.lesson.common.service.LessonOutService;
 import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentLessonNoteSaveRequest;
+import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentsLessonNoteStatusUpdateRequest;
 import com.graduationproject.studentinformationsystem.university.note.model.dto.response.StudentLessonNoteResponse;
 import com.graduationproject.studentinformationsystem.university.note.model.entity.*;
 import com.graduationproject.studentinformationsystem.university.note.model.enums.StudentLessonNoteState;
@@ -122,6 +123,19 @@ public class StudentLessonNoteInfoConverter {
         return StudentLessonResitNoteConfirmEntity.builder()
                 .id(lessonNoteId)
                 .noteState(StudentLessonNoteState.CONFIRMED)
+                .modifiedUserId(operationInfoRequest.getUserId())
+                .modifiedDate(new Date())
+                .build();
+    }
+
+    public StudentLessonNoteStatusUpdateEntity generateStatusUpdateEntity(final StudentsLessonNoteStatusUpdateRequest updateRequest) {
+
+        final SisOperationInfoRequest operationInfoRequest = updateRequest.getOperationInfoRequest();
+
+        return StudentLessonNoteStatusUpdateEntity.builder()
+                .studentId(updateRequest.getStudentId())
+                .lessonId(updateRequest.getLessonId())
+                .status(updateRequest.getStatus())
                 .modifiedUserId(operationInfoRequest.getUserId())
                 .modifiedDate(new Date())
                 .build();

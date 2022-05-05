@@ -166,4 +166,15 @@ public class StudentLessonNoteSqlScripts {
     public static final String GET_MIDTERM_NOTE_BY_ID =
             sqlBuilder.delete(0, sqlBuilder.length())
                     .append("SELECT MIDTERM_NOTE FROM STUDENT_LESSON_NOTE WHERE ID=:id").toString();
+
+    /**
+     * UPDATE STUDENT_LESSON_NOTE SET STATUS=:status,
+     * MODIFIED_DATE=:modifiedDate, MODIFIED_USER_ID=:modifiedUserId
+     * WHERE STUDENT_ID=:studentId AND LESSON_ID=:lessonId;
+     */
+    public static final String UPDATE_STUDENT_LESSON_NOTE_STATUS =
+            sqlBuilder.delete(0, sqlBuilder.length())
+                    .append("UPDATE STUDENT_LESSON_NOTE SET STATUS=:status, " +
+                            "MODIFIED_DATE=:modifiedDate, MODIFIED_USER_ID=:modifiedUserId " +
+                            "WHERE STUDENT_ID=:studentId AND LESSON_ID=:lessonId").toString();
 }

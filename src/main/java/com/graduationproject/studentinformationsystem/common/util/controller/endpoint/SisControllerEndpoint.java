@@ -5,6 +5,17 @@ public class SisControllerEndpoint {
     private SisControllerEndpoint() {
     }
 
+    public static class Base {
+        private Base() {
+        }
+
+        private static final String STUDENT_ID = "/{studentId}";
+        public static final String BY_STUDENT_ID = "/by/student" + STUDENT_ID;
+
+        private static final String LESSON_ID = "/{lessonId}";
+        public static final String BY_LESSON_ID = "/by/lesson" + LESSON_ID;
+    }
+
     public static class Path {
         private Path() {
         }
@@ -12,6 +23,7 @@ public class SisControllerEndpoint {
         private static final String REGISTRATION = "/registration";
         private static final String PASSWORD_OPERATION = "/password-operation";
         private static final String NOTE = "/note";
+        private static final String ABSENTEEISM = "/absenteeism";
         private static final String GRADUATION = "/graduation";
 
         public static final String FACULTY = "/faculty";
@@ -24,6 +36,7 @@ public class SisControllerEndpoint {
         public static final String STUDENT_LESSON = STUDENT + LESSON;
         public static final String STUDENT_LESSON_REGISTRATION = STUDENT_LESSON + REGISTRATION;
         public static final String STUDENT_LESSON_NOTE = STUDENT + LESSON + NOTE;
+        public static final String STUDENT_LESSON_ABSENTEEISM = STUDENT + LESSON + ABSENTEEISM;
         public static final String STUDENT_GRADUATION = STUDENT + GRADUATION;
         public static final String TEACHER = "/teacher";
         public static final String TEACHER_LESSON = TEACHER + LESSON;
