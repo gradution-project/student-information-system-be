@@ -9,7 +9,8 @@ public enum StudentLessonNoteStatus {
 
     UNFINALISED("Sonuçlandırılmadı"),
     PASSED("Geçti"),
-    FAILED("Kaldı");
+    FAILED("Kaldı"),
+    FAILED_FROM_ABSENTEEISM("Devamsızlıktan Kaldı");
 
     private final String tr;
 }
