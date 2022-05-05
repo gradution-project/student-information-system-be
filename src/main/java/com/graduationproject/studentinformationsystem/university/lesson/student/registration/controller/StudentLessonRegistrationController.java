@@ -3,6 +3,7 @@ package com.graduationproject.studentinformationsystem.university.lesson.student
 import com.graduationproject.studentinformationsystem.common.util.controller.response.SisBaseApiResponse;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisAlreadyException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
+import com.graduationproject.studentinformationsystem.common.util.exception.SisProcessException;
 import com.graduationproject.studentinformationsystem.common.util.validation.id.StudentID;
 import com.graduationproject.studentinformationsystem.university.lesson.student.registration.controller.endpoint.StudentLessonRegistrationControllerEndpoint;
 import com.graduationproject.studentinformationsystem.university.lesson.student.registration.model.dto.request.StudentLessonRegistrationApproveRequest;
@@ -19,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.ParseException;
 import java.util.List;
 
 import static com.graduationproject.studentinformationsystem.common.config.SisSwaggerConfiguration.STUDENT_LESSON_REGISTRATION_API_TAG;
@@ -78,7 +80,7 @@ public class StudentLessonRegistrationController {
     @ApiOperation(value = "Approve Student Lesson Registration")
     public ResponseEntity<SisBaseApiResponse<StudentLessonRegistrationDetailResponse>> approveStudentLessonRegistration(
             @RequestBody @Valid final StudentLessonRegistrationApproveRequest approveRequest)
-            throws SisNotExistException, SisAlreadyException {
+            throws SisNotExistException, SisAlreadyException, SisProcessException, ParseException {
 
         final StudentLessonRegistrationDetailResponse registrationDetailResponse = studentLessonRegistrationService
                 .approveStudentLessonRegistration(approveRequest);
