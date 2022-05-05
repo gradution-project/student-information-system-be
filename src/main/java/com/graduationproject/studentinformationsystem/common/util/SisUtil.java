@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import org.apache.commons.lang3.BooleanUtils;
 
 import java.lang.reflect.Type;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -37,6 +38,14 @@ public class SisUtil {
             return Long.parseLong(first + second + third + fourth);
         }
         return 1L;
+    }
+
+    public static Date getDate(final String date) throws ParseException {
+        if (date == null) {
+            return null;
+        } else {
+            return new SimpleDateFormat(DATE_TIME_PATTERN).parse(date);
+        }
     }
 
     public static String getFormattedDate(final Date date) {
