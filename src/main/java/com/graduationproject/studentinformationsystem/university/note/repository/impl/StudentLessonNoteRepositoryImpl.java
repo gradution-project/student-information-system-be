@@ -220,6 +220,24 @@ public class StudentLessonNoteRepositoryImpl implements StudentLessonNoteReposit
     }
 
     @Override
+    public void updateStudentLessonNoteStatus(final StudentLessonNoteStatusUpdateEntity updateEntity) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(UPDATE_STUDENT_LESSON_NOTE_STATUS)) {
+
+            query.addParameter(STUDENT_ID.getModelName(), updateEntity.getStudentId())
+                    .addParameter(LESSON_ID.getModelName(), updateEntity.getLessonId())
+                    .addParameter(STATUS.getModelName(), updateEntity.getStatus())
+                    .addParameter(MODIFIED_DATE.getModelName(), updateEntity.getModifiedDate())
+                    .addParameter(MODIFIED_USER_ID.getModelName(), updateEntity.getModifiedUserId())
+                    .executeUpdate();
+
+            info.updated();
+        } catch (Exception exception) {
+            error.errorWhenUpdating();
+            throw new SisDatabaseException(exception);
+        }
+    }
+
+    @Override
     public Double getMidtermNoteById(final String id) {
         try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_MIDTERM_NOTE_BY_ID)) {
 
