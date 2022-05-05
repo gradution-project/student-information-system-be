@@ -5,6 +5,7 @@ import com.graduationproject.studentinformationsystem.common.util.exception.SisP
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.request.StudentsLessonAbsenteeismUpdateRequest;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.response.StudentLessonAbsenteeismResponse;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface StudentLessonAbsenteeismService {
@@ -17,4 +18,6 @@ public interface StudentLessonAbsenteeismService {
 
     List<StudentLessonAbsenteeismResponse> updateStudentLessonAbsenteeism(StudentsLessonAbsenteeismUpdateRequest updateRequest)
             throws SisNotExistException, SisProcessException;
+
+    Integer getTotalLessonAbsenteeismWeek() throws ParseException, SisNotExistException, SisProcessException;
 }

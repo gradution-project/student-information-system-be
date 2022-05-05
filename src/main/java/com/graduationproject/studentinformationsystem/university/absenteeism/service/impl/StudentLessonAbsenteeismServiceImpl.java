@@ -1,6 +1,7 @@
 package com.graduationproject.studentinformationsystem.university.absenteeism.service.impl;
 
 import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
+import com.graduationproject.studentinformationsystem.common.util.SisUtil;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
 import com.graduationproject.studentinformationsystem.common.util.exception.SisProcessException;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.converter.StudentLessonAbsenteeismInfoConverter;
@@ -12,13 +13,19 @@ import com.graduationproject.studentinformationsystem.university.absenteeism.mod
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.exception.StudentLessonAbsenteeismException;
 import com.graduationproject.studentinformationsystem.university.absenteeism.repository.StudentLessonAbsenteeismRepository;
 import com.graduationproject.studentinformationsystem.university.absenteeism.service.StudentLessonAbsenteeismService;
+import com.graduationproject.studentinformationsystem.university.absenteeism.util.AbsenteeismUtil;
+import com.graduationproject.studentinformationsystem.university.featuretoggle.model.dto.response.FeatureToggleResponse;
+import com.graduationproject.studentinformationsystem.university.featuretoggle.model.enums.FeatureToggleName;
+import com.graduationproject.studentinformationsystem.university.featuretoggle.service.FeatureToggleOutService;
 import com.graduationproject.studentinformationsystem.university.lesson.common.service.LessonOutService;
 import com.graduationproject.studentinformationsystem.university.note.service.StudentLessonNoteOutService;
 import com.graduationproject.studentinformationsystem.university.student.service.StudentOutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +36,7 @@ public class StudentLessonAbsenteeismServiceImpl implements StudentLessonAbsente
     private final LessonOutService lessonOutService;
     private final StudentOutService studentOutService;
     private final StudentLessonNoteOutService studentLessonNoteOutService;
+    private final FeatureToggleOutService featureToggleOutService;
 
     private final StudentLessonAbsenteeismRepository lessonAbsenteeismRepository;
     private final StudentLessonAbsenteeismInfoConverter lessonAbsenteeismInfoConverter;
@@ -164,6 +172,37 @@ public class StudentLessonAbsenteeismServiceImpl implements StudentLessonAbsente
         final StudentLessonAbsenteeismEntity absenteeismEntity = lessonAbsenteeismRepository.getStudentLessonAbsenteeismById(absenteeismId);
         final StudentLessonAbsenteeismResponse absenteeismResponse = lessonAbsenteeismInfoConverter.entityToResponse(absenteeismEntity);
         studentLessonAbsenteeismResponses.add(absenteeismResponse);
+    }
+
+    @Override
+    public Integer getTotalLessonAbsenteeismWeek() throws SisNotExistException, SisProcessException, ParseException {
+
+        final FeatureToggleResponse firstFeatureToggleResponse = featureToggleOutService
+                .getFeatureToggleByName(FeatureToggleName.FIRST_SEMESTER_LESSON_DATE_RANGE);
+
+        final Date firstSemesterStartDate = SisUtil.getDate(firstFeatureToggleResponse.getStartDate());
+        final Date firstSemesterEndDate = SisUtil.getDate(firstFeatureToggleResponse.getEndDate());
+
+        boolean isFirstSemester = firstSemesterStartDate.before(new Date()) && firstSemesterEndDate.after(new Date());
+
+        if (isFirstSemester) {
+            return AbsenteeismUtil.getTotalWeekBetween2Dates(firstSemesterStartDate, firstSemesterEndDate);
+        }
+
+
+        final FeatureToggleResponse secondFeatureToggleResponse = featureToggleOutService
+                .getFeatureToggleByName(FeatureToggleName.SECOND_SEMESTER_LESSON_DATE_RANGE);
+
+        final Date secondSemesterStartDate = SisUtil.getDate(secondFeatureToggleResponse.getStartDate());
+        final Date secondSemesterEndDate = SisUtil.getDate(secondFeatureToggleResponse.getEndDate());
+
+        boolean isSecondSemester = secondSemesterStartDate.before(new Date()) && secondSemesterEndDate.after(new Date());
+
+        if (isSecondSemester) {
+            return AbsenteeismUtil.getTotalWeekBetween2Dates(secondSemesterStartDate, secondSemesterEndDate);
+        }
+
+        throw new SisProcessException("Current Date Not a First or Second Semester!");
     }
 
 
