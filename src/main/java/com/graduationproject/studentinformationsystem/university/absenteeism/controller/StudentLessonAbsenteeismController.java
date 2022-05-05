@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.ParseException;
 import java.util.List;
 
 import static com.graduationproject.studentinformationsystem.common.config.SisSwaggerConfiguration.STUDENT_LESSON_ABSENTEEISM_API_TAG;
@@ -73,5 +74,15 @@ public class StudentLessonAbsenteeismController {
                 .updateStudentLessonAbsenteeism(updateRequest);
 
         return successResponse(absenteeismResponses);
+    }
+
+    @GetMapping(StudentLessonAbsenteeismControllerEndpoint.TOTAL_WEEK)
+    @ApiOperation(value = "Get Total Lesson Absenteeism Week")
+    public ResponseEntity<SisBaseApiResponse<Integer>> getTotalLessonAbsenteeismWeek()
+            throws SisNotExistException, SisProcessException, ParseException {
+
+        final Integer totalLessonAbsenteeismWeek = studentLessonAbsenteeismService.getTotalLessonAbsenteeismWeek();
+
+        return successResponse(totalLessonAbsenteeismWeek);
     }
 }
