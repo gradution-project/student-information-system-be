@@ -5,6 +5,17 @@ public class SisControllerEndpoint {
     private SisControllerEndpoint() {
     }
 
+    public static class Base {
+        private Base() {
+        }
+
+        private static final String STUDENT_ID = "/{studentId}";
+        public static final String BY_STUDENT_ID = "/by/student" + STUDENT_ID;
+
+        private static final String LESSON_ID = "/{lessonId}";
+        public static final String BY_LESSON_ID = "/by/lesson" + LESSON_ID;
+    }
+
     public static class Path {
         private Path() {
         }
