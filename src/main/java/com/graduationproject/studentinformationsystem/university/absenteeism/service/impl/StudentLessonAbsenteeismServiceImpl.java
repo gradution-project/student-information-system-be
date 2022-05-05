@@ -1,0 +1,207 @@
+package com.graduationproject.studentinformationsystem.university.absenteeism.service.impl;
+
+import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
+import com.graduationproject.studentinformationsystem.common.util.exception.SisNotExistException;
+import com.graduationproject.studentinformationsystem.common.util.exception.SisProcessException;
+import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.converter.StudentLessonAbsenteeismInfoConverter;
+import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.request.StudentsLessonAbsenteeismUpdateRequest;
+import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.response.StudentLessonAbsenteeismResponse;
+import com.graduationproject.studentinformationsystem.university.absenteeism.model.entity.StudentLessonAbsenteeismEntity;
+import com.graduationproject.studentinformationsystem.university.absenteeism.model.entity.StudentLessonAbsenteeismUpdateEntity;
+import com.graduationproject.studentinformationsystem.university.absenteeism.model.enums.StudentLessonAbsenteeismStatus;
+import com.graduationproject.studentinformationsystem.university.absenteeism.model.exception.StudentLessonAbsenteeismException;
+import com.graduationproject.studentinformationsystem.university.absenteeism.repository.StudentLessonAbsenteeismRepository;
+import com.graduationproject.studentinformationsystem.university.absenteeism.service.StudentLessonAbsenteeismService;
+import com.graduationproject.studentinformationsystem.university.lesson.common.service.LessonOutService;
+import com.graduationproject.studentinformationsystem.university.note.service.StudentLessonNoteOutService;
+import com.graduationproject.studentinformationsystem.university.student.service.StudentOutService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+@Service
+@RequiredArgsConstructor
+public class StudentLessonAbsenteeismServiceImpl implements StudentLessonAbsenteeismService {
+
+    private final LessonOutService lessonOutService;
+    private final StudentOutService studentOutService;
+    private final StudentLessonNoteOutService studentLessonNoteOutService;
+
+    private final StudentLessonAbsenteeismRepository lessonAbsenteeismRepository;
+    private final StudentLessonAbsenteeismInfoConverter lessonAbsenteeismInfoConverter;
+
+    @Override
+    public List<StudentLessonAbsenteeismResponse> getAllStudentLessonsAbsenteeismByStudentId(final Long studentId,
+                                                                                             final Integer week)
+            throws SisNotExistException {
+
+        ifStudentIsNotExistThrowNotExistException(studentId);
+        ifStudentLessonsNotesAreNotExistThrowNotExistException(studentId);
+
+        final List<StudentLessonAbsenteeismEntity> entities = lessonAbsenteeismRepository.getAllStudentLessonsAbsenteeismByStudentId(studentId, week);
+        return lessonAbsenteeismInfoConverter.entitiesToResponses(entities);
+    }
+
+    @Override
+    public List<StudentLessonAbsenteeismResponse> getAllStudentsLessonsAbsenteeismByLessonId(final Long lessonId,
+                                                                                             final Integer week)
+            throws SisNotExistException {
+
+        ifLessonIsNotExistThrowNotExistException(lessonId);
+
+        final List<StudentLessonAbsenteeismEntity> entities = lessonAbsenteeismRepository.getAllStudentsLessonsAbsenteeismByLessonId(lessonId, week);
+        return lessonAbsenteeismInfoConverter.entitiesToResponses(entities);
+    }
+
+    @Override
+    public List<StudentLessonAbsenteeismResponse> updateStudentLessonAbsenteeism(final StudentsLessonAbsenteeismUpdateRequest updateRequest)
+            throws SisNotExistException, SisProcessException {
+
+        final Map<String, Map<String, Integer>> absenteeismIdsAndTheoreticalHoursAndPracticeHours = updateRequest
+                .getAbsenteeismIdsAndTheoreticalHoursAndPracticeHours();
+
+        checkBeforeUpdateNotes(absenteeismIdsAndTheoreticalHoursAndPracticeHours);
+
+        final List<StudentLessonAbsenteeismResponse> studentLessonAbsenteeismResponses = new ArrayList<>();
+        for (Map.Entry<String, Map<String, Integer>> absenteeismIdAndTheoreticalHoursAndPracticeHours : absenteeismIdsAndTheoreticalHoursAndPracticeHours.entrySet()) {
+
+            final String absenteeismId = absenteeismIdAndTheoreticalHoursAndPracticeHours.getKey();
+            final Map<String, Integer> theoreticalHoursAndPracticeHours = absenteeismIdAndTheoreticalHoursAndPracticeHours.getValue();
+
+            Integer theoreticalHours = null;
+            Integer practiceHours = null;
+            for (Map.Entry<String, Integer> theoreticalHourAndPracticeHour : theoreticalHoursAndPracticeHours.entrySet()) {
+                String variableName = theoreticalHourAndPracticeHour.getKey();
+
+                if ("theoreticalHours".equals(variableName)) {
+                    theoreticalHours = theoreticalHourAndPracticeHour.getValue();
+                } else if ("practiceHours".equals(variableName)) {
+                    practiceHours = theoreticalHourAndPracticeHour.getValue();
+                } else {
+                    throw new SisProcessException("Variables Not a theoreticalHours or practiceHours!");
+                }
+            }
+
+            final SisOperationInfoRequest operationInfoRequest = updateRequest.getOperationInfoRequest();
+
+            updateStudentLessonAbsenteeism(absenteeismId, theoreticalHours, practiceHours, operationInfoRequest);
+
+            checkTotalHoursIfExceededSetNoteStatusAndAbsenteeismStatusToFailed(absenteeismId, operationInfoRequest);
+
+            addResponseToList(absenteeismId, studentLessonAbsenteeismResponses);
+        }
+
+        return studentLessonAbsenteeismResponses;
+    }
+
+    private void updateStudentLessonAbsenteeism(final String absenteeismId,
+                                                final Integer theoreticalHours,
+                                                final Integer practiceHours,
+                                                final SisOperationInfoRequest operationInfoRequest) {
+
+        final StudentLessonAbsenteeismUpdateEntity updateEntity = lessonAbsenteeismInfoConverter
+                .generateUpdateEntity(absenteeismId, theoreticalHours, practiceHours, operationInfoRequest);
+
+        lessonAbsenteeismRepository.updateStudentLessonAbsenteeism(updateEntity);
+    }
+
+    private void checkTotalHoursIfExceededSetNoteStatusAndAbsenteeismStatusToFailed(final String absenteeismId,
+                                                                                    final SisOperationInfoRequest operationInfoRequest) {
+
+        checkTheoreticalHoursIfExceededSetNoteStatusAndAbsenteeismStatusToFailed(absenteeismId, operationInfoRequest);
+        checkPracticeHoursIfExceededSetNoteStatusAndAbsenteeismStatusToFailed(absenteeismId, operationInfoRequest);
+    }
+
+    private void checkPracticeHoursIfExceededSetNoteStatusAndAbsenteeismStatusToFailed(final String absenteeismId,
+                                                                                       final SisOperationInfoRequest operationInfoRequest) {
+
+        final Integer totalPracticeHours = lessonAbsenteeismRepository.calculateTotalPracticeHours(absenteeismId);
+        if (totalPracticeHours != null) {
+
+            final Integer maxPracticeHours = lessonAbsenteeismRepository.getMaxPracticeHoursById(absenteeismId);
+            if (maxPracticeHours != null) {
+
+                if (totalPracticeHours > maxPracticeHours) {
+                    setNoteStatusAndAbsenteeismStatusToFailed(absenteeismId, operationInfoRequest);
+                }
+            }
+        }
+    }
+
+    private void checkTheoreticalHoursIfExceededSetNoteStatusAndAbsenteeismStatusToFailed(final String absenteeismId,
+                                                                                          final SisOperationInfoRequest operationInfoRequest) {
+
+        final Integer totalTheoreticalHours = lessonAbsenteeismRepository.calculateTotalTheoreticalHours(absenteeismId);
+        if (totalTheoreticalHours != null) {
+
+            final Integer maxTheoreticalHours = lessonAbsenteeismRepository.getMaxTheoreticalHoursById(absenteeismId);
+            if (maxTheoreticalHours != null) {
+
+                if (totalTheoreticalHours > maxTheoreticalHours) {
+                    setNoteStatusAndAbsenteeismStatusToFailed(absenteeismId, operationInfoRequest);
+                }
+            }
+        }
+    }
+
+    private void setNoteStatusAndAbsenteeismStatusToFailed(final String absenteeismId,
+                                                           final SisOperationInfoRequest operationInfoRequest) {
+
+        lessonAbsenteeismRepository.updateStudentLessonAbsenteeismStatus(absenteeismId, StudentLessonAbsenteeismStatus.FAILED);
+
+        final Long studentId = lessonAbsenteeismRepository.getStudentIdByAbsenteeismId(absenteeismId);
+        final Long lessonId = lessonAbsenteeismRepository.getLessonIdByAbsenteeismId(absenteeismId);
+        studentLessonNoteOutService
+                .updateStudentLessonsNoteStatusToFailedFromAbsenteeism(studentId, lessonId, operationInfoRequest);
+    }
+
+    private void addResponseToList(final String absenteeismId,
+                                   final List<StudentLessonAbsenteeismResponse> studentLessonAbsenteeismResponses) {
+
+        final StudentLessonAbsenteeismEntity absenteeismEntity = lessonAbsenteeismRepository.getStudentLessonAbsenteeismById(absenteeismId);
+        final StudentLessonAbsenteeismResponse absenteeismResponse = lessonAbsenteeismInfoConverter.entityToResponse(absenteeismEntity);
+        studentLessonAbsenteeismResponses.add(absenteeismResponse);
+    }
+
+
+    /**
+     * Checks Before Processing
+     */
+
+    private void checkBeforeUpdateNotes(final Map<String, Map<String, Integer>> absenteeismIdsAndTheoreticalHoursAndPracticeHours)
+            throws SisNotExistException {
+
+        for (Map.Entry<String, Map<String, Integer>> absenteeismIdAndTheoreticalHoursAndPracticeHours : absenteeismIdsAndTheoreticalHoursAndPracticeHours.entrySet()) {
+            final String absenteeismId = absenteeismIdAndTheoreticalHoursAndPracticeHours.getKey();
+            ifStudentLessonAbsenteeismAreNotExistThrowNotExistException(absenteeismId);
+        }
+    }
+
+
+    /**
+     * Throw Exceptions
+     */
+
+    private void ifLessonIsNotExistThrowNotExistException(final Long lessonId) throws SisNotExistException {
+        lessonOutService.ifLessonIsNotExistThrowNotExistException(lessonId);
+    }
+
+    private void ifStudentIsNotExistThrowNotExistException(final Long studentId) throws SisNotExistException {
+        studentOutService.ifStudentIsNotExistThrowNotExistException(studentId);
+    }
+
+    private void ifStudentLessonsNotesAreNotExistThrowNotExistException(final Long studentId) throws SisNotExistException {
+        if (!lessonAbsenteeismRepository.isStudentLessonAbsenteeismExist(studentId)) {
+            StudentLessonAbsenteeismException.throwNotExistExceptionByStudentId(studentId);
+        }
+    }
+
+    private void ifStudentLessonAbsenteeismAreNotExistThrowNotExistException(final String id) throws SisNotExistException {
+        if (!lessonAbsenteeismRepository.isStudentLessonAbsenteeismExist(id)) {
+            StudentLessonAbsenteeismException.throwNotExistExceptionById(id);
+        }
+    }
+}
