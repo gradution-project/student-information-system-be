@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum FeatureToggleName {
 
+    FIRST_SEMESTER_LESSON_DATE_RANGE("1. Dönem Ders Tarih Aralığı"),
+    SECOND_SEMESTER_LESSON_DATE_RANGE("2. Dönem Ders Tarih Aralığı"),
     FIRST_SEMESTER_LESSON_REGISTRATION_OPERATIONS("1. Dönem Ders Kayıt İşlemleri"),
     SECOND_SEMESTER_LESSON_REGISTRATION_OPERATIONS("2. Dönem Ders Kayıt İşlemleri"),
     NOTE_OPERATIONS("Not İşlemleri"),
