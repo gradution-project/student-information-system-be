@@ -12,6 +12,7 @@ public class SisControllerEndpoint {
         private static final String REGISTRATION = "/registration";
         private static final String PASSWORD_OPERATION = "/password-operation";
         private static final String NOTE = "/note";
+        private static final String ABSENTEEISM = "/absenteeism";
         private static final String GRADUATION = "/graduation";
 
         public static final String FACULTY = "/faculty";
@@ -24,6 +25,7 @@ public class SisControllerEndpoint {
         public static final String STUDENT_LESSON = STUDENT + LESSON;
         public static final String STUDENT_LESSON_REGISTRATION = STUDENT_LESSON + REGISTRATION;
         public static final String STUDENT_LESSON_NOTE = STUDENT + LESSON + NOTE;
+        public static final String STUDENT_LESSON_ABSENTEEISM = STUDENT + LESSON + ABSENTEEISM;
         public static final String STUDENT_GRADUATION = STUDENT + GRADUATION;
         public static final String TEACHER = "/teacher";
         public static final String TEACHER_LESSON = TEACHER + LESSON;
