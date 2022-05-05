@@ -6,7 +6,10 @@ import com.graduationproject.studentinformationsystem.university.lesson.common.m
 import com.graduationproject.studentinformationsystem.university.lesson.teacher.service.TeacherLessonOutService;
 import com.graduationproject.studentinformationsystem.university.note.model.dto.converter.StudentLessonNoteInfoConverter;
 import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentLessonNoteSaveRequest;
+import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentsLessonNoteStatusUpdateRequest;
 import com.graduationproject.studentinformationsystem.university.note.model.entity.StudentLessonNoteSaveEntity;
+import com.graduationproject.studentinformationsystem.university.note.model.entity.StudentLessonNoteStatusUpdateEntity;
+import com.graduationproject.studentinformationsystem.university.note.model.enums.StudentLessonNoteStatus;
 import com.graduationproject.studentinformationsystem.university.note.model.exception.StudentLessonNoteException;
 import com.graduationproject.studentinformationsystem.university.note.repository.StudentLessonNoteRepository;
 import com.graduationproject.studentinformationsystem.university.note.service.StudentLessonNoteOutService;
@@ -33,7 +36,7 @@ public class StudentLessonNoteOutServiceImpl implements StudentLessonNoteOutServ
             final Long lessonId = lessonResponse.getLessonId();
             final Long teacherId = teacherLessonOutService.getTeacherIdByLessonId(lessonId);
 
-            StudentLessonNoteSaveRequest saveRequest = StudentLessonNoteSaveRequest.builder()
+            final StudentLessonNoteSaveRequest saveRequest = StudentLessonNoteSaveRequest.builder()
                     .teacherId(teacherId)
                     .studentId(studentId)
                     .lessonId(lessonId)
@@ -43,6 +46,21 @@ public class StudentLessonNoteOutServiceImpl implements StudentLessonNoteOutServ
             final StudentLessonNoteSaveEntity saveEntity = lessonNoteInfoConverter.generateSaveEntity(saveRequest);
             lessonNoteRepository.saveStudentLessonNote(saveEntity);
         }
+    }
+
+    @Override
+    public void updateStudentLessonsNoteStatusToFailedFromAbsenteeism(final Long studentId,
+                                                                      final Long lessonId,
+                                                                      final SisOperationInfoRequest operationInfoRequest) {
+
+        final StudentsLessonNoteStatusUpdateRequest updateRequest = StudentsLessonNoteStatusUpdateRequest.builder()
+                .studentId(studentId)
+                .lessonId(lessonId)
+                .status(StudentLessonNoteStatus.FAILED_FROM_ABSENTEEISM)
+                .operationInfoRequest(operationInfoRequest).build();
+
+        final StudentLessonNoteStatusUpdateEntity updateEntity = lessonNoteInfoConverter.generateStatusUpdateEntity(updateRequest);
+        lessonNoteRepository.updateStudentLessonNoteStatus(updateEntity);
     }
 
     @Override
