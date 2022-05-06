@@ -19,18 +19,17 @@ import javax.validation.Valid;
 import java.util.List;
 
 import static com.graduationproject.studentinformationsystem.common.config.SisSwaggerConfiguration.TEACHER_LESSON_API_TAG;
-import static com.graduationproject.studentinformationsystem.common.util.controller.endpoint.SisControllerEndpoint.Path.TEACHER_LESSON;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.successResponse;
 
 @RestController
-@RequestMapping(TEACHER_LESSON)
+@RequestMapping
 @Api(tags = TEACHER_LESSON_API_TAG)
 @RequiredArgsConstructor
 public class TeacherLessonController {
 
     private final TeacherLessonService lessonService;
 
-    @GetMapping
+    @GetMapping(TeacherLessonControllerEndpoint.ALL)
     @ApiOperation(value = "Get All Teachers Lessons")
     public ResponseEntity<SisBaseApiResponse<List<TeacherLessonResponse>>> getAllTeachersLessons() {
 
@@ -38,7 +37,7 @@ public class TeacherLessonController {
         return successResponse(lessonResponses);
     }
 
-    @GetMapping(TeacherLessonControllerEndpoint.GET_BY_TEACHER_ID)
+    @GetMapping(TeacherLessonControllerEndpoint.BY_TEACHER_ID)
     @ApiOperation(value = "Get Teacher All Lessons By Teacher ID")
     public ResponseEntity<SisBaseApiResponse<List<TeacherLessonResponse>>> getTeacherLessonsById(
             @PathVariable final Long teacherId) {
@@ -47,7 +46,7 @@ public class TeacherLessonController {
         return successResponse(lessonResponses);
     }
 
-    @PostMapping(TeacherLessonControllerEndpoint.SAVE)
+    @PostMapping(TeacherLessonControllerEndpoint.BASE)
     @ApiOperation(value = "Save Teacher Lesson")
     public ResponseEntity<SisBaseApiResponse<TeacherLessonResponse>> saveTeacherLesson(
             @RequestBody @Valid final TeacherLessonSaveRequest saveRequest)
@@ -57,7 +56,7 @@ public class TeacherLessonController {
         return successResponse(lessonResponse);
     }
 
-    @DeleteMapping(TeacherLessonControllerEndpoint.DELETE)
+    @DeleteMapping(TeacherLessonControllerEndpoint.BASE)
     @ApiOperation(value = "Delete Teacher Lesson")
     public ResponseEntity<SisApiResponse> deleteTeacherLesson(
             @RequestBody @Valid final TeacherLessonDeleteRequest deleteRequest)

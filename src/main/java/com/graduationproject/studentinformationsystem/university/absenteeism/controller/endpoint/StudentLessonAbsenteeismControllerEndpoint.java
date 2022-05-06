@@ -7,7 +7,8 @@ public class StudentLessonAbsenteeismControllerEndpoint {
     private StudentLessonAbsenteeismControllerEndpoint() {
     }
 
-    public static final String BY_STUDENT_ID = SisControllerEndpoint.Base.BY_STUDENT_ID;
-    public static final String BY_LESSON_ID = SisControllerEndpoint.Base.BY_LESSON_ID;
-    public static final String TOTAL_WEEK = "/total/week";
+    public static final String BASE = SisControllerEndpoint.Path.STUDENT_LESSON_ABSENTEEISM;
+    public static final String BY_STUDENT_ID = BASE + SisControllerEndpoint.Path.By.BY_STUDENT_ID;
+    public static final String BY_LESSON_ID = BASE + SisControllerEndpoint.Path.By.BY_LESSON_ID;
+    public static final String TOTAL_WEEK = BASE + "/total/week";
 }

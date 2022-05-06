@@ -21,18 +21,17 @@ import javax.validation.Valid;
 import java.util.List;
 
 import static com.graduationproject.studentinformationsystem.common.config.SisSwaggerConfiguration.TEACHER_API_TAG;
-import static com.graduationproject.studentinformationsystem.common.util.controller.endpoint.SisControllerEndpoint.Path.TEACHER;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.successResponse;
 
 @RestController
-@RequestMapping(TEACHER)
+@RequestMapping
 @Api(tags = TEACHER_API_TAG)
 @RequiredArgsConstructor
 public class TeacherController {
 
     private final TeacherService teacherService;
 
-    @GetMapping
+    @GetMapping(TeacherControllerEndpoint.ALL)
     @ApiOperation(value = "Get All Teachers By Status")
     public ResponseEntity<SisBaseApiResponse<List<TeacherInfoResponse>>> getAllTeachersByStatus(
             @RequestParam final TeacherStatus status) {
@@ -41,7 +40,7 @@ public class TeacherController {
         return successResponse(infoResponses);
     }
 
-    @GetMapping(TeacherControllerEndpoint.TEACHER_ID)
+    @GetMapping(TeacherControllerEndpoint.BY_TEACHER_ID)
     @ApiOperation(value = "Get Teacher Detail By Teacher ID")
     public ResponseEntity<SisBaseApiResponse<TeacherInfoDetailResponse>> getTeacherDetailById(
             @PathVariable final Long teacherId)
@@ -51,7 +50,7 @@ public class TeacherController {
         return successResponse(infoDetailResponse);
     }
 
-    @PostMapping(TeacherControllerEndpoint.SAVE)
+    @PostMapping(TeacherControllerEndpoint.BASE)
     @ApiOperation(value = "Save Teacher")
     public ResponseEntity<SisBaseApiResponse<TeacherInfoDetailResponse>> saveTeacher(
             @Valid @RequestBody final TeacherSaveRequest saveRequest) throws SisNotExistException {
@@ -60,7 +59,7 @@ public class TeacherController {
         return successResponse(infoDetailResponse);
     }
 
-    @PutMapping(TeacherControllerEndpoint.UPDATE_ACADEMIC_INFO_BY_TEACHER_ID)
+    @PutMapping(TeacherControllerEndpoint.ACADEMIC_INFO_BY_TEACHER_ID)
     @ApiOperation(value = "Update Teacher Academic Info")
     public ResponseEntity<SisBaseApiResponse<TeacherAcademicInfoResponse>> updateTeacherAcademicInfo(
             @PathVariable final Long teacherId,
@@ -71,7 +70,7 @@ public class TeacherController {
         return successResponse(academicInfoResponse);
     }
 
-    @PutMapping(TeacherControllerEndpoint.UPDATE_PERSONAL_INFO_BY_TEACHER_ID)
+    @PutMapping(TeacherControllerEndpoint.PERSONAL_INFO_BY_TEACHER_ID)
     @ApiOperation(value = "Update Teacher Personal Info")
     public ResponseEntity<SisBaseApiResponse<TeacherPersonalInfoResponse>> updateTeacherPersonalInfo(
             @PathVariable final Long teacherId,
@@ -82,7 +81,7 @@ public class TeacherController {
         return successResponse(personalInfoResponse);
     }
 
-    @DeleteMapping(TeacherControllerEndpoint.DELETE)
+    @DeleteMapping(TeacherControllerEndpoint.BASE)
     @ApiOperation(value = "Delete Teacher")
     public ResponseEntity<SisBaseApiResponse<TeacherInfoResponse>> deleteTeacher(
             @Valid @RequestBody final TeacherDeleteRequest deleteRequest)

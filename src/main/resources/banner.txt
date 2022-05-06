@@ -2,5 +2,5 @@
   ${AnsiColor.BRIGHT_YELLOW}     /  _____/${AnsiColor.BLUE} /  /${AnsiColor.DEFAULT} /  _____/
   ${AnsiColor.BRIGHT_YELLOW}     \___  \ ${AnsiColor.BLUE} /  /${AnsiColor.DEFAULT}  \___  \
   ${AnsiColor.BRIGHT_YELLOW}    ____/  / ${AnsiColor.BLUE}/  / ${AnsiColor.DEFAULT} ____/  /
-  ${AnsiColor.BRIGHT_YELLOW}  /_______/ ${AnsiColor.BLUE}/__/ ${AnsiColor.DEFAULT}/_______/${AnsiColor.BRIGHT_WHITE}〔${sis.version}〕
+  ${AnsiColor.BRIGHT_YELLOW}  /_______/ ${AnsiColor.BLUE}/__/ ${AnsiColor.DEFAULT}/_______/${AnsiColor.BRIGHT_WHITE}〔${sis.api.version}〕
 :: Student Information System ::${AnsiColor.DEFAULT}

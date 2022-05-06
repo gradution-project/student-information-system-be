@@ -18,12 +18,11 @@ import java.text.ParseException;
 import java.util.List;
 
 import static com.graduationproject.studentinformationsystem.common.config.SisSwaggerConfiguration.STUDENT_LESSON_ABSENTEEISM_API_TAG;
-import static com.graduationproject.studentinformationsystem.common.util.controller.endpoint.SisControllerEndpoint.Path.STUDENT_LESSON_ABSENTEEISM;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.failResponse;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.successResponse;
 
 @RestController
-@RequestMapping(STUDENT_LESSON_ABSENTEEISM)
+@RequestMapping
 @Api(tags = STUDENT_LESSON_ABSENTEEISM_API_TAG)
 @RequiredArgsConstructor
 public class StudentLessonAbsenteeismController {
@@ -64,7 +63,7 @@ public class StudentLessonAbsenteeismController {
         return successResponse(absenteeismResponses);
     }
 
-    @PutMapping
+    @PutMapping(StudentLessonAbsenteeismControllerEndpoint.BASE)
     @ApiOperation(value = "Update Students Lesson Absenteeism")
     public ResponseEntity<SisBaseApiResponse<List<StudentLessonAbsenteeismResponse>>> updateStudentsLessonMidtermNotes(
             @RequestBody @Valid final StudentsLessonAbsenteeismUpdateRequest updateRequest)

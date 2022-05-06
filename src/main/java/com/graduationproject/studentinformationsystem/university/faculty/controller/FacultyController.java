@@ -18,18 +18,17 @@ import javax.validation.Valid;
 import java.util.List;
 
 import static com.graduationproject.studentinformationsystem.common.config.SisSwaggerConfiguration.FACULTY_API_TAG;
-import static com.graduationproject.studentinformationsystem.common.util.controller.endpoint.SisControllerEndpoint.Path.FACULTY;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.successResponse;
 
 @RestController
-@RequestMapping(FACULTY)
+@RequestMapping
 @Api(tags = FACULTY_API_TAG)
 @RequiredArgsConstructor
 public class FacultyController {
 
     private final FacultyService facultyService;
 
-    @GetMapping
+    @GetMapping(FacultyControllerEndpoint.ALL)
     @ApiOperation(value = "Get All Faculties By Status")
     public ResponseEntity<SisBaseApiResponse<List<FacultyResponse>>> getAllFacultiesByStatus(
             @RequestParam final FacultyStatus status) {
@@ -38,7 +37,7 @@ public class FacultyController {
         return successResponse(facultyResponses);
     }
 
-    @GetMapping(FacultyControllerEndpoint.FACULTY_ID)
+    @GetMapping(FacultyControllerEndpoint.BY_FACULTY_ID)
     @ApiOperation(value = "Get Faculty Detail By Faculty ID")
     public ResponseEntity<SisBaseApiResponse<FacultyResponse>> getFacultyById(
             @PathVariable final Long facultyId)
@@ -48,7 +47,7 @@ public class FacultyController {
         return successResponse(facultyResponse);
     }
 
-    @PostMapping(FacultyControllerEndpoint.SAVE)
+    @PostMapping(FacultyControllerEndpoint.BASE)
     @ApiOperation(value = "Save Faculty")
     public ResponseEntity<SisBaseApiResponse<FacultyResponse>> saveFaculty(
             @Valid @RequestBody final FacultySaveRequest saveRequest) {
@@ -57,7 +56,7 @@ public class FacultyController {
         return successResponse(facultyResponse);
     }
 
-    @PutMapping(FacultyControllerEndpoint.UPDATE_BY_FACULTY_ID)
+    @PutMapping(FacultyControllerEndpoint.BY_FACULTY_ID)
     @ApiOperation(value = "Update Faculty")
     public ResponseEntity<SisBaseApiResponse<FacultyResponse>> updateFaculty(
             @PathVariable final Long facultyId,
@@ -68,7 +67,7 @@ public class FacultyController {
         return successResponse(facultyResponse);
     }
 
-    @DeleteMapping(FacultyControllerEndpoint.DELETE)
+    @DeleteMapping(FacultyControllerEndpoint.BASE)
     @ApiOperation(value = "Delete Faculty")
     public ResponseEntity<SisBaseApiResponse<FacultyResponse>> deleteFaculty(
             @Valid @RequestBody final FacultyDeleteRequest deleteRequest)

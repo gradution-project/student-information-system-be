@@ -18,18 +18,17 @@ import javax.validation.Valid;
 import java.util.List;
 
 import static com.graduationproject.studentinformationsystem.common.config.SisSwaggerConfiguration.DEPARTMENT_API_TAG;
-import static com.graduationproject.studentinformationsystem.common.util.controller.endpoint.SisControllerEndpoint.Path.DEPARTMENT;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.successResponse;
 
 @RestController
-@RequestMapping(DEPARTMENT)
+@RequestMapping
 @Api(tags = DEPARTMENT_API_TAG)
 @RequiredArgsConstructor
 public class DepartmentController {
 
     private final DepartmentService departmentService;
 
-    @GetMapping
+    @GetMapping(DepartmentControllerEndpoint.ALL)
     @ApiOperation(value = "Get All Departments By Status")
     public ResponseEntity<SisBaseApiResponse<List<DepartmentResponse>>> getAllDepartmentsByStatus(
             @RequestParam final DepartmentStatus status) {
@@ -38,7 +37,7 @@ public class DepartmentController {
         return successResponse(departmentResponses);
     }
 
-    @GetMapping(DepartmentControllerEndpoint.DEPARTMENT_ID)
+    @GetMapping(DepartmentControllerEndpoint.BY_DEPARTMENT_ID)
     @ApiOperation(value = "Get Department Detail By Department ID")
     public ResponseEntity<SisBaseApiResponse<DepartmentResponse>> getDepartmentById(
             @PathVariable final Long departmentId)
@@ -48,7 +47,7 @@ public class DepartmentController {
         return successResponse(departmentResponse);
     }
 
-    @PostMapping(DepartmentControllerEndpoint.SAVE)
+    @PostMapping(DepartmentControllerEndpoint.BASE)
     @ApiOperation(value = "Save Department")
     public ResponseEntity<SisBaseApiResponse<DepartmentResponse>> saveDepartment(
             @Valid @RequestBody final DepartmentSaveRequest saveRequest)
@@ -58,7 +57,7 @@ public class DepartmentController {
         return successResponse(departmentResponse);
     }
 
-    @PutMapping(DepartmentControllerEndpoint.UPDATE_BY_DEPARTMENT_ID)
+    @PutMapping(DepartmentControllerEndpoint.BY_DEPARTMENT_ID)
     @ApiOperation(value = "Update Department")
     public ResponseEntity<SisBaseApiResponse<DepartmentResponse>> updateDepartment(
             @PathVariable final Long departmentId,
@@ -69,7 +68,7 @@ public class DepartmentController {
         return successResponse(departmentResponse);
     }
 
-    @DeleteMapping(DepartmentControllerEndpoint.DELETE)
+    @DeleteMapping(DepartmentControllerEndpoint.BASE)
     @ApiOperation(value = "Delete Department")
     public ResponseEntity<SisBaseApiResponse<DepartmentResponse>> deleteDepartment(
             @Valid @RequestBody final DepartmentDeleteRequest deleteRequest)

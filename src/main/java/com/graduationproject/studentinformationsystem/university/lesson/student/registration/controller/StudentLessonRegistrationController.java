@@ -24,18 +24,17 @@ import java.text.ParseException;
 import java.util.List;
 
 import static com.graduationproject.studentinformationsystem.common.config.SisSwaggerConfiguration.STUDENT_LESSON_REGISTRATION_API_TAG;
-import static com.graduationproject.studentinformationsystem.common.util.controller.endpoint.SisControllerEndpoint.Path.STUDENT_LESSON_REGISTRATION;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.successResponse;
 
 @RestController
-@RequestMapping(STUDENT_LESSON_REGISTRATION)
+@RequestMapping
 @Api(tags = STUDENT_LESSON_REGISTRATION_API_TAG)
 @RequiredArgsConstructor
 public class StudentLessonRegistrationController {
 
     private final StudentLessonRegistrationService studentLessonRegistrationService;
 
-    @GetMapping
+    @GetMapping(StudentLessonRegistrationControllerEndpoint.ALL)
     @ApiOperation(value = "Get All Students Lessons Registrations By Status")
     public ResponseEntity<SisBaseApiResponse<List<StudentLessonRegistrationResponse>>> getAllStudentLessonRegistrationsByStatus(
             @RequestParam final StudentLessonRegistrationStatus status) {
@@ -45,7 +44,7 @@ public class StudentLessonRegistrationController {
         return successResponse(registrationResponses);
     }
 
-    @GetMapping(StudentLessonRegistrationControllerEndpoint.DETAIL_BY_REGISTRATION_ID)
+    @GetMapping(StudentLessonRegistrationControllerEndpoint.BY_REGISTRATION_ID)
     @ApiOperation(value = "Get Student Lesson Registration By Registration ID")
     public ResponseEntity<SisBaseApiResponse<StudentLessonRegistrationDetailResponse>> getStudentLessonRegistrationDetailByRegistrationId(
             @PathVariable final String registrationId) throws SisNotExistException {
@@ -65,7 +64,7 @@ public class StudentLessonRegistrationController {
         return successResponse(registrationId);
     }
 
-    @PostMapping(StudentLessonRegistrationControllerEndpoint.SAVE)
+    @PostMapping(StudentLessonRegistrationControllerEndpoint.BASE)
     @ApiOperation(value = "Save Student Lesson Registration")
     public ResponseEntity<SisBaseApiResponse<StudentLessonRegistrationDetailResponse>> saveStudentLessonRegistration(
             @RequestBody @Valid final StudentLessonRegistrationSaveRequest saveRequest)

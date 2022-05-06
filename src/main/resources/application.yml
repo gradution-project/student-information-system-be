@@ -1,6 +1,7 @@
 sis:
-  title: Student Information System API
-  version: v1.6.0
+  api:
+    title: Student Information System API
+    version: v1.6.0
 
 server:
   port: 8585

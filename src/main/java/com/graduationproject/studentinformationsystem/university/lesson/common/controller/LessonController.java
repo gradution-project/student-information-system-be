@@ -18,18 +18,17 @@ import javax.validation.Valid;
 import java.util.List;
 
 import static com.graduationproject.studentinformationsystem.common.config.SisSwaggerConfiguration.LESSON_API_TAG;
-import static com.graduationproject.studentinformationsystem.common.util.controller.endpoint.SisControllerEndpoint.Path.LESSON;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.successResponse;
 
 @RestController
-@RequestMapping(LESSON)
+@RequestMapping
 @Api(tags = LESSON_API_TAG)
 @RequiredArgsConstructor
 public class LessonController {
 
     private final LessonService lessonService;
 
-    @GetMapping
+    @GetMapping(LessonControllerEndpoint.ALL)
     @ApiOperation(value = "Get All Lessons By Status")
     public ResponseEntity<SisBaseApiResponse<List<LessonResponse>>> getAllFacultiesByStatus(
             @RequestParam final LessonStatus status) {
@@ -38,7 +37,7 @@ public class LessonController {
         return successResponse(lessonResponses);
     }
 
-    @GetMapping(LessonControllerEndpoint.LESSON_ID)
+    @GetMapping(LessonControllerEndpoint.BY_LESSON_ID)
     @ApiOperation(value = "Get Lesson Detail By Lesson ID")
     public ResponseEntity<SisBaseApiResponse<LessonResponse>> getLessonById(
             @PathVariable final Long lessonId)
@@ -48,7 +47,7 @@ public class LessonController {
         return successResponse(lessonResponse);
     }
 
-    @PostMapping(LessonControllerEndpoint.SAVE)
+    @PostMapping(LessonControllerEndpoint.BASE)
     @ApiOperation(value = "Save Lesson")
     public ResponseEntity<SisBaseApiResponse<LessonResponse>> saveLesson(
             @Valid @RequestBody final LessonSaveRequest saveRequest) throws SisNotExistException {
@@ -57,7 +56,7 @@ public class LessonController {
         return successResponse(lessonResponse);
     }
 
-    @PutMapping(LessonControllerEndpoint.UPDATE_BY_LESSON_ID)
+    @PutMapping(LessonControllerEndpoint.BY_LESSON_ID)
     @ApiOperation(value = "Update Lesson")
     public ResponseEntity<SisBaseApiResponse<LessonResponse>> updateLesson(
             @PathVariable final Long lessonId,
@@ -68,7 +67,7 @@ public class LessonController {
         return successResponse(lessonResponse);
     }
 
-    @DeleteMapping(LessonControllerEndpoint.DELETE)
+    @DeleteMapping(LessonControllerEndpoint.BASE)
     @ApiOperation(value = "Delete Lesson")
     public ResponseEntity<SisBaseApiResponse<LessonResponse>> deleteLesson(
             @Valid @RequestBody final LessonDeleteRequest deleteRequest)
