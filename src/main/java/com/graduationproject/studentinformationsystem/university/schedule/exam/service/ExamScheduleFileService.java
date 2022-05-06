@@ -20,8 +20,7 @@ public interface ExamScheduleFileService {
     ScheduleFileDetailResponse getExamScheduleFileByDepartmentId(Long departmentId)
             throws SisNotExistException;
 
-    ScheduleFileDetailResponse saveExamScheduleFile(String apiUrl,
-                                                    Long facultyId,
+    ScheduleFileDetailResponse saveExamScheduleFile(Long facultyId,
                                                     Long departmentId,
                                                     Long operationUserId,
                                                     MultipartFile document)
