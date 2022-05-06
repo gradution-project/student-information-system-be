@@ -13,7 +13,6 @@ public class ScheduleFileEntity {
     private String fileId;
     private Long facultyId;
     private Long departmentId;
-    private String apiUrl;
     private String fileName;
     private String fileType;
     private Long fileSize;

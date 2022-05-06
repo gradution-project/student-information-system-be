@@ -90,7 +90,6 @@ public class ExamScheduleFileController {
     )
     @ApiOperation(value = "Save Exam Schedule File")
     public ResponseEntity<SisBaseApiResponse<ScheduleFileDetailResponse>> saveExamScheduleFile(
-            @RequestParam String apiUrl,
             @RequestParam @FacultyID Long facultyId,
             @RequestParam @DepartmentID Long departmentId,
             @RequestParam @OperationUserID Long operationUserId,
@@ -98,7 +97,7 @@ public class ExamScheduleFileController {
             throws SisNotExistException, IOException, SisAlreadyException {
 
         final ScheduleFileDetailResponse scheduleFileDetailResponse = examScheduleFileService
-                .saveExamScheduleFile(apiUrl, facultyId, departmentId, operationUserId, document);
+                .saveExamScheduleFile(facultyId, departmentId, operationUserId, document);
         return successResponse(scheduleFileDetailResponse);
     }
 

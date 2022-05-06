@@ -14,7 +14,6 @@ public enum ScheduleFileMapping {
     FILE_ID("FILE_ID", "fileId"),
     FACULTY_ID("FACULTY_ID", "facultyId"),
     DEPARTMENT_ID("DEPARTMENT_ID", "departmentId"),
-    API_URL("API_URL", "apiUrl"),
     FILE_NAME("FILE_NAME", "fileName"),
     FILE_TYPE("FILE_TYPE", "fileType"),
     FILE("FILE", "file"),

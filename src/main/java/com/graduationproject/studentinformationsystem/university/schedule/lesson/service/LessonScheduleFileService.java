@@ -20,8 +20,7 @@ public interface LessonScheduleFileService {
     ScheduleFileDetailResponse getLessonScheduleFileByDepartmentId(Long departmentId)
             throws SisNotExistException;
 
-    ScheduleFileDetailResponse saveLessonScheduleFile(String apiUrl,
-                                                      Long facultyId,
+    ScheduleFileDetailResponse saveLessonScheduleFile(Long facultyId,
                                                       Long departmentId,
                                                       Long operationUserId,
                                                       MultipartFile document)
