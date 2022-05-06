@@ -6,6 +6,7 @@ import com.graduationproject.studentinformationsystem.university.department.serv
 import com.graduationproject.studentinformationsystem.university.schedule.common.model.dto.response.ScheduleFileDetailResponse;
 import com.graduationproject.studentinformationsystem.university.schedule.common.model.dto.response.ScheduleFileResponse;
 import com.graduationproject.studentinformationsystem.university.schedule.common.model.entity.ScheduleFileEntity;
+import com.graduationproject.studentinformationsystem.university.schedule.exam.controller.endpoint.ExamScheduleFileControllerEndpoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -60,8 +61,8 @@ public class ExamScheduleFileInfoConverter {
                 .fileId(scheduleFileEntity.getFileId())
                 .fileName(scheduleFileEntity.getFileName())
                 .fileType(scheduleFileEntity.getFileType())
-                .fileDownloadUrl(scheduleFileEntity.getApiUrl() + "/exam-schedule-file/download/" + scheduleFileEntity.getFileId())
-                .fileViewUrl(scheduleFileEntity.getApiUrl() + "/exam-schedule-file/view/" + scheduleFileEntity.getFileId())
+                .fileDownloadUrl(scheduleFileEntity.getApiUrl() + ExamScheduleFileControllerEndpoint.Out.DOWNLOAD + scheduleFileEntity.getFileId())
+                .fileViewUrl(scheduleFileEntity.getApiUrl() + ExamScheduleFileControllerEndpoint.Out.VIEW + scheduleFileEntity.getFileId())
                 .createdUserId(scheduleFileEntity.getCreatedUserId())
                 .createdDate(SisUtil.getFormattedDateTime(scheduleFileEntity.getCreatedDate()))
                 .departmentResponse(departmentResponse)
