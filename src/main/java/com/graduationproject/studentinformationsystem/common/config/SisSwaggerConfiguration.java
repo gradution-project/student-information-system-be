@@ -1,6 +1,5 @@
 package com.graduationproject.studentinformationsystem.common.config;
 
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -68,12 +67,10 @@ public class SisSwaggerConfiguration {
                 );
     }
 
-    @Setter
-    @Value("title")
+    @Value("${sis.api.title}")
     private String title;
 
-    @Setter
-    @Value("version")
+    @Value("${sis.api.version}")
     private String version;
 
     private ApiInfo apiEndPointsInfo() {
