@@ -1,12 +1,13 @@
 package com.graduationproject.studentinformationsystem.university.lesson.teacher.controller.endpoint;
 
+import com.graduationproject.studentinformationsystem.common.util.controller.endpoint.SisControllerEndpoint;
+
 public class TeacherLessonControllerEndpoint {
 
     private TeacherLessonControllerEndpoint() {
     }
 
-    private static final String TEACHER_ID = "/{teacherId}";
-    public static final String GET_BY_TEACHER_ID = "/get" + TEACHER_ID;
-    public static final String SAVE = "/save";
-    public static final String DELETE = "/delete";
+    public static final String ALL = SisControllerEndpoint.Path.TEACHER_LESSONS;
+    public static final String BASE = SisControllerEndpoint.Path.TEACHER_LESSON;
+    public static final String BY_TEACHER_ID = BASE + SisControllerEndpoint.Path.By.BY_TEACHER_ID;
 }
