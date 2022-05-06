@@ -16,11 +16,10 @@ import javax.validation.Valid;
 import java.util.List;
 
 import static com.graduationproject.studentinformationsystem.common.config.SisSwaggerConfiguration.STUDENT_LESSON_NOTE_API_TAG;
-import static com.graduationproject.studentinformationsystem.common.util.controller.endpoint.SisControllerEndpoint.Path.STUDENT_LESSON_NOTE;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.successResponse;
 
 @RestController
-@RequestMapping(STUDENT_LESSON_NOTE)
+@RequestMapping
 @Api(tags = STUDENT_LESSON_NOTE_API_TAG)
 @RequiredArgsConstructor
 public class StudentLessonNoteController {
@@ -28,7 +27,7 @@ public class StudentLessonNoteController {
 
     private final StudentLessonNoteService studentLessonNoteService;
 
-    @GetMapping(StudentLessonNoteControllerEndpoint.GET_ALL_BY_LESSON_ID)
+    @GetMapping(StudentLessonNoteControllerEndpoint.ALL_BY_LESSON_ID)
     @ApiOperation(value = "Get All Students Lessons Notes By Lesson ID")
     public ResponseEntity<SisBaseApiResponse<List<StudentLessonNoteResponse>>> getAllStudentsLessonsNotesByLessonId(
             @PathVariable final Long lessonId)
@@ -38,7 +37,7 @@ public class StudentLessonNoteController {
         return successResponse(noteResponses);
     }
 
-    @GetMapping(StudentLessonNoteControllerEndpoint.GET_ALL_BY_STUDENT_ID)
+    @GetMapping(StudentLessonNoteControllerEndpoint.ALL_BY_STUDENT_ID)
     @ApiOperation(value = "Get All Student Lessons Notes By Student ID")
     public ResponseEntity<SisBaseApiResponse<List<StudentLessonNoteResponse>>> getAllStudentLessonsNotesByStudentId(
             @PathVariable final Long studentId)
