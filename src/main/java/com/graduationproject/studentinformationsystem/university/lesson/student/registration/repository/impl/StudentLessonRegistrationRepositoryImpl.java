@@ -90,6 +90,25 @@ public class StudentLessonRegistrationRepositoryImpl implements StudentLessonReg
     }
 
     @Override
+    public void updateStudentLessonRegistration(final StudentLessonRegistrationEntity registrationEntity) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(UPDATE_STUDENT_LESSON_REGISTRATION)) {
+
+            query.addParameter(REGISTRATION_ID.getModelName(), registrationEntity.getRegistrationId())
+                    .addParameter(LESSONS_IDS.getModelName(), registrationEntity.getLessonsIds())
+                    .addParameter(STATUS.getModelName(), registrationEntity.getStatus())
+                    .addParameter(MODIFIED_DATE.getModelName(), registrationEntity.getModifiedDate())
+                    .addParameter(MODIFIED_USER_ID.getModelName(), registrationEntity.getModifiedUserId())
+                    .setColumnMappings(COLUMN_MAPPINGS)
+                    .executeUpdate();
+
+            info.updated();
+        } catch (Exception exception) {
+            error.errorWhenUpdating();
+            throw new SisDatabaseException(exception);
+        }
+    }
+
+    @Override
     public void updateStudentLessonRegistrationStatus(final StudentLessonRegistrationEntity registrationEntity) {
         try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(UPDATE_STUDENT_LESSON_REGISTRATION_STATUS)) {
 

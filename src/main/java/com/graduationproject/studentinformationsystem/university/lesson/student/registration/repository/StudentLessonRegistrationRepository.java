@@ -13,6 +13,8 @@ public interface StudentLessonRegistrationRepository {
 
     void saveStudentLessonRegistration(StudentLessonRegistrationEntity registrationEntity);
 
+    void updateStudentLessonRegistration(StudentLessonRegistrationEntity registrationEntity);
+
     void updateStudentLessonRegistrationStatus(StudentLessonRegistrationEntity registrationEntity);
 
     boolean isStudentLessonRegistrationExist(String registrationId);
