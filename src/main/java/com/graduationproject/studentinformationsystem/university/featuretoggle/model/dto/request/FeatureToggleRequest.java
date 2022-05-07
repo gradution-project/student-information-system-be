@@ -19,5 +19,6 @@ public class FeatureToggleRequest implements Serializable {
     private FeatureToggleName name;
 
     @Valid
+    @NotNull
     private SisOperationInfoRequest operationInfoRequest;
 }
