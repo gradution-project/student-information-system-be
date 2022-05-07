@@ -7,6 +7,7 @@ import lombok.experimental.SuperBuilder;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Map;
@@ -23,5 +24,6 @@ public class StudentsLessonFinalNotesUpdateRequest implements Serializable {
     private Map<String, Double> finalNoteIdsAndNotes;
 
     @Valid
+    @NotNull
     private SisOperationInfoRequest operationInfoRequest;
 }
