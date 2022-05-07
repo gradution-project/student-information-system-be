@@ -20,6 +20,7 @@ public class StudentsLessonFinalNotesUpdateRequest implements Serializable {
     @Serial
     private static final long serialVersionUID = 5093920385984058988L;
 
+    @NotNull
     @NotEmpty
     private Map<String, Double> finalNoteIdsAndNotes;
 
