@@ -4,6 +4,7 @@ import com.graduationproject.studentinformationsystem.common.model.dto.request.S
 import lombok.Getter;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
@@ -16,6 +17,7 @@ public class StudentsLessonAbsenteeismUpdateRequest implements Serializable {
     private static final long serialVersionUID = -4786087456831453643L;
 
     @NotNull
+    @NotEmpty
     private Map<String, Map<String, Integer>> absenteeismIdsAndTheoreticalHoursAndPracticeHours;
 
     @Valid
