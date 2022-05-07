@@ -21,5 +21,6 @@ public class StudentsLessonAbsenteeismUpdateRequest implements Serializable {
     private Map<String, Map<String, Integer>> absenteeismIdsAndTheoreticalHoursAndPracticeHours;
 
     @Valid
+    @NotNull
     private SisOperationInfoRequest operationInfoRequest;
 }
