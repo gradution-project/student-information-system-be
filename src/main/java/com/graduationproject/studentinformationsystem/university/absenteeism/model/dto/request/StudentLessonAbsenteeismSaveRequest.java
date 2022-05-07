@@ -41,5 +41,6 @@ public class StudentLessonAbsenteeismSaveRequest implements Serializable {
     private Integer maxPracticeHours;
 
     @Valid
+    @NotNull
     private SisOperationInfoRequest operationInfoRequest;
 }

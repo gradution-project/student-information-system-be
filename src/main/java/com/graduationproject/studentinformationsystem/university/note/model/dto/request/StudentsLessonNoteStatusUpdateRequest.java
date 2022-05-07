@@ -31,5 +31,6 @@ public class StudentsLessonNoteStatusUpdateRequest implements Serializable {
     private StudentLessonNoteStatus status;
 
     @Valid
+    @NotNull
     private SisOperationInfoRequest operationInfoRequest;
 }
