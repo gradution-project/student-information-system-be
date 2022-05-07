@@ -22,6 +22,7 @@ import com.graduationproject.studentinformationsystem.university.lesson.student.
 import com.graduationproject.studentinformationsystem.university.note.service.StudentLessonNoteOutService;
 import com.graduationproject.studentinformationsystem.university.student.service.StudentOutService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -75,7 +76,8 @@ public class StudentLessonRegistrationServiceImpl implements StudentLessonRegist
     }
 
     @Override
-    public StudentLessonRegistrationDetailResponse saveStudentLessonRegistration(final StudentLessonRegistrationSaveRequest saveRequest)
+    public StudentLessonRegistrationDetailResponse saveStudentLessonRegistration(
+            final StudentLessonRegistrationSaveRequest saveRequest)
             throws SisAlreadyException, SisNotExistException {
 
         final Long studentId = saveRequest.getStudentLessonRegistrationInfoRequest().getStudentId();
@@ -83,6 +85,14 @@ public class StudentLessonRegistrationServiceImpl implements StudentLessonRegist
         final String registrationId = studentLessonRegistrationRepository.getRegistrationId(studentId);
 
         checkBeforeSaving(registrationId, studentId, lessonsIds);
+
+        if (!StringUtils.isEmpty(registrationId)) {
+            final StudentLessonRegistrationEntity registrationEntity = studentLessonRegistrationInfoConverter
+                    .generateUpdateEntity(registrationId, saveRequest);
+
+            studentLessonRegistrationRepository.updateStudentLessonRegistration(registrationEntity);
+            return getStudentLessonRegistrationDetailByRegistrationId(registrationEntity.getRegistrationId());
+        }
 
         final StudentLessonRegistrationEntity registrationEntity = studentLessonRegistrationInfoConverter
                 .generateSaveEntity(saveRequest);
