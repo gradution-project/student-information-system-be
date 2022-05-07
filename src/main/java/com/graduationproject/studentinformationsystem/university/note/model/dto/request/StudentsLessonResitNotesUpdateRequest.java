@@ -20,6 +20,7 @@ public class StudentsLessonResitNotesUpdateRequest implements Serializable {
     @Serial
     private static final long serialVersionUID = 4495180748614571012L;
 
+    @NotNull
     @NotEmpty
     private Map<String, Double> resitNoteIdsAndNotes;
 
