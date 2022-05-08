@@ -56,6 +56,7 @@ public class SisSwaggerConfiguration {
                         new Tag(STUDENT_LESSON_API_TAG, "STUDENT_LESSON"),
                         new Tag(STUDENT_LESSON_REGISTRATION_API_TAG, "STUDENT_LESSON_REGISTRATION"),
                         new Tag(STUDENT_LESSON_NOTE_API_TAG, "STUDENT_LESSON_NOTE"),
+                        new Tag(STUDENT_LESSON_ABSENTEEISM_API_TAG, "STUDENT_LESSON_ABSENTEEISM"),
                         new Tag(STUDENT_GRADUATION_API_TAG, "STUDENT_GRADUATION"),
                         new Tag(TEACHER_API_TAG, "TEACHER_ACADEMIC_INFO & TEACHER_PERSONAL_INFO"),
                         new Tag(TEACHER_LESSON_API_TAG, "TEACHER_LESSON"),
