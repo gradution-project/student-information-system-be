@@ -13,8 +13,8 @@ public class StudentUtil {
      * Student Email : name.surname@ogr.university.edu.tr
      */
     public static String generateStudentEmail(String name, String surname) {
-        name = SisUtil.stringToStringLowerCaseWithDot(name);
-        surname = SisUtil.stringToStringLowerCaseWithDot(surname);
+        name = SisUtil.setStringToStringLowerCaseAndChangeSpacesWithChar(name, ".");
+        surname = SisUtil.setStringToStringLowerCaseAndChangeSpacesWithChar(surname, ".");
         return name + "." + surname + "@ogr.university.edu.tr";
     }
 

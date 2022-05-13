@@ -13,8 +13,8 @@ public class OfficerUtil {
      * Officer Email : name.surname@university.edu.tr
      */
     public static String generateOfficerEmail(String name, String surname) {
-        name = SisUtil.stringToStringLowerCaseWithDot(name);
-        surname = SisUtil.stringToStringLowerCaseWithDot(surname);
+        name = SisUtil.setStringToStringLowerCaseAndChangeSpacesWithChar(name, ".");
+        surname = SisUtil.setStringToStringLowerCaseAndChangeSpacesWithChar(surname, ".");
         return name + "." + surname + "@university.edu.tr";
     }
 
