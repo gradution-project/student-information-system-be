@@ -3,9 +3,11 @@ package com.graduationproject.studentinformationsystem.university.transcript.mod
 import com.graduationproject.studentinformationsystem.university.lesson.common.model.dto.response.LessonResponse;
 import com.graduationproject.studentinformationsystem.university.lesson.common.model.enums.LessonSemester;
 import com.graduationproject.studentinformationsystem.university.note.model.dto.response.StudentLessonNoteResponse;
+import com.graduationproject.studentinformationsystem.university.transcript.controller.endpoint.StudentTranscriptControllerEndpoint;
 import com.graduationproject.studentinformationsystem.university.transcript.model.dto.response.StudentTranscriptLessonNoteResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -16,6 +18,9 @@ import java.util.TreeMap;
 @Component
 @RequiredArgsConstructor
 public class StudentTranscriptInfoConverter {
+
+    @Value("${sis.be-url}")
+    private String beUrl;
 
     public Map<LessonSemester, List<StudentTranscriptLessonNoteResponse>> generateStudentLessonsSemestersNotesResponseMap(
             final List<StudentLessonNoteResponse> studentLessonNoteResponses) {
@@ -46,5 +51,10 @@ public class StudentTranscriptInfoConverter {
         });
 
         return studentLessonsSemestersNotesResponse;
+    }
+
+    public String createFileDownloadUrl(final Long studentId) {
+        final String basePath = StudentTranscriptControllerEndpoint.DOWNLOAD_BY_STUDENT_ID;
+        return beUrl + basePath.replace("{studentId}", studentId.toString());
     }
 }
