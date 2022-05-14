@@ -10,6 +10,8 @@ public interface StudentLessonNoteRepository {
 
     List<StudentLessonNoteEntity> getAllStudentLessonsNotesByStudentId(Long studentId);
 
+    List<StudentLessonNoteEntity> getStudentLessonsAllConfirmedNotesByStudentId(Long studentId);
+
     StudentLessonNoteEntity getStudentLessonNotesById(String id);
 
     void saveStudentLessonNote(StudentLessonNoteSaveEntity saveEntity);
