@@ -65,7 +65,7 @@ public class StudentLessonAbsenteeismController {
 
     @PutMapping(StudentLessonAbsenteeismControllerEndpoint.BASE)
     @ApiOperation(value = "Update Students Lesson Absenteeism")
-    public ResponseEntity<SisBaseApiResponse<List<StudentLessonAbsenteeismResponse>>> updateStudentsLessonMidtermNotes(
+    public ResponseEntity<SisBaseApiResponse<List<StudentLessonAbsenteeismResponse>>> updateStudentLessonAbsenteeism(
             @RequestBody @Valid final StudentsLessonAbsenteeismUpdateRequest updateRequest)
             throws SisNotExistException, SisProcessException {
 
