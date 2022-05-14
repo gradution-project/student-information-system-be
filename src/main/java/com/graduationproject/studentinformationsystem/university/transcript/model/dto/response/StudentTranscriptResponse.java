@@ -13,5 +13,6 @@ public class StudentTranscriptResponse {
 
     private Double meanOfAllNotes;
     private Map<LessonSemester, StudentTranscriptLessonNoteSemesterResponse> studentLessonsSemestersNotesResponse;
+    private String fileDownloadUrl;
     private StudentInfoResponse studentInfoResponse;
 }
