@@ -106,6 +106,7 @@ public class StudentTranscriptServiceImpl implements StudentTranscriptService {
                 .studentLessonsSemestersNotesResponse(studentLessonsSemestersNotesResponse)
                 .meanOfAllNotes(StudentTranscriptUtil.getMeanOfNoteWith2NumberAfterDot(meanOfAllNotes))
                 .studentInfoResponse(studentInfoResponse)
+                .fileDownloadUrl(studentTranscriptInfoConverter.createFileDownloadUrl(studentInfoResponse.getStudentId()))
                 .build();
     }
 
