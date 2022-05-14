@@ -18,7 +18,7 @@ public class ExamScheduleFileControllerEndpoint {
         private Out() {
         }
 
-        public static final String DOWNLOAD = BASE + "/";
-        public static final String VIEW = BASE + "/";
+        public static final String DOWNLOAD = BASE + "/download/";
+        public static final String VIEW = BASE + "/view/";
     }
 }
