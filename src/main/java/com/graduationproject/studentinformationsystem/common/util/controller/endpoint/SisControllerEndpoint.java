@@ -46,6 +46,8 @@ public class SisControllerEndpoint {
         public static final String STUDENT_GRADUATION = PREFIX + "/student/graduation";
         public static final String STUDENT_GRADUATIONS = PREFIX + "/student/graduations";
 
+        public static final String STUDENT_TRANSCRIPT = PREFIX + "/student/transcript";
+
         public static final String TEACHER = PREFIX + "/teacher";
         public static final String TEACHERS = PREFIX + "/teachers";
 
