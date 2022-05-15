@@ -15,18 +15,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import static com.graduationproject.studentinformationsystem.common.config.SisSwaggerConfiguration.STUDENT_LESSON_API_TAG;
-import static com.graduationproject.studentinformationsystem.common.util.controller.endpoint.SisControllerEndpoint.Path.STUDENT_LESSON;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.successResponse;
 
 @RestController
-@RequestMapping(STUDENT_LESSON)
+@RequestMapping
 @Api(tags = STUDENT_LESSON_API_TAG)
 @RequiredArgsConstructor
 public class StudentLessonController {
 
     private final StudentLessonService lessonService;
 
-    @GetMapping(StudentLessonControllerEndpoint.GET_BY_STUDENT_ID)
+    @GetMapping(StudentLessonControllerEndpoint.ALL_BY_STUDENT_ID)
     @ApiOperation(value = "Get Student All Lessons By Student ID")
     public ResponseEntity<SisBaseApiResponse<StudentLessonsResponse>> getStudentLessonsById(
             @PathVariable @StudentID final Long studentId)
@@ -36,7 +35,7 @@ public class StudentLessonController {
         return successResponse(lessonsResponse);
     }
 
-    @DeleteMapping(StudentLessonControllerEndpoint.DELETE_BY_STUDENT_ID)
+    @DeleteMapping(StudentLessonControllerEndpoint.BY_STUDENT_ID)
     @ApiOperation(value = "Delete Student All Lessons By Student ID")
     public ResponseEntity<SisApiResponse> deleteStudentLessons(
             @PathVariable @StudentID final Long studentId)

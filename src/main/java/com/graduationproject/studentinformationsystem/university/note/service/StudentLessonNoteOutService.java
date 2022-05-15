@@ -12,5 +12,9 @@ public interface StudentLessonNoteOutService {
                                               List<LessonResponse> lessonResponses,
                                               SisOperationInfoRequest operationInfoRequest);
 
+    void updateStudentLessonsNoteStatusToFailedFromAbsenteeism(Long studentId,
+                                                               Long lessonId,
+                                                               SisOperationInfoRequest operationInfoRequest);
+
     void hasTheStudentPassedAllLessons(Long studentId) throws SisAlreadyException;
 }

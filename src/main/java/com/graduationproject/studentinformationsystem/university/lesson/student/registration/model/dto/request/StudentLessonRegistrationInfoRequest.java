@@ -3,6 +3,7 @@ package com.graduationproject.studentinformationsystem.university.lesson.student
 import com.graduationproject.studentinformationsystem.common.util.validation.id.StudentID;
 import lombok.Getter;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
@@ -19,5 +20,6 @@ public class StudentLessonRegistrationInfoRequest implements Serializable {
     private Long studentId;
 
     @NotNull
+    @NotEmpty
     private List<Long> lessonsIds;
 }

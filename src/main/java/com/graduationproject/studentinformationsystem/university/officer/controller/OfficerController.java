@@ -21,18 +21,17 @@ import javax.validation.Valid;
 import java.util.List;
 
 import static com.graduationproject.studentinformationsystem.common.config.SisSwaggerConfiguration.OFFICER_API_TAG;
-import static com.graduationproject.studentinformationsystem.common.util.controller.endpoint.SisControllerEndpoint.Path.OFFICER;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.successResponse;
 
 @RestController
-@RequestMapping(OFFICER)
+@RequestMapping
 @Api(tags = OFFICER_API_TAG)
 @RequiredArgsConstructor
 public class OfficerController {
 
     private final OfficerService officerService;
 
-    @GetMapping
+    @GetMapping(OfficerControllerEndpoint.ALL)
     @ApiOperation(value = "Get All Officers By Status")
     public ResponseEntity<SisBaseApiResponse<List<OfficerInfoResponse>>> getAllOfficersByStatus(
             @RequestParam final OfficerStatus status) {
@@ -41,7 +40,7 @@ public class OfficerController {
         return successResponse(infoResponses);
     }
 
-    @GetMapping(OfficerControllerEndpoint.OFFICER_ID)
+    @GetMapping(OfficerControllerEndpoint.BY_OFFICER_ID)
     @ApiOperation(value = "Get Officer Detail By Officer ID")
     public ResponseEntity<SisBaseApiResponse<OfficerInfoDetailResponse>> getOfficerDetailById(
             @PathVariable final Long officerId)
@@ -51,7 +50,7 @@ public class OfficerController {
         return successResponse(infoDetailResponse);
     }
 
-    @PostMapping(OfficerControllerEndpoint.SAVE)
+    @PostMapping(OfficerControllerEndpoint.BASE)
     @ApiOperation(value = "Save Officer")
     public ResponseEntity<SisBaseApiResponse<OfficerInfoDetailResponse>> saveOfficer(
             @Valid @RequestBody final OfficerSaveRequest saveRequest) throws SisNotExistException {
@@ -60,7 +59,7 @@ public class OfficerController {
         return successResponse(infoDetailResponse);
     }
 
-    @PutMapping(OfficerControllerEndpoint.UPDATE_ACADEMIC_INFO_BY_OFFICER_ID)
+    @PutMapping(OfficerControllerEndpoint.ACADEMIC_INFO_BY_OFFICER_ID)
     @ApiOperation(value = "Update Officer Academic Info")
     public ResponseEntity<SisBaseApiResponse<OfficerAcademicInfoResponse>> updateOfficerAcademicInfo(
             @PathVariable final Long officerId,
@@ -71,7 +70,7 @@ public class OfficerController {
         return successResponse(academicInfoResponse);
     }
 
-    @PutMapping(OfficerControllerEndpoint.UPDATE_PERSONAL_INFO_BY_OFFICER_ID)
+    @PutMapping(OfficerControllerEndpoint.PERSONAL_INFO_BY_OFFICER_ID)
     @ApiOperation(value = "Update Officer Personal Info")
     public ResponseEntity<SisBaseApiResponse<OfficerPersonalInfoResponse>> updateOfficerPersonalInfo(
             @PathVariable final Long officerId,
@@ -82,7 +81,7 @@ public class OfficerController {
         return successResponse(personalInfoResponse);
     }
 
-    @DeleteMapping(OfficerControllerEndpoint.DELETE)
+    @DeleteMapping(OfficerControllerEndpoint.BASE)
     @ApiOperation(value = "Delete Officer")
     public ResponseEntity<SisBaseApiResponse<OfficerInfoResponse>> deleteOfficer(
             @Valid @RequestBody final OfficerDeleteRequest deleteRequest)

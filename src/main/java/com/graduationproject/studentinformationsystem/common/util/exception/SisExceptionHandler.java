@@ -53,4 +53,11 @@ public class SisExceptionHandler extends ResponseEntityExceptionHandler {
         final SisError error = generateError(exception.getMessage(), httpStatus);
         return new ResponseEntity<>(error, httpStatus);
     }
+
+    @ExceptionHandler(SisProcessException.class)
+    protected ResponseEntity<Object> handleProcessError(final SisProcessException processException) {
+        final HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        final SisError error = generateError(processException.getMessage(), httpStatus);
+        return new ResponseEntity<>(error, httpStatus);
+    }
 }

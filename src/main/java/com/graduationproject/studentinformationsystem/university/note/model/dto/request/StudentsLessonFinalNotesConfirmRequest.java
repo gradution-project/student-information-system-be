@@ -25,5 +25,6 @@ public class StudentsLessonFinalNotesConfirmRequest implements Serializable {
     private List<String> lessonNoteIds;
 
     @Valid
+    @NotNull
     private SisOperationInfoRequest operationInfoRequest;
 }

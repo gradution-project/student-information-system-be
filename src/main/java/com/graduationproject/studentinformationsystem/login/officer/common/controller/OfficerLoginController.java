@@ -1,7 +1,6 @@
 package com.graduationproject.studentinformationsystem.login.officer.common.controller;
 
 import com.graduationproject.studentinformationsystem.common.util.controller.response.SisBaseApiResponse;
-import com.graduationproject.studentinformationsystem.login.common.controller.enpoint.LoginControllerEndpoint;
 import com.graduationproject.studentinformationsystem.login.common.model.response.LoginResponse;
 import com.graduationproject.studentinformationsystem.login.officer.common.model.dto.request.OfficerLoginRequest;
 import com.graduationproject.studentinformationsystem.login.officer.common.service.OfficerLoginService;
@@ -17,18 +16,18 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 import static com.graduationproject.studentinformationsystem.common.config.SisSwaggerConfiguration.LOGIN_API_TAG;
-import static com.graduationproject.studentinformationsystem.common.util.controller.endpoint.SisControllerEndpoint.Path.LOGIN;
+import static com.graduationproject.studentinformationsystem.common.util.controller.endpoint.SisControllerEndpoint.Path.OFFICER_LOGIN;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.successResponse;
 
 @RestController
-@RequestMapping(LOGIN)
+@RequestMapping(OFFICER_LOGIN)
 @Api(tags = LOGIN_API_TAG)
 @RequiredArgsConstructor
 public class OfficerLoginController {
 
     private final OfficerLoginService loginService;
 
-    @PostMapping(LoginControllerEndpoint.OFFICER)
+    @PostMapping
     @ApiOperation(value = "Officer Login")
     public ResponseEntity<SisBaseApiResponse<LoginResponse>> officerLogin(
             @RequestBody @Valid final OfficerLoginRequest loginRequest) {

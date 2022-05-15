@@ -18,5 +18,6 @@ public class StudentGraduationApproveRequest implements Serializable {
     private String graduationId;
 
     @Valid
+    @NotNull
     private SisOperationInfoRequest operationInfoRequest;
 }

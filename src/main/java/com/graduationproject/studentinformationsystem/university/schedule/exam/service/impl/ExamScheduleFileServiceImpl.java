@@ -56,8 +56,7 @@ public class ExamScheduleFileServiceImpl implements ExamScheduleFileService {
     }
 
     @Override
-    public ScheduleFileDetailResponse saveExamScheduleFile(final String apiUrl,
-                                                           final Long facultyId,
+    public ScheduleFileDetailResponse saveExamScheduleFile(final Long facultyId,
                                                            final Long departmentId,
                                                            final Long operationUserId,
                                                            final MultipartFile document)
@@ -67,7 +66,7 @@ public class ExamScheduleFileServiceImpl implements ExamScheduleFileService {
 
         final String fileId = SisUtil.generateRandomUUID();
         final ScheduleFileEntity scheduleFileEntity = scheduleFileInfoConverter
-                .generateSaveEntity(fileId, document, apiUrl, facultyId, departmentId, operationUserId);
+                .generateSaveEntity(fileId, document, facultyId, departmentId, operationUserId);
 
         scheduleFileRepository.saveExamScheduleFile(scheduleFileEntity);
         return getExamScheduleFileDetailResponse(departmentId);

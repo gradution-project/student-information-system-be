@@ -32,5 +32,6 @@ public class StudentLessonNoteSaveRequest implements Serializable {
     private Long lessonId;
 
     @Valid
+    @NotNull
     private SisOperationInfoRequest operationInfoRequest;
 }
