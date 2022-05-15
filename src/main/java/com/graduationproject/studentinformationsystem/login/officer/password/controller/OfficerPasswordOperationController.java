@@ -18,22 +18,21 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 import static com.graduationproject.studentinformationsystem.common.config.SisSwaggerConfiguration.OFFICER_PASSWORD_OPERATION_API_TAG;
-import static com.graduationproject.studentinformationsystem.common.util.controller.endpoint.SisControllerEndpoint.Path.OFFICER_PASSWORD_OPERATION;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.successResponse;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.unauthorizedResponse;
 
 @RestController
-@RequestMapping(OFFICER_PASSWORD_OPERATION)
+@RequestMapping
 @Api(tags = OFFICER_PASSWORD_OPERATION_API_TAG)
 @RequiredArgsConstructor
 public class OfficerPasswordOperationController {
 
     private final OfficerPasswordOperationService passwordOperationService;
 
-    @GetMapping
-    @ApiOperation(value = "Is Officer Password Change Operation Enabled")
+    @GetMapping(OfficerPasswordOperationControllerEndpoint.ENABLED)
+    @ApiOperation(value = "Is Officer Password Change Operation Enabled By Operation ID")
     public ResponseEntity<SisApiResponse> isPasswordChangeOperationEnabled(
-            @RequestParam final String operationId) throws SisNotExistException {
+            @PathVariable final String operationId) throws SisNotExistException {
 
         final boolean isPasswordChangeEnabled = passwordOperationService.isPasswordChangeEnabled(operationId);
 
@@ -44,7 +43,7 @@ public class OfficerPasswordOperationController {
         }
     }
 
-    @PostMapping(OfficerPasswordOperationControllerEndpoint.CHANGE_PASSWORD)
+    @PostMapping(OfficerPasswordOperationControllerEndpoint.CHANGE)
     @ApiOperation(value = "Change Officer Password")
     public ResponseEntity<SisBaseApiResponse<OfficerPasswordChangeResponse>> changePassword(
             @RequestBody final OfficerPasswordChangeRequest passwordChangeRequest) throws SisNotExistException {
@@ -53,7 +52,7 @@ public class OfficerPasswordOperationController {
         return successResponse(passwordChangeResponse);
     }
 
-    @PostMapping(OfficerPasswordOperationControllerEndpoint.FORGOT_PASSWORD)
+    @PostMapping(OfficerPasswordOperationControllerEndpoint.FORGOT)
     @ApiOperation(value = "Officer Forgot Password")
     public ResponseEntity<SisBaseApiResponse<OfficerPasswordForgotResponse>> forgotPassword(
             @RequestBody @Valid final OfficerPasswordForgotRequest passwordForgotRequest)

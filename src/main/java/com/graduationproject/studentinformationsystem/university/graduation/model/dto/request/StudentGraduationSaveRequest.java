@@ -20,5 +20,6 @@ public class StudentGraduationSaveRequest implements Serializable {
     private Long studentId;
 
     @Valid
+    @NotNull
     private SisOperationInfoRequest operationInfoRequest;
 }

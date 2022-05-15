@@ -1,6 +1,5 @@
 package com.graduationproject.studentinformationsystem.common.config;
 
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -29,6 +28,7 @@ public class SisSwaggerConfiguration {
     public static final String STUDENT_LESSON_API_TAG = "Student Lesson Controller";
     public static final String STUDENT_LESSON_REGISTRATION_API_TAG = "Student Lesson Registration Controller";
     public static final String STUDENT_LESSON_NOTE_API_TAG = "Student Lesson Note Controller";
+    public static final String STUDENT_LESSON_ABSENTEEISM_API_TAG = "Student Lesson Absenteeism Controller";
     public static final String STUDENT_GRADUATION_API_TAG = "Student Graduation Controller";
     public static final String TEACHER_API_TAG = "Teacher Controller";
     public static final String TEACHER_LESSON_API_TAG = "Teacher Lesson Controller";
@@ -67,12 +67,10 @@ public class SisSwaggerConfiguration {
                 );
     }
 
-    @Setter
-    @Value("title")
+    @Value("${sis.api.title}")
     private String title;
 
-    @Setter
-    @Value("version")
+    @Value("${sis.api.version}")
     private String version;
 
     private ApiInfo apiEndPointsInfo() {

@@ -26,6 +26,8 @@ public interface StudentLessonNoteRepository {
 
     void confirmStudentLessonResitNote(StudentLessonResitNoteConfirmEntity confirmEntity);
 
+    void updateStudentLessonNoteStatus(StudentLessonNoteStatusUpdateEntity updateEntity);
+
     Double getMidtermNoteById(String id);
 
     boolean isStudentLessonNotesExist(String id);

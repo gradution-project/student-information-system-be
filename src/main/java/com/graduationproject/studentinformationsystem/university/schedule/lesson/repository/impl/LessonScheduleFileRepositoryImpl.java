@@ -87,7 +87,6 @@ public class LessonScheduleFileRepositoryImpl implements LessonScheduleFileRepos
                     .addParameter(FILE_ID.getModelName(), scheduleFileEntity.getFileId())
                     .addParameter(FACULTY_ID.getModelName(), scheduleFileEntity.getFacultyId())
                     .addParameter(DEPARTMENT_ID.getModelName(), scheduleFileEntity.getDepartmentId())
-                    .addParameter(API_URL.getModelName(), scheduleFileEntity.getApiUrl())
                     .addParameter(FILE_NAME.getModelName(), scheduleFileEntity.getFileName())
                     .addParameter(FILE_TYPE.getModelName(), scheduleFileEntity.getFileType())
                     .addParameter(FILE_BYTE.getModelName(), scheduleFileEntity.getFileByte())

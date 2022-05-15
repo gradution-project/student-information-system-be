@@ -42,6 +42,20 @@ public class StudentLessonRegistrationInfoConverter {
                 .createdDate(new Date()).build();
     }
 
+    public StudentLessonRegistrationEntity generateUpdateEntity(final String registrationId,
+                                                                final StudentLessonRegistrationSaveRequest saveRequest) {
+
+        final StudentLessonRegistrationInfoRequest studentLessonRegistrationInfoRequest = saveRequest.getStudentLessonRegistrationInfoRequest();
+        final SisOperationInfoRequest operationInfoRequest = saveRequest.getOperationInfoRequest();
+
+        return StudentLessonRegistrationEntity.builder()
+                .registrationId(registrationId)
+                .lessonsIds(SisUtil.longListToString(studentLessonRegistrationInfoRequest.getLessonsIds()))
+                .status(StudentLessonRegistrationStatus.WAITING)
+                .modifiedUserId(operationInfoRequest.getUserId())
+                .modifiedDate(new Date()).build();
+    }
+
     public StudentLessonRegistrationEntity generateApprovedEntity(final StudentLessonRegistrationApproveRequest approveRequest) {
 
         final SisOperationInfoRequest operationInfoRequest = approveRequest.getOperationInfoRequest();

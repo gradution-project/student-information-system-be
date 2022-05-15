@@ -9,9 +9,9 @@ import com.graduationproject.studentinformationsystem.common.util.exception.SisN
 import com.graduationproject.studentinformationsystem.common.util.validation.id.DepartmentID;
 import com.graduationproject.studentinformationsystem.common.util.validation.id.FacultyID;
 import com.graduationproject.studentinformationsystem.common.util.validation.id.OperationUserID;
-import com.graduationproject.studentinformationsystem.university.schedule.common.controller.endpoint.ScheduleFileControllerEndpoint;
 import com.graduationproject.studentinformationsystem.university.schedule.common.model.dto.response.ScheduleFileDetailResponse;
 import com.graduationproject.studentinformationsystem.university.schedule.common.model.dto.response.ScheduleFileResponse;
+import com.graduationproject.studentinformationsystem.university.schedule.lesson.controller.endpoint.LessonScheduleFileControllerEndpoint;
 import com.graduationproject.studentinformationsystem.university.schedule.lesson.service.LessonScheduleFileService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,18 +26,17 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.graduationproject.studentinformationsystem.common.config.SisSwaggerConfiguration.LESSON_SCHEDULE_FILE_API_TAG;
-import static com.graduationproject.studentinformationsystem.common.util.controller.endpoint.SisControllerEndpoint.Path.LESSON_SCHEDULE_FILE;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.successResponse;
 
 @RestController
-@RequestMapping(LESSON_SCHEDULE_FILE)
+@RequestMapping
 @Api(tags = LESSON_SCHEDULE_FILE_API_TAG)
 @RequiredArgsConstructor
 public class LessonScheduleFileController {
 
     private final LessonScheduleFileService lessonScheduleFileService;
 
-    @GetMapping(ScheduleFileControllerEndpoint.FACULTY_ID)
+    @GetMapping(LessonScheduleFileControllerEndpoint.ALL_BY_FACULTY_ID)
     @ApiOperation(value = "Get Lesson Schedule Files Detail By Faculty ID")
     public ResponseEntity<SisBaseApiResponse<List<ScheduleFileDetailResponse>>> getLessonScheduleFilesByFacultyId(
             @PathVariable final Long facultyId)
@@ -48,8 +47,8 @@ public class LessonScheduleFileController {
         return successResponse(scheduleFileDetailResponses);
     }
 
-    @GetMapping(ScheduleFileControllerEndpoint.VIEW)
-    @ApiOperation(value = "View Lesson Schedule File By ID")
+    @GetMapping(LessonScheduleFileControllerEndpoint.VIEW_BY_FILE_ID)
+    @ApiOperation(value = "View Lesson Schedule File By File ID")
     public ResponseEntity<byte[]> viewLessonScheduleFileById(
             @PathVariable String fileId)
             throws SisNotExistException, IOException {
@@ -62,8 +61,8 @@ public class LessonScheduleFileController {
                 .body(scheduleFileResponse.getFileByte());
     }
 
-    @GetMapping(ScheduleFileControllerEndpoint.DOWNLOAD)
-    @ApiOperation(value = "Download Lesson Schedule File By ID")
+    @GetMapping(LessonScheduleFileControllerEndpoint.DOWNLOAD_BY_FILE_ID)
+    @ApiOperation(value = "Download Lesson Schedule File By File ID")
     public ResponseEntity<MultipartFile> downloadLessonScheduleFileById(
             @PathVariable String fileId)
             throws SisNotExistException, IOException {
@@ -74,7 +73,7 @@ public class LessonScheduleFileController {
                 .body(scheduleFileResponse.getFile());
     }
 
-    @GetMapping(ScheduleFileControllerEndpoint.DEPARTMENT_ID)
+    @GetMapping(LessonScheduleFileControllerEndpoint.BY_DEPARTMENT_ID)
     @ApiOperation(value = "Get Lesson Schedule File Detail By Department ID")
     public ResponseEntity<SisBaseApiResponse<ScheduleFileDetailResponse>> getLessonScheduleFileByDepartmentId(
             @PathVariable final Long departmentId)
@@ -86,12 +85,11 @@ public class LessonScheduleFileController {
     }
 
     @PostMapping(
-            value = ScheduleFileControllerEndpoint.SAVE,
+            value = LessonScheduleFileControllerEndpoint.BASE,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     @ApiOperation(value = "Save Lesson Schedule File")
     public ResponseEntity<SisBaseApiResponse<ScheduleFileDetailResponse>> saveLessonScheduleFile(
-            @RequestParam String apiUrl,
             @RequestParam @FacultyID Long facultyId,
             @RequestParam @DepartmentID Long departmentId,
             @RequestParam @OperationUserID Long operationUserId,
@@ -99,11 +97,11 @@ public class LessonScheduleFileController {
             throws SisNotExistException, IOException, SisAlreadyException {
 
         final ScheduleFileDetailResponse scheduleFileDetailResponse = lessonScheduleFileService
-                .saveLessonScheduleFile(apiUrl, facultyId, departmentId, operationUserId, document);
+                .saveLessonScheduleFile(facultyId, departmentId, operationUserId, document);
         return successResponse(scheduleFileDetailResponse);
     }
 
-    @DeleteMapping(ScheduleFileControllerEndpoint.DELETE)
+    @DeleteMapping(LessonScheduleFileControllerEndpoint.BY_DEPARTMENT_ID)
     @ApiOperation(value = "Delete Lesson Schedule File")
     public ResponseEntity<SisApiResponse> deleteLessonScheduleFile(
             @PathVariable final Long departmentId)

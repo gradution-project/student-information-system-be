@@ -40,14 +40,14 @@ public class LessonScheduleFileSqlScripts {
 
     /**
      * INSERT INTO UNIV_LESSON_SCHEDULE_FILE SET FILE_ID=:fileId, FACULTY_ID=:facultyId, DEPARTMENT_ID=:departmentId,
-     * FILE=:file, FILE_NAME=:fileName, FILE_TYPE=:fileType, FILE_BYTE=:fileByte, FILE_SIZE=:fileSize, API_URL=:apiUrl,
+     * FILE=:file, FILE_NAME=:fileName, FILE_TYPE=:fileType, FILE_BYTE=:fileByte, FILE_SIZE=:fileSize,
      * CREATED_USER_ID=:createdUserId, CREATED_DATE=:createdDate;
      */
     public static final String SAVE_LESSON_SCHEDULE_FILE =
             sqlBuilder.delete(0, sqlBuilder.length())
                     .append("INSERT INTO UNIV_LESSON_SCHEDULE_FILE SET FILE_ID=:fileId, FACULTY_ID=:facultyId," +
                             "DEPARTMENT_ID=:departmentId, FILE=:file, FILE_NAME=:fileName, FILE_TYPE=:fileType, " +
-                            "FILE_BYTE=:fileByte, FILE_SIZE=:fileSize, API_URL=:apiUrl, " +
+                            "FILE_BYTE=:fileByte, FILE_SIZE=:fileSize, " +
                             "CREATED_USER_ID=:createdUserId, CREATED_DATE=:createdDate").toString();
 
     /**

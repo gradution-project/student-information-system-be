@@ -6,7 +6,9 @@ import com.graduationproject.studentinformationsystem.university.department.serv
 import com.graduationproject.studentinformationsystem.university.schedule.common.model.dto.response.ScheduleFileDetailResponse;
 import com.graduationproject.studentinformationsystem.university.schedule.common.model.dto.response.ScheduleFileResponse;
 import com.graduationproject.studentinformationsystem.university.schedule.common.model.entity.ScheduleFileEntity;
+import com.graduationproject.studentinformationsystem.university.schedule.lesson.controller.endpoint.LessonScheduleFileControllerEndpoint;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,9 +23,11 @@ public class LessonScheduleFileInfoConverter {
 
     private final DepartmentOutService departmentOutService;
 
+    @Value("${sis.be-url}")
+    private String beUrl;
+
     public ScheduleFileEntity generateSaveEntity(final String fileId,
                                                  final MultipartFile document,
-                                                 final String apiUrl,
                                                  final Long facultyId,
                                                  final Long departmentId,
                                                  final Long operationUserId) throws IOException {
@@ -32,7 +36,6 @@ public class LessonScheduleFileInfoConverter {
                 .fileId(fileId)
                 .facultyId(facultyId)
                 .departmentId(departmentId)
-                .apiUrl(apiUrl)
                 .fileName(document.getOriginalFilename())
                 .fileType(document.getContentType())
                 .file(document)
@@ -60,8 +63,8 @@ public class LessonScheduleFileInfoConverter {
                 .fileId(scheduleFileEntity.getFileId())
                 .fileName(scheduleFileEntity.getFileName())
                 .fileType(scheduleFileEntity.getFileType())
-                .fileDownloadUrl(scheduleFileEntity.getApiUrl() + "/lesson-schedule-file/download/" + scheduleFileEntity.getFileId())
-                .fileViewUrl(scheduleFileEntity.getApiUrl() + "/lesson-schedule-file/view/" + scheduleFileEntity.getFileId())
+                .fileDownloadUrl(beUrl + LessonScheduleFileControllerEndpoint.Out.DOWNLOAD + scheduleFileEntity.getFileId())
+                .fileViewUrl(beUrl + LessonScheduleFileControllerEndpoint.Out.VIEW + scheduleFileEntity.getFileId())
                 .createdUserId(scheduleFileEntity.getCreatedUserId())
                 .createdDate(SisUtil.getFormattedDateTime(scheduleFileEntity.getCreatedDate()))
                 .departmentResponse(departmentResponse)

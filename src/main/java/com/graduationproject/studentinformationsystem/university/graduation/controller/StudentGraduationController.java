@@ -20,19 +20,18 @@ import javax.validation.Valid;
 import java.util.List;
 
 import static com.graduationproject.studentinformationsystem.common.config.SisSwaggerConfiguration.STUDENT_GRADUATION_API_TAG;
-import static com.graduationproject.studentinformationsystem.common.util.controller.endpoint.SisControllerEndpoint.Path.STUDENT_GRADUATION;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.failResponse;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.successResponse;
 
 @RestController
-@RequestMapping(STUDENT_GRADUATION)
+@RequestMapping
 @Api(tags = STUDENT_GRADUATION_API_TAG)
 @RequiredArgsConstructor
 public class StudentGraduationController {
 
     private final StudentGraduationService studentGraduationService;
 
-    @GetMapping(StudentGraduationControllerEndpoint.GET)
+    @GetMapping(StudentGraduationControllerEndpoint.ALL)
     @ApiOperation(value = "Get All Student Graduations By Status")
     public ResponseEntity<SisBaseApiResponse<List<StudentGraduationResponse>>> getAllStudentGraduationsByStatus(
             @RequestParam final StudentGraduationStatus status) {
@@ -41,8 +40,8 @@ public class StudentGraduationController {
         return successResponse(graduationResponses);
     }
 
-    @GetMapping(StudentGraduationControllerEndpoint.GET_BY_GRADUATION_ID)
-    @ApiOperation(value = "Get Student Graduation By Registration ID")
+    @GetMapping(StudentGraduationControllerEndpoint.BY_GRADUATION_ID)
+    @ApiOperation(value = "Get Student Graduation By Graduation ID")
     public ResponseEntity<SisBaseApiResponse<StudentGraduationResponse>> getStudentGraduationDetailByRegistrationId(
             @PathVariable final String graduationId) throws SisNotExistException {
 
@@ -51,7 +50,7 @@ public class StudentGraduationController {
         return successResponse(graduationResponse);
     }
 
-    @PostMapping(StudentGraduationControllerEndpoint.SAVE)
+    @PostMapping(StudentGraduationControllerEndpoint.BASE)
     @ApiOperation(value = "Save Student Graduation")
     public ResponseEntity<SisBaseApiResponse<StudentGraduationResponse>> saveStudentGraduation(
             @RequestBody @Valid final StudentGraduationSaveRequest saveRequest)
@@ -103,8 +102,8 @@ public class StudentGraduationController {
         return successResponse(graduationResponse);
     }
 
-    @GetMapping(StudentGraduationControllerEndpoint.ENABLED)
-    @ApiOperation(value = "Is Student Graduation Enabled")
+    @GetMapping(StudentGraduationControllerEndpoint.ENABLED_BY_STUDENT_ID)
+    @ApiOperation(value = "Is Student Graduation Enabled By Student ID")
     public ResponseEntity<SisApiResponse> isStudentGraduationEnabled(
             @PathVariable @StudentID final Long studentId)
             throws SisNotExistException, SisAlreadyException {

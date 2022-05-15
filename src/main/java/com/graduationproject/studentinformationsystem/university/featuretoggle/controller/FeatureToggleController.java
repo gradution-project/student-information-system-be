@@ -18,18 +18,17 @@ import javax.validation.Valid;
 import java.util.List;
 
 import static com.graduationproject.studentinformationsystem.common.config.SisSwaggerConfiguration.FEATURE_TOGGLE_API_TAG;
-import static com.graduationproject.studentinformationsystem.common.util.controller.endpoint.SisControllerEndpoint.Path.FEATURE_TOGGLE;
 import static com.graduationproject.studentinformationsystem.common.util.controller.response.SisResponseUtil.successResponse;
 
 @RestController
-@RequestMapping(FEATURE_TOGGLE)
+@RequestMapping
 @Api(tags = FEATURE_TOGGLE_API_TAG)
 @RequiredArgsConstructor
 public class FeatureToggleController {
 
     private final FeatureToggleService featureToggleService;
 
-    @GetMapping
+    @GetMapping(FeatureToggleControllerEndpoint.ALL)
     @ApiOperation(value = "Get All Feature Toggles")
     public ResponseEntity<SisBaseApiResponse<List<FeatureToggleResponse>>> getAllFeatureToggles() {
 
@@ -37,7 +36,7 @@ public class FeatureToggleController {
         return successResponse(featureToggleResponses);
     }
 
-    @GetMapping(FeatureToggleControllerEndpoint.NAME)
+    @GetMapping(FeatureToggleControllerEndpoint.BY_NAME)
     @ApiOperation(value = "Get Feature Toggle By Name")
     public ResponseEntity<SisBaseApiResponse<FeatureToggleResponse>> getFeatureToggleByName(
             @PathVariable final FeatureToggleName name)
@@ -48,7 +47,7 @@ public class FeatureToggleController {
     }
 
     @GetMapping(FeatureToggleControllerEndpoint.ENABLED_BY_NAME)
-    @ApiOperation(value = "Is Feature Toggle Enabled")
+    @ApiOperation(value = "Is Feature Toggle Enabled By Name")
     public ResponseEntity<SisBaseApiResponse<FeatureToggleIsEnabledResponse>> isFeatureToggleEnabled(
             @PathVariable final FeatureToggleName name)
             throws SisNotExistException {

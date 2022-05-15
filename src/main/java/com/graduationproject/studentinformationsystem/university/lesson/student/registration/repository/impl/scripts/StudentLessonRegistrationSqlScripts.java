@@ -46,6 +46,17 @@ public class StudentLessonRegistrationSqlScripts {
                             ":status, :createdDate, :createdUserId) ").toString();
 
     /**
+     * UPDATE STUDENT_LESSON_REGISTRATION SET LESSONS_IDS=:lessonsIds, STATUS=:status,
+     * MODIFIED_DATE=:modifiedDate, MODIFIED_USER_ID=:modifiedUserId
+     * WHERE REGISTRATION_ID=:registrationId;
+     */
+    public static final String UPDATE_STUDENT_LESSON_REGISTRATION =
+            sqlBuilder.delete(0, sqlBuilder.length())
+                    .append("UPDATE STUDENT_LESSON_REGISTRATION SET LESSONS_IDS=:lessonsIds, STATUS=:status, " +
+                            "MODIFIED_DATE=:modifiedDate, MODIFIED_USER_ID=:modifiedUserId " +
+                            "WHERE REGISTRATION_ID=:registrationId").toString();
+
+    /**
      * UPDATE STUDENT_LESSON_REGISTRATION SET STATUS=:status,
      * MODIFIED_DATE=:modifiedDate, MODIFIED_USER_ID=:modifiedUserId
      * WHERE REGISTRATION_ID=:registrationId;

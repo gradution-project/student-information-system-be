@@ -56,8 +56,7 @@ public class LessonScheduleFileServiceImpl implements LessonScheduleFileService 
     }
 
     @Override
-    public ScheduleFileDetailResponse saveLessonScheduleFile(final String apiUrl,
-                                                             final Long facultyId,
+    public ScheduleFileDetailResponse saveLessonScheduleFile(final Long facultyId,
                                                              final Long departmentId,
                                                              final Long operationUserId,
                                                              final MultipartFile document)
@@ -67,7 +66,7 @@ public class LessonScheduleFileServiceImpl implements LessonScheduleFileService 
 
         final String fileId = SisUtil.generateRandomUUID();
         final ScheduleFileEntity scheduleFileEntity = scheduleFileInfoConverter
-                .generateSaveEntity(fileId, document, apiUrl, facultyId, departmentId, operationUserId);
+                .generateSaveEntity(fileId, document, facultyId, departmentId, operationUserId);
 
         scheduleFileRepository.saveLessonScheduleFile(scheduleFileEntity);
         return getLessonScheduleFileDetailResponse(departmentId);
