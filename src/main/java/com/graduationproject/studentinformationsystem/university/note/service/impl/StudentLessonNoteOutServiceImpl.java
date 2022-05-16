@@ -7,6 +7,8 @@ import com.graduationproject.studentinformationsystem.university.lesson.teacher.
 import com.graduationproject.studentinformationsystem.university.note.model.dto.converter.StudentLessonNoteInfoConverter;
 import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentLessonNoteSaveRequest;
 import com.graduationproject.studentinformationsystem.university.note.model.dto.request.StudentsLessonNoteStatusUpdateRequest;
+import com.graduationproject.studentinformationsystem.university.note.model.dto.response.StudentLessonNoteResponse;
+import com.graduationproject.studentinformationsystem.university.note.model.entity.StudentLessonNoteEntity;
 import com.graduationproject.studentinformationsystem.university.note.model.entity.StudentLessonNoteSaveEntity;
 import com.graduationproject.studentinformationsystem.university.note.model.entity.StudentLessonNoteStatusUpdateEntity;
 import com.graduationproject.studentinformationsystem.university.note.model.enums.StudentLessonNoteStatus;
@@ -61,6 +63,13 @@ public class StudentLessonNoteOutServiceImpl implements StudentLessonNoteOutServ
 
         final StudentLessonNoteStatusUpdateEntity updateEntity = lessonNoteInfoConverter.generateStatusUpdateEntity(updateRequest);
         lessonNoteRepository.updateStudentLessonNoteStatus(updateEntity);
+    }
+
+    @Override
+    public List<StudentLessonNoteResponse> getStudentLessonsAllConfirmedNotesByStudentId(final Long studentId) {
+
+        final List<StudentLessonNoteEntity> entities = lessonNoteRepository.getStudentLessonsAllConfirmedNotesByStudentId(studentId);
+        return lessonNoteInfoConverter.entitiesToResponses(entities);
     }
 
     @Override

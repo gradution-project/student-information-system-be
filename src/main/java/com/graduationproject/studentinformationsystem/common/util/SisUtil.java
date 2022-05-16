@@ -75,12 +75,12 @@ public class SisUtil {
         return String.valueOf(LocalDateTime.now().getYear());
     }
 
-    public static String stringToStringLowerCaseWithDot(String string) {
+    public static String setStringToStringLowerCaseAndChangeSpacesWithChar(String string, String character) {
         string = string.toLowerCase(Locale.ROOT);
 
         String[] stringArray = string.split(" ");
         if (stringArray.length >= 2) {
-            return string.replace(" ", ".");
+            return string.replace(" ", character);
         }
         return string;
     }

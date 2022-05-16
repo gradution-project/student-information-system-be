@@ -71,6 +71,27 @@ public class StudentLessonNoteRepositoryImpl implements StudentLessonNoteReposit
     }
 
     @Override
+    public List<StudentLessonNoteEntity> getStudentLessonsAllConfirmedNotesByStudentId(final Long studentId) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_STUDENT_LESSONS_ALL_CONFIRMED_NOTES_BY_STUDENT_ID)) {
+
+            final List<StudentLessonNoteEntity> noteEntities = query
+                    .addParameter(STUDENT_ID.getModelName(), studentId)
+                    .setColumnMappings(COLUMN_MAPPINGS)
+                    .executeAndFetch(StudentLessonNoteEntity.class);
+
+            if (!noteEntities.isEmpty()) {
+                info.foundAllByStudentId(studentId);
+            } else {
+                warn.notFoundAllByStudentId(studentId);
+            }
+            return noteEntities;
+        } catch (Exception exception) {
+            error.errorWhenGettingAllByStudentId(studentId);
+            throw new SisDatabaseException(exception);
+        }
+    }
+
+    @Override
     public StudentLessonNoteEntity getStudentLessonNotesById(final String id) {
         try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_STUDENT_LESSON_NOTES_BY_ID)) {
 
