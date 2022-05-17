@@ -5,7 +5,7 @@ import com.graduationproject.studentinformationsystem.common.util.exception.SisN
 import com.graduationproject.studentinformationsystem.common.util.exception.SisProcessException;
 import com.graduationproject.studentinformationsystem.university.absenteeism.controller.endpoint.StudentLessonAbsenteeismControllerEndpoint;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.request.StudentsLessonAbsenteeismUpdateRequest;
-import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.response.StudentLessonAbsenteeismResponse;
+import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.response.StudentsLessonAbsenteeismResponse;
 import com.graduationproject.studentinformationsystem.university.absenteeism.service.StudentLessonAbsenteeismService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,12 +31,12 @@ public class StudentLessonAbsenteeismController {
 
     @GetMapping(StudentLessonAbsenteeismControllerEndpoint.BY_STUDENT_ID)
     @ApiOperation(value = "Get All Student Lessons Absenteeism By Student ID")
-    public ResponseEntity<SisBaseApiResponse<List<StudentLessonAbsenteeismResponse>>> getAllStudentLessonsAbsenteeismByStudentId(
+    public ResponseEntity<SisBaseApiResponse<List<StudentsLessonAbsenteeismResponse>>> getAllStudentLessonsAbsenteeismByStudentId(
             @PathVariable final Long studentId,
             @RequestParam final Integer week)
             throws SisNotExistException {
 
-        final List<StudentLessonAbsenteeismResponse> absenteeismResponses = studentLessonAbsenteeismService
+        final List<StudentsLessonAbsenteeismResponse> absenteeismResponses = studentLessonAbsenteeismService
                 .getAllStudentLessonsAbsenteeismByStudentId(studentId, week);
 
         if (absenteeismResponses.isEmpty()) {
@@ -48,12 +48,12 @@ public class StudentLessonAbsenteeismController {
 
     @GetMapping(StudentLessonAbsenteeismControllerEndpoint.BY_LESSON_ID)
     @ApiOperation(value = "Get All Students Lessons Absenteeism By Lesson ID")
-    public ResponseEntity<SisBaseApiResponse<List<StudentLessonAbsenteeismResponse>>> getAllStudentsLessonsAbsenteeismByLessonId(
+    public ResponseEntity<SisBaseApiResponse<List<StudentsLessonAbsenteeismResponse>>> getAllStudentsLessonsAbsenteeismByLessonId(
             @PathVariable final Long lessonId,
             @RequestParam final Integer week)
             throws SisNotExistException {
 
-        final List<StudentLessonAbsenteeismResponse> absenteeismResponses = studentLessonAbsenteeismService
+        final List<StudentsLessonAbsenteeismResponse> absenteeismResponses = studentLessonAbsenteeismService
                 .getAllStudentsLessonsAbsenteeismByLessonId(lessonId, week);
 
         if (absenteeismResponses.isEmpty()) {
@@ -65,11 +65,11 @@ public class StudentLessonAbsenteeismController {
 
     @PutMapping(StudentLessonAbsenteeismControllerEndpoint.BASE)
     @ApiOperation(value = "Update Students Lesson Absenteeism")
-    public ResponseEntity<SisBaseApiResponse<List<StudentLessonAbsenteeismResponse>>> updateStudentLessonAbsenteeism(
+    public ResponseEntity<SisBaseApiResponse<List<StudentsLessonAbsenteeismResponse>>> updateStudentLessonAbsenteeism(
             @RequestBody @Valid final StudentsLessonAbsenteeismUpdateRequest updateRequest)
             throws SisNotExistException, SisProcessException {
 
-        final List<StudentLessonAbsenteeismResponse> absenteeismResponses = studentLessonAbsenteeismService
+        final List<StudentsLessonAbsenteeismResponse> absenteeismResponses = studentLessonAbsenteeismService
                 .updateStudentLessonAbsenteeism(updateRequest);
 
         return successResponse(absenteeismResponses);

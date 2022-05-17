@@ -3,7 +3,7 @@ package com.graduationproject.studentinformationsystem.university.absenteeism.mo
 import com.graduationproject.studentinformationsystem.common.model.dto.request.SisOperationInfoRequest;
 import com.graduationproject.studentinformationsystem.common.util.SisUtil;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.request.StudentLessonAbsenteeismSaveRequest;
-import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.response.StudentLessonAbsenteeismResponse;
+import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.response.StudentsLessonAbsenteeismResponse;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.entity.StudentLessonAbsenteeismEntity;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.entity.StudentLessonAbsenteeismSaveEntity;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.entity.StudentLessonAbsenteeismUpdateEntity;
@@ -62,7 +62,7 @@ public class StudentLessonAbsenteeismInfoConverter {
                 .build();
     }
 
-    public StudentLessonAbsenteeismResponse entityToResponse(final StudentLessonAbsenteeismEntity absenteeismEntity) {
+    public StudentsLessonAbsenteeismResponse entityToResponse(final StudentLessonAbsenteeismEntity absenteeismEntity) {
 
         final Long teacherId = absenteeismEntity.getTeacherId();
         final TeacherInfoResponse teacherResponse = teacherOutService.getTeacherInfoResponse(teacherId);
@@ -73,7 +73,7 @@ public class StudentLessonAbsenteeismInfoConverter {
         final Long lessonId = absenteeismEntity.getLessonId();
         final LessonResponse lessonResponse = lessonOutService.getLessonResponse(lessonId);
 
-        return StudentLessonAbsenteeismResponse.builder()
+        return StudentsLessonAbsenteeismResponse.builder()
                 .id(absenteeismEntity.getId())
                 .week(absenteeismEntity.getWeek())
                 .theoreticalHours(absenteeismEntity.getTheoreticalHours())
@@ -88,8 +88,8 @@ public class StudentLessonAbsenteeismInfoConverter {
                 .lessonResponse(lessonResponse).build();
     }
 
-    public List<StudentLessonAbsenteeismResponse> entitiesToResponses(final List<StudentLessonAbsenteeismEntity> absenteeismEntities) {
-        List<StudentLessonAbsenteeismResponse> absenteeismResponses = new ArrayList<>();
+    public List<StudentsLessonAbsenteeismResponse> entitiesToResponses(final List<StudentLessonAbsenteeismEntity> absenteeismEntities) {
+        List<StudentsLessonAbsenteeismResponse> absenteeismResponses = new ArrayList<>();
         absenteeismEntities.forEach(absenteeismEntity -> absenteeismResponses.add(entityToResponse(absenteeismEntity)));
         return absenteeismResponses;
     }

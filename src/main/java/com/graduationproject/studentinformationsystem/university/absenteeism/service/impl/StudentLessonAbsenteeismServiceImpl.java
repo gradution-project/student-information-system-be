@@ -6,7 +6,7 @@ import com.graduationproject.studentinformationsystem.common.util.exception.SisN
 import com.graduationproject.studentinformationsystem.common.util.exception.SisProcessException;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.converter.StudentLessonAbsenteeismInfoConverter;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.request.StudentsLessonAbsenteeismUpdateRequest;
-import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.response.StudentLessonAbsenteeismResponse;
+import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.response.StudentsLessonAbsenteeismResponse;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.entity.StudentLessonAbsenteeismEntity;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.entity.StudentLessonAbsenteeismUpdateEntity;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.enums.StudentLessonAbsenteeismStatus;
@@ -42,8 +42,8 @@ public class StudentLessonAbsenteeismServiceImpl implements StudentLessonAbsente
     private final StudentLessonAbsenteeismInfoConverter lessonAbsenteeismInfoConverter;
 
     @Override
-    public List<StudentLessonAbsenteeismResponse> getAllStudentLessonsAbsenteeismByStudentId(final Long studentId,
-                                                                                             final Integer week)
+    public List<StudentsLessonAbsenteeismResponse> getAllStudentLessonsAbsenteeismByStudentId(final Long studentId,
+                                                                                              final Integer week)
             throws SisNotExistException {
 
         ifStudentIsNotExistThrowNotExistException(studentId);
@@ -54,8 +54,8 @@ public class StudentLessonAbsenteeismServiceImpl implements StudentLessonAbsente
     }
 
     @Override
-    public List<StudentLessonAbsenteeismResponse> getAllStudentsLessonsAbsenteeismByLessonId(final Long lessonId,
-                                                                                             final Integer week)
+    public List<StudentsLessonAbsenteeismResponse> getAllStudentsLessonsAbsenteeismByLessonId(final Long lessonId,
+                                                                                              final Integer week)
             throws SisNotExistException {
 
         ifLessonIsNotExistThrowNotExistException(lessonId);
@@ -65,7 +65,7 @@ public class StudentLessonAbsenteeismServiceImpl implements StudentLessonAbsente
     }
 
     @Override
-    public List<StudentLessonAbsenteeismResponse> updateStudentLessonAbsenteeism(final StudentsLessonAbsenteeismUpdateRequest updateRequest)
+    public List<StudentsLessonAbsenteeismResponse> updateStudentLessonAbsenteeism(final StudentsLessonAbsenteeismUpdateRequest updateRequest)
             throws SisNotExistException, SisProcessException {
 
         final Map<String, Map<String, Integer>> absenteeismIdsAndTheoreticalHoursAndPracticeHours = updateRequest
@@ -73,7 +73,7 @@ public class StudentLessonAbsenteeismServiceImpl implements StudentLessonAbsente
 
         checkBeforeUpdateNotes(absenteeismIdsAndTheoreticalHoursAndPracticeHours);
 
-        final List<StudentLessonAbsenteeismResponse> studentLessonAbsenteeismResponses = new ArrayList<>();
+        final List<StudentsLessonAbsenteeismResponse> studentsLessonAbsenteeismRespons = new ArrayList<>();
         for (Map.Entry<String, Map<String, Integer>> absenteeismIdAndTheoreticalHoursAndPracticeHours : absenteeismIdsAndTheoreticalHoursAndPracticeHours.entrySet()) {
 
             final String absenteeismId = absenteeismIdAndTheoreticalHoursAndPracticeHours.getKey();
@@ -99,10 +99,10 @@ public class StudentLessonAbsenteeismServiceImpl implements StudentLessonAbsente
 
             checkTotalHoursIfExceededSetNoteStatusAndAbsenteeismStatusToFailed(absenteeismId, operationInfoRequest);
 
-            addResponseToList(absenteeismId, studentLessonAbsenteeismResponses);
+            addResponseToList(absenteeismId, studentsLessonAbsenteeismRespons);
         }
 
-        return studentLessonAbsenteeismResponses;
+        return studentsLessonAbsenteeismRespons;
     }
 
     private void updateStudentLessonAbsenteeism(final String absenteeismId,
@@ -167,11 +167,11 @@ public class StudentLessonAbsenteeismServiceImpl implements StudentLessonAbsente
     }
 
     private void addResponseToList(final String absenteeismId,
-                                   final List<StudentLessonAbsenteeismResponse> studentLessonAbsenteeismResponses) {
+                                   final List<StudentsLessonAbsenteeismResponse> studentsLessonAbsenteeismRespons) {
 
         final StudentLessonAbsenteeismEntity absenteeismEntity = lessonAbsenteeismRepository.getStudentLessonAbsenteeismById(absenteeismId);
-        final StudentLessonAbsenteeismResponse absenteeismResponse = lessonAbsenteeismInfoConverter.entityToResponse(absenteeismEntity);
-        studentLessonAbsenteeismResponses.add(absenteeismResponse);
+        final StudentsLessonAbsenteeismResponse absenteeismResponse = lessonAbsenteeismInfoConverter.entityToResponse(absenteeismEntity);
+        studentsLessonAbsenteeismRespons.add(absenteeismResponse);
     }
 
     @Override

@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 
 @Getter
 @SuperBuilder
-public class StudentLessonAbsenteeismResponse extends SisBaseResponse {
+public class StudentsLessonAbsenteeismResponse extends SisBaseResponse {
 
     private String id;
     private Integer week;
