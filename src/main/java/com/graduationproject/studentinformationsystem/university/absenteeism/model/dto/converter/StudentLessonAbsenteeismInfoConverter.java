@@ -109,14 +109,14 @@ public class StudentLessonAbsenteeismInfoConverter {
         final LessonResponse lessonResponse = lessonOutService.getLessonResponse(lessonId);
 
         StudentLessonAbsenteeismHoursState theoreticalHoursState = StudentLessonAbsenteeismHoursState.NOT_ENTERED;
-        if (currentTheoreticalHours != 0 || balanceTheoreticalHours != 0) {
+        if (currentTheoreticalHours != 0 && balanceTheoreticalHours != 0) {
             theoreticalHoursState = StudentLessonAbsenteeismHoursState.ENTERED;
         } else if (currentTheoreticalHours == 0 && balanceTheoreticalHours == 0) {
             theoreticalHoursState = StudentLessonAbsenteeismHoursState.NOT_EXIST;
         }
 
         StudentLessonAbsenteeismHoursState practiceHoursState = StudentLessonAbsenteeismHoursState.NOT_ENTERED;
-        if (currentPracticeHours != 0 || balancePracticeHours != 0) {
+        if (currentPracticeHours != 0 && balancePracticeHours != 0) {
             practiceHoursState = StudentLessonAbsenteeismHoursState.ENTERED;
         } else if (currentPracticeHours == 0 && balancePracticeHours == 0) {
             practiceHoursState = StudentLessonAbsenteeismHoursState.NOT_EXIST;
