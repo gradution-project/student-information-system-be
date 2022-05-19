@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum StudentLessonAbsenteeismHoursState {
 
-    NOT_EXIST("Teori Saati Bulunmuyor!"),
+    NOT_EXIST("Ders Saati Bulunmuyor!"),
     NOT_ENTERED("Yoklama Girişi Yapılmamış"),
     ENTERED("Yoklama Girişi Yapılmış");
 
