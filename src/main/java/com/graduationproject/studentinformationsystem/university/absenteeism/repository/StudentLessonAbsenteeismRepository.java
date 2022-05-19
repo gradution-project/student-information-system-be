@@ -12,7 +12,7 @@ public interface StudentLessonAbsenteeismRepository {
 
     List<StudentLessonsAbsenteeismEntity> getAllStudentLessonsAbsenteeismByStudentId(Long studentId);
 
-    List<StudentsLessonAbsenteeismEntity> getAllStudentsLessonsAbsenteeismByLessonId(Long lessonId, Integer week);
+    List<StudentsLessonAbsenteeismEntity> getAllStudentsLessonAbsenteeismByLessonId(Long lessonId, Integer week);
 
     StudentsLessonAbsenteeismEntity getStudentLessonAbsenteeismById(String id);
 

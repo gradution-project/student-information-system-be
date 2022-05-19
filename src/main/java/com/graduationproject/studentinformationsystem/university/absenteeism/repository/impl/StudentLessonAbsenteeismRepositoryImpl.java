@@ -56,8 +56,8 @@ public class StudentLessonAbsenteeismRepositoryImpl implements StudentLessonAbse
     }
 
     @Override
-    public List<StudentsLessonAbsenteeismEntity> getAllStudentsLessonsAbsenteeismByLessonId(final Long lessonId,
-                                                                                            final Integer week) {
+    public List<StudentsLessonAbsenteeismEntity> getAllStudentsLessonAbsenteeismByLessonId(final Long lessonId,
+                                                                                           final Integer week) {
 
         try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_ALL_STUDENTS_LESSON_ABSENTEEISM_BY_LESSON_ID_AND_WEEK)) {
 

@@ -14,7 +14,7 @@ public interface StudentLessonAbsenteeismService {
     List<StudentLessonsAbsenteeismResponse> getAllStudentLessonsAbsenteeismByStudentId(Long studentId)
             throws SisNotExistException;
 
-    List<StudentsLessonAbsenteeismResponse> getAllStudentsLessonsAbsenteeismByLessonId(Long lessonId, Integer week)
+    List<StudentsLessonAbsenteeismResponse> getAllStudentsLessonAbsenteeismByLessonId(Long lessonId, Integer week)
             throws SisNotExistException;
 
     List<StudentsLessonAbsenteeismResponse> updateStudentLessonAbsenteeism(StudentsLessonAbsenteeismUpdateRequest updateRequest)

@@ -47,14 +47,14 @@ public class StudentLessonAbsenteeismController {
     }
 
     @GetMapping(StudentLessonAbsenteeismControllerEndpoint.BY_LESSON_ID)
-    @ApiOperation(value = "Get All Students Lessons Absenteeism By Lesson ID")
-    public ResponseEntity<SisBaseApiResponse<List<StudentsLessonAbsenteeismResponse>>> getAllStudentsLessonsAbsenteeismByLessonId(
+    @ApiOperation(value = "Get All Students Lesson Absenteeism By Lesson ID")
+    public ResponseEntity<SisBaseApiResponse<List<StudentsLessonAbsenteeismResponse>>> getAllStudentsLessonAbsenteeismByLessonId(
             @PathVariable final Long lessonId,
             @RequestParam final Integer week)
             throws SisNotExistException {
 
         final List<StudentsLessonAbsenteeismResponse> absenteeismResponses = studentLessonAbsenteeismService
-                .getAllStudentsLessonsAbsenteeismByLessonId(lessonId, week);
+                .getAllStudentsLessonAbsenteeismByLessonId(lessonId, week);
 
         if (absenteeismResponses.isEmpty()) {
             return failResponse(absenteeismResponses);

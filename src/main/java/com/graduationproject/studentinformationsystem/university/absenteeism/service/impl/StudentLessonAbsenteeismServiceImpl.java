@@ -55,7 +55,7 @@ public class StudentLessonAbsenteeismServiceImpl implements StudentLessonAbsente
         final List<StudentLessonsAbsenteeismEntity> tempStudentLessonsAbsenteeismEntities = new ArrayList<>();
         studentLessonsAbsenteeismEntities.forEach(studentLessonsAbsenteeismEntity -> {
 
-            boolean isResponseExist = tempStudentLessonsAbsenteeismEntities.stream()
+            final boolean isResponseExist = tempStudentLessonsAbsenteeismEntities.stream()
                     .anyMatch(entity -> entity.getLessonId().equals(studentLessonsAbsenteeismEntity.getLessonId()));
 
             if (!isResponseExist) {
@@ -66,7 +66,7 @@ public class StudentLessonAbsenteeismServiceImpl implements StudentLessonAbsente
         final List<StudentLessonsAbsenteeismResponse> studentLessonsAbsenteeismResponses = new ArrayList<>();
         tempStudentLessonsAbsenteeismEntities.forEach(tempStudentLessonsAbsenteeismEntity -> {
 
-            boolean isResponseExist = studentLessonsAbsenteeismResponses.stream()
+            final boolean isResponseExist = studentLessonsAbsenteeismResponses.stream()
                     .anyMatch(response -> response.getLessonResponse().getLessonId().equals(tempStudentLessonsAbsenteeismEntity.getLessonId()));
 
             if (!isResponseExist) {
@@ -101,13 +101,13 @@ public class StudentLessonAbsenteeismServiceImpl implements StudentLessonAbsente
     }
 
     @Override
-    public List<StudentsLessonAbsenteeismResponse> getAllStudentsLessonsAbsenteeismByLessonId(final Long lessonId,
-                                                                                              final Integer week)
+    public List<StudentsLessonAbsenteeismResponse> getAllStudentsLessonAbsenteeismByLessonId(final Long lessonId,
+                                                                                             final Integer week)
             throws SisNotExistException {
 
         ifLessonIsNotExistThrowNotExistException(lessonId);
 
-        final List<StudentsLessonAbsenteeismEntity> entities = lessonAbsenteeismRepository.getAllStudentsLessonsAbsenteeismByLessonId(lessonId, week);
+        final List<StudentsLessonAbsenteeismEntity> entities = lessonAbsenteeismRepository.getAllStudentsLessonAbsenteeismByLessonId(lessonId, week);
         return lessonAbsenteeismInfoConverter.entitiesToResponses(entities);
     }
 
