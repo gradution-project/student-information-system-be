@@ -4,9 +4,10 @@ import com.graduationproject.studentinformationsystem.common.util.exception.SisD
 import com.graduationproject.studentinformationsystem.common.util.log.SisErrorLogMessageUtil;
 import com.graduationproject.studentinformationsystem.common.util.log.SisInfoLogMessageUtil;
 import com.graduationproject.studentinformationsystem.common.util.log.SisWarnLogMessageUtil;
-import com.graduationproject.studentinformationsystem.university.absenteeism.model.entity.StudentLessonAbsenteeismEntity;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.entity.StudentLessonAbsenteeismSaveEntity;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.entity.StudentLessonAbsenteeismUpdateEntity;
+import com.graduationproject.studentinformationsystem.university.absenteeism.model.entity.StudentLessonsAbsenteeismEntity;
+import com.graduationproject.studentinformationsystem.university.absenteeism.model.entity.StudentsLessonAbsenteeismEntity;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.enums.StudentLessonAbsenteeismStatus;
 import com.graduationproject.studentinformationsystem.university.absenteeism.repository.StudentLessonAbsenteeismRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,16 +34,14 @@ public class StudentLessonAbsenteeismRepositoryImpl implements StudentLessonAbse
     private final Sql2o sql2o;
 
     @Override
-    public List<StudentLessonAbsenteeismEntity> getAllStudentLessonsAbsenteeismByStudentId(final Long studentId,
-                                                                                           final Integer week) {
+    public List<StudentLessonsAbsenteeismEntity> getAllStudentLessonsAbsenteeismByStudentId(final Long studentId) {
 
-        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_ALL_STUDENT_LESSONS_ABSENTEEISM_BY_STUDENT_ID_AND_WEEK)) {
+        try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_ALL_STUDENT_LESSONS_ABSENTEEISM_BY_STUDENT_ID)) {
 
-            final List<StudentLessonAbsenteeismEntity> absenteeismEntities = query
+            final List<StudentLessonsAbsenteeismEntity> absenteeismEntities = query
                     .addParameter(STUDENT_ID.getModelName(), studentId)
-                    .addParameter(WEEK.getModelName(), week)
                     .setColumnMappings(COLUMN_MAPPINGS)
-                    .executeAndFetch(StudentLessonAbsenteeismEntity.class);
+                    .executeAndFetch(StudentLessonsAbsenteeismEntity.class);
 
             if (!absenteeismEntities.isEmpty()) {
                 info.foundAllByStudentId(studentId);
@@ -57,16 +56,16 @@ public class StudentLessonAbsenteeismRepositoryImpl implements StudentLessonAbse
     }
 
     @Override
-    public List<StudentLessonAbsenteeismEntity> getAllStudentsLessonsAbsenteeismByLessonId(final Long lessonId,
-                                                                                           final Integer week) {
+    public List<StudentsLessonAbsenteeismEntity> getAllStudentsLessonsAbsenteeismByLessonId(final Long lessonId,
+                                                                                            final Integer week) {
 
         try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_ALL_STUDENTS_LESSON_ABSENTEEISM_BY_LESSON_ID_AND_WEEK)) {
 
-            final List<StudentLessonAbsenteeismEntity> absenteeismEntities = query
+            final List<StudentsLessonAbsenteeismEntity> absenteeismEntities = query
                     .addParameter(LESSON_ID.getModelName(), lessonId)
                     .addParameter(WEEK.getModelName(), week)
                     .setColumnMappings(COLUMN_MAPPINGS)
-                    .executeAndFetch(StudentLessonAbsenteeismEntity.class);
+                    .executeAndFetch(StudentsLessonAbsenteeismEntity.class);
 
             if (!absenteeismEntities.isEmpty()) {
                 info.foundAllByLessonId(lessonId);
@@ -81,13 +80,13 @@ public class StudentLessonAbsenteeismRepositoryImpl implements StudentLessonAbse
     }
 
     @Override
-    public StudentLessonAbsenteeismEntity getStudentLessonAbsenteeismById(final String id) {
+    public StudentsLessonAbsenteeismEntity getStudentLessonAbsenteeismById(final String id) {
         try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(GET_STUDENT_LESSON_ABSENTEEISM_BY_ID)) {
 
-            final StudentLessonAbsenteeismEntity absenteeismEntity = query
+            final StudentsLessonAbsenteeismEntity absenteeismEntity = query
                     .addParameter(ID.getModelName(), id)
                     .setColumnMappings(COLUMN_MAPPINGS)
-                    .executeAndFetchFirst(StudentLessonAbsenteeismEntity.class);
+                    .executeAndFetchFirst(StudentsLessonAbsenteeismEntity.class);
 
             if (absenteeismEntity != null) {
                 info.foundById(id);
@@ -110,7 +109,9 @@ public class StudentLessonAbsenteeismRepositoryImpl implements StudentLessonAbse
                     .addParameter(STUDENT_ID.getModelName(), saveEntity.getStudentId())
                     .addParameter(LESSON_ID.getModelName(), saveEntity.getLessonId())
                     .addParameter(WEEK.getModelName(), saveEntity.getWeek())
+                    .addParameter(THEORETICAL_HOURS_STATE.getModelName(), saveEntity.getTheoreticalHoursState())
                     .addParameter(MAX_THEORETICAL_HOURS.getModelName(), saveEntity.getMaxTheoreticalHours())
+                    .addParameter(PRACTICE_HOURS_STATE.getModelName(), saveEntity.getPracticeHoursState())
                     .addParameter(MAX_PRACTICE_HOURS.getModelName(), saveEntity.getMaxPracticeHours())
                     .addParameter(STATUS.getModelName(), saveEntity.getStatus())
                     .addParameter(CREATED_DATE.getModelName(), saveEntity.getCreatedDate())
@@ -129,7 +130,9 @@ public class StudentLessonAbsenteeismRepositoryImpl implements StudentLessonAbse
         try (final Connection connection = sql2o.open(); final Query query = connection.createQuery(UPDATE_STUDENT_LESSON_ABSENTEEISM)) {
 
             query.addParameter(ID.getModelName(), updateEntity.getId())
+                    .addParameter(THEORETICAL_HOURS_STATE.getModelName(), updateEntity.getTheoreticalHoursState())
                     .addParameter(THEORETICAL_HOURS.getModelName(), updateEntity.getTheoreticalHours())
+                    .addParameter(PRACTICE_HOURS_STATE.getModelName(), updateEntity.getPracticeHoursState())
                     .addParameter(PRACTICE_HOURS.getModelName(), updateEntity.getPracticeHours())
                     .addParameter(STATUS.getModelName(), updateEntity.getStatus())
                     .addParameter(MODIFIED_DATE.getModelName(), updateEntity.getModifiedDate())
