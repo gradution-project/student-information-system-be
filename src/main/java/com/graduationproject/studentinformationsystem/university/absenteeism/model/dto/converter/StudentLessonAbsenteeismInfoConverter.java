@@ -108,14 +108,22 @@ public class StudentLessonAbsenteeismInfoConverter {
         final Long lessonId = absenteeismEntity.getLessonId();
         final LessonResponse lessonResponse = lessonOutService.getLessonResponse(lessonId);
 
+        StudentLessonAbsenteeismStatus status = StudentLessonAbsenteeismStatus.NOT_ENTERED;
+
         StudentLessonAbsenteeismHoursState theoreticalHoursState = StudentLessonAbsenteeismHoursState.NOT_ENTERED;
         if (currentTheoreticalHours != 0 || balanceTheoreticalHours != 0) {
             theoreticalHoursState = StudentLessonAbsenteeismHoursState.ENTERED;
+            status = StudentLessonAbsenteeismStatus.ENTERED;
+        } else if (currentTheoreticalHours == 0 && balanceTheoreticalHours == 0) {
+            theoreticalHoursState = StudentLessonAbsenteeismHoursState.NOT_EXIST;
         }
 
         StudentLessonAbsenteeismHoursState practiceHoursState = StudentLessonAbsenteeismHoursState.NOT_ENTERED;
         if (currentPracticeHours != 0 || balancePracticeHours != 0) {
             practiceHoursState = StudentLessonAbsenteeismHoursState.ENTERED;
+            status = StudentLessonAbsenteeismStatus.ENTERED;
+        } else if (currentPracticeHours == 0 && balancePracticeHours == 0) {
+            practiceHoursState = StudentLessonAbsenteeismHoursState.NOT_EXIST;
         }
 
         return StudentLessonsAbsenteeismResponse.builder()
@@ -126,7 +134,7 @@ public class StudentLessonAbsenteeismInfoConverter {
                 .practiceHoursState(practiceHoursState)
                 .currentPracticeHours(currentPracticeHours)
                 .balancePracticeHours(balancePracticeHours)
-                .status(absenteeismEntity.getStatus())
+                .status(status)
                 .createdDate(SisUtil.getFormattedDateTime(absenteeismEntity.getCreatedDate()))
                 .createdUserId(absenteeismEntity.getCreatedUserId())
                 .modifiedDate(SisUtil.getFormattedDateTime(absenteeismEntity.getModifiedDate()))
