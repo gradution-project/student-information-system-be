@@ -5,6 +5,7 @@ import com.graduationproject.studentinformationsystem.common.util.exception.SisN
 import com.graduationproject.studentinformationsystem.common.util.exception.SisProcessException;
 import com.graduationproject.studentinformationsystem.university.absenteeism.controller.endpoint.StudentLessonAbsenteeismControllerEndpoint;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.request.StudentsLessonAbsenteeismUpdateRequest;
+import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.response.StudentLessonsAbsenteeismResponse;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.response.StudentsLessonAbsenteeismResponse;
 import com.graduationproject.studentinformationsystem.university.absenteeism.service.StudentLessonAbsenteeismService;
 import io.swagger.annotations.Api;
@@ -31,13 +32,12 @@ public class StudentLessonAbsenteeismController {
 
     @GetMapping(StudentLessonAbsenteeismControllerEndpoint.BY_STUDENT_ID)
     @ApiOperation(value = "Get All Student Lessons Absenteeism By Student ID")
-    public ResponseEntity<SisBaseApiResponse<List<StudentsLessonAbsenteeismResponse>>> getAllStudentLessonsAbsenteeismByStudentId(
-            @PathVariable final Long studentId,
-            @RequestParam final Integer week)
+    public ResponseEntity<SisBaseApiResponse<List<StudentLessonsAbsenteeismResponse>>> getAllStudentLessonsAbsenteeismByStudentId(
+            @PathVariable final Long studentId)
             throws SisNotExistException {
 
-        final List<StudentsLessonAbsenteeismResponse> absenteeismResponses = studentLessonAbsenteeismService
-                .getAllStudentLessonsAbsenteeismByStudentId(studentId, week);
+        final List<StudentLessonsAbsenteeismResponse> absenteeismResponses = studentLessonAbsenteeismService
+                .getAllStudentLessonsAbsenteeismByStudentId(studentId);
 
         if (absenteeismResponses.isEmpty()) {
             return failResponse(absenteeismResponses);
