@@ -108,12 +108,22 @@ public class StudentLessonAbsenteeismInfoConverter {
         final Long lessonId = absenteeismEntity.getLessonId();
         final LessonResponse lessonResponse = lessonOutService.getLessonResponse(lessonId);
 
+        StudentLessonAbsenteeismHoursState theoreticalHoursState = StudentLessonAbsenteeismHoursState.NOT_ENTERED;
+        if (currentTheoreticalHours != 0 || balanceTheoreticalHours != 0) {
+            theoreticalHoursState = StudentLessonAbsenteeismHoursState.ENTERED;
+        }
+
+        StudentLessonAbsenteeismHoursState practiceHoursState = StudentLessonAbsenteeismHoursState.NOT_ENTERED;
+        if (currentPracticeHours != 0 || balancePracticeHours != 0) {
+            practiceHoursState = StudentLessonAbsenteeismHoursState.ENTERED;
+        }
+
         return StudentLessonsAbsenteeismResponse.builder()
                 .id(absenteeismEntity.getId())
-                .theoreticalHoursState(absenteeismEntity.getTheoreticalHoursState())
+                .theoreticalHoursState(theoreticalHoursState)
                 .currentTheoreticalHours(currentTheoreticalHours)
                 .balanceTheoreticalHours(balanceTheoreticalHours)
-                .practiceHoursState(absenteeismEntity.getPracticeHoursState())
+                .practiceHoursState(practiceHoursState)
                 .currentPracticeHours(currentPracticeHours)
                 .balancePracticeHours(balancePracticeHours)
                 .status(absenteeismEntity.getStatus())
