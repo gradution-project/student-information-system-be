@@ -1,19 +1,20 @@
 package com.graduationproject.studentinformationsystem.university.absenteeism.repository;
 
-import com.graduationproject.studentinformationsystem.university.absenteeism.model.entity.StudentLessonAbsenteeismEntity;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.entity.StudentLessonAbsenteeismSaveEntity;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.entity.StudentLessonAbsenteeismUpdateEntity;
+import com.graduationproject.studentinformationsystem.university.absenteeism.model.entity.StudentLessonsAbsenteeismEntity;
+import com.graduationproject.studentinformationsystem.university.absenteeism.model.entity.StudentsLessonAbsenteeismEntity;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.enums.StudentLessonAbsenteeismStatus;
 
 import java.util.List;
 
 public interface StudentLessonAbsenteeismRepository {
 
-    List<StudentLessonAbsenteeismEntity> getAllStudentLessonsAbsenteeismByStudentId(Long studentId, Integer week);
+    List<StudentLessonsAbsenteeismEntity> getAllStudentLessonsAbsenteeismByStudentId(Long studentId);
 
-    List<StudentLessonAbsenteeismEntity> getAllStudentsLessonsAbsenteeismByLessonId(Long lessonId, Integer week);
+    List<StudentsLessonAbsenteeismEntity> getAllStudentsLessonAbsenteeismByLessonId(Long lessonId, Integer week);
 
-    StudentLessonAbsenteeismEntity getStudentLessonAbsenteeismById(String id);
+    StudentsLessonAbsenteeismEntity getStudentLessonAbsenteeismById(String id);
 
     void saveStudentLessonAbsenteeism(StudentLessonAbsenteeismSaveEntity saveEntity);
 

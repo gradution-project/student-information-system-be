@@ -6,9 +6,11 @@ import com.graduationproject.studentinformationsystem.common.util.exception.SisN
 import com.graduationproject.studentinformationsystem.common.util.exception.SisProcessException;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.converter.StudentLessonAbsenteeismInfoConverter;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.request.StudentsLessonAbsenteeismUpdateRequest;
-import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.response.StudentLessonAbsenteeismResponse;
-import com.graduationproject.studentinformationsystem.university.absenteeism.model.entity.StudentLessonAbsenteeismEntity;
+import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.response.StudentLessonsAbsenteeismResponse;
+import com.graduationproject.studentinformationsystem.university.absenteeism.model.dto.response.StudentsLessonAbsenteeismResponse;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.entity.StudentLessonAbsenteeismUpdateEntity;
+import com.graduationproject.studentinformationsystem.university.absenteeism.model.entity.StudentLessonsAbsenteeismEntity;
+import com.graduationproject.studentinformationsystem.university.absenteeism.model.entity.StudentsLessonAbsenteeismEntity;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.enums.StudentLessonAbsenteeismStatus;
 import com.graduationproject.studentinformationsystem.university.absenteeism.model.exception.StudentLessonAbsenteeismException;
 import com.graduationproject.studentinformationsystem.university.absenteeism.repository.StudentLessonAbsenteeismRepository;
@@ -42,30 +44,75 @@ public class StudentLessonAbsenteeismServiceImpl implements StudentLessonAbsente
     private final StudentLessonAbsenteeismInfoConverter lessonAbsenteeismInfoConverter;
 
     @Override
-    public List<StudentLessonAbsenteeismResponse> getAllStudentLessonsAbsenteeismByStudentId(final Long studentId,
-                                                                                             final Integer week)
+    public List<StudentLessonsAbsenteeismResponse> getAllStudentLessonsAbsenteeismByStudentId(final Long studentId)
             throws SisNotExistException {
 
         ifStudentIsNotExistThrowNotExistException(studentId);
         ifStudentLessonsNotesAreNotExistThrowNotExistException(studentId);
 
-        final List<StudentLessonAbsenteeismEntity> entities = lessonAbsenteeismRepository.getAllStudentLessonsAbsenteeismByStudentId(studentId, week);
-        return lessonAbsenteeismInfoConverter.entitiesToResponses(entities);
+        final List<StudentLessonsAbsenteeismEntity> studentLessonsAbsenteeismEntities = lessonAbsenteeismRepository.getAllStudentLessonsAbsenteeismByStudentId(studentId);
+
+        final List<StudentLessonsAbsenteeismEntity> tempStudentLessonsAbsenteeismEntities = new ArrayList<>();
+        studentLessonsAbsenteeismEntities.forEach(studentLessonsAbsenteeismEntity -> {
+
+            final boolean isResponseExist = tempStudentLessonsAbsenteeismEntities.stream()
+                    .anyMatch(entity -> entity.getLessonId().equals(studentLessonsAbsenteeismEntity.getLessonId()));
+
+            if (!isResponseExist) {
+                tempStudentLessonsAbsenteeismEntities.add(studentLessonsAbsenteeismEntity);
+            }
+        });
+
+        final List<StudentLessonsAbsenteeismResponse> studentLessonsAbsenteeismResponses = new ArrayList<>();
+        tempStudentLessonsAbsenteeismEntities.forEach(tempStudentLessonsAbsenteeismEntity -> {
+
+            final boolean isResponseExist = studentLessonsAbsenteeismResponses.stream()
+                    .anyMatch(response -> response.getLessonResponse().getLessonId().equals(tempStudentLessonsAbsenteeismEntity.getLessonId()));
+
+            if (!isResponseExist) {
+                List<StudentLessonsAbsenteeismEntity> entities = studentLessonsAbsenteeismEntities.stream()
+                        .filter(entity -> tempStudentLessonsAbsenteeismEntity.getLessonId().equals(entity.getLessonId()))
+                        .toList();
+
+                Integer currentTheoreticalHours = 0;
+                Integer currentPracticeHours = 0;
+                for (StudentLessonsAbsenteeismEntity entity : entities) {
+                    if (entity.getTheoreticalHours() != null) {
+                        currentTheoreticalHours = Integer.sum(currentTheoreticalHours, entity.getTheoreticalHours());
+                    }
+                    if (entity.getPracticeHours() != null) {
+                        currentPracticeHours = Integer.sum(currentPracticeHours, entity.getPracticeHours());
+                    }
+                }
+
+                final Integer maxTheoreticalHours = tempStudentLessonsAbsenteeismEntity.getMaxTheoreticalHours();
+                final Integer maxPracticeHours = tempStudentLessonsAbsenteeismEntity.getMaxPracticeHours();
+                final Integer balanceTheoreticalHours = maxTheoreticalHours - currentTheoreticalHours;
+                final Integer balancePracticeHours = maxPracticeHours - currentPracticeHours;
+
+                final StudentLessonsAbsenteeismResponse studentLessonsAbsenteeismResponse = lessonAbsenteeismInfoConverter
+                        .entityToResponse(currentTheoreticalHours, currentPracticeHours, balanceTheoreticalHours, balancePracticeHours, tempStudentLessonsAbsenteeismEntity);
+
+                studentLessonsAbsenteeismResponses.add(studentLessonsAbsenteeismResponse);
+            }
+        });
+
+        return studentLessonsAbsenteeismResponses;
     }
 
     @Override
-    public List<StudentLessonAbsenteeismResponse> getAllStudentsLessonsAbsenteeismByLessonId(final Long lessonId,
+    public List<StudentsLessonAbsenteeismResponse> getAllStudentsLessonAbsenteeismByLessonId(final Long lessonId,
                                                                                              final Integer week)
             throws SisNotExistException {
 
         ifLessonIsNotExistThrowNotExistException(lessonId);
 
-        final List<StudentLessonAbsenteeismEntity> entities = lessonAbsenteeismRepository.getAllStudentsLessonsAbsenteeismByLessonId(lessonId, week);
+        final List<StudentsLessonAbsenteeismEntity> entities = lessonAbsenteeismRepository.getAllStudentsLessonAbsenteeismByLessonId(lessonId, week);
         return lessonAbsenteeismInfoConverter.entitiesToResponses(entities);
     }
 
     @Override
-    public List<StudentLessonAbsenteeismResponse> updateStudentLessonAbsenteeism(final StudentsLessonAbsenteeismUpdateRequest updateRequest)
+    public List<StudentsLessonAbsenteeismResponse> updateStudentLessonAbsenteeism(final StudentsLessonAbsenteeismUpdateRequest updateRequest)
             throws SisNotExistException, SisProcessException {
 
         final Map<String, Map<String, Integer>> absenteeismIdsAndTheoreticalHoursAndPracticeHours = updateRequest
@@ -73,7 +120,7 @@ public class StudentLessonAbsenteeismServiceImpl implements StudentLessonAbsente
 
         checkBeforeUpdateNotes(absenteeismIdsAndTheoreticalHoursAndPracticeHours);
 
-        final List<StudentLessonAbsenteeismResponse> studentLessonAbsenteeismResponses = new ArrayList<>();
+        final List<StudentsLessonAbsenteeismResponse> studentsLessonAbsenteeismRespons = new ArrayList<>();
         for (Map.Entry<String, Map<String, Integer>> absenteeismIdAndTheoreticalHoursAndPracticeHours : absenteeismIdsAndTheoreticalHoursAndPracticeHours.entrySet()) {
 
             final String absenteeismId = absenteeismIdAndTheoreticalHoursAndPracticeHours.getKey();
@@ -99,10 +146,10 @@ public class StudentLessonAbsenteeismServiceImpl implements StudentLessonAbsente
 
             checkTotalHoursIfExceededSetNoteStatusAndAbsenteeismStatusToFailed(absenteeismId, operationInfoRequest);
 
-            addResponseToList(absenteeismId, studentLessonAbsenteeismResponses);
+            addResponseToList(absenteeismId, studentsLessonAbsenteeismRespons);
         }
 
-        return studentLessonAbsenteeismResponses;
+        return studentsLessonAbsenteeismRespons;
     }
 
     private void updateStudentLessonAbsenteeism(final String absenteeismId,
@@ -167,11 +214,11 @@ public class StudentLessonAbsenteeismServiceImpl implements StudentLessonAbsente
     }
 
     private void addResponseToList(final String absenteeismId,
-                                   final List<StudentLessonAbsenteeismResponse> studentLessonAbsenteeismResponses) {
+                                   final List<StudentsLessonAbsenteeismResponse> studentsLessonAbsenteeismResponse) {
 
-        final StudentLessonAbsenteeismEntity absenteeismEntity = lessonAbsenteeismRepository.getStudentLessonAbsenteeismById(absenteeismId);
-        final StudentLessonAbsenteeismResponse absenteeismResponse = lessonAbsenteeismInfoConverter.entityToResponse(absenteeismEntity);
-        studentLessonAbsenteeismResponses.add(absenteeismResponse);
+        final StudentsLessonAbsenteeismEntity absenteeismEntity = lessonAbsenteeismRepository.getStudentLessonAbsenteeismById(absenteeismId);
+        final StudentsLessonAbsenteeismResponse absenteeismResponse = lessonAbsenteeismInfoConverter.entityToResponse(absenteeismEntity);
+        studentsLessonAbsenteeismResponse.add(absenteeismResponse);
     }
 
     @Override
