@@ -38,7 +38,7 @@
 	<properties>
 		<java.version>17</java.version>
 		<log4j2.version>2.17.1</log4j2.version>
-		<mysql-connector-java.version>8.0.26</mysql-connector-java.version>
+		<mysql-connector-java.version>8.0.28</mysql-connector-java.version>
 		<sql2o.version>1.6.0-RC3</sql2o.version>
 		<hikari.version>5.0.0</hikari.version>
 		<lombok.version>1.18.20</lombok.version>
